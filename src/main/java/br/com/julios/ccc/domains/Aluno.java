@@ -4,23 +4,25 @@ import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
-
-
 @Entity
 @Table(name = "ALUNO")
 public class Aluno {
 	
 	@Id
+	@GeneratedValue
+	private long id;
+	
+	@Column(length = 11, nullable = false)
 	private int cpf;
 	
-	@Column
+	@Column(nullable = false)
 	private String nome;
 	
 	@Column
@@ -42,15 +44,14 @@ public class Aluno {
 	@Temporal(TemporalType.DATE)
 	private Calendar dataNascimento;
 	
-	
 	@OneToMany
 	private EstadoCivil estadoCivil;
 	
 	@Column
 	private String profissao;
 	
-	@Column(name = "conehece_escola")
-	private String conheceEscola;
+	@OneToMany
+	private ConheceEscola conheceEscola;
 	
 	@Column(length=1)
 	private String sexo;
@@ -125,11 +126,11 @@ public class Aluno {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public String getEstadoCivil() {
+	public EstadoCivil getEstadoCivil() {
 		return estadoCivil;
 	}
 
-	public void setEstadoCivil(String estadoCivil) {
+	public void setEstadoCivil(EstadoCivil estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
 
@@ -141,11 +142,11 @@ public class Aluno {
 		this.profissao = profissao;
 	}
 
-	public String getConheceEscola() {
+	public ConheceEscola getConheceEscola() {
 		return conheceEscola;
 	}
 
-	public void setConheceEscola(String conheceEscola) {
+	public void setConheceEscola(ConheceEscola conheceEscola) {
 		this.conheceEscola = conheceEscola;
 	}
 

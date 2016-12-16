@@ -8,9 +8,13 @@ public class Professor {
 
 	
 	@Id
+	@GeneratedValue
+	private long id;
+	
+	@Column(length = 11, nullable = false)
 	private int cpf;
 	
-	@Column
+	@Column(nullable = false)
 	private String nome;
 	
 	@Column
@@ -24,4 +28,7 @@ public class Professor {
 	
 	@Column
 	private int telefone;
+	
+	@Column
+	private String observacao;
 }
