@@ -1,12 +1,16 @@
 package br.com.julios.ccc.domains;
 
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,10 +20,10 @@ import javax.persistence.TemporalType;
 public class Aluno {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 	
-	@Column(length = 11, nullable = false)
+	@Column(nullable = false)
 	private int cpf;
 	
 	@Column(nullable = false)
@@ -44,14 +48,15 @@ public class Aluno {
 	@Temporal(TemporalType.DATE)
 	private Calendar dataNascimento;
 	
-	@OneToMany
+	@OneToOne
+	@JoinColumn(name = "estado_civil_id")
 	private EstadoCivil estadoCivil;
 	
 	@Column
 	private String profissao;
 	
-	@OneToMany
-	private ConheceEscola conheceEscola;
+	@OneToMany(mappedBy = "conheceescola")	
+	private List<ConheceEscola> conheceEscola;
 	
 	@Column(length=1)
 	private String sexo;
@@ -142,12 +147,12 @@ public class Aluno {
 		this.profissao = profissao;
 	}
 
-	public ConheceEscola getConheceEscola() {
+	public List<ConheceEscola> getConheceEscola() {
 		return conheceEscola;
 	}
 
 	public void setConheceEscola(ConheceEscola conheceEscola) {
-		this.conheceEscola = conheceEscola;
+		this.conheceEscola = (List<ConheceEscola>) conheceEscola;
 	}
 
 	public String getSexo() {

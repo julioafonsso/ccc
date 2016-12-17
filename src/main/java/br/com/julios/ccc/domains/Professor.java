@@ -1,5 +1,7 @@
 package br.com.julios.ccc.domains;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,10 +10,10 @@ public class Professor {
 
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 	
-	@Column(length = 11, nullable = false)
+	@Column(nullable = false)
 	private int cpf;
 	
 	@Column(nullable = false)
@@ -31,4 +33,7 @@ public class Professor {
 	
 	@Column
 	private String observacao;
+	
+	@ManyToOne
+	private List<Turma> turmas;
 }

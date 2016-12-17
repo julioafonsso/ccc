@@ -3,6 +3,8 @@ package br.com.julios.ccc.domains;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +18,10 @@ public class ConheceEscola {
 	@Column
 	private String nome;
 
+	@ManyToOne
+	@JoinColumn(name = "aluno_id")
+	private Aluno aluno;
+	
 	public int getId() {
 		return id;
 	}
