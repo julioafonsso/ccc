@@ -1,8 +1,11 @@
 package br.com.julios.ccc.domains;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,6 +18,9 @@ public class ModalidadeTurma {
 	
 	@Column
 	private String modalidade;
+	
+	@OneToMany(mappedBy = "turma")
+	private List<Turma> turma;
 
 	public int getId() {
 		return id;
@@ -30,5 +36,13 @@ public class ModalidadeTurma {
 
 	public void setModalidade(String modalidade) {
 		this.modalidade = modalidade;
+	}
+
+	public List<Turma> getTurma() {
+		return turma;
+	}
+
+	public void setTurma(List<Turma> turma) {
+		this.turma = turma;
 	}
 }

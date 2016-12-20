@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -55,8 +57,9 @@ public class Aluno {
 	@Column
 	private String profissao;
 	
-	@OneToMany(mappedBy = "conheceescola")	
-	private List<ConheceEscola> conheceEscola;
+	@ManyToOne
+	@JoinColumn(name = "conhece_escola_id")
+	private ConheceEscola conheceEscola;
 	
 	@Column(length=1)
 	private String sexo;
@@ -66,7 +69,13 @@ public class Aluno {
 	
 	@Column
 	private String foto;
+	
+	@ManyToMany(mappedBy = "alunos")
+	private List<Turma> turmas;
 
+	
+	//Getters and Setters
+	
 	public int getCpf() {
 		return cpf;
 	}
@@ -147,12 +156,12 @@ public class Aluno {
 		this.profissao = profissao;
 	}
 
-	public List<ConheceEscola> getConheceEscola() {
+	public ConheceEscola getConheceEscola() {
 		return conheceEscola;
 	}
 
 	public void setConheceEscola(ConheceEscola conheceEscola) {
-		this.conheceEscola = (List<ConheceEscola>) conheceEscola;
+		this.conheceEscola = (ConheceEscola) conheceEscola;
 	}
 
 	public String getSexo() {
@@ -177,6 +186,22 @@ public class Aluno {
 
 	public void setFoto(String foto) {
 		this.foto = foto;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public List<Turma> getTurmas() {
+		return turmas;
+	}
+
+	public void setTurmas(List<Turma> turmas) {
+		this.turmas = turmas;
 	}
 	
 

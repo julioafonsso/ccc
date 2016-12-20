@@ -1,8 +1,11 @@
 package br.com.julios.ccc.domains;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,6 +18,9 @@ public class DiasSemana {
 	
 	@Column
 	private String dias;
+	
+	@ManyToMany(mappedBy = "diassemana")
+	private List<Turma> turmas;
 
 	public int getId() {
 		return id;
@@ -30,5 +36,13 @@ public class DiasSemana {
 
 	public void setDias(String dias) {
 		this.dias = dias;
+	}
+
+	public List<Turma> getTurmas() {
+		return turmas;
+	}
+
+	public void setTurmas(List<Turma> turmas) {
+		this.turmas = turmas;
 	}
 }
