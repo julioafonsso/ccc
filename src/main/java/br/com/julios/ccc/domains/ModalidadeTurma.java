@@ -19,7 +19,7 @@ public class ModalidadeTurma {
 	@Column
 	private String modalidade;
 	
-	@OneToMany(mappedBy = "turma")
+	@OneToMany(mappedBy = "modalidade")
 	private List<Turma> turma;
 
 	public int getId() {

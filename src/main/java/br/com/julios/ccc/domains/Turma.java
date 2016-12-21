@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,18 +37,6 @@ public class Turma {
 	@Temporal(TemporalType.TIME)
 	private Calendar horarioinicial;
 	
-	@Column /*OneToMany ou ManyToMany */
-	private Professor professor1;
-	
-	@Column
-	private int percetual1;
-	
-	@Column /*OneToMany ou ManyToMany */
-	private Professor professor2;
-	
-	@Column
-	private int percentual2;
-	
 	@Column
 	private double mensalidade;
 	
@@ -62,11 +51,95 @@ public class Turma {
 	@JoinColumn (name = "nivel_turma_id")
 	private NivelTurma nivel;
 	
-	@ManyToMany
-	@JoinTable (name = "turma_professor", joinColumns = @JoinColumn (name = "turma_id"), inverseJoinColumns = @JoinColumn (name = "professor_id"))
-	private List<Professor> professores;
+	@OneToMany(mappedBy = "turma")
+	private List<TurmaProfessor> professores;
 	
 	@ManyToMany
 	@JoinTable (name ="turma_aluno", joinColumns = @JoinColumn (name = "turma_id"), inverseJoinColumns = @JoinColumn (name = "aluno_id"))
 	private List<Aluno> alunos;
+	
+	//Getters and Setters
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public ModalidadeTurma getModalidade() {
+		return modalidade;
+	}
+
+	public void setModalidade(ModalidadeTurma modalidade) {
+		this.modalidade = modalidade;
+	}
+
+	public List<DiasSemana> getDiassemana() {
+		return diassemana;
+	}
+
+	public void setDiassemana(List<DiasSemana> diassemana) {
+		this.diassemana = diassemana;
+	}
+
+	public Calendar getHorarioinicial() {
+		return horarioinicial;
+	}
+
+	public void setHorarioinicial(Calendar horarioinicial) {
+		this.horarioinicial = horarioinicial;
+	}
+
+	public double getMensalidade() {
+		return mensalidade;
+	}
+
+	public void setMensalidade(double mensalidade) {
+		this.mensalidade = mensalidade;
+	}
+
+	public int getVagas() {
+		return vagas;
+	}
+
+	public void setVagas(int vagas) {
+		this.vagas = vagas;
+	}
+
+	public Salas getSalaaula() {
+		return salaaula;
+	}
+
+	public void setSalaaula(Salas salaaula) {
+		this.salaaula = salaaula;
+	}
+
+	public NivelTurma getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(NivelTurma nivel) {
+		this.nivel = nivel;
+	}
+
+	public List<TurmaProfessor> getProfessores() {
+		return professores;
+	}
+
+	public void setProfessores(List<TurmaProfessor> professores) {
+		this.professores = professores;
+	}
+
+	public List<Aluno> getAlunos() {
+		return alunos;
+	}
+
+	public void setAlunos(List<Aluno> alunos) {
+		this.alunos = alunos;
+	}
+	
+	
+	
 }

@@ -18,7 +18,7 @@ public class Salas {
 	@Column(name = "sala_aula")
 	private String salaaula;
 	
-	@OneToMany (mappedBy = "turma")
+	@OneToMany (mappedBy = "salaaula")
 	private List<Turma> turma;
 
 	public int getId() {

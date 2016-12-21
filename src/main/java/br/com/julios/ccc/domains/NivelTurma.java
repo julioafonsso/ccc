@@ -18,7 +18,7 @@ public class NivelTurma {
 	@Column
 	private String nivel;
 	
-	@OneToMany (mappedBy = "turma")
+	@OneToMany (mappedBy = "nivel")
 	private List<Turma> turma;
 
 	public int getId() {

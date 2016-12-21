@@ -34,8 +34,8 @@ public class Professor {
 	@Column
 	private String observacao;
 	
-	@ManyToMany(mappedBy = "professores")
-	private List<Turma> turmas;
+	@OneToMany(mappedBy = "professores")
+	private List<TurmaProfessor> turmas;
 	
 	//Getters and Setters
 
@@ -103,13 +103,15 @@ public class Professor {
 		this.observacao = observacao;
 	}
 
-	public List<Turma> getTurmas() {
+	public List<TurmaProfessor> getTurmas() {
 		return turmas;
 	}
 
-	public void setTurmas(List<Turma> turmas) {
+	public void setTurmas(List<TurmaProfessor> turmas) {
 		this.turmas = turmas;
 	}
+
+	
 	
 	
 }

@@ -5,8 +5,6 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,7 +19,7 @@ public class ConheceEscola {
 	@Column
 	private String nome;
 
-	@OneToMany(mappedBy = "aluno")	
+	@OneToMany(mappedBy = "conheceEscola")	
 	private List<Aluno> aluno;
 	
 	
