@@ -33,9 +33,9 @@ public class Turma {
 	@JoinTable(name = "turma_dias", joinColumns = @JoinColumn(name = "turma_id"), inverseJoinColumns = @JoinColumn(name = "dias_semana_id"))
 	private List<DiasSemana> diassemana;
 	
-	@Column(name = "horario_inicial")
-	@Temporal(TemporalType.TIME)
-	private Calendar horarioinicial;
+//	@Column(name = "horario_inicial")
+//	@Temporal(TemporalType.TIME)
+//	private Calendar horarioinicial;
 	
 	@Column
 	private double mensalidade;
@@ -83,14 +83,14 @@ public class Turma {
 	public void setDiassemana(List<DiasSemana> diassemana) {
 		this.diassemana = diassemana;
 	}
-
-	public Calendar getHorarioinicial() {
-		return horarioinicial;
-	}
-
-	public void setHorarioinicial(Calendar horarioinicial) {
-		this.horarioinicial = horarioinicial;
-	}
+//
+//	public Calendar getHorarioinicial() {
+//		return horarioinicial;
+//	}
+//
+//	public void setHorarioinicial(Calendar horarioinicial) {
+//		this.horarioinicial = horarioinicial;
+//	}
 
 	public double getMensalidade() {
 		return mensalidade;

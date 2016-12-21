@@ -11,7 +11,7 @@ public class Professor {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private long id;
+	private Integer id;
 	
 	@Column(nullable = false)
 	private int cpf;
@@ -34,18 +34,15 @@ public class Professor {
 	@Column
 	private String observacao;
 	
-	@OneToMany(mappedBy = "professores")
+	@OneToMany(mappedBy = "professor")
 	private List<TurmaProfessor> turmas;
 	
 	//Getters and Setters
 
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public int getCpf() {
 		return cpf;

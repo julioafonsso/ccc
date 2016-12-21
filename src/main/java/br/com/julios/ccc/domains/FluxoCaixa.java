@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,6 +37,10 @@ public class FluxoCaixa {
 	@ManyToMany
 	@JoinTable(name = "fluxo_tipo", joinColumns = @JoinColumn(name = "fluxo_id"), inverseJoinColumns = @JoinColumn(name = "tipo_fluxo_id"))
 	private List<TipoFluxoCaixa> tipoFluxo;
+	
+	@ManyToOne
+	private Usuario userLancamento;
+	
 	
 	//Getters and Setters
 
