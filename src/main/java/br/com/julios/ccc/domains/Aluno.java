@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
 public class Aluno {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	@Column(nullable = false)

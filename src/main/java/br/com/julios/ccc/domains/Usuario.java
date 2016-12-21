@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 public class Usuario {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	@Column

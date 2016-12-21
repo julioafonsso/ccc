@@ -2,7 +2,14 @@ package br.com.julios.ccc.domains;
 
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "PROFESSOR") 
@@ -10,8 +17,8 @@ public class Professor {
 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 	
 	@Column(nullable = false)
 	private int cpf;
@@ -39,10 +46,14 @@ public class Professor {
 	
 	//Getters and Setters
 
-	public Integer getId() {
+	public long getId() {
 		return id;
 	}
-
+	
+	public void setId(long id)
+	{
+		this.id = id;
+	}
 
 	public int getCpf() {
 		return cpf;

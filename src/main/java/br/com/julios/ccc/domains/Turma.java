@@ -22,7 +22,7 @@ import javax.persistence.JoinColumn;
 public class Turma {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
 	@ManyToOne

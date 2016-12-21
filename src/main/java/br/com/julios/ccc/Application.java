@@ -27,7 +27,7 @@ public class Application {
     
     @RequestMapping("/find/{id}")
     @ResponseBody
-    public Professor get(@PathVariable("id") int id){
+    public Professor get(@PathVariable("id") long id){
     	return pDAO.findOne(id);
     	
     }
