@@ -25,10 +25,6 @@ public class Salas {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getSalaaula() {
 		return salaaula;
 	}

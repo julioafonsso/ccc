@@ -36,7 +36,7 @@ public class Application {
     public void save(){
     	Professor p = new Professor();
     	
-    	p.setCpf(1231);
+    	p.setCpf("01234567890");
     	p.setNome("Julio");
     	p.setEmail("julioafonsso@gmail.com");
     	

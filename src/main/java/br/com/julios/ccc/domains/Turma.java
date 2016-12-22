@@ -1,6 +1,6 @@
 package br.com.julios.ccc.domains;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -33,9 +33,13 @@ public class Turma {
 	@JoinTable(name = "turma_dias", joinColumns = @JoinColumn(name = "turma_id"), inverseJoinColumns = @JoinColumn(name = "dias_semana_id"))
 	private List<DiasSemana> diassemana;
 	
-//	@Column(name = "horario_inicial")
-//	@Temporal(TemporalType.TIME)
-//	private Calendar horarioinicial;
+	@Column(name = "horario_inicial")
+	@Temporal(TemporalType.TIME)
+	private Date horarioinicial;
+	
+	@Column(name = "horario_final")
+	@Temporal(TemporalType.TIME)
+	private Date horariofinal;
 	
 	@Column
 	private double mensalidade;
@@ -64,10 +68,6 @@ public class Turma {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public ModalidadeTurma getModalidade() {
 		return modalidade;
 	}
@@ -83,14 +83,22 @@ public class Turma {
 	public void setDiassemana(List<DiasSemana> diassemana) {
 		this.diassemana = diassemana;
 	}
-//
-//	public Calendar getHorarioinicial() {
-//		return horarioinicial;
-//	}
-//
-//	public void setHorarioinicial(Calendar horarioinicial) {
-//		this.horarioinicial = horarioinicial;
-//	}
+
+	public Date getHorarioinicial() {
+		return horarioinicial;
+	}
+
+	public void setHorarioinicial(Date horarioinicial) {
+		this.horarioinicial = horarioinicial;
+	}
+	
+	public Date getHorariofinal() {
+		return horariofinal;
+	}
+
+	public void setHorariofinal(Date horariofinal) {
+		this.horariofinal = horariofinal;
+	}
 
 	public double getMensalidade() {
 		return mensalidade;

@@ -26,10 +26,6 @@ public class DiasSemana {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getDias() {
 		return dias;
 	}

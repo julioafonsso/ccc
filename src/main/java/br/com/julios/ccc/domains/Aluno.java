@@ -25,13 +25,13 @@ public class Aluno {
 	private long id;
 	
 	@Column(nullable = false)
-	private int cpf;
+	private String cpf;
 	
 	@Column(nullable = false)
 	private String nome;
 	
 	@Column
-	private int rg;
+	private String rg;
 	
 	@Column
 	private String email;
@@ -75,11 +75,11 @@ public class Aluno {
 	
 	//Getters and Setters
 	
-	public int getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(int cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 
@@ -91,11 +91,11 @@ public class Aluno {
 		this.nome = nome;
 	}
 
-	public int getRg() {
+	public String getRg() {
 		return rg;
 	}
 
-	public void setRg(int rg) {
+	public void setRg(String rg) {
 		this.rg = rg;
 	}
 
@@ -189,10 +189,6 @@ public class Aluno {
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public List<Turma> getTurmas() {

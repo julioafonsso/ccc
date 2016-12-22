@@ -25,10 +25,6 @@ public class NivelTurma {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getNivel() {
 		return nivel;
 	}

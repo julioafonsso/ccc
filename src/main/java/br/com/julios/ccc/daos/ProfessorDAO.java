@@ -13,5 +13,18 @@ public interface ProfessorDAO extends CrudRepository<Professor, Long> {
 
 	public Professor findOne(Long id);
 	
-	public Professor findByCpf(int cpf);
+	public Professor findByCpf(String cpf);
+	
+	public Professor findByRg(String rg);
+	
+	public Professor findByNome(String nome);
+	
+	public Professor findByEmail(String email);
+	
+	public Professor findByEndereco(String endereco);
+	
+	public Professor findByTelefone(Long telefone);
+	
+	public Professor findByObservacao(String observavao);
+	
 }
