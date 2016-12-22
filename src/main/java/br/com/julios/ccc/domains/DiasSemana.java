@@ -19,7 +19,7 @@ public class DiasSemana {
 	@Column
 	private String dias;
 	
-	@ManyToMany(mappedBy = "diassemana")
+	@ManyToMany(mappedBy = "diasSemana")
 	private List<Turma> turmas;
 
 	public int getId() {

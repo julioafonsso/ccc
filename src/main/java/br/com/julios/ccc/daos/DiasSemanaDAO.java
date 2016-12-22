@@ -11,8 +11,5 @@ import br.com.julios.ccc.domains.DiasSemana;
 @Transactional
 public interface DiasSemanaDAO extends CrudRepository<DiasSemana, Long>{
 	
-	public DiasSemana findOne(Long id);
-	
-	public DiasSemana findByDias(String dias);
 
 }

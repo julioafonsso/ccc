@@ -12,8 +12,5 @@ import br.com.julios.ccc.domains.Salas;
 @Transactional
 public interface SalasDAO extends CrudRepository<Salas, Long> {
 
-	public Salas findOne(Long id);
-	
-	public Salas findBySalaAula(String salaaula);
 
 }

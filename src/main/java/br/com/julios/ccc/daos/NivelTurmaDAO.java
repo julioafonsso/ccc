@@ -11,8 +11,5 @@ import br.com.julios.ccc.domains.NivelTurma;
 @Transactional
 public interface NivelTurmaDAO extends CrudRepository<NivelTurma, Long> {
 
-	public NivelTurma findOne(Long id);
-	
-	public NivelTurma findByNivel(String nivel);
 
 }

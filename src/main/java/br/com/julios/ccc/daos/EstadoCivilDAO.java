@@ -11,8 +11,4 @@ import br.com.julios.ccc.domains.EstadoCivil;
 @Transactional
 public interface EstadoCivilDAO extends CrudRepository<EstadoCivil, Long> {
 
-	public EstadoCivil findOne(Long id);
-	
-	public EstadoCivil findByNome(String nome);
-
 }

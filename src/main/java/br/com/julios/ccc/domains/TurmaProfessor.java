@@ -31,7 +31,7 @@ public class TurmaProfessor {
 	private Professor professor;
 	
 	@Column
-	private double percentual1;
+	private double percentual;
 	
 	@Column(name = "data_exclusao")
 	@Temporal(TemporalType.DATE)
@@ -55,12 +55,12 @@ public class TurmaProfessor {
 		this.professor = professor;
 	}
 
-	public double getPercentual1() {
-		return percentual1;
+	public double getPercentual() {
+		return percentual;
 	}
 
-	public void setPercentual1(double percentual1) {
-		this.percentual1 = percentual1;
+	public void setPercentual(double percentual) {
+		this.percentual = percentual;
 	}
 
 	public Date getDataExclusao() {

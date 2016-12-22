@@ -11,8 +11,6 @@ import br.com.julios.ccc.domains.TipoFluxoCaixa;
 @Transactional
 public interface TipoFluxoCaixaDAO extends CrudRepository<TipoFluxoCaixa, Long> {
 
-	public TipoFluxoCaixa findOne(Long id);
-	
 	public TipoFluxoCaixa findByNomeFluxo(String nomefluxo);
 	
 	public TipoFluxoCaixa findByIndEntrada(boolean indentrada);

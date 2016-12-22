@@ -19,10 +19,10 @@ public class TipoFluxoCaixa {
 	private long id;
 	
 	@Column
-	private String nome_fluxo;
+	private String nomeFluxo;
 	
 	@Column
-	private boolean ind_entrada;
+	private boolean indEntrada;
 	
 	@ManyToMany(mappedBy = "tipoFluxo")
 	private List<FluxoCaixa> fluxos;
@@ -33,20 +33,20 @@ public class TipoFluxoCaixa {
 		return id;
 	}
 
-	public String getNome_fluxo() {
-		return nome_fluxo;
+	public String getNomeFluxo() {
+		return nomeFluxo;
 	}
 
-	public void setNome_fluxo(String nome_fluxo) {
-		this.nome_fluxo = nome_fluxo;
+	public void setNomeFluxo(String nomeFluxo) {
+		this.nomeFluxo = nomeFluxo;
 	}
 
-	public boolean isInd_entrada() {
-		return ind_entrada;
+	public boolean isIndEntrada() {
+		return indEntrada;
 	}
 
-	public void setInd_entrada(boolean ind_entrada) {
-		this.ind_entrada = ind_entrada;
+	public void setIndEntrada(boolean indEntrada) {
+		this.indEntrada = indEntrada;
 	}
 
 	public List<FluxoCaixa> getFluxos() {

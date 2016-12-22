@@ -14,8 +14,6 @@ import br.com.julios.ccc.domains.Usuario;
 @Transactional
 public interface UsuarioDAO extends CrudRepository<Usuario, Long> {
 
-	public Usuario findOne(Long id);
-	
 	public Usuario findByNomeUsuario(String nomeusuario);
 	
 	public Usuario findByLogin(String login);

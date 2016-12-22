@@ -13,8 +13,6 @@ import br.com.julios.ccc.domains.FluxoCaixa;
 @Transactional
 public interface FluxoCaixaDAO extends CrudRepository<FluxoCaixa, Long> {
 
-	public FluxoCaixa findOne(Long id);
-	
 	public FluxoCaixa findByValor(double valor);
 	
 	public FluxoCaixa findByDescricao(String descricao);

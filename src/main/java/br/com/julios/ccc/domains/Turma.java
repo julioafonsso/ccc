@@ -31,15 +31,15 @@ public class Turma {
 	
 	@ManyToMany
 	@JoinTable(name = "turma_dias", joinColumns = @JoinColumn(name = "turma_id"), inverseJoinColumns = @JoinColumn(name = "dias_semana_id"))
-	private List<DiasSemana> diassemana;
+	private List<DiasSemana> diasSemana;
 	
 	@Column(name = "horario_inicial")
 	@Temporal(TemporalType.TIME)
-	private Date horarioinicial;
+	private Date horarioInicial;
 	
 	@Column(name = "horario_final")
 	@Temporal(TemporalType.TIME)
-	private Date horariofinal;
+	private Date horarioFinal;
 	
 	@Column
 	private double mensalidade;
@@ -49,7 +49,7 @@ public class Turma {
 	
 	@ManyToOne
 	@JoinColumn (name = "sala_id")
-	private Salas salaaula;
+	private Salas salaAula;
 	
 	@ManyToOne
 	@JoinColumn (name = "nivel_turma_id")
@@ -61,13 +61,9 @@ public class Turma {
 	@ManyToMany
 	@JoinTable (name ="turma_aluno", joinColumns = @JoinColumn (name = "turma_id"), inverseJoinColumns = @JoinColumn (name = "aluno_id"))
 	private List<Aluno> alunos;
-	
+
 	//Getters and Setters
-
-	public long getId() {
-		return id;
-	}
-
+	
 	public ModalidadeTurma getModalidade() {
 		return modalidade;
 	}
@@ -76,28 +72,28 @@ public class Turma {
 		this.modalidade = modalidade;
 	}
 
-	public List<DiasSemana> getDiassemana() {
-		return diassemana;
+	public List<DiasSemana> getDiasSemana() {
+		return diasSemana;
 	}
 
-	public void setDiassemana(List<DiasSemana> diassemana) {
-		this.diassemana = diassemana;
+	public void setDiasSemana(List<DiasSemana> diasSemana) {
+		this.diasSemana = diasSemana;
 	}
 
-	public Date getHorarioinicial() {
-		return horarioinicial;
+	public Date getHorarioInicial() {
+		return horarioInicial;
 	}
 
-	public void setHorarioinicial(Date horarioinicial) {
-		this.horarioinicial = horarioinicial;
-	}
-	
-	public Date getHorariofinal() {
-		return horariofinal;
+	public void setHorarioInicial(Date horarioInicial) {
+		this.horarioInicial = horarioInicial;
 	}
 
-	public void setHorariofinal(Date horariofinal) {
-		this.horariofinal = horariofinal;
+	public Date getHorarioFinal() {
+		return horarioFinal;
+	}
+
+	public void setHorarioFinal(Date horarioFinal) {
+		this.horarioFinal = horarioFinal;
 	}
 
 	public double getMensalidade() {
@@ -116,12 +112,12 @@ public class Turma {
 		this.vagas = vagas;
 	}
 
-	public Salas getSalaaula() {
-		return salaaula;
+	public Salas getSalaAula() {
+		return salaAula;
 	}
 
-	public void setSalaaula(Salas salaaula) {
-		this.salaaula = salaaula;
+	public void setSalaAula(Salas salaAula) {
+		this.salaAula = salaAula;
 	}
 
 	public NivelTurma getNivel() {
@@ -147,6 +143,12 @@ public class Turma {
 	public void setAlunos(List<Aluno> alunos) {
 		this.alunos = alunos;
 	}
+
+	public long getId() {
+		return id;
+	}
+	
+	
 	
 	
 	

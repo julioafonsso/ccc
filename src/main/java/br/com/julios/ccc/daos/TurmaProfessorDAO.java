@@ -11,6 +11,5 @@ import br.com.julios.ccc.domains.TurmaProfessor;
 @Transactional
 public interface TurmaProfessorDAO extends CrudRepository<TurmaProfessor, Long> {
 
-	public TurmaProfessor findOne(Long id);
 
 }

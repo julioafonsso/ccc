@@ -12,7 +12,6 @@ import br.com.julios.ccc.domains.ModalidadeTurma;
 @Transactional
 public interface ModalidadeTurmaDAO extends CrudRepository<ModalidadeTurma, Long> {
 
-	public ModalidadeTurma findOne(Long id);
 	
 	public ModalidadeTurma findByModalidade(String modalidade);
 	

@@ -11,8 +11,6 @@ import br.com.julios.ccc.domains.Aluno;
 @Transactional
 public interface AlunoDAO extends CrudRepository<Aluno, Long>{
 	
-	public Aluno findOne(Long id);
-	
 	public Aluno findByCpf(String cpf);
 	
 	public Aluno findByNome(String nome);

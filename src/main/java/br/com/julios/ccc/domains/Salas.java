@@ -16,23 +16,25 @@ public class Salas {
 	private int id;
 	
 	@Column(name = "sala_aula")
-	private String salaaula;
+	private String salaAula;
 	
-	@OneToMany (mappedBy = "salaaula")
+	@OneToMany (mappedBy = "salaAula")
 	private List<Turma> turma;
 
 	public int getId() {
 		return id;
 	}
 
-	public String getSalaaula() {
-		return salaaula;
+	public String getSalaAula() {
+		return salaAula;
 	}
 
-	public void setSalaaula(String salaaula) {
-		this.salaaula = salaaula;
+
+	public void setSalaAula(String salaAula) {
+		this.salaAula = salaAula;
 	}
 
+	
 	public List<Turma> getTurma() {
 		return turma;
 	}

@@ -11,8 +11,5 @@ import br.com.julios.ccc.domains.ConheceEscola;
 @Transactional
 public interface ConheceEscolaDAO extends CrudRepository<ConheceEscola, Long>{
 	
-	public ConheceEscola findOne(Long id);
-	
-	public ConheceEscola findByNome(String nome);
 
 }
