@@ -12,9 +12,9 @@ public class AlunoApi {
 	@Autowired
 	AlunoDAO alunoDAO;
 	
-	public void cadastrarAluno()
+	public void cadastrarAluno(Aluno aluno)
 	{
-		
+		alunoDAO.save(aluno);
 	}
 
 	public Iterable<Aluno> getAlunos() {
@@ -25,12 +25,12 @@ public class AlunoApi {
 		return alunoDAO.findByCpf(cpf);
 	}
 
-	public void atualizarAluno() {
-		
+	public void atualizarAluno(Aluno aluno) {
+		alunoDAO.save(aluno);
 	}
 
-	public void apagarAluno() {
-		
+	public void apagarAluno(Aluno aluno) {
+		alunoDAO.delete(aluno);
 	}
 	
 }

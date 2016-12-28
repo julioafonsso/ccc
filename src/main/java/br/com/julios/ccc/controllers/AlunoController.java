@@ -15,29 +15,29 @@ import br.com.julios.ccc.negocio.AlunoApi;
 public class AlunoController {
 
 	@Autowired
-	AlunoApi aluno;
+	AlunoApi alunoApi;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<Aluno> getAlunos()
 	{
-		return aluno.getAlunos();
+		return alunoApi.getAlunos();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarAluno()
+	public void cadastrarAluno(Aluno aluno)
 	{
-		aluno.cadastrarAluno();
+		alunoApi.cadastrarAluno(aluno);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarAluno()
+	public void atualizarAluno(Aluno aluno)
 	{
-		aluno.atualizarAluno();
+		alunoApi.atualizarAluno(aluno);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	public void apagarAluno()
+	public void apagarAluno(Aluno aluno)
 	{
-		aluno.apagarAluno();
+		alunoApi.apagarAluno(aluno);
 	}
 }
