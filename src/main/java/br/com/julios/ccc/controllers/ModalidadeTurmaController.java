@@ -18,8 +18,30 @@ public class ModalidadeTurmaController {
 	ModalidadeTurmaApi modalidadeTurmaApi;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public Iterable<ModalidadeTurma> getmodalidadeTurma(){
+	public Iterable<ModalidadeTurma> getmodalidadeTurma()
+	{
 		return modalidadeTurmaApi.getmodalidadeTurma();
 	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public void cadastrarModalidade(ModalidadeTurma modalidadeTurma)
+	{
+		modalidadeTurmaApi.cadastarModalidade(modalidadeTurma);
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT)
+	public void atualizarModalidade(ModalidadeTurma modalidadeTurma)
+	{
+		modalidadeTurmaApi.atualizarModalidade(modalidadeTurma);
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE)
+	public void apagarModalidade(ModalidadeTurma modalidadeTurma)
+	{
+		modalidadeTurmaApi.apagarModalidade(modalidadeTurma);
+	}
+	
 
 }

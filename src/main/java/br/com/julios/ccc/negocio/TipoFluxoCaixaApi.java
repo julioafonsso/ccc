@@ -12,18 +12,27 @@ public class TipoFluxoCaixaApi {
 	@Autowired
 	TipoFluxoCaixaDAO tipoFluxoCaixaDAO;
 
-	public Iterable<TipoFluxoCaixa> gettipoFluxoCaixa() {
+	public Iterable<TipoFluxoCaixa> gettipoFluxoCaixa() 
+	{
 				return tipoFluxoCaixaDAO.findAll();
 	}
 
-	public void cadastrarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) {
+	public void cadastrarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) 
+	{
 		tipoFluxoCaixaDAO.save(tipoFluxoCaixa);
 		
 	}
 
-	public void atualizarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) {
+	public void atualizarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) 
+	{
 		tipoFluxoCaixaDAO.save(tipoFluxoCaixa);
 				
+	}
+
+	public void apagarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) 
+	{
+		tipoFluxoCaixaDAO.delete(tipoFluxoCaixa);
+		
 	}
 
 

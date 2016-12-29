@@ -12,10 +12,27 @@ public class ModalidadeTurmaApi {
 	@Autowired
 	ModalidadeTurmaDAO modalidadeTurmaDAO;
 
-	public Iterable<ModalidadeTurma> getmodalidadeTurma() {
+	public Iterable<ModalidadeTurma> getmodalidadeTurma() 
+	{
 				return modalidadeTurmaDAO.findAll();
 	}
-	
-	
+
+	public void cadastarModalidade(ModalidadeTurma modalidadeTurma) 
+	{
+		modalidadeTurmaDAO.save(modalidadeTurma);
+		
+	}
+
+	public void atualizarModalidade(ModalidadeTurma modalidadeTurma) 
+	{
+		modalidadeTurmaDAO.save(modalidadeTurma);
+		
+	}
+
+	public void apagarModalidade(ModalidadeTurma modalidadeTurma) 
+	{
+		modalidadeTurmaDAO.delete(modalidadeTurma);
+				
+	}
 
 }

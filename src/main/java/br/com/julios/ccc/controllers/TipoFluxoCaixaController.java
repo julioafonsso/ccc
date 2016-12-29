@@ -31,5 +31,12 @@ public class TipoFluxoCaixaController {
 	public void atualizarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa){
 		tipoFluxoCaixaApi.atualizarTipoFluxoCaixa(tipoFluxoCaixa);
 	}
+	
+	@RequestMapping(method = RequestMethod.DELETE)
+	public void apagarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa)
+	{
+		tipoFluxoCaixaApi.apagarTipoFluxoCaixa(tipoFluxoCaixa);
+	}
+	
 
 }
