@@ -17,15 +17,18 @@ public class ProfessorApi {
 		return professorDAO.findAll();
 	}
 
-	public void cadastrarProfessor() {
+	public void cadastrarProfessor(Professor professor) {
+		professorDAO.save(professor);
 				
 	}
 
-	public void atualizarProfessor() {
+	public void atualizarProfessor(Professor professor) {
+		professorDAO.save(professor);
 		
 	}
 
-	public void apagarProfessor() {
+	public void apagarProfessor(Professor professor) {
+		professorDAO.delete(professor);
 				
 	}
 

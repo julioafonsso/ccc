@@ -64,7 +64,7 @@ public class Aluno {
 	private String sexo;
 	
 	@Column
-	private int telefone;
+	private String telefone;
 	
 	@Column
 	private String foto;
@@ -171,11 +171,11 @@ public class Aluno {
 		this.sexo = sexo;
 	}
 
-	public int getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
 
-	public void setTelefone(int telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 

@@ -15,26 +15,26 @@ import br.com.julios.ccc.negocio.FluxoCaixaApi;
 public class FluxoCaixaController {
 	
 	@Autowired
-	FluxoCaixaApi fluxoCaixa;
+	FluxoCaixaApi fluxoCaixaApi;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<FluxoCaixa> getFluxosCaixa(){
-		return fluxoCaixa.getFluxosCaixa();
+		return fluxoCaixaApi.getFluxosCaixa();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarFluxoCaixa(){
-		fluxoCaixa.cadastrarFluxoCaixa();
+	public void cadastrarFluxoCaixa(FluxoCaixa fluxoCaixa){
+		fluxoCaixaApi.cadastrarFluxoCaixa(fluxoCaixa);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarFluxoCaixa(){
-		fluxoCaixa.atualizarFluxoCaixa();
+	public void atualizarFluxoCaixa(FluxoCaixa fluxoCaixa){
+		fluxoCaixaApi.atualizarFluxoCaixa(fluxoCaixa);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	public void apagarFluxoCaixa(){
-		fluxoCaixa.apagarFluxoCaixa();
+	public void apagarFluxoCaixa(FluxoCaixa fluxoCaixa){
+		fluxoCaixaApi.apagarFluxoCaixa(fluxoCaixa);
 	}
 
 }

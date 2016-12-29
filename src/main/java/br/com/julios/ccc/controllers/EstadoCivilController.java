@@ -15,11 +15,11 @@ import br.com.julios.ccc.negocio.EstadoCivilApi;
 public class EstadoCivilController {
 	
 	@Autowired
-	EstadoCivilApi estadoCivil;
+	EstadoCivilApi estadoCivilApi;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<EstadoCivil> getestadoCivil(){
-		return estadoCivil.getestadoCivil();
+		return estadoCivilApi.getestadoCivil();
 		
 	}
 

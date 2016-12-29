@@ -16,16 +16,19 @@ public class FluxoCaixaApi {
 		return fluxoCaixaDAO.findAll();
 	}
 
-	public void cadastrarFluxoCaixa() {
+	public void cadastrarFluxoCaixa(FluxoCaixa fluxoCaixa) {
+		fluxoCaixaDAO.save(fluxoCaixa);
 				
 	}
 
-	public void atualizarFluxoCaixa() {
+	public void atualizarFluxoCaixa(FluxoCaixa fluxoCaixa) {
+		fluxoCaixaDAO.save(fluxoCaixa);				
+	}
+
+	public void apagarFluxoCaixa(FluxoCaixa fluxoCaixa) {
+		fluxoCaixaDAO.delete(fluxoCaixa);
 				
 	}
 
-	public void apagarFluxoCaixa() {
-				
-	}
 
 }

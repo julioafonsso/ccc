@@ -15,11 +15,11 @@ import br.com.julios.ccc.negocio.ModalidadeTurmaApi;
 public class ModalidadeTurmaController {
 	
 	@Autowired
-	ModalidadeTurmaApi modalidadeTurma;
+	ModalidadeTurmaApi modalidadeTurmaApi;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<ModalidadeTurma> getmodalidadeTurma(){
-		return modalidadeTurma.getmodalidadeTurma();
+		return modalidadeTurmaApi.getmodalidadeTurma();
 	}
 
 }

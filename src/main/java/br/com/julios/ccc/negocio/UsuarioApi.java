@@ -16,15 +16,18 @@ public class UsuarioApi {
 				return usuarioDAO.findAll();
 	}
 
-	public void cadastrarUsuario() {
+	public void cadastrarUsuario(Usuario usuario) {
+		usuarioDAO.save(usuario);
 				
 	}
 
-	public void atualizarUsuario() {
+	public void atualizarUsuario(Usuario usuario) {
+		usuarioDAO.save(usuario);
 				
 	}
 
-	public void apagarUsuario() {
+	public void apagarUsuario(Usuario usuario) {
+		usuarioDAO.delete(usuario);
 				
 	}
 

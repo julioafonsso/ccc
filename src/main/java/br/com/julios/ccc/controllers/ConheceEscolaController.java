@@ -14,11 +14,11 @@ import br.com.julios.ccc.negocio.ConheceEscolaApi;
 @RequestMapping("/conheceEscola")
 public class ConheceEscolaController {
 	@Autowired
-	ConheceEscolaApi conheceEscola;
+	ConheceEscolaApi conheceEscolaApi;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<ConheceEscola> getconheceEscola(){
-		return conheceEscola.getconheceEscola();
+		return conheceEscolaApi.getconheceEscola();
 	}
 
 }

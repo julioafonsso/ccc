@@ -16,11 +16,13 @@ public class TipoFluxoCaixaApi {
 				return tipoFluxoCaixaDAO.findAll();
 	}
 
-	public void cadastrarTipoFluxoCaixa() {
+	public void cadastrarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) {
+		tipoFluxoCaixaDAO.save(tipoFluxoCaixa);
 		
 	}
 
-	public void atualizarTipoFluxoCaixa() {
+	public void atualizarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) {
+		tipoFluxoCaixaDAO.save(tipoFluxoCaixa);
 				
 	}
 

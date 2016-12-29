@@ -15,11 +15,11 @@ import br.com.julios.ccc.negocio.NivelTurmaApi;
 public class NivelTurmaController {
 	
 	@Autowired
-	NivelTurmaApi nivelTurma;
+	NivelTurmaApi nivelTurmaApi;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<NivelTurma> getnivelTurma(){
-		return nivelTurma.getnivelTurma();
+		return nivelTurmaApi.getnivelTurma();
 	}
 
 }

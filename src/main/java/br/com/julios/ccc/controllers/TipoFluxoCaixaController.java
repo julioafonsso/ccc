@@ -15,21 +15,21 @@ import br.com.julios.ccc.negocio.TipoFluxoCaixaApi;
 public class TipoFluxoCaixaController {
 	
 	@Autowired
-	TipoFluxoCaixaApi tipoFluxoCaixa;
+	TipoFluxoCaixaApi tipoFluxoCaixaApi;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<TipoFluxoCaixa> gettipoFluxoCaixa(){
-		return tipoFluxoCaixa.gettipoFluxoCaixa();
+		return tipoFluxoCaixaApi.gettipoFluxoCaixa();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarTipoFluxoCaixa(){
-		tipoFluxoCaixa.cadastrarTipoFluxoCaixa();
+	public void cadastrarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa){
+		tipoFluxoCaixaApi.cadastrarTipoFluxoCaixa(tipoFluxoCaixa);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarTipoFluxoCaixa(){
-		tipoFluxoCaixa.atualizarTipoFluxoCaixa();
+	public void atualizarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa){
+		tipoFluxoCaixaApi.atualizarTipoFluxoCaixa(tipoFluxoCaixa);
 	}
 
 }

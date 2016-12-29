@@ -36,7 +36,7 @@ public class Professor {
 	private String endereco;
 	
 	@Column
-	private long telefone;
+	private String telefone;
 	
 	@Column
 	private String observacao;
@@ -90,11 +90,11 @@ public class Professor {
 		this.endereco = endereco;
 	}
 
-	public long getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
 
-	public void setTelefone(long telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 

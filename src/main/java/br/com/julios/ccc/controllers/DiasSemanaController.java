@@ -15,11 +15,11 @@ import br.com.julios.ccc.negocio.DiasSemanaApi;
 public class DiasSemanaController {
 	
 	@Autowired
-	DiasSemanaApi diasSemana;
+	DiasSemanaApi diasSemanaApi;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<DiasSemana> getdiasSemana(){
-		return diasSemana.getdiasSemana();
+		return diasSemanaApi.getdiasSemana();
 	}
 
 }

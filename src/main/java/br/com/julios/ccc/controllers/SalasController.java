@@ -15,11 +15,11 @@ import br.com.julios.ccc.negocio.SalasApi;
 public class SalasController {
 	
 	@Autowired
-	SalasApi sala;
+	SalasApi salaApi;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<Salas> getsala(){
-		return sala.getsala();
+		return salaApi.getsala();
 	}
 
 }

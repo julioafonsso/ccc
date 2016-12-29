@@ -15,26 +15,27 @@ import br.com.julios.ccc.negocio.ProfessorApi;
 public class ProfessorController {
 	
 	@Autowired
-	ProfessorApi professor;
+	ProfessorApi professorApi;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<Professor> getProfessores(){
-		return professor.getProfessores();
+		return professorApi.getProfessores();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarProfessor(){
-		professor.cadastrarProfessor();
+	public void cadastrarProfessor(Professor professor){
+		System.out.println("CHEGOU NO POST");
+		professorApi.cadastrarProfessor(professor);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarProfessor(){
-		professor.atualizarProfessor();
+	public void atualizarProfessor(Professor professor){
+		professorApi.atualizarProfessor(professor);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	public void apagarProfessor(){
-		professor.apagarProfessor();
+	public void apagarProfessor(Professor professor){
+		professorApi.apagarProfessor(professor);
 	}
 
 }

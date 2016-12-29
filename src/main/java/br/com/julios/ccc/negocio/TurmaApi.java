@@ -17,15 +17,18 @@ public class TurmaApi {
 		return turmaDAO.findAll();
 	}
 
-	public void cadastrarTurma() {
+	public void cadastrarTurma(Turma turma) {
+		turmaDAO.save(turma);
 				
 	}
 
-	public void atualizarTurma() {
+	public void atualizarTurma(Turma turma) {
+		turmaDAO.save(turma);
 				
 	}
 
-	public void apagarTurma() {
+	public void apagarTurma(Turma turma) {
+		turmaDAO.delete(turma);
 				
 	}
 

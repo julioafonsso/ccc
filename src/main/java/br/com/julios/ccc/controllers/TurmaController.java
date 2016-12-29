@@ -15,26 +15,26 @@ import br.com.julios.ccc.negocio.TurmaApi;
 public class TurmaController {
 	
 	@Autowired
-	TurmaApi turma;
+	TurmaApi turmaApi;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<Turma> getTurmas(){
-		return turma.getTurmas();
+		return turmaApi.getTurmas();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarTurma(){
-		turma.cadastrarTurma();
+	public void cadastrarTurma(Turma turma){
+		turmaApi.cadastrarTurma(turma);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarTurma(){
-		turma.atualizarTurma();
+	public void atualizarTurma(Turma turma){
+		turmaApi.atualizarTurma(turma);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	public void apagarTurma(){
-		turma.apagarTurma();
+	public void apagarTurma(Turma turma){
+		turmaApi.apagarTurma(turma);
 	}
 
 }

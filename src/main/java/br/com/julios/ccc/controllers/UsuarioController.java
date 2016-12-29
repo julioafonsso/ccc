@@ -15,26 +15,30 @@ import br.com.julios.ccc.negocio.UsuarioApi;
 public class UsuarioController {
 	
 	@Autowired
-	UsuarioApi usuario;
+	UsuarioApi usuarioApi;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public Iterable<Usuario> getUsuarios(){
-		return usuario.getUsuarios();
+	public Iterable<Usuario> getUsuarios()
+	{
+		return usuarioApi.getUsuarios();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarUsuario(){
-		usuario.cadastrarUsuario();
+	public void cadastrarUsuario(Usuario usuario)
+	{
+		usuarioApi.cadastrarUsuario(usuario);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarUsuario(){
-		usuario.atualizarUsuario();
+	public void atualizarUsuario(Usuario usuario)
+	{
+		usuarioApi.atualizarUsuario(usuario);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	public void apagarUsuario(){
-		usuario.apagarUsuario();
+	public void apagarUsuario(Usuario usuario)
+	{
+		usuarioApi.apagarUsuario(usuario);
 	}
 
 }
