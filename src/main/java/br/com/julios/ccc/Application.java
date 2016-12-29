@@ -3,44 +3,30 @@ package br.com.julios.ccc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import br.com.julios.ccc.daos.ProfessorDAO;
-import br.com.julios.ccc.domains.Professor;
 
 @SpringBootApplication
-//@EnableAutoConfiguration
 @Controller
 public class Application {
 
 	@Autowired
 	ProfessorDAO pDAO;
 
-    @RequestMapping("/")
-    @ResponseBody
-    String home() {
-        return "Hello World!";
-    }
-    
-    @RequestMapping("/find/{id}")
-    @ResponseBody
-    public Professor get(@PathVariable("id") long id){
-    	return pDAO.findOne(id);
-    	
-    }
-    @RequestMapping("/teste")
-    @ResponseBody
-    public void save(){
-    	Professor p = new Professor();
-    	
-    	p.setCpf("01234567890");
-    	p.setNome("Julio");
-    	p.setEmail("julioafonsso@gmail.com");
-    	
-    	pDAO.save(p);
+
+	@Bean
+	 public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**/*").allowedOrigins("http://localhost:4200");
+            }
+        };
     }
 
     public static void main(String[] args) throws Exception {
