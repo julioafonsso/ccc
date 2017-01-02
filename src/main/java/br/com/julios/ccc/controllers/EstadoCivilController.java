@@ -11,7 +11,7 @@ import br.com.julios.ccc.negocio.EstadoCivilApi;
 
 @Controller
 @ResponseBody
-@RequestMapping("/estadosCivis")
+@RequestMapping("/estado-civil")
 public class EstadoCivilController {
 	
 	@Autowired

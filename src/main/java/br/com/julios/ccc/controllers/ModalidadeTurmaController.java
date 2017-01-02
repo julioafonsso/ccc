@@ -12,7 +12,7 @@ import br.com.julios.ccc.negocio.ModalidadeTurmaApi;
 
 @Controller
 @ResponseBody
-@RequestMapping("/turma/modalidade")
+@RequestMapping("/modalidades/turmas")
 public class ModalidadeTurmaController {
 	
 	@Autowired
@@ -39,7 +39,7 @@ public class ModalidadeTurmaController {
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	public void apagarModalidade(@RequestBody ModalidadeTurma modalidadeTurma)
+	public void apagarModalidade(@RequestBody 	ModalidadeTurma modalidadeTurma)
 	{
 		modalidadeTurmaApi.apagarModalidade(modalidadeTurma);
 	}

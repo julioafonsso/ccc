@@ -11,7 +11,7 @@ import br.com.julios.ccc.negocio.NivelTurmaApi;
 
 @Controller
 @ResponseBody
-@RequestMapping("/niveisTurma")
+@RequestMapping("/niveis/turmas")
 public class NivelTurmaController {
 	
 	@Autowired

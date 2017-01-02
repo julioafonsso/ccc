@@ -11,7 +11,7 @@ import br.com.julios.ccc.negocio.DiasSemanaApi;
 
 @Controller
 @ResponseBody
-@RequestMapping("/diasSemana")
+@RequestMapping("/dias")
 public class DiasSemanaController {
 	
 	@Autowired

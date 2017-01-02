@@ -11,7 +11,7 @@ import br.com.julios.ccc.negocio.ConheceEscolaApi;
 
 @Controller
 @ResponseBody
-@RequestMapping("/conheceEscola")
+@RequestMapping("/conhece-escola")
 public class ConheceEscolaController {
 	@Autowired
 	ConheceEscolaApi conheceEscolaApi;
