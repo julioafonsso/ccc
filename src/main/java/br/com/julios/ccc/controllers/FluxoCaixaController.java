@@ -11,7 +11,7 @@ import br.com.julios.ccc.negocio.FluxoCaixaApi;
 
 @Controller
 @ResponseBody
-@RequestMapping("/fluxosCaixa")
+@RequestMapping("/fluxo-caixa")
 public class FluxoCaixaController {
 	
 	@Autowired
