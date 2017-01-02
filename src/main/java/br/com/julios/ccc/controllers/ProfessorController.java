@@ -2,6 +2,7 @@ package br.com.julios.ccc.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,18 +24,18 @@ public class ProfessorController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarProfessor(Professor professor){
-		System.out.println("CHEGOU NO POST");
+	public void cadastrarProfessor(@RequestBody Professor professor){
+		
 		professorApi.cadastrarProfessor(professor);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarProfessor(Professor professor){
+	public void atualizarProfessor(@RequestBody Professor professor){
 		professorApi.atualizarProfessor(professor);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	public void apagarProfessor(Professor professor){
+	public void apagarProfessor(@RequestBody Professor professor){
 		professorApi.apagarProfessor(professor);
 	}
 
