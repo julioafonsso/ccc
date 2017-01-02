@@ -35,5 +35,13 @@ public class TipoFluxoCaixaApi {
 		
 	}
 
+	public Iterable<TipoFluxoCaixa> gettipoFluxoCaixaEntrada() {
+		return tipoFluxoCaixaDAO.findByIndEntrada(true);
+	}
+
+	public Iterable<TipoFluxoCaixa> gettipoFluxoCaixaSaida() {
+		return tipoFluxoCaixaDAO.findByIndEntrada(false);
+	}
+
 
 }
