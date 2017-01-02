@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -15,7 +16,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.JoinColumn;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "TURMA")
@@ -27,10 +32,12 @@ public class Turma {
 	
 	@ManyToOne
 	@JoinColumn (name = "modalidade_id")
+	@JsonIgnoreProperties("turma")
 	private ModalidadeTurma modalidade;
 	
 	@ManyToMany
 	@JoinTable(name = "turma_dias", joinColumns = @JoinColumn(name = "turma_id"), inverseJoinColumns = @JoinColumn(name = "dias_semana_id"))
+	@JsonIgnoreProperties("turmas")
 	private List<DiasSemana> diasSemana;
 	
 	@Column(name = "horario_inicial")
@@ -49,17 +56,22 @@ public class Turma {
 	
 	@ManyToOne
 	@JoinColumn (name = "sala_id")
-	private Salas salaAula;
+	@JsonIgnoreProperties("turma")
+	private Salas sala;
 	
 	@ManyToOne
 	@JoinColumn (name = "nivel_turma_id")
+	@JsonIgnoreProperties("turma")
 	private NivelTurma nivel;
 	
 	@OneToMany(mappedBy = "turma")
+	@JsonIgnoreProperties("turma")
+	@Cascade(value={CascadeType.PERSIST})
 	private List<TurmaProfessor> professores;
 	
 	@ManyToMany
 	@JoinTable (name ="turma_aluno", joinColumns = @JoinColumn (name = "turma_id"), inverseJoinColumns = @JoinColumn (name = "aluno_id"))
+	@JsonIgnoreProperties("turmas")
 	private List<Aluno> alunos;
 
 	//Getters and Setters
@@ -112,12 +124,12 @@ public class Turma {
 		this.vagas = vagas;
 	}
 
-	public Salas getSalaAula() {
-		return salaAula;
+	public Salas getSala() {
+		return sala;
 	}
 
-	public void setSalaAula(Salas salaAula) {
-		this.salaAula = salaAula;
+	public void setSala(Salas sala) {
+		this.sala = sala;
 	}
 
 	public NivelTurma getNivel() {

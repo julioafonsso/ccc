@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "nivel_turma")
 public class NivelTurma {
@@ -16,22 +18,27 @@ public class NivelTurma {
 	private int id;
 	
 	@Column
-	private String nivel;
+	private String nome;
 	
 	@OneToMany (mappedBy = "nivel")
+	@JsonIgnoreProperties("nivel")
 	private List<Turma> turma;
 
 	public int getId() {
 		return id;
 	}
 
-	public String getNivel() {
-		return nivel;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setNivel(String nivel) {
-		this.nivel = nivel;
+
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
+
+
 
 	public List<Turma> getTurma() {
 		return turma;

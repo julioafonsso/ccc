@@ -16,6 +16,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "ALUNO")
 public class Aluno {
@@ -58,6 +61,7 @@ public class Aluno {
 	
 	@ManyToOne
 	@JoinColumn(name = "conhece_escola_id")
+	@JsonIgnoreProperties("aluno")
 	private ConheceEscola conheceEscola;
 	
 	@Column(length=1)
@@ -70,6 +74,7 @@ public class Aluno {
 	private String foto;
 	
 	@ManyToMany(mappedBy = "alunos")
+	@JsonIgnoreProperties("alunos")
 	private List<Turma> turmas;
 
 	

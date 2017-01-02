@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "TIPO_FLUXO_CAIXA")
 public class TipoFluxoCaixa {
@@ -19,12 +21,13 @@ public class TipoFluxoCaixa {
 	private long id;
 	
 	@Column
-	private String nomeFluxo;
+	private String nome;
 	
 	@Column
 	private boolean indEntrada;
 	
 	@ManyToMany(mappedBy = "tipoFluxo")
+	@JsonIgnoreProperties("tipoFluxo")
 	private List<FluxoCaixa> fluxos;
 	
 	//Getters and Setters
@@ -33,12 +36,12 @@ public class TipoFluxoCaixa {
 		return id;
 	}
 
-	public String getNomeFluxo() {
-		return nomeFluxo;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setNomeFluxo(String nomeFluxo) {
-		this.nomeFluxo = nomeFluxo;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public boolean isIndEntrada() {

@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "conhece_escola")
 public class ConheceEscola {
@@ -19,7 +22,8 @@ public class ConheceEscola {
 	@Column
 	private String nome;
 
-	@OneToMany(mappedBy = "conheceEscola")	
+	@OneToMany(mappedBy = "conheceEscola")
+	@JsonIgnoreProperties("conheceEscola")
 	private List<Aluno> aluno;
 	
 	

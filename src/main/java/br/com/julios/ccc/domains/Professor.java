@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
 @Table(name = "PROFESSOR") 
@@ -42,6 +44,7 @@ public class Professor {
 	private String observacao;
 	
 	@OneToMany(mappedBy = "professor")
+	@JsonIgnoreProperties("professor")
 	private List<TurmaProfessor> turmas;
 	
 	//Getters and Setters
