@@ -34,9 +34,9 @@ public class FluxoCaixa {
 	@Temporal(TemporalType.DATE)
 	private Date dataFluxo;
 	
-	@ManyToMany
-	@JoinTable(name = "fluxo_tipo", joinColumns = @JoinColumn(name = "fluxo_id"), inverseJoinColumns = @JoinColumn(name = "tipo_fluxo_id"))
-	private List<TipoFluxoCaixa> tipoFluxo;
+	@ManyToOne
+	@JoinColumn(name = "tipo_fluxo_id")
+	private TipoFluxoCaixa tipoFluxo;
 	
 	@ManyToOne
 	private Usuario userLancamento;
@@ -72,11 +72,11 @@ public class FluxoCaixa {
 		this.dataFluxo = dataFluxo;
 	}
 
-	public List<TipoFluxoCaixa> getTipoFluxo() {
+	public TipoFluxoCaixa getTipoFluxo() {
 		return tipoFluxo;
 	}
 
-	public void setTipoFluxo(List<TipoFluxoCaixa> tipoFluxo) {
+	public void setTipoFluxo(TipoFluxoCaixa tipoFluxo) {
 		this.tipoFluxo = tipoFluxo;
 	}
 	
