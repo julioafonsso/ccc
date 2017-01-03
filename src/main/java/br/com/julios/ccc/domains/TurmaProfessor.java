@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table (name = "TURMA_PROFESSOR")
 public class TurmaProfessor {
@@ -23,11 +25,13 @@ public class TurmaProfessor {
 	
 	@ManyToOne
 	@JoinColumn (name = "turma_id")
+	@JsonIgnoreProperties("professores")
 	private Turma turma;
 	
 	
 	@ManyToOne
 	@JoinColumn (name = "professor_id")
+	@JsonIgnoreProperties("turmas")
 	private Professor professor;
 	
 	@Column

@@ -3,6 +3,7 @@ package br.com.julios.ccc.domains;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,8 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Formula;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -66,13 +66,15 @@ public class Turma {
 	
 	@OneToMany(mappedBy = "turma")
 	@JsonIgnoreProperties("turma")
-	@Cascade(value={CascadeType.PERSIST})
 	private List<TurmaProfessor> professores;
 	
 	@ManyToMany
 	@JoinTable (name ="turma_aluno", joinColumns = @JoinColumn (name = "turma_id"), inverseJoinColumns = @JoinColumn (name = "aluno_id"))
 	@JsonIgnoreProperties("turmas")
 	private List<Aluno> alunos;
+	
+	@Formula("(select count(*) from turma_aluno ta , aluno a where a.id = ta.aluno_id and a.sexo = 'M' and ta.turma_id = id)")
+	private int qtdAlunos;
 
 	//Getters and Setters
 	
