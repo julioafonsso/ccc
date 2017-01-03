@@ -1,5 +1,7 @@
 package br.com.julios.ccc.daos;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.repository.CrudRepository;
@@ -11,8 +13,8 @@ import br.com.julios.ccc.domains.TipoFluxoCaixa;
 @Transactional
 public interface TipoFluxoCaixaDAO extends CrudRepository<TipoFluxoCaixa, Long> {
 
-	public TipoFluxoCaixa findByNomeFluxo(String nomefluxo);
+	public TipoFluxoCaixa findByNome(String nome);
 	
-	public TipoFluxoCaixa findByIndEntrada(boolean indentrada);
+	public List<TipoFluxoCaixa> findByIndEntrada(boolean indentrada);
 
 }
