@@ -2,6 +2,7 @@ package br.com.julios.ccc.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,17 +24,17 @@ public class FluxoCaixaController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarFluxoCaixa(FluxoCaixa fluxoCaixa){
+	public void cadastrarFluxoCaixa(@RequestBody FluxoCaixa fluxoCaixa){
 		fluxoCaixaApi.cadastrarFluxoCaixa(fluxoCaixa);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarFluxoCaixa(FluxoCaixa fluxoCaixa){
+	public void atualizarFluxoCaixa(@RequestBody FluxoCaixa fluxoCaixa){
 		fluxoCaixaApi.atualizarFluxoCaixa(fluxoCaixa);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	public void apagarFluxoCaixa(FluxoCaixa fluxoCaixa){
+	public void apagarFluxoCaixa(@RequestBody FluxoCaixa fluxoCaixa){
 		fluxoCaixaApi.apagarFluxoCaixa(fluxoCaixa);
 	}
 
