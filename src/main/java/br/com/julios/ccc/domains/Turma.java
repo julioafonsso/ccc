@@ -75,9 +75,20 @@ public class Turma {
 	
 	@Formula("(select count(*) from turma_aluno ta , aluno a where a.id = ta.aluno_id and a.sexo = 'M' and ta.turma_id = id)")
 	private int qtdAlunos;
+	
+	@Formula("(select count(*) from turma_aluno ta , aluno a where a.id = ta.aluno_id and a.sexo = 'F' and ta.turma_id = id)")
+	private int qtdAlunas;
 
 	//Getters and Setters
 	
+	public int getQtdAlunos() {
+		return qtdAlunos;
+	}
+
+	public int getQtdAlunas() {
+		return qtdAlunas;
+	}
+
 	public ModalidadeTurma getModalidade() {
 		return modalidade;
 	}
