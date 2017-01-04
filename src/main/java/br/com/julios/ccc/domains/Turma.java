@@ -40,6 +40,14 @@ public class Turma {
 	@JsonIgnoreProperties("turmas")
 	private List<DiasSemana> diasSemana;
 	
+	@Column(name = "data_inicio")
+	@Temporal(TemporalType.DATE)
+	private Date dataInicio;
+	
+	@Column(name = "data_termino")
+	@Temporal(TemporalType.DATE)
+	private Date dataTermino;
+	
 	@Column(name = "horario_inicial")
 	@Temporal(TemporalType.TIME)
 	private Date horarioInicial;
@@ -103,6 +111,22 @@ public class Turma {
 
 	public void setDiasSemana(List<DiasSemana> diasSemana) {
 		this.diasSemana = diasSemana;
+	}
+	
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+
+	public Date getDataTermino() {
+		return dataTermino;
+	}
+
+	public void setDataTermino(Date dataTermino) {
+		this.dataTermino = dataTermino;
 	}
 
 	public Date getHorarioInicial() {
@@ -172,9 +196,6 @@ public class Turma {
 	public long getId() {
 		return id;
 	}
-	
-	
-	
 	
 	
 }
