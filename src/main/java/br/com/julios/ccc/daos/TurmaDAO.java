@@ -14,6 +14,10 @@ import br.com.julios.ccc.domains.Turma;
 @Transactional
 public interface TurmaDAO extends CrudRepository<Turma, Long> {
 
+	public Turma findByDataInicio(Date datainicial);
+	
+	public Turma findByDataTermino(Date datatermino);
+	
 	public Turma findByHorarioInicial(Date horarioinicial);
 	
 	public Turma findByHorarioFinal(Date horariofinal);
