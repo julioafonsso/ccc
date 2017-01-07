@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -73,9 +74,9 @@ public class Aluno {
 	@Column
 	private String foto;
 	
-	@ManyToMany(mappedBy = "alunos")
-	@JsonIgnoreProperties("alunos")
-	private List<Turma> turmas;
+	@OneToMany(mappedBy = "aluno")
+	@JsonIgnoreProperties("aluno")
+	private List<Matricula> turmas;
 
 	
 	//Getters and Setters
@@ -196,13 +197,6 @@ public class Aluno {
 		return id;
 	}
 
-	public List<Turma> getTurmas() {
-		return turmas;
-	}
-
-	public void setTurmas(List<Turma> turmas) {
-		this.turmas = turmas;
-	}
-	
+		
 
 }

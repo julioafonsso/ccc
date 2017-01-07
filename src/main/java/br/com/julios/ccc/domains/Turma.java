@@ -3,7 +3,6 @@ package br.com.julios.ccc.domains;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -76,15 +76,16 @@ public class Turma {
 	@JsonIgnoreProperties("turma")
 	private List<TurmaProfessor> professores;
 	
-	@ManyToMany
-	@JoinTable (name ="turma_aluno", joinColumns = @JoinColumn (name = "turma_id"), inverseJoinColumns = @JoinColumn (name = "aluno_id"))
-	@JsonIgnoreProperties("turmas")
-	private List<Aluno> alunos;
+	@OneToMany(mappedBy = "turma")
 	
-	@Formula("(select count(*) from turma_aluno ta , aluno a where a.id = ta.aluno_id and a.sexo = 'M' and ta.turma_id = id)")
+	@JsonIgnoreProperties("turma")
+	@Where(clause = "data_exclusao is null")
+	private List<Matricula> matriculas;
+	
+	@Formula("(select count(*) from matricula ta , aluno a where a.id = ta.aluno_id and a.sexo = 'M' and ta.turma_id = id)")
 	private int qtdAlunos;
 	
-	@Formula("(select count(*) from turma_aluno ta , aluno a where a.id = ta.aluno_id and a.sexo = 'F' and ta.turma_id = id)")
+	@Formula("(select count(*) from matricula ta , aluno a where a.id = ta.aluno_id and a.sexo = 'F' and ta.turma_id = id)")
 	private int qtdAlunas;
 
 	//Getters and Setters
@@ -185,12 +186,13 @@ public class Turma {
 		this.professores = professores;
 	}
 
-	public List<Aluno> getAlunos() {
-		return alunos;
+
+	public List<Matricula> getMatriculas() {
+		return matriculas;
 	}
 
-	public void setAlunos(List<Aluno> alunos) {
-		this.alunos = alunos;
+	public void setMatriculas(List<Matricula> matriculas) {
+		this.matriculas = matriculas;
 	}
 
 	public long getId() {
