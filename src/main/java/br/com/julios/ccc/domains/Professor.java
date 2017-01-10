@@ -1,5 +1,6 @@
 package br.com.julios.ccc.domains;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -39,6 +42,10 @@ public class Professor {
 	
 	@Column
 	private String telefone;
+	
+	@Column(name = "data_admissao")
+	@Temporal(TemporalType.DATE)
+	private Calendar dataAdmissao;
 	
 	@Column
 	private String observacao;
@@ -99,6 +106,14 @@ public class Professor {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+	
+	public Calendar getDataAdmissao() {
+		return dataAdmissao;
+	}
+
+	public void setDataAdmissao(Calendar dataAdmissao) {
+		this.dataAdmissao = dataAdmissao;
 	}
 
 	public String getObservacao() {
