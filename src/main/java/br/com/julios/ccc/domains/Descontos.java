@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "descontos")
+@Table(name = "tipo_desconto")
 public class Descontos {
 	
 	@Id
@@ -19,7 +19,7 @@ public class Descontos {
 	private String nome;
 	
 	@Column
-	private int desconto;
+	private int valor;
 
 	//Getters and Setters
 	
@@ -31,12 +31,12 @@ public class Descontos {
 		this.nome = nome;
 	}
 
-	public int getDesconto() {
-		return desconto;
+	public int getValor() {
+		return valor;
 	}
 
-	public void setDesconto(int desconto) {
-		this.desconto = desconto;
+	public void setValor(int valor) {
+		this.valor = valor;
 	}
 
 	public long getId() {
