@@ -29,10 +29,12 @@ public class Turma {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+
+	@Column
+	private String codigo;
 	
 	@ManyToOne
 	@JoinColumn (name = "modalidade_id")
-	@JsonIgnoreProperties("turma")
 	private ModalidadeTurma modalidade;
 	
 	@ManyToMany
@@ -49,12 +51,10 @@ public class Turma {
 	private Date dataTermino;
 	
 	@Column(name = "horario_inicial")
-	@Temporal(TemporalType.TIME)
-	private Date horarioInicial;
+	private String horarioInicial;
 	
 	@Column(name = "horario_final")
-	@Temporal(TemporalType.TIME)
-	private Date horarioFinal;
+	private String horarioFinal;
 	
 	@Column
 	private double mensalidade;
@@ -64,12 +64,10 @@ public class Turma {
 	
 	@ManyToOne
 	@JoinColumn (name = "sala_id")
-	@JsonIgnoreProperties("turma")
 	private Salas sala;
 	
 	@ManyToOne
 	@JoinColumn (name = "nivel_turma_id")
-	@JsonIgnoreProperties("turma")
 	private NivelTurma nivel;
 	
 	@OneToMany(mappedBy = "turma")
@@ -77,8 +75,7 @@ public class Turma {
 	private List<TurmaProfessor> professores;
 	
 	@OneToMany(mappedBy = "turma")
-	
-	@JsonIgnoreProperties("turma")
+		@JsonIgnoreProperties("turma")
 	@Where(clause = "data_exclusao is null")
 	private List<Matricula> matriculas;
 	
@@ -89,6 +86,16 @@ public class Turma {
 	private int qtdAlunas;
 
 	//Getters and Setters
+
+	
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
 	
 	public int getQtdAlunos() {
 		return qtdAlunos;
@@ -130,19 +137,19 @@ public class Turma {
 		this.dataTermino = dataTermino;
 	}
 
-	public Date getHorarioInicial() {
+	public String getHorarioInicial() {
 		return horarioInicial;
 	}
 
-	public void setHorarioInicial(Date horarioInicial) {
+	public void setHorarioInicial(String horarioInicial) {
 		this.horarioInicial = horarioInicial;
 	}
 
-	public Date getHorarioFinal() {
+	public String getHorarioFinal() {
 		return horarioFinal;
 	}
 
-	public void setHorarioFinal(Date horarioFinal) {
+	public void setHorarioFinal(String horarioFinal) {
 		this.horarioFinal = horarioFinal;
 	}
 

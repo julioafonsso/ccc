@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "dias_semana")
@@ -22,7 +22,7 @@ public class DiasSemana {
 	private String nome;
 	
 	@ManyToMany(mappedBy = "diasSemana")
-	@JsonIgnoreProperties("diasSemana")
+	@JsonIgnore
 	private List<Turma> turmas;
 
 	public int getId() {

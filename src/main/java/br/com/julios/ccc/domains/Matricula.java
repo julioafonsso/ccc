@@ -1,6 +1,7 @@
 package br.com.julios.ccc.domains;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,18 +10,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "matricula")
-
 public class Matricula {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	
 	private long id;
 
 	@ManyToOne
@@ -30,7 +31,7 @@ public class Matricula {
 
 	@ManyToOne
 	@JoinColumn(name = "aluno_id")
-	@JsonIgnoreProperties("turmas")
+	@JsonIgnoreProperties("matriculas")
 	private Aluno aluno;
 
 	@Column(name = "dia_vencimento")
@@ -42,10 +43,32 @@ public class Matricula {
 	@Column(name = "data_exclusao")
 	private Date dataExclusao;
 	
+	@OneToMany(mappedBy="matricula")
+	@JsonIgnore
+	private List<MensalidadesPagas> pagamentos;
+	
+	@ManyToOne
+	private Descontos desconto;
 	
 	
 	public Date getDataExclusao() {
 		return dataExclusao;
+	}
+
+	public List<MensalidadesPagas> getPagamentos() {
+		return pagamentos;
+	}
+
+	public void setPagamentos(List<MensalidadesPagas> pagamentos) {
+		this.pagamentos = pagamentos;
+	}
+
+	public Descontos getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(Descontos desconto) {
+		this.desconto = desconto;
 	}
 
 	public void setDataExclusao(Date dataExclusao) {

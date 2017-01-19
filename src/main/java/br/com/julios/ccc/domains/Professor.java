@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -51,7 +51,7 @@ public class Professor {
 	private String observacao;
 	
 	@OneToMany(mappedBy = "professor")
-	@JsonIgnoreProperties("professor")
+	@JsonIgnore
 	private List<TurmaProfessor> turmas;
 	
 	//Getters and Setters

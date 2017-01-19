@@ -11,11 +11,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "TIPO_FLUXO_CAIXA")
 public class TipoFluxoCaixa {
+
+	public static final long MENSALIDADE = 1;
+	public static final long PAGAMENTO_PROFESSOR = 2;
 	
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)
@@ -28,7 +32,7 @@ public class TipoFluxoCaixa {
 	private boolean indEntrada;
 	
 	@OneToMany(mappedBy = "tipoFluxo")
-	@JsonIgnoreProperties("tipoFluxo")
+	@JsonIgnore
 	private List<FluxoCaixa> fluxos;
 	
 	//Getters and Setters

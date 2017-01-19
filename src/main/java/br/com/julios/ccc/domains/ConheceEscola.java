@@ -23,7 +23,7 @@ public class ConheceEscola {
 	private String nome;
 
 	@OneToMany(mappedBy = "conheceEscola")
-	@JsonIgnoreProperties("conheceEscola")
+	@JsonIgnore
 	private List<Aluno> aluno;
 	
 	

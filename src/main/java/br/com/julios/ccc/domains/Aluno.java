@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Where;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -64,7 +66,7 @@ public class Aluno {
 	@JoinColumn(name = "conhece_escola_id")
 	@JsonIgnoreProperties("aluno")
 	private ConheceEscola conheceEscola;
-	
+		
 	@Column(length=1)
 	private String sexo;
 	
@@ -75,16 +77,27 @@ public class Aluno {
 	private String foto;
 	
 	@OneToMany(mappedBy = "aluno")
-	@JsonIgnoreProperties("aluno")
-	private List<Matricula> turmas;
+	@JsonIgnore
+	@Where(clause = "data_exclusao is null")
+	private List<Matricula> matriculas;
 
 	
 	//Getters and Setters
+	
+	public List<Matricula> getMatriculas() {
+		return matriculas;
+	}
+
+	public void setMatriculas(List<Matricula> matriculas) {
+		this.matriculas = matriculas;
+	}
+
 	
 	public String getCpf() {
 		return cpf;
 	}
 
+	
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
