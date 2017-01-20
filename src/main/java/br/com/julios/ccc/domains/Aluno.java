@@ -74,6 +74,9 @@ public class Aluno {
 	private String telefone;
 	
 	@Column
+	private String observacao;
+
+	@Column
 	private String foto;
 	
 	@OneToMany(mappedBy = "aluno")
@@ -196,6 +199,14 @@ public class Aluno {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+	
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 
 	public String getFoto() {

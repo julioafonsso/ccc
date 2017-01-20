@@ -31,6 +31,8 @@ public interface AlunoDAO extends JpaRepository<Aluno, Long>{
 	
 	public Aluno findByTelefone(int telefone);
 	
+	public Aluno findByObservacao(String observacao);
+	
 	
 	
 
