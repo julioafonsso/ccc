@@ -2,6 +2,7 @@ package br.com.julios.ccc.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,6 +38,11 @@ public class ProfessorController {
 	@RequestMapping(method = RequestMethod.DELETE)
 	public void apagarProfessor(@RequestBody Professor professor){
 		professorApi.apagarProfessor(professor);
+	}
+	
+	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	public Professor getProfessor(@PathVariable("id") Long idProfessor){
+		return professorApi.getProfessor(idProfessor);
 	}
 
 }
