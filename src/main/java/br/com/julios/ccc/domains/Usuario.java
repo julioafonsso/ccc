@@ -28,6 +28,9 @@ public class Usuario {
 	@Column
 	private String senha;
 	
+	@Column(name="ind_supervisor")
+	private boolean indSupervisor;
+	
 	@Column(name = "data_exclusao")
 	@Temporal(TemporalType.DATE)
 	private Date dataExclusao;
@@ -68,6 +71,14 @@ public class Usuario {
 
 	public void setDataExclusao(Date dataExclusao) {
 		this.dataExclusao = dataExclusao;
+	}
+
+	public boolean isIndSupervisor() {
+		return indSupervisor;
+	}
+
+	public void setIndSupervisor(boolean indSupervisor) {
+		this.indSupervisor = indSupervisor;
 	}
 	
 	
