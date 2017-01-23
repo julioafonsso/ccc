@@ -66,8 +66,8 @@ public class TurmaApi {
 
 	}
 
-	public void excluirAlunoTurma(Matricula matricula) {
-		matricula = matriculaDAO.findOne(matricula.getId());
+	public void excluirAlunoTurma(long id) {
+		Matricula matricula = matriculaDAO.findOne(id);
 		matricula.setDataExclusao(new Date());
 		matriculaDAO.save(matricula);
 	}

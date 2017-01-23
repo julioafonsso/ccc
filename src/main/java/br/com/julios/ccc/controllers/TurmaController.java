@@ -58,8 +58,8 @@ public class TurmaController {
 		turmaApi.apagarTurma(turma);
 	}
 
-	@RequestMapping(value="matricula" , method = RequestMethod.DELETE)
-	public void apagarTurma(@RequestBody Matricula matricula){
-		turmaApi.excluirAlunoTurma(matricula);
+	@RequestMapping(value="matricula/{id}" , method = RequestMethod.DELETE)
+	public void apagarTurma(@PathVariable("id") long id){
+		turmaApi.excluirAlunoTurma(id);
 	}
 }
