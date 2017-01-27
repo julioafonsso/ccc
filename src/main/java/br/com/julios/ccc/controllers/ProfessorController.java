@@ -1,5 +1,7 @@
 package br.com.julios.ccc.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.julios.ccc.domains.Professor;
+import br.com.julios.ccc.domains.TurmaProfessor;
 import br.com.julios.ccc.negocio.ProfessorApi;
 
 @Controller
@@ -43,6 +46,11 @@ public class ProfessorController {
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public Professor getProfessor(@PathVariable("id") Long idProfessor){
 		return professorApi.getProfessor(idProfessor);
+	}
+	
+	@RequestMapping(value = "{id}/turmas", method = RequestMethod.GET)
+	public List<TurmaProfessor> getTurmas(@PathVariable("id") Long idProfessor) {
+		return professorApi.getTurmas(idProfessor);
 	}
 
 }
