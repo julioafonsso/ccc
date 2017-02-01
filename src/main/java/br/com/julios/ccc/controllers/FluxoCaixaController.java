@@ -37,5 +37,6 @@ public class FluxoCaixaController {
 	public void apagarFluxoCaixa(@RequestBody FluxoCaixa fluxoCaixa){
 		fluxoCaixaApi.apagarFluxoCaixa(fluxoCaixa);
 	}
-
+	
+	
 }

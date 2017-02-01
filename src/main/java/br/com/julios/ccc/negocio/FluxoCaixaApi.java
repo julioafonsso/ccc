@@ -17,6 +17,8 @@ public class FluxoCaixaApi {
 	}
 
 	public void cadastrarFluxoCaixa(FluxoCaixa fluxoCaixa) {
+		if(!fluxoCaixa.getTipoFluxo().isIndEntrada())
+			fluxoCaixa.setValor(fluxoCaixa.getValor() * -1 );
 		fluxoCaixaDAO.save(fluxoCaixa);
 				
 	}
@@ -27,8 +29,6 @@ public class FluxoCaixaApi {
 
 	public void apagarFluxoCaixa(FluxoCaixa fluxoCaixa) {
 		fluxoCaixaDAO.delete(fluxoCaixa);
-				
 	}
-
-
+	
 }
