@@ -1,6 +1,11 @@
 package br.com.julios.ccc.controllers;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import br.com.julios.ccc.daos.AlunoDAO;
 import br.com.julios.ccc.domains.Aluno;
 import br.com.julios.ccc.domains.Matricula;
 import br.com.julios.ccc.domains.Mensalidades;
@@ -24,19 +31,28 @@ public class AlunoController {
 	@Autowired
 	AlunoApi alunoApi;
 
+	@Autowired
+	private HttpServletRequest http;
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<Aluno> getAlunos(@RequestParam(value = "nome", required = false) String nome,
 			@RequestParam(value = "cpf", required = false) String cpf,
 			@RequestParam(value = "email", required = false) String email) {
-
+		
+		System.out.println(http.getHeader("token"));
 		return alunoApi.getAlunos(nome, cpf, email);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarAluno(@RequestBody Aluno aluno) {
-		alunoApi.cadastrarAluno(aluno);
+	public Aluno cadastrarAluno(@RequestBody Aluno aluno) {
+		return alunoApi.cadastrarAluno(aluno);
 	}
-
+	
+	@RequestMapping(value="{id}/foto",  method = RequestMethod.POST)
+	public void cadastrarFoto(@PathVariable("id") Long idAluno,  @RequestBody MultipartFile file) throws Exception {
+		alunoApi.cadastrarFoto(idAluno, file);
+	}
+	
 	@RequestMapping(method = RequestMethod.PUT)
 	public void atualizarAluno(Aluno aluno) {
 		alunoApi.atualizarAluno(aluno);

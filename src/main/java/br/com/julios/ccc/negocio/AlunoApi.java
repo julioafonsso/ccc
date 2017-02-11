@@ -1,5 +1,8 @@
 package br.com.julios.ccc.negocio;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +12,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.julios.ccc.Util;
 import br.com.julios.ccc.daos.AlunoDAO;
@@ -50,9 +54,11 @@ public class AlunoApi {
 	@Autowired
 	MatriculaDAO matriculaDAO;
 	
-	public void cadastrarAluno(Aluno aluno)
+	public Aluno cadastrarAluno(Aluno aluno)
 	{
 		alunoDAO.save(aluno);
+		System.out.println("ID do Aluno Incluid" + aluno.getId());
+		return aluno;
 	}
 
 	public Iterable<Aluno> getAlunos() {
@@ -124,6 +130,21 @@ public class AlunoApi {
 		mensalidadePaga.setMesReferencia(mes);
 		
 		mensalidadesPagasDAO.save(mensalidadePaga);
+		
+	}
+
+	public void cadastrarFoto(Long idAluno, MultipartFile file) throws Exception {
+		
+		String foto = "images/" + idAluno + ".jpge";
+		File f = new File (foto);
+		FileOutputStream fos = new FileOutputStream(f);
+		fos.write(file.getBytes());
+		fos.close();	
+		System.out.println("ARQUIVO SALVO");
+		Aluno al = alunoDAO.findOne(idAluno);
+		al.setFoto(foto);
+		alunoDAO.save(al);
+		
 		
 	}
 	

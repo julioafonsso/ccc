@@ -151,14 +151,6 @@ public class Mensalidades {
 		this.nivelTurma = nivelTurma;
 	}
 
-//	public Double getValorParaPagar() {
-//		return valorParaPagar;
-//	}
-//
-//	public void setValorParaPagar(Double valorParaPagar) {
-//		this.valorParaPagar = valorParaPagar;
-//	}
-
 	public Double getValorMensalidade() {
 		return valorMensalidade;
 	}
