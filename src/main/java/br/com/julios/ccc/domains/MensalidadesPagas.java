@@ -1,5 +1,6 @@
 package br.com.julios.ccc.domains;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,11 +27,15 @@ public class MensalidadesPagas {
 	
 	@ManyToOne
 	private Matricula matricula;
+	
+	@Column
+	private String indPagoProfessor;
 
 	
 	public MesReferencia getMesReferencia() {
 		return mesReferencia;
 	}
+	
 
 	public void setMesReferencia(MesReferencia mesReferencia) {
 		this.mesReferencia = mesReferencia;

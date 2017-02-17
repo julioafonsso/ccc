@@ -79,27 +79,29 @@ public class TurmaApi {
 	}
 
 	private String geraCodigo(Turma turma) {
-		StringBuffer retorno = new StringBuffer();
-		List<Integer> diasi = new ArrayList<Integer>();
+//		StringBuffer retorno = new StringBuffer();
+//		List<Integer> diasi = new ArrayList<Integer>();
+//
+//		List<DiasSemana> dias = turma.getDiasSemana();
+//		dias.sort(new Comparator<DiasSemana>() {
+//
+//			public int compare(DiasSemana o1, DiasSemana o2) {
+//				if (o1.getId() < o2.getId())
+//					return 1;
+//				return 0;
+//			}
+//
+//		});
+//		for (DiasSemana dia : dias) {
+//			retorno.append(dia.getId());
+//		}
+//
+//		retorno.append(turma.getHorarioFinal().substring(0, turma.getHorarioFinal().indexOf(":")));
+//
+//		retorno.append(turma.getSala().getId());
+//		return retorno.toString();
 
-		List<DiasSemana> dias = turma.getDiasSemana();
-		dias.sort(new Comparator<DiasSemana>() {
-
-			public int compare(DiasSemana o1, DiasSemana o2) {
-				if (o1.getId() < o2.getId())
-					return 1;
-				return 0;
-			}
-
-		});
-		for (DiasSemana dia : dias) {
-			retorno.append(dia.getId());
-		}
-
-		retorno.append(turma.getHorarioFinal().substring(0, turma.getHorarioFinal().indexOf(":")));
-
-		retorno.append(turma.getSala().getId());
-		return retorno.toString();
+		return "12345";
 	}
 
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.julios.ccc.domains.Professor;
+import br.com.julios.ccc.domains.Salario;
 import br.com.julios.ccc.domains.TurmaProfessor;
 import br.com.julios.ccc.negocio.ProfessorApi;
 
@@ -51,6 +52,11 @@ public class ProfessorController {
 	@RequestMapping(value = "{id}/turmas", method = RequestMethod.GET)
 	public List<TurmaProfessor> getTurmas(@PathVariable("id") Long idProfessor) {
 		return professorApi.getTurmas(idProfessor);
+	}
+	
+	@RequestMapping(value = "{id}/salario-pendente", method = RequestMethod.GET)
+	public List<Salario> getSalarioProfessorPendente(@PathVariable("id") Long idProfessor){
+		return professorApi.getSalarioProfessorPendente(idProfessor);
 	}
 
 }
