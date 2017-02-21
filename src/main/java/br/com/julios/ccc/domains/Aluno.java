@@ -48,6 +48,12 @@ public class Aluno {
 
 	@Column
 	private String endereco;
+	
+	@Column
+	private Long numero;
+	
+	@Column
+	private String complemento;
 
 	@Column
 	private String bairro;
@@ -99,13 +105,19 @@ public class Aluno {
 	}
 
 	public String getCpf() throws Exception {
-		return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9);
+		if(cpf != null && cpf.length() > 0){
+			return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9);
+		}
+		return null;
 
 	}
 
 	public void setCpf(String cpf) throws Exception {
-
-		this.cpf = cpf.replaceAll("[^0-9]", "");
+		if(cpf != null && cpf.length() > 0){
+			this.cpf = cpf.replaceAll("[^0-9]", "");
+		} else{
+			this.cpf = cpf;
+		}
 	}
 
 	public String getNome() {
@@ -138,6 +150,22 @@ public class Aluno {
 
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
+	}
+	
+	public Long getNumero() {
+		return numero;
+	}
+
+	public void setNumero(Long numero) {
+		this.numero = numero;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 
 	public String getBairro() {

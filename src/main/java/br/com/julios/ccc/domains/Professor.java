@@ -41,6 +41,12 @@ public class Professor {
 	private String endereco;
 	
 	@Column
+	private long numero;
+	
+	@Column
+	private String complemento;
+	
+	@Column
 	private String telefone;
 	
 	@Column(name = "data_admissao")
@@ -64,12 +70,21 @@ public class Professor {
 		return id;
 	}
 
-	public String getCpf() {
-		return cpf;
+	public String getCpf() throws Exception {
+		if(cpf != null && cpf.length() > 0){
+			return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9);
+		}
+		return "";
+
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setCpf(String cpf) throws Exception {
+		if(cpf != null && cpf.length() > 0){
+			this.cpf = cpf.replaceAll("[^0-9]", "");
+		} else{
+			this.cpf = null;
+		}
+
 	}
 
 	public String getNome() {
@@ -102,6 +117,22 @@ public class Professor {
 
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
+	}
+
+	public long getNumero() {
+		return numero;
+	}
+
+	public void setNumero(long numero) {
+		this.numero = numero;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 
 	public String getTelefone() {
