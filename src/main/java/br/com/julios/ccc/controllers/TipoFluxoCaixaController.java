@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.julios.ccc.domains.TipoFluxoCaixa;
+import br.com.julios.ccc.facade.FluxoCaixaFacade;
 import br.com.julios.ccc.negocio.TipoFluxoCaixaApi;
 
 @Controller
@@ -16,38 +17,40 @@ import br.com.julios.ccc.negocio.TipoFluxoCaixaApi;
 public class TipoFluxoCaixaController {
 	
 	@Autowired
-	TipoFluxoCaixaApi tipoFluxoCaixaApi;
+	FluxoCaixaFacade FluxoCaixaFacade;
+	
+	
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixa(){
-		return tipoFluxoCaixaApi.getTipoFluxoCaixa();
+		return FluxoCaixaFacade.getTipoFluxoCaixa();
 	}
 	
 	
 	@RequestMapping(value="/entrada", method = RequestMethod.GET)
 	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixaEntrada(){
-		return tipoFluxoCaixaApi.getTipoFluxoCaixaEntrada();
+		return FluxoCaixaFacade.getTipoFluxoCaixaEntrada();
 	}
 	
 	@RequestMapping(value="/saida", method = RequestMethod.GET)
 	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixaSaida(){
-		return tipoFluxoCaixaApi.getTipoFluxoCaixaSaida();
+		return FluxoCaixaFacade.getTipoFluxoCaixaSaida();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public void cadastrarTipoFluxoCaixa(@RequestBody TipoFluxoCaixa tipoFluxoCaixa){
-		tipoFluxoCaixaApi.cadastrarTipoFluxoCaixa(tipoFluxoCaixa);
+		FluxoCaixaFacade.cadastrarTipoFluxoCaixa(tipoFluxoCaixa);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
 	public void atualizarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa){
-		tipoFluxoCaixaApi.atualizarTipoFluxoCaixa(tipoFluxoCaixa);
+		FluxoCaixaFacade.atualizarTipoFluxoCaixa(tipoFluxoCaixa);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
 	public void apagarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa)
 	{
-		tipoFluxoCaixaApi.apagarTipoFluxoCaixa(tipoFluxoCaixa);
+		FluxoCaixaFacade.apagarTipoFluxoCaixa(tipoFluxoCaixa);
 	}
 	
 

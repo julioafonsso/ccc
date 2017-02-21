@@ -1,8 +1,5 @@
 package br.com.julios.ccc.controllers;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.julios.ccc.daos.AlunoDAO;
 import br.com.julios.ccc.domains.Aluno;
 import br.com.julios.ccc.domains.Matricula;
 import br.com.julios.ccc.domains.Mensalidades;
-import br.com.julios.ccc.negocio.AlunoApi;
+import br.com.julios.ccc.facade.AlunoFacade;
+import br.com.julios.ccc.facade.FileFacade;
+import br.com.julios.ccc.facade.MensalidadeFacade;
 
 @Controller
 @ResponseBody
@@ -29,58 +27,60 @@ import br.com.julios.ccc.negocio.AlunoApi;
 public class AlunoController {
 
 	@Autowired
-	AlunoApi alunoApi;
+	AlunoFacade alunoFacade;
+
+	@Autowired
+	FileFacade fileFacade;
+
+	@Autowired
+	MensalidadeFacade mensalidadeFacade;
 
 	@Autowired
 	private HttpServletRequest http;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<Aluno> getAlunos(@RequestParam(value = "nome", required = false) String nome,
 			@RequestParam(value = "cpf", required = false) String cpf,
-			@RequestParam(value = "email", required = false) String email) {
-		
-		System.out.println(http.getHeader("token"));
-		return alunoApi.getAlunos(nome, cpf, email);
+			@RequestParam(value = "email", required = false) String email) throws Exception {
+
+		return alunoFacade.getAlunos(nome, cpf, email);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public Aluno cadastrarAluno(@RequestBody Aluno aluno) {
-		return alunoApi.cadastrarAluno(aluno);
+	public void cadastrarAluno(@RequestBody Aluno aluno) throws Exception {
+		alunoFacade.cadastrarAluno(aluno);
 	}
+
 	
-	@RequestMapping(value="{id}/foto",  method = RequestMethod.POST)
-	public void cadastrarFoto(@PathVariable("id") Long idAluno,  @RequestBody MultipartFile file) throws Exception {
-		alunoApi.cadastrarFoto(idAluno, file);
-	}
-	
+
 	@RequestMapping(method = RequestMethod.PUT)
 	public void atualizarAluno(Aluno aluno) {
-		alunoApi.atualizarAluno(aluno);
+		alunoFacade.atualizarAluno(aluno);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)
 	public void apagarAluno(Aluno aluno) {
-		alunoApi.apagarAluno(aluno);
+		alunoFacade.apagarAluno(aluno);
 	}
 
-	@RequestMapping(value ="pagamento", method= RequestMethod.POST)
-	public void efetuarPagamento(@RequestBody Mensalidades mensalidade){
-		alunoApi.efetuarPagamento(mensalidade);
+	@RequestMapping(value = "pagamento", method = RequestMethod.POST)
+	public void efetuarPagamento(@RequestBody Mensalidades mensalidade) {
+		mensalidadeFacade.efetuarPagamento(mensalidade);
 	}
-	
+
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public Aluno getAluno(@PathVariable("id") Long idAluno) {
-		return alunoApi.getAluno(idAluno);
+		return alunoFacade.getAluno(idAluno);
 	}
 
 	@RequestMapping(value = "{id}/turmas", method = RequestMethod.GET)
 	public List<Matricula> getTurmas(@PathVariable("id") Long idAluno) {
-		return alunoApi.getTurmas(idAluno);
+		return alunoFacade.getMatriculas(idAluno);
 	}
 
 	@RequestMapping(value = "{id}/debitos", method = RequestMethod.GET)
 	public List<Mensalidades> getDebitos(@PathVariable("id") Long idAluno) {
-		return alunoApi.getMensalidadesParaPagar(idAluno);
+		return alunoFacade.getDebitos(idAluno);
 	}
 
 }

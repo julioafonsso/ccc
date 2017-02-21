@@ -1,4 +1,4 @@
-package br.com.julios.ccc;
+package br.com.julios.ccc.util;
 
 public class Util {
 
@@ -8,4 +8,5 @@ public class Util {
 			return null;
 		return param;
 	}
+	
 }

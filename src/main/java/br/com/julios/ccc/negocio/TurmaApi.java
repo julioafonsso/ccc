@@ -2,7 +2,6 @@ package br.com.julios.ccc.negocio;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,18 +59,7 @@ public class TurmaApi {
 		return turmaDAO.findOne(id);
 	}
 
-	public void matricularAluno(Matricula matricula) {
-		matricula.setDataMatricula(new Date());
-		matriculaDAO.save(matricula);
-
-	}
-
-	public void excluirAlunoTurma(long id) {
-		Matricula matricula = matriculaDAO.findOne(id);
-		matricula.setDataExclusao(new Date());
-		matriculaDAO.save(matricula);
-	}
-
+	
 	public Iterable<Matricula> getAlunosTurma(Long idTurma) {
 		Turma turma = turmaDAO.findOne(idTurma);
 		return matriculaDAO.findByTurmaAndDataExclusaoIsNull(turma);

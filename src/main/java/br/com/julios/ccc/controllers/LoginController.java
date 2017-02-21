@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.julios.ccc.domains.Usuario;
-import br.com.julios.ccc.negocio.LoginApi;
+import br.com.julios.ccc.facade.LoginFacade;
 
 @Controller
 @ResponseBody
@@ -16,7 +16,7 @@ import br.com.julios.ccc.negocio.LoginApi;
 public class LoginController {
 
 	@Autowired
-	LoginApi login;
+	LoginFacade login;
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public Usuario login(@RequestBody Usuario usuario) throws Exception{

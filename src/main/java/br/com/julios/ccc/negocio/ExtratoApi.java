@@ -1,11 +1,8 @@
 package br.com.julios.ccc.negocio;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -29,8 +26,9 @@ public class ExtratoApi {
 		HashMap<String, Extrato> map = new HashMap<String, Extrato>();
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		double saldoAtual = fluxoDAO.getSaldoAteData(dataInicio);
-
+		Double saldoAtual = fluxoDAO.getSaldoAteData(dataInicio);
+		if(saldoAtual == null)
+			saldoAtual = new Double(0);
 		
 		List<FluxoCaixa> dados = fluxoDAO.findByDataFluxoBetweenOrderByDataFluxoDesc(dataInicio, dataFim);
 

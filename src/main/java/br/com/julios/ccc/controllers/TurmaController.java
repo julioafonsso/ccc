@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.julios.ccc.domains.Matricula;
 import br.com.julios.ccc.domains.Turma;
-import br.com.julios.ccc.negocio.TurmaApi;
+import br.com.julios.ccc.facade.MatriculaFacade;
+import br.com.julios.ccc.facade.TurmaFacade;
 
 @Controller
 @ResponseBody
@@ -18,48 +19,51 @@ import br.com.julios.ccc.negocio.TurmaApi;
 public class TurmaController {
 	
 	@Autowired
-	TurmaApi turmaApi;
+	TurmaFacade turmaFacade;
+	
+	@Autowired 
+	MatriculaFacade matriculaFacade;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<Turma> getTurmas(){
-		return turmaApi.getTurmas();
+		return turmaFacade.getTurmas();
 	}
 
 	@RequestMapping(value="{id}/alunos" ,method = RequestMethod.GET)
 	public Iterable<Matricula> getAlunos(@PathVariable("id") Long idTurma){
-		return turmaApi.getAlunosTurma(idTurma);
+		return turmaFacade.getAlunosTurma(idTurma);
 	}
 
 	
 	@RequestMapping(value = "{id}", method= RequestMethod.GET)
 	public Turma getTurma(@PathVariable("id") long id)
 	{
-		return turmaApi.getTurma(id);
+		return turmaFacade.getTurma(id);
 	}
 	
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public void cadastrarTurma(@RequestBody Turma turma){
-		turmaApi.cadastrarTurma(turma);
+		turmaFacade.cadastrarTurma(turma);
 	}
 	
 	@RequestMapping(value = "matricula", method = RequestMethod.POST)
 	public void cadastrarTurma(@RequestBody Matricula matricula){
-		turmaApi.matricularAluno(matricula);
+		matriculaFacade.matricularAluno(matricula);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
 	public void atualizarTurma(@RequestBody Turma turma){
-		turmaApi.atualizarTurma(turma);
+		turmaFacade.atualizarTurma(turma);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
 	public void apagarTurma(@RequestBody Turma turma){
-		turmaApi.apagarTurma(turma);
+		turmaFacade.apagarTurma(turma);
 	}
 
 	@RequestMapping(value="matricula/{id}" , method = RequestMethod.DELETE)
 	public void apagarTurma(@PathVariable("id") long id){
-		turmaApi.excluirAlunoTurma(id);
+		matriculaFacade.excluirMatricula(id);
 	}
 }

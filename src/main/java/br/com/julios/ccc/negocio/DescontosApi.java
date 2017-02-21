@@ -16,4 +16,8 @@ public class DescontosApi {
 		return descontosDAO.findAll();
 }
 
+	public void cadastrar(Descontos desconto) {
+		descontosDAO.save(desconto);
+	}
+
 }

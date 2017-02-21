@@ -53,6 +53,10 @@ public class Professor {
 	@OneToMany(mappedBy = "professor")
 	@JsonIgnore
 	private List<TurmaProfessor> turmas;
+
+	@Column(name = "data_nascimento")
+	@Temporal(TemporalType.DATE)
+	private Calendar dataNascimento;
 	
 	//Getters and Setters
 
@@ -130,6 +134,14 @@ public class Professor {
 
 	public void setTurmas(List<TurmaProfessor> turmas) {
 		this.turmas = turmas;
+	}
+
+	public Calendar getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(Calendar dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
 	

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.julios.ccc.domains.Extrato;
 import br.com.julios.ccc.domains.FluxoCaixa;
+import br.com.julios.ccc.facade.ExtratoFacade;
 import br.com.julios.ccc.negocio.ExtratoApi;
 
 @Controller
@@ -24,7 +25,7 @@ import br.com.julios.ccc.negocio.ExtratoApi;
 public class ExtratoController {
 
 	@Autowired
-	ExtratoApi extratoAPI;
+	ExtratoFacade extratoFacade;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
@@ -35,7 +36,7 @@ public class ExtratoController {
 		Date dInicio = sdf.parse(dataInicio);
 		Date dFim = sdf.parse(dataFim);
 
-		return extratoAPI.getExtrato(dInicio, dFim);
+		return extratoFacade.getExtrato(dInicio, dFim);
 
 	}
 
@@ -46,7 +47,7 @@ public class ExtratoController {
 
 		Date dInicio = sdf.parse(dataInicio);
 		Date dFim = sdf.parse(dataFim);
-		return extratoAPI.getExtratoConsolidado(dInicio, dFim, true);
+		return extratoFacade.getExtratoConsolidado(dInicio, dFim, true);
 
 	}
 
@@ -57,7 +58,7 @@ public class ExtratoController {
 
 		Date dInicio = sdf.parse(dataInicio);
 		Date dFim = sdf.parse(dataFim);
-		return extratoAPI.getExtratoConsolidado(dInicio, dFim, false);
+		return extratoFacade.getExtratoConsolidado(dInicio, dFim, false);
 
 	}
 

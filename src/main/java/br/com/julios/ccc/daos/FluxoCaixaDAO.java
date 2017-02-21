@@ -24,7 +24,7 @@ public interface FluxoCaixaDAO extends JpaRepository<FluxoCaixa, Long> {
 	public FluxoCaixa findByDataFluxo(Date datafluxo);
 
 	@Query("select sum(valor) from FluxoCaixa where dataFluxo < :data")
-	public double getSaldoAteData(@Param("data") Date data);
+	public Double getSaldoAteData(@Param("data") Date data);
 	
 	public List<FluxoCaixa> findByDataFluxoBetweenOrderByDataFluxoDesc(Date dataInicial, Date dataFinal);
 	

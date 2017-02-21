@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.julios.ccc.domains.ModalidadeTurma;
-import br.com.julios.ccc.negocio.ModalidadeTurmaApi;
+import br.com.julios.ccc.facade.ModalidadeTurmaFacade;
 
 @Controller
 @ResponseBody
@@ -16,32 +16,32 @@ import br.com.julios.ccc.negocio.ModalidadeTurmaApi;
 public class ModalidadeTurmaController {
 	
 	@Autowired
-	ModalidadeTurmaApi modalidadeTurmaApi;
+	ModalidadeTurmaFacade modalidadeTurmaFacade;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<ModalidadeTurma> getmodalidadeTurma()
 	{
-		return modalidadeTurmaApi.getmodalidadeTurma();
+		return modalidadeTurmaFacade.getmodalidadeTurma();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public void cadastrarModalidade(@RequestBody ModalidadeTurma modalidade)
 	{
-		modalidadeTurmaApi.cadastarModalidade(modalidade);
+		modalidadeTurmaFacade.cadastarModalidade(modalidade);
 		
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
 	public void atualizarModalidade(@RequestBody ModalidadeTurma modalidadeTurma)
 	{
-		modalidadeTurmaApi.atualizarModalidade(modalidadeTurma);
+		modalidadeTurmaFacade.atualizarModalidade(modalidadeTurma);
 		
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
 	public void apagarModalidade(@RequestBody 	ModalidadeTurma modalidadeTurma)
 	{
-		modalidadeTurmaApi.apagarModalidade(modalidadeTurma);
+		modalidadeTurmaFacade.apagarModalidade(modalidadeTurma);
 	}
 	
 

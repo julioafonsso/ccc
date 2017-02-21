@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.julios.ccc.domains.Professor;
 import br.com.julios.ccc.domains.TurmaProfessor;
-import br.com.julios.ccc.negocio.ProfessorApi;
+import br.com.julios.ccc.facade.ProfessorFacade;
 
 @Controller
 @ResponseBody
@@ -20,37 +20,37 @@ import br.com.julios.ccc.negocio.ProfessorApi;
 public class ProfessorController {
 	
 	@Autowired
-	ProfessorApi professorApi;
+	ProfessorFacade professorFacade;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<Professor> getProfessores(){
-		return professorApi.getProfessores();
+		return professorFacade.getProfessores();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public void cadastrarProfessor(@RequestBody Professor professor){
 		
-		professorApi.cadastrarProfessor(professor);
+		professorFacade.cadastrarProfessor(professor);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
 	public void atualizarProfessor(@RequestBody Professor professor){
-		professorApi.atualizarProfessor(professor);
+		professorFacade.atualizarProfessor(professor);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
 	public void apagarProfessor(@RequestBody Professor professor){
-		professorApi.apagarProfessor(professor);
+		professorFacade.apagarProfessor(professor);
 	}
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public Professor getProfessor(@PathVariable("id") Long idProfessor){
-		return professorApi.getProfessor(idProfessor);
+		return professorFacade.getProfessor(idProfessor);
 	}
 	
 	@RequestMapping(value = "{id}/turmas", method = RequestMethod.GET)
 	public List<TurmaProfessor> getTurmas(@PathVariable("id") Long idProfessor) {
-		return professorApi.getTurmas(idProfessor);
+		return professorFacade.getTurmas(idProfessor);
 	}
 
 }

@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -18,75 +17,79 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Where;
+import org.hibernate.validator.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import br.com.julios.ccc.componentes.cpf.CPF;
+
 @Entity
 @Table(name = "ALUNO")
 public class Aluno {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	@Column(nullable = false)
+	@CPF
 	private String cpf;
-	
+
 	@Column(nullable = false)
 	private String nome;
-	
+
 	@Column
 	private String rg;
-	
+
 	@Column
+	@Email
 	private String email;
-	
+
 	@Column
 	private String endereco;
-	
+
 	@Column
 	private String bairro;
-	
+
 	@Column
 	private String cidade;
-	
+
 	@Column(name = "data_nascimento")
 	@Temporal(TemporalType.DATE)
 	private Calendar dataNascimento;
-	
+
 	@OneToOne
 	@JoinColumn(name = "estado_civil_id")
 	private EstadoCivil estadoCivil;
-	
+
 	@Column
 	private String profissao;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "conhece_escola_id")
 	@JsonIgnoreProperties("aluno")
 	private ConheceEscola conheceEscola;
-		
-	@Column(length=1)
+
+	@Column(length = 1)
 	private String sexo;
-	
+
 	@Column
 	private String telefone;
-	
+
 	@Column
 	private String observacao;
 
 	@Column
 	private String foto;
-	
+
 	@OneToMany(mappedBy = "aluno")
 	@JsonIgnore
 	@Where(clause = "data_exclusao is null")
 	private List<Matricula> matriculas;
 
-	
-	//Getters and Setters
-	
+	// Getters and Setters
+
 	public List<Matricula> getMatriculas() {
 		return matriculas;
 	}
@@ -95,14 +98,14 @@ public class Aluno {
 		this.matriculas = matriculas;
 	}
 
-	
-	public String getCpf() {
-		return cpf;
+	public String getCpf() throws Exception {
+		return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9);
+
 	}
 
-	
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setCpf(String cpf) throws Exception {
+
+		this.cpf = cpf.replaceAll("[^0-9]", "");
 	}
 
 	public String getNome() {
@@ -200,7 +203,7 @@ public class Aluno {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	
+
 	public String getObservacao() {
 		return observacao;
 	}
@@ -220,7 +223,5 @@ public class Aluno {
 	public long getId() {
 		return id;
 	}
-
-		
 
 }
