@@ -20,18 +20,18 @@ public class TipoFluxoCaixaController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixa(){
-		return tipoFluxoCaixaApi.gettipoFluxoCaixa();
+		return tipoFluxoCaixaApi.getTipoFluxoCaixa();
 	}
 	
 	
 	@RequestMapping(value="/entrada", method = RequestMethod.GET)
 	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixaEntrada(){
-		return tipoFluxoCaixaApi.gettipoFluxoCaixaEntrada();
+		return tipoFluxoCaixaApi.getTipoFluxoCaixaEntrada();
 	}
 	
 	@RequestMapping(value="/saida", method = RequestMethod.GET)
 	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixaSaida(){
-		return tipoFluxoCaixaApi.gettipoFluxoCaixaSaida();
+		return tipoFluxoCaixaApi.getTipoFluxoCaixaSaida();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)

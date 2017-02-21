@@ -12,7 +12,7 @@ public class TipoFluxoCaixaApi {
 	@Autowired
 	TipoFluxoCaixaDAO tipoFluxoCaixaDAO;
 
-	public Iterable<TipoFluxoCaixa> gettipoFluxoCaixa() 
+	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixa() 
 	{
 				return tipoFluxoCaixaDAO.findAll();
 	}
@@ -35,11 +35,11 @@ public class TipoFluxoCaixaApi {
 		
 	}
 
-	public Iterable<TipoFluxoCaixa> gettipoFluxoCaixaEntrada() {
+	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixaEntrada() {
 		return tipoFluxoCaixaDAO.findByIndEntrada(true);
 	}
 
-	public Iterable<TipoFluxoCaixa> gettipoFluxoCaixaSaida() {
+	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixaSaida() {
 		return tipoFluxoCaixaDAO.findByIndEntrada(false);
 	}
 
