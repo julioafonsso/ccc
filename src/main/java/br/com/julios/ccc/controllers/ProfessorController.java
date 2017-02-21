@@ -56,7 +56,7 @@ public class ProfessorController {
 	
 	@RequestMapping(value = "{id}/salario-pendente", method = RequestMethod.GET)
 	public List<Salario> getSalarioProfessorPendente(@PathVariable("id") Long idProfessor){
-		return professorApi.getSalarioProfessorPendente(idProfessor);
+		return professorFacade.getSalarioProfessorPendente(idProfessor);
 	}
 
 }

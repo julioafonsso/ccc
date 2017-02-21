@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.domains.Professor;
+import br.com.julios.ccc.domains.Salario;
 import br.com.julios.ccc.domains.TurmaProfessor;
 import br.com.julios.ccc.negocio.FtpApi;
 import br.com.julios.ccc.negocio.ProfessorApi;
@@ -44,6 +45,10 @@ public class ProfessorFacade {
 
 	public List<TurmaProfessor> getTurmas(Long idProfessor) {
 		return professorApi.getTurmas(idProfessor);
+	}
+
+	public List<Salario> getSalarioProfessorPendente(Long idProfessor) {
+		return professorApi.getSalarioProfessorPendente(idProfessor);
 	}
 
 }
