@@ -22,6 +22,10 @@ public class MesReferencia {
 	private long ano;
 
 
+	public long getId(){
+		return id;
+	}
+	
 	public long getMes() {
 		return mes;
 	}

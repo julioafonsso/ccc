@@ -31,7 +31,7 @@ public class Descontos {
 		this.nome = nome;
 	}
 
-	public int getValor() {
+	public double getValor() {
 		return valor;
 	}
 

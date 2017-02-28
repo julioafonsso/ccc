@@ -8,6 +8,6 @@ import br.com.julios.ccc.domains.Salario;
 
 public interface SalarioDAO extends JpaRepository<Salario, Long>{
 	
-	public List<Salario> findByProfessor(Long professor);
+	public List<Salario> findByIdProfessor(Long professor);
 
 }

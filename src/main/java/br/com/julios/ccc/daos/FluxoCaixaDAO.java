@@ -11,7 +11,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.com.julios.ccc.domains.FluxoCaixa;
-import br.com.julios.ccc.domains.TipoFluxoCaixa;
 
 @Repository
 @Transactional
@@ -21,15 +20,17 @@ public interface FluxoCaixaDAO extends JpaRepository<FluxoCaixa, Long> {
 	
 	public FluxoCaixa findByDescricao(String descricao);
 	
-	public FluxoCaixa findByDataFluxo(Date datafluxo);
+	public FluxoCaixa findByData(Date datafluxo);
 
-	@Query("select sum(valor) from FluxoCaixa where dataFluxo < :data")
+	@Query("select sum(valor) from FluxoCaixa where data < :data")
 	public Double getSaldoAteData(@Param("data") Date data);
 	
-	public List<FluxoCaixa> findByDataFluxoBetweenOrderByDataFluxoDesc(Date dataInicial, Date dataFinal);
+	public List<FluxoCaixa> findByDataBetweenOrderByDataDesc(Date dataInicial, Date dataFinal);
+	
+	public List<FluxoCaixa> findByDataBetweenOrderByData(Date dataInicial, Date dataFinal);
 	
 	
-	@Query("select sum(f.valor), f.tipoFluxo.nome from FluxoCaixa f where f.tipoFluxo.indEntrada = :indEntrada and f.dataFluxo between :datInicial and :datFinal group by f.tipoFluxo")
+	@Query("select sum(f.valor), f.tipoFluxo.nome from FluxoCaixa f where f.tipoFluxo.indEntrada = :indEntrada and f.data between :datInicial and :datFinal group by f.tipoFluxo")
 	public Object[] findSum(@Param("datInicial")Date datInicial, @Param("datFinal")Date datFinal , @Param("indEntrada") boolean indEntrada);
 	
 	

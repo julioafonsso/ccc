@@ -36,5 +36,7 @@ public class Application extends SpringBootServletInitializer {
 	private static SpringApplicationBuilder configureApplication(SpringApplicationBuilder builder) {
 		return builder.sources(Application.class).bannerMode(Banner.Mode.OFF);
 	}
+	
+	
 
 }

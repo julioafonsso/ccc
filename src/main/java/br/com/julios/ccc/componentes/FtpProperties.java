@@ -10,6 +10,16 @@ public class FtpProperties {
 	private String url;
 	private String user;
 	private String password;
+	private String path;
+	
+	
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
+	
 	public String getUrl() {
 		return url;
 	}

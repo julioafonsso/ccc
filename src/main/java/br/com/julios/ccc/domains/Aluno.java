@@ -1,6 +1,7 @@
 package br.com.julios.ccc.domains;
 
-import java.util.Calendar;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -23,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.julios.ccc.componentes.cpf.CPF;
+import br.com.julios.ccc.util.Util;
 
 @Entity
 @Table(name = "ALUNO")
@@ -62,8 +64,7 @@ public class Aluno {
 	private String cidade;
 
 	@Column(name = "data_nascimento")
-	@Temporal(TemporalType.DATE)
-	private Calendar dataNascimento;
+	private Date dataNascimento;
 
 	@OneToOne
 	@JoinColumn(name = "estado_civil_id")
@@ -120,6 +121,10 @@ public class Aluno {
 		}
 	}
 
+	public String getCpfSemFormat(){
+		return cpf;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
@@ -184,11 +189,15 @@ public class Aluno {
 		this.cidade = cidade;
 	}
 
-	public Calendar getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Calendar dataNascimento) {
+	public void setDataNascimento(String dataNascimento) throws ParseException {
+		this.dataNascimento = Util.parseDate(dataNascimento);
+	}
+	
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
@@ -225,11 +234,25 @@ public class Aluno {
 	}
 
 	public String getTelefone() {
+		if(telefone != null )
+		{
+			if(telefone.length() == 11)
+			{
+				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 7) + "-"  + telefone.substring(7);
+			}
+			else{
+				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 6) + "-"  + telefone.substring(6);
+			}
+		}
 		return telefone;
 	}
 
 	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+		if(telefone != null && telefone.length() > 0){
+			this.telefone = telefone.replaceAll("[^0-9]", "");
+		} else{
+			this.telefone = telefone;
+		}
 	}
 
 	public String getObservacao() {

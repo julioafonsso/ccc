@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.julios.ccc.domains.PagamentoProfessor;
 import br.com.julios.ccc.domains.Professor;
-import br.com.julios.ccc.domains.Salario;
 import br.com.julios.ccc.domains.TurmaProfessor;
 import br.com.julios.ccc.facade.ProfessorFacade;
 
@@ -29,8 +29,7 @@ public class ProfessorController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarProfessor(@RequestBody Professor professor){
-		
+	public void cadastrarProfessor(@RequestBody Professor professor) throws Exception{
 		professorFacade.cadastrarProfessor(professor);
 	}
 	
@@ -54,8 +53,13 @@ public class ProfessorController {
 		return professorFacade.getTurmas(idProfessor);
 	}
 	
+	@RequestMapping(value = "{id}/salario", method = RequestMethod.POST)
+	public void cadastrarRecebimento(@PathVariable("id") Long idProfessor, @RequestBody List<PagamentoProfessor> pagamento){
+		 professorFacade.pagamentoProfessor(idProfessor, pagamento);
+	}
+	
 	@RequestMapping(value = "{id}/salario-pendente", method = RequestMethod.GET)
-	public List<Salario> getSalarioProfessorPendente(@PathVariable("id") Long idProfessor){
+	public List<PagamentoProfessor> getSalarioProfessorPendente(@PathVariable("id") Long idProfessor){
 		return professorFacade.getSalarioProfessorPendente(idProfessor);
 	}
 

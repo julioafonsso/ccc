@@ -1,5 +1,9 @@
 package br.com.julios.ccc.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Util {
 
 	
@@ -9,4 +13,11 @@ public class Util {
 		return param;
 	}
 	
+	
+	public static Date parseDate(String valor) throws ParseException{
+		if(valor == null)
+			return null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		return sdf.parse(valor);
+	}
 }

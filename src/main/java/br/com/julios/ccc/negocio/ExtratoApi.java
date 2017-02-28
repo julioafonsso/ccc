@@ -30,22 +30,22 @@ public class ExtratoApi {
 		if(saldoAtual == null)
 			saldoAtual = new Double(0);
 		
-		List<FluxoCaixa> dados = fluxoDAO.findByDataFluxoBetweenOrderByDataFluxoDesc(dataInicio, dataFim);
+		List<FluxoCaixa> dados = fluxoDAO.findByDataBetweenOrderByData(dataInicio, dataFim);
 
 		for (FluxoCaixa fluxoCaixa : dados) {
 			Extrato valor;
-			valor = map.get(sdf.format(fluxoCaixa.getDataFluxo()));
+			valor = map.get(sdf.format(fluxoCaixa.getData()));
 			saldoAtual += fluxoCaixa.getValor();
 
 			if (valor == null) {
 				valor = new Extrato();
-				valor.setData(sdf.format(fluxoCaixa.getDataFluxo()));
+				valor.setData(sdf.format(fluxoCaixa.getData()));
 			}
 				
 			valor.setValor(saldoAtual);
 			valor.addFluxoCaixa(fluxoCaixa);
 
-			map.put(sdf.format(fluxoCaixa.getDataFluxo()), valor);
+			map.put(sdf.format(fluxoCaixa.getData()), valor);
 		}
 		List<Extrato> retorno = new ArrayList<Extrato>(map.values());
 		

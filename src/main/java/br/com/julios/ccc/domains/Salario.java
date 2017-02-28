@@ -10,19 +10,26 @@ import javax.persistence.Table;
 public class Salario {
 	
 	@Id
+	@Column (name= "id_mensalidade")
 	private long id;
+	
+	@Column(name="id_professor")
+	private long idProfessor;
 	
 	@Column (name= "valor_calculado")
 	private Double valorCalculado;
 	
-	@Column
-	private Double valor;
+	@Column(name="valor_pago_aluno")
+	private Double valorPagoAluno;
 	
-	@Column
-	private String nome;
+	@Column(name="nome_aluno")
+	private String nomeAluno;
 	
-	@Column
+	@Column(name="codigo_turma")
 	private long codigo;
+	
+	@Column(name="valor_mensalidade")
+	private Double valorMensalidade;
 	
 	@Column
 	private Double percentual;
@@ -31,19 +38,24 @@ public class Salario {
 	private Long mes;
 	
 	@Column
-	private Long ano; 
-	
-	@Column
-	private Long professor;
-	
+	private Long ano;
+
 	//Getters and Setters
 	
-	public Long getProfessor() {
-		return professor;
+	public long getId() {
+		return id;
 	}
 
-	public void setProfessor(Long professor) {
-		this.professor = professor;
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public long getIdProfessor() {
+		return idProfessor;
+	}
+
+	public void setIdProfessor(long idProfessor) {
+		this.idProfessor = idProfessor;
 	}
 
 	public Double getValorCalculado() {
@@ -54,20 +66,20 @@ public class Salario {
 		this.valorCalculado = valorCalculado;
 	}
 
-	public Double getValor() {
-		return valor;
+	public Double getValorPagoAluno() {
+		return valorPagoAluno;
 	}
 
-	public void setValor(Double valor) {
-		this.valor = valor;
+	public void setValorPagoAluno(Double valorPagoAluno) {
+		this.valorPagoAluno = valorPagoAluno;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getNomeAluno() {
+		return nomeAluno;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNomeAluno(String nomeAluno) {
+		this.nomeAluno = nomeAluno;
 	}
 
 	public long getCodigo() {
@@ -102,5 +114,15 @@ public class Salario {
 		this.ano = ano;
 	}
 
+	public Double getValorMensalidade() {
+		return valorMensalidade;
+	}
 
+	public void setValorMensalidade(Double valorMensalidade) {
+		this.valorMensalidade = valorMensalidade;
+	} 
+	
+	
+	
+	
 }

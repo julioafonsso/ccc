@@ -1,5 +1,6 @@
 package br.com.julios.ccc.domains;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -14,17 +15,19 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import br.com.julios.ccc.util.Util;
+
 @Entity
 @Table(name = "TURMA")
 public class Turma {
+	
+	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,11 +46,9 @@ public class Turma {
 	private List<DiasSemana> diasSemana;
 	
 	@Column(name = "data_inicio")
-	@Temporal(TemporalType.DATE)
 	private Date dataInicio;
 	
 	@Column(name = "data_termino")
-	@Temporal(TemporalType.DATE)
 	private Date dataTermino;
 	
 	@Column(name = "horario_inicial")
@@ -57,7 +58,7 @@ public class Turma {
 	private String horarioFinal;
 	
 	@Column
-	private double mensalidade;
+	private Double mensalidade;
 	
 	@Column
 	private int vagas;
@@ -79,10 +80,10 @@ public class Turma {
 	@Where(clause = "data_exclusao is null")
 	private List<Matricula> matriculas;
 	
-	@Formula("(select count(*) from matricula ta , aluno a where a.id = ta.aluno_id and a.sexo = 'M' and ta.turma_id = id)")
+	@Formula("(select count(*) from matricula ta , aluno a where a.id = ta.aluno_id and a.sexo = 'M' and ta.turma_id = id and ta.data_exclusao is null)")
 	private int qtdAlunos;
 	
-	@Formula("(select count(*) from matricula ta , aluno a where a.id = ta.aluno_id and a.sexo = 'F' and ta.turma_id = id)")
+	@Formula("(select count(*) from matricula ta , aluno a where a.id = ta.aluno_id and a.sexo = 'F' and ta.turma_id = id and ta.data_exclusao is null	)")
 	private int qtdAlunas;
 
 	//Getters and Setters
@@ -125,6 +126,10 @@ public class Turma {
 		return dataInicio;
 	}
 
+	public void setDataInicio(String dataInicio) throws ParseException {
+		this.dataInicio = Util.parseDate(dataInicio);
+	}
+	
 	public void setDataInicio(Date dataInicio) {
 		this.dataInicio = dataInicio;
 	}
@@ -135,6 +140,10 @@ public class Turma {
 
 	public void setDataTermino(Date dataTermino) {
 		this.dataTermino = dataTermino;
+	}
+	
+	public void setDataTermino(String dataTermino) throws ParseException {
+		this.dataTermino = Util.parseDate(dataTermino);
 	}
 
 	public String getHorarioInicial() {
@@ -153,11 +162,11 @@ public class Turma {
 		this.horarioFinal = horarioFinal;
 	}
 
-	public double getMensalidade() {
+	public Double getMensalidade() {
 		return mensalidade;
 	}
 
-	public void setMensalidade(double mensalidade) {
+	public void setMensalidade(Double mensalidade) {
 		this.mensalidade = mensalidade;
 	}
 

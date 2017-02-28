@@ -24,11 +24,19 @@ public class MatriculaApi {
 		matriculaDAO.save(matricula);
 	}
 
-	public void excluirMatricula(long id) {
-		Matricula matricula = matriculaDAO.findOne(id);
+	public void excluirMatricula(Matricula matricula) {
 		matricula.setDataExclusao(new Date());
 		matriculaDAO.save(matricula);
 	}
+
+	
+	public void validaExisteMatricula(Matricula matricula) throws Exception {
+		Matricula m = matriculaDAO.findByAlunoAndTurmaAndDataExclusaoIsNull(matricula.getAluno(), matricula.getTurma());
+		if(m != null)
+			throw new Exception("Aluno já matriculado nessa turma!");
+	}
+	
+	
 	
 
 }

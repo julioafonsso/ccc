@@ -10,8 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import br.com.julios.ccc.util.Util;
 
 @Entity
 @Table(name = "FLUXO_CAIXA")
@@ -28,8 +28,7 @@ public class FluxoCaixa {
 	private String descricao;
 	
 	@Column(name = "data_fluxo")
-	@Temporal(TemporalType.DATE)
-	private Date dataFluxo;
+	private Date data;
 	
 	@ManyToOne
 	@JoinColumn(name = "tipo_fluxo_id")
@@ -37,7 +36,6 @@ public class FluxoCaixa {
 	
 	@ManyToOne
 	private Usuario userLancamento;
-	
 	
 	//Getters and Setters
 
@@ -61,14 +59,18 @@ public class FluxoCaixa {
 		this.descricao = descricao;
 	}
 
-	public Date getDataFluxo() {
-		return dataFluxo;
+	public Date getData	() {
+		return data;
 	}
 
-	public void setDataFluxo(Date dataFluxo) {
-		this.dataFluxo = dataFluxo;
+	public void setData(String data) throws Exception {
+		this.data = Util.parseDate(data);
 	}
 
+	public void setData(Date data) {
+		this.data = data;
+	}
+	
 	public TipoFluxoCaixa getTipoFluxo() {
 		return tipoFluxo;
 	}
@@ -76,6 +78,8 @@ public class FluxoCaixa {
 	public void setTipoFluxo(TipoFluxoCaixa tipoFluxo) {
 		this.tipoFluxo = tipoFluxo;
 	}
+
+	
 	
 	
 	

@@ -1,6 +1,7 @@
 package br.com.julios.ccc.domains;
 
-import java.util.Calendar;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -15,73 +16,85 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.julios.ccc.util.Util;
 
 @Entity
-@Table(name = "PROFESSOR") 
+@Table(name = "PROFESSOR")
 public class Professor {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	@Column(nullable = false)
 	private String cpf;
-	
+
 	@Column(nullable = false)
 	private String nome;
-	
+
 	@Column
 	private String rg;
-	
+
 	@Column
 	private String email;
-	
+
 	@Column
 	private String endereco;
-	
+
 	@Column
 	private long numero;
-	
+
 	@Column
 	private String complemento;
-	
+
 	@Column
 	private String telefone;
-	
+
 	@Column(name = "data_admissao")
 	@Temporal(TemporalType.DATE)
-	private Calendar dataAdmissao;
-	
+	private Date dataAdmissao;
+
 	@Column
 	private String observacao;
-	
+
 	@OneToMany(mappedBy = "professor")
 	@JsonIgnore
 	private List<TurmaProfessor> turmas;
 
 	@Column(name = "data_nascimento")
 	@Temporal(TemporalType.DATE)
-	private Calendar dataNascimento;
-	
-	//Getters and Setters
+	private Date dataNascimento;
+
+	@Column
+	private String foto;
+
+	// Getters and Setters
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
 
 	public long getId() {
 		return id;
 	}
 
 	public String getCpf() throws Exception {
-		if(cpf != null && cpf.length() > 0){
+		if (cpf != null && cpf.length() > 0) {
 			return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9);
 		}
 		return "";
-
 	}
-
+	public String getCpfSemFormat(){
+		return cpf;
+	}
 	public void setCpf(String cpf) throws Exception {
-		if(cpf != null && cpf.length() > 0){
+		if (cpf != null && cpf.length() > 0) {
 			this.cpf = cpf.replaceAll("[^0-9]", "");
-		} else{
+		} else {
 			this.cpf = null;
 		}
 
@@ -136,21 +149,36 @@ public class Professor {
 	}
 
 	public String getTelefone() {
+		if (telefone != null) {
+			if (telefone.length() == 11) {
+				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 7) + "-" + telefone.substring(7);
+			} else {
+				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 6) + "-" + telefone.substring(6);
+			}
+		}
 		return telefone;
 	}
 
 	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+		if (telefone != null && telefone.length() > 0) {
+			this.telefone = telefone.replaceAll("[^0-9]", "");
+		} else {
+			this.telefone = telefone;
+		}
 	}
-	
-	public Calendar getDataAdmissao() {
+
+	public Date getDataAdmissao() {
 		return dataAdmissao;
 	}
 
-	public void setDataAdmissao(Calendar dataAdmissao) {
+	public void setDataAdmissao(Date dataAdmissao) {
 		this.dataAdmissao = dataAdmissao;
 	}
 
+	public void setDataAdmissao(String dataAdmissao) throws ParseException {
+		this.dataAdmissao = Util.parseDate(dataAdmissao);
+	}
+	
 	public String getObservacao() {
 		return observacao;
 	}
@@ -167,15 +195,21 @@ public class Professor {
 		this.turmas = turmas;
 	}
 
-	public Calendar getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Calendar dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
-	
-	
+	public void setDataNascimento(String dataNascimento) {
+		try {
+			this.dataNascimento = Util.parseDate(dataNascimento);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 }

@@ -43,12 +43,12 @@ public class TurmaController {
 	
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarTurma(@RequestBody Turma turma){
+	public void cadastrarTurma(@RequestBody Turma turma) throws Exception{
 		turmaFacade.cadastrarTurma(turma);
 	}
 	
 	@RequestMapping(value = "matricula", method = RequestMethod.POST)
-	public void cadastrarTurma(@RequestBody Matricula matricula){
+	public void matricularAluno(@RequestBody Matricula matricula) throws Exception{
 		matriculaFacade.matricularAluno(matricula);
 	}
 	

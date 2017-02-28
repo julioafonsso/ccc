@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 import br.com.julios.ccc.negocio.FtpApi;
 
 @Service
-public class FileFacade {
+public class FtpFacade {
 	
 	@Autowired
 	FtpApi ftp;
 	
-	public String salvarFotoTmp(String nomeFoto, byte[] file) throws Exception{
-		return ftp.salvarFotoTmp(nomeFoto, file);
+	public String salvarFoto(byte[] file) throws Exception{
+		return ftp.salvarFoto( file);
 	}
 
 }

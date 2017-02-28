@@ -13,6 +13,7 @@ public class TurmaFacade {
 	@Autowired
 	TurmaApi turmaApi;
 	
+	
 	public Iterable<Turma> getTurmas() {
 		return turmaApi.getTurmas();
 	}
@@ -25,7 +26,10 @@ public class TurmaFacade {
 		return turmaApi.getTurma(id);
 	}
 
-	public void cadastrarTurma(Turma turma) {
+	public void cadastrarTurma(Turma turma) throws Exception {
+		turmaApi.validaProfessoresIguais(turma);
+		turmaApi.validaSala(turma);
+		turmaApi.validaHorarioProfessores(turma);
 		turmaApi.cadastrarTurma(turma);
 		
 	}

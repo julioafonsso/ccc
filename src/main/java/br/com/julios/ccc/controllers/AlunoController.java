@@ -12,14 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import br.com.julios.ccc.domains.Aluno;
 import br.com.julios.ccc.domains.Matricula;
 import br.com.julios.ccc.domains.Mensalidades;
 import br.com.julios.ccc.facade.AlunoFacade;
-import br.com.julios.ccc.facade.FileFacade;
-import br.com.julios.ccc.facade.MensalidadeFacade;
+import br.com.julios.ccc.facade.FtpFacade;
 
 @Controller
 @ResponseBody
@@ -30,10 +28,8 @@ public class AlunoController {
 	AlunoFacade alunoFacade;
 
 	@Autowired
-	FileFacade fileFacade;
+	FtpFacade fileFacade;
 
-	@Autowired
-	MensalidadeFacade mensalidadeFacade;
 
 	@Autowired
 	private HttpServletRequest http;
@@ -64,8 +60,8 @@ public class AlunoController {
 	}
 
 	@RequestMapping(value = "pagamento", method = RequestMethod.POST)
-	public void efetuarPagamento(@RequestBody Mensalidades mensalidade) {
-		mensalidadeFacade.efetuarPagamento(mensalidade);
+	public void efetuarPagamento(@RequestBody Mensalidades mensalidade) throws Exception {
+		alunoFacade.pagarMensalidade(mensalidade);
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)

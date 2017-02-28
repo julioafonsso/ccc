@@ -45,21 +45,21 @@ public class Matricula {
 	
 	@OneToMany(mappedBy="matricula")
 	@JsonIgnore
-	private List<MensalidadesPagas> pagamentos;
+	private List<Mensalidades> pagamentos;
 	
 	@ManyToOne
 	private Descontos desconto;
 	
-	
+
 	public Date getDataExclusao() {
 		return dataExclusao;
 	}
 
-	public List<MensalidadesPagas> getPagamentos() {
+	public List<Mensalidades> getPagamentos() {
 		return pagamentos;
 	}
 
-	public void setPagamentos(List<MensalidadesPagas> pagamentos) {
+	public void setPagamentos(List<Mensalidades> pagamentos) {
 		this.pagamentos = pagamentos;
 	}
 
@@ -83,8 +83,6 @@ public class Matricula {
 		this.dataMatricula = dataMatricula;
 	}
 
-	
-	
 	public Turma getTurma() {
 		return turma;
 	}

@@ -1,171 +1,101 @@
 package br.com.julios.ccc.domains;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="v_mensalidades")	
+@Table(name = "mensalidades")
 public class Mensalidades {
 
-	public static final String ATRASADO = "Atrasado";
-	public static final String PENDENTE = "Pendente";
-	public static final String PAGO = "Pago";
-	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
-	@Column
-	private Long aluno;
-	
-	@Column
-	private Long matricula;
-	
-	@Column
-	private Long turma;
-	
-	@Column(name="dia_vencimento")
-	private Long diaVencimento;
-	
-	
-	@Column(name="id_mes_referencia")
-	private Long idMesReferencia;
-	
-	@Column
-	private Long mes;
-	
-	@Column
-	private Long ano;
-	
-	@Column
-	private String situacao;
-	
-	@Column(name = "modalidade_turma")
-	private String modalidadeTurma;
-	
-	@Column(name = "nivel_turma")
-	private String nivelTurma;
-	
-	@Column(name = "valor_calculado")
-	private Double valorCalculado;
 
+	@ManyToOne
+	private MesReferencia mesReferencia;
+
+	@OneToOne
+	private FluxoCaixa fluxoCaixa;
+
+	@ManyToOne
+	private Matricula matricula;
+
+	@Transient
+	private Double valorCalculado;
 	
 	@Transient
-	private Double valorParaPagar;
-
-	@Column(name = "valor_mensalidade")
-	private Double valorMensalidade;
-
-	public Long getId() {
-		return id;
+	private Double desconto;
+	
+	private Date dataExclusao;
+	
+	public Date getDataExclusao() {
+		return dataExclusao;
 	}
 
-	public Long getAluno() {
-		return aluno;
+	public void setDataExclusao(Date dataExclusao) {
+		this.dataExclusao = dataExclusao;
 	}
 
-	public void setAluno(Long aluno) {
-		this.aluno = aluno;
-	}
-
-	public Long getTurma() {
-		return turma;
-	}
-
-	public void setTurma(Long turma) {
-		this.turma = turma;
-	}
-
-	public Long getDiaVencimento() {
-		return diaVencimento;
-	}
-
-	public void setDiaVencimento(Long diaVencimento) {
-		this.diaVencimento = diaVencimento;
+	public Double getDesconto(){
+		if (matricula.getDesconto() != null)
+			return matricula.getTurma().getMensalidade() * matricula.getDesconto().getValor()/100;
+		return 0.0;
 	}
 	
-	public Long getMes() {
-		return mes;
-	}
+	public Double getValorCalculado() throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String strVencimento = matricula.getDiaVencimento() + "/" + mesReferencia.getMes() + "/"
+				+ mesReferencia.getAno();
+		Date hoje = new Date();
+		Date vencimento = sdf.parse(strVencimento);
 
-	public void setMes(Long mes) {
-		this.mes = mes;
-	}
-
-	public Long getAno() {
-		return ano;
-	}
-
-	public void setAno(Long ano) {
-		this.ano = ano;
-	}
-
-	public String getSituacao() {
-		return situacao;
-	}
-
-	public Double getValorCalculado() {
-		return valorCalculado;
+		if (vencimento.before(hoje)) {
+			return matricula.getTurma().getMensalidade() * 1.1;
+		} else {
+			return matricula.getTurma().getMensalidade() - getDesconto();
+		}
 	}
 
 	public void setValorCalculado(Double valorCalculado) {
 		this.valorCalculado = valorCalculado;
 	}
 
-	public Double getValorParaPagar() {
-		return valorParaPagar;
+	public MesReferencia getMesReferencia() {
+		return mesReferencia;
 	}
 
-	public void setValorParaPagar(Double valorParaPagar) {
-		this.valorParaPagar = valorParaPagar;
+	public void setMesReferencia(MesReferencia mesReferencia) {
+		this.mesReferencia = mesReferencia;
 	}
 
-	public void setSituacao(String situacao) {
-		this.situacao = situacao;
-	}
-
-	public Long getMatricula() {
+	public Matricula getMatricula() {
 		return matricula;
 	}
 
-	public void setMatricula(Long matricula) {
+	public void setMatricula(Matricula matricula) {
 		this.matricula = matricula;
 	}
 
-	public String getModalidadeTurma() {
-		return modalidadeTurma;
+	public Long getId() {
+		return id;
 	}
 
-	public void setModalidadeTurma(String modalidadeTurma) {
-		this.modalidadeTurma = modalidadeTurma;
+	public FluxoCaixa getFluxoCaixa() {
+		return fluxoCaixa;
 	}
 
-	public String getNivelTurma() {
-		return nivelTurma;
+	public void setFluxoCaixa(FluxoCaixa fluxoCaixa) {
+		this.fluxoCaixa = fluxoCaixa;
 	}
 
-	public void setNivelTurma(String nivelTurma) {
-		this.nivelTurma = nivelTurma;
-	}
-
-	public Double getValorMensalidade() {
-		return valorMensalidade;
-	}
-
-	public void setValorMensalidade(Double valorMensalidade) {
-		this.valorMensalidade = valorMensalidade;
-	}
-
-	public Long getIdMesReferencia() {
-		return idMesReferencia;
-	}
-
-	public void setIdMesReferencia(Long idMesReferencia) {
-		this.idMesReferencia = idMesReferencia;
-	}
 	
-
 }
