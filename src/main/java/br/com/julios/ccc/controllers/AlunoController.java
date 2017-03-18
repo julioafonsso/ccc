@@ -50,7 +50,7 @@ public class AlunoController {
 	
 
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarAluno(Aluno aluno) {
+	public void atualizarAluno(@RequestBody Aluno aluno) {
 		alunoFacade.atualizarAluno(aluno);
 	}
 

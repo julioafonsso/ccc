@@ -17,7 +17,7 @@ public class Util {
 	public static Date parseDate(String valor) throws ParseException{
 		if(valor == null)
 			return null;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		return sdf.parse(valor);
 	}
 }

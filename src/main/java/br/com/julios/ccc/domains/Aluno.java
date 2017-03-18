@@ -14,12 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Email;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -63,6 +62,7 @@ public class Aluno {
 	@Column
 	private String cidade;
 
+	@JsonFormat(pattern="yyyy-MM-dd")
 	@Column(name = "data_nascimento")
 	private Date dataNascimento;
 

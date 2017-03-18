@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.julios.ccc.util.Util;
@@ -45,9 +46,11 @@ public class Turma {
 	@JsonIgnoreProperties("turmas")
 	private List<DiasSemana> diasSemana;
 	
+	@JsonFormat(pattern="yyyy-MM-dd")
 	@Column(name = "data_inicio")
 	private Date dataInicio;
 	
+	@JsonFormat(pattern="yyyy-MM-dd")
 	@Column(name = "data_termino")
 	private Date dataTermino;
 	
@@ -133,7 +136,7 @@ public class Turma {
 	public void setDataInicio(Date dataInicio) {
 		this.dataInicio = dataInicio;
 	}
-
+	
 	public Date getDataTermino() {
 		return dataTermino;
 	}
