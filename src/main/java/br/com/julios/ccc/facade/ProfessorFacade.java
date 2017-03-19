@@ -69,7 +69,8 @@ public class ProfessorFacade {
 		return professorApi.getSalarioProfessorPendente(idProfessor);
 	}
 
-	public void pagamentoProfessor(Long idProfessor, List<PagamentoProfessor> pagamento) {
+	public void pagamentoProfessor(Long idProfessor) {
+		List<PagamentoProfessor> pagamento = getSalarioProfessorPendente(idProfessor);
 		Double valorParaPagar = professorApi.getValorParaPagar(pagamento);
 		Professor prof = professorApi.getProfessor(idProfessor);
 		FluxoCaixa fluxo = fluxoApi.cadastrarFluxoCaixaPagamentoProfessor(prof, valorParaPagar);

@@ -76,24 +76,25 @@ public class ProfessorApi {
 		}
 	}
 
-	public void cadastarPagamentosFuturos(List<Mensalidades> mensalidades, Turma turma) {
-		for (Mensalidades mensalidade : mensalidades) {
-			Professor prof1 = mensalidade.getMatricula().getTurma().getProfessor1();
-			if (prof1 != null) {
-				PagamentoProfessor pagamento = new PagamentoProfessor();
-				pagamento.setMensalidade(mensalidade);
-				pagamento.setProfessor(prof1);
-				pagamentoDAO.save(pagamento);
-			}
+	public void cadastarPagamentosFuturos(Mensalidades mensalidade) {
 
-			Professor prof2 = mensalidade.getMatricula().getTurma().getProfessor2();
-			if (prof2 != null) {
-				PagamentoProfessor pagamento = new PagamentoProfessor();
-				pagamento.setMensalidade(mensalidade);
-				pagamento.setProfessor(prof2);
-				pagamentoDAO.save(pagamento);
-			}
+		
+		Professor prof1 = mensalidade.getMatricula().getTurma().getProfessor1();
+		if (prof1 != null) {
+			PagamentoProfessor pagamento = new PagamentoProfessor();
+			pagamento.setMensalidade(mensalidade);
+			pagamento.setProfessor(prof1);
+			pagamentoDAO.save(pagamento);
 		}
+
+		Professor prof2 = mensalidade.getMatricula().getTurma().getProfessor2();
+		if (prof2 != null) {
+			PagamentoProfessor pagamento = new PagamentoProfessor();
+			pagamento.setMensalidade(mensalidade);
+			pagamento.setProfessor(prof2);
+			pagamentoDAO.save(pagamento);
+		}
+
 	}
 
 	public void excluirPagamentosFuturos(List<Mensalidades> mensalidades) {

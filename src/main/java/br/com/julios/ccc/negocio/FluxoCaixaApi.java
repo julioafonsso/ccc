@@ -1,3 +1,4 @@
+
 package br.com.julios.ccc.negocio;
 
 import java.util.Date;
@@ -7,10 +8,12 @@ import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.daos.FluxoCaixaDAO;
 import br.com.julios.ccc.daos.TipoFluxoCaixaDAO;
+import br.com.julios.ccc.domains.Aluno;
 import br.com.julios.ccc.domains.FluxoCaixa;
 import br.com.julios.ccc.domains.Mensalidades;
 import br.com.julios.ccc.domains.Professor;
 import br.com.julios.ccc.domains.TipoFluxoCaixa;
+import br.com.julios.ccc.domains.Turma;
 
 @Service
 public class FluxoCaixaApi {
@@ -42,7 +45,7 @@ public class FluxoCaixaApi {
 		fluxo.setData(new Date());
 		fluxo.setDescricao("Recebimento Mensalidade Aluno : " + mensalidade.getMatricula().getAluno().getNome());
 		fluxo.setTipoFluxo(tipoFluxoMensalidade);
-		fluxo.setValor(mensalidade.getValorCalculado());
+		fluxo.setValor(mensalidade.getValorParaPagar());
 
 		return cadastrarFluxoCaixa(fluxo);
 	}
@@ -67,6 +70,19 @@ public class FluxoCaixaApi {
 
 		return cadastrarFluxoCaixa(fluxo);
 
+	}
+
+	public FluxoCaixa lancamentoMatricula(Aluno aluno, Turma turma, Double valor) {
+		TipoFluxoCaixa tipoFluxoMatricula = tipoFluxoCaixaDAO.findOne(TipoFluxoCaixa.MATRICULA);
+		FluxoCaixa fluxo = new FluxoCaixa();
+		fluxo.setData(new Date());
+		fluxo.setDescricao("Matricula do Aluno: " + aluno.getNome() + " - Turma Codigo: " + turma.getCodigo());
+		fluxo.setTipoFluxo(tipoFluxoMatricula);
+		fluxo.setValor(valor);
+
+		return cadastrarFluxoCaixa(fluxo);
+
+		
 	}
 
 }

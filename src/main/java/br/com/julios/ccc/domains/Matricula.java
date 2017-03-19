@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -50,6 +51,27 @@ public class Matricula {
 	@ManyToOne
 	private Descontos desconto;
 	
+	@ManyToOne
+	private FluxoCaixa pagamentroMatricula;
+	
+	public FluxoCaixa getPagamentroMatricula() {
+		return pagamentroMatricula;
+	}
+
+	public void setPagamentroMatricula(FluxoCaixa pagamentroMatricula) {
+		this.pagamentroMatricula = pagamentroMatricula;
+	}
+
+	@Transient
+	private Double valor; 
+
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
 
 	public Date getDataExclusao() {
 		return dataExclusao;

@@ -18,6 +18,7 @@ import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.julios.ccc.util.Util;
@@ -84,6 +85,7 @@ public class Turma {
 	@OneToMany(mappedBy = "turma")
 		@JsonIgnoreProperties("turma")
 	@Where(clause = "data_exclusao is null")
+	@JsonIgnore
 	private List<Matricula> matriculas;
 	
 	@Formula("(select count(*) from matricula ta , aluno a where a.id = ta.aluno_id and a.sexo = 'M' and ta.turma_id = id and ta.data_exclusao is null)")
@@ -312,6 +314,25 @@ public class Turma {
 
 	public void setSabado(boolean sabado) {
 		this.sabado = sabado;
+	}
+
+	public boolean temAula(int dayOfWeek) {
+		if(dayOfWeek == 1)
+			return isDomingo();
+		if(dayOfWeek == 2)
+			return isSegunda();
+		if(dayOfWeek == 3)
+			return isTerca();
+		if(dayOfWeek == 4)
+			return isQuarta();
+		if(dayOfWeek == 5)
+			return isQuinta();
+		if(dayOfWeek == 6)
+			return isSexta();
+		if(dayOfWeek == 7)
+			return isSabado();
+		return false;
+		
 	}
 	
 	

@@ -54,8 +54,8 @@ public class ProfessorController {
 	}
 	
 	@RequestMapping(value = "{id}/salario", method = RequestMethod.POST)
-	public void cadastrarRecebimento(@PathVariable("id") Long idProfessor, @RequestBody List<PagamentoProfessor> pagamento){
-		 professorFacade.pagamentoProfessor(idProfessor, pagamento);
+	public void cadastrarRecebimento(@PathVariable("id") Long idProfessor){
+		 professorFacade.pagamentoProfessor(idProfessor);
 	}
 	
 	@RequestMapping(value = "{id}/salario-pendente", method = RequestMethod.GET)

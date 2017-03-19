@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.julios.ccc.domains.ModalidadeTurma;
 import br.com.julios.ccc.domains.TipoFluxoCaixa;
 import br.com.julios.ccc.facade.FluxoCaixaFacade;
 

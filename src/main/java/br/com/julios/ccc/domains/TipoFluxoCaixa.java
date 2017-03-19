@@ -18,7 +18,7 @@ public class TipoFluxoCaixa {
 
 	public static final long MENSALIDADE = 1;
 	public static final long PAGAMENTO_PROFESSOR = 2;
-	
+	public static final long MATRICULA = 3;
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	private long id;
@@ -65,3 +65,4 @@ public class TipoFluxoCaixa {
 	
 
 }
+

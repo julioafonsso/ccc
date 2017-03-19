@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import br.com.julios.ccc.componentes.ExceptionValidacoes;
+import br.com.julios.ccc.daos.MensalidadesDAO;
 import br.com.julios.ccc.domains.Aluno;
 import br.com.julios.ccc.domains.FluxoCaixa;
 import br.com.julios.ccc.domains.Matricula;
@@ -16,6 +17,8 @@ import br.com.julios.ccc.domains.Mensalidades;
 import br.com.julios.ccc.negocio.AlunoApi;
 import br.com.julios.ccc.negocio.FluxoCaixaApi;
 import br.com.julios.ccc.negocio.FtpApi;
+import br.com.julios.ccc.negocio.MatriculaApi;
+import br.com.julios.ccc.negocio.ProfessorApi;
 
 @Service
 public class AlunoFacade {
@@ -28,8 +31,16 @@ public class AlunoFacade {
 	
 	@Autowired
 	FluxoCaixaApi fluxoApi;
-	
 
+	@Autowired
+	MatriculaApi matriculaApi;
+	
+	@Autowired
+	ProfessorApi professorApi;
+	
+	@Autowired
+	MensalidadesDAO mensDAO;
+	
 	@Autowired
 	ExceptionValidacoes validacao;
 
@@ -65,15 +76,20 @@ public class AlunoFacade {
 		return alunoApi.getMatriculas(idAluno);
 	}
 
-	public List<Mensalidades> getDebitos(Long idAluno) {
+	public List<Mensalidades> getDebitos(Long idAluno) throws Exception {
 		Aluno aluno = alunoApi.getAluno(idAluno);
-		alunoApi.criarMensalidadesFuturas(aluno);
+		List<Mensalidades> mensalidades = alunoApi.criarMensalidadesFuturas(aluno);
+		
 		return alunoApi.getMensalidadesParaPagar(aluno);
 	}
 	
 	public void pagarMensalidade(Mensalidades mensalidade) throws Exception {
-		FluxoCaixa fluxo = fluxoApi.cadastrarFluxoCaixaPagamentoMensalidade(mensalidade);
-		alunoApi.pagarMensalidade(mensalidade, fluxo);
+		Mensalidades mensalidadeParaPagar = mensDAO.findOne(mensalidade.getId());
+		mensalidadeParaPagar.setValorParaPagar(mensalidade.getValorParaPagar());
+		
+		FluxoCaixa fluxo = fluxoApi.cadastrarFluxoCaixaPagamentoMensalidade(mensalidadeParaPagar);
+		matriculaApi.pagarMensalidade(mensalidadeParaPagar, fluxo);
+		professorApi.cadastarPagamentosFuturos(mensalidadeParaPagar);
 	}
 
 }

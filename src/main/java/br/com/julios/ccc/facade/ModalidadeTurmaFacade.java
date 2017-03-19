@@ -11,7 +11,7 @@ public class ModalidadeTurmaFacade {
 	
 	@Autowired
 	ModalidadeTurmaApi modalidadeTurmaApi;
-
+	
 		
 	public Iterable<ModalidadeTurma> getmodalidadeTurma() {
 		return modalidadeTurmaApi.getmodalidadeTurma();

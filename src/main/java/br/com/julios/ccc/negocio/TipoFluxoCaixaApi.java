@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.daos.TipoFluxoCaixaDAO;
-import br.com.julios.ccc.domains.ModalidadeTurma;
 import br.com.julios.ccc.domains.TipoFluxoCaixa;
 
 @Service

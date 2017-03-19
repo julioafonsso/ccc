@@ -75,7 +75,7 @@ public class AlunoController {
 	}
 
 	@RequestMapping(value = "{id}/debitos", method = RequestMethod.GET)
-	public List<Mensalidades> getDebitos(@PathVariable("id") Long idAluno) {
+	public List<Mensalidades> getDebitos(@PathVariable("id") Long idAluno) throws Exception {
 		return alunoFacade.getDebitos(idAluno);
 	}
 

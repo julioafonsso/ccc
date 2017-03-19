@@ -1,6 +1,5 @@
 package br.com.julios.ccc.domains;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -11,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "mensalidades")
@@ -28,14 +29,46 @@ public class Mensalidades {
 
 	@ManyToOne
 	private Matricula matricula;
+	
+	private Double valorMensalidade;
+	
+	@JsonFormat(pattern="yyyy-MM-dd")
+	private Date dataVencimento;
 
 	@Transient
 	private Double valorCalculado;
 	
 	@Transient
+	private Double valorParaPagar;
+	
+	public Double getValorParaPagar() {
+		return valorParaPagar;
+	}
+
+	public void setValorParaPagar(Double valorParaPagar) {
+		this.valorParaPagar = valorParaPagar;
+	}
+
+	@Transient
 	private Double desconto;
 	
 	private Date dataExclusao;
+
+	public Date getDataVencimento() {
+		return dataVencimento;
+	}
+
+	public void setDataVencimento(Date dataVencimento) {
+		this.dataVencimento = dataVencimento;
+	}
+	
+	public Double getValorMensalidade() {
+		return valorMensalidade;
+	}
+
+	public void setValorMensalidade(Double valorMensalidade) {
+		this.valorMensalidade = valorMensalidade;
+	}
 	
 	public Date getDataExclusao() {
 		return dataExclusao;
@@ -47,21 +80,19 @@ public class Mensalidades {
 
 	public Double getDesconto(){
 		if (matricula.getDesconto() != null)
-			return matricula.getTurma().getMensalidade() * matricula.getDesconto().getValor()/100;
+			return getValorMensalidade() * matricula.getDesconto().getValor()/100;
 		return 0.0;
 	}
 	
 	public Double getValorCalculado() throws Exception {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		String strVencimento = matricula.getDiaVencimento() + "/" + mesReferencia.getMes() + "/"
-				+ mesReferencia.getAno();
+		
 		Date hoje = new Date();
-		Date vencimento = sdf.parse(strVencimento);
+		
 
-		if (vencimento.before(hoje)) {
-			return matricula.getTurma().getMensalidade() * 1.1;
+		if (getDataVencimento().before(hoje)) {
+			return getValorMensalidade() * 1.1;
 		} else {
-			return matricula.getTurma().getMensalidade() - getDesconto();
+			return getValorMensalidade() - getDesconto();
 		}
 	}
 
