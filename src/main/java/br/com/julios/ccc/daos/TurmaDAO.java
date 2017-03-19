@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.julios.ccc.domains.DiasSemana;
 import br.com.julios.ccc.domains.Professor;
 import br.com.julios.ccc.domains.Salas;
 import br.com.julios.ccc.domains.Turma;
@@ -18,10 +17,13 @@ import br.com.julios.ccc.domains.Turma;
 @Transactional
 public interface TurmaDAO extends CrudRepository<Turma, Long> {
 
-	@Query("select t from Turma t JOIN t.diasSemana dia where t.sala = ?1 and dia in ?2")
-	public List<Turma> getTurmasPorSalaEDias(Salas sala, List<DiasSemana> dias);
+	@Query("select t from Turma t where t.sala = ?1 ")
+	public List<Turma> getTurmasPorSala(Salas sala);
 
 	
-	@Query("select t from Turma t JOIN t.professores p JOIN t.diasSemana dia where p.professor = ?1 and dia in (?2)")
-	public List<Turma> getTurmaPorProfessorEDia(Professor professor, List<DiasSemana> dias);
+	@Query("select t from Turma t where (t.professor1 = ?1 or t.professor2 = ?1 ) ")
+	public List<Turma> getTurmaPorProfessor(Professor professor);
+
+
+	public List<Turma> findByProfessor1OrProfessor2(Professor prof, Professor prof2);
 }

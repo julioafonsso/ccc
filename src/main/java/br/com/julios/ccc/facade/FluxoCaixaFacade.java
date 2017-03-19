@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.domains.FluxoCaixa;
+import br.com.julios.ccc.domains.ModalidadeTurma;
 import br.com.julios.ccc.domains.TipoFluxoCaixa;
 import br.com.julios.ccc.negocio.FluxoCaixaApi;
 import br.com.julios.ccc.negocio.TipoFluxoCaixaApi;
@@ -57,6 +58,10 @@ public class FluxoCaixaFacade {
 	public void apagarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) {
 		tipoFluxoCaixaApi.apagarTipoFluxoCaixa(tipoFluxoCaixa);
 		
+	}
+
+	public TipoFluxoCaixa getTipoFluxoCaixa(Long id) {
+		return tipoFluxoCaixaApi.getTipoFluxoCaixa(id);
 	}
 
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.julios.ccc.domains.PagamentoProfessor;
 import br.com.julios.ccc.domains.Professor;
-import br.com.julios.ccc.domains.TurmaProfessor;
+import br.com.julios.ccc.domains.Turma;
 import br.com.julios.ccc.facade.ProfessorFacade;
 
 @Controller
@@ -49,7 +49,7 @@ public class ProfessorController {
 	}
 	
 	@RequestMapping(value = "{id}/turmas", method = RequestMethod.GET)
-	public List<TurmaProfessor> getTurmas(@PathVariable("id") Long idProfessor) {
+	public List<Turma> getTurmas(@PathVariable("id") Long idProfessor) {
 		return professorFacade.getTurmas(idProfessor);
 	}
 	

@@ -11,7 +11,7 @@ import br.com.julios.ccc.componentes.ExceptionValidacoes;
 import br.com.julios.ccc.domains.FluxoCaixa;
 import br.com.julios.ccc.domains.PagamentoProfessor;
 import br.com.julios.ccc.domains.Professor;
-import br.com.julios.ccc.domains.TurmaProfessor;
+import br.com.julios.ccc.domains.Turma;
 import br.com.julios.ccc.negocio.FluxoCaixaApi;
 import br.com.julios.ccc.negocio.FtpApi;
 import br.com.julios.ccc.negocio.ProfessorApi;
@@ -61,7 +61,7 @@ public class ProfessorFacade {
 		return professorApi.getProfessor(idProfessor);
 	}
 
-	public List<TurmaProfessor> getTurmas(Long idProfessor) {
+	public List<Turma> getTurmas(Long idProfessor) {
 		return professorApi.getTurmas(idProfessor);
 	}
 

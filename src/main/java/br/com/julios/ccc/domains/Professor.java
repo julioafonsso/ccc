@@ -2,19 +2,15 @@ package br.com.julios.ccc.domains;
 
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.julios.ccc.util.Util;
 
@@ -56,10 +52,6 @@ public class Professor {
 
 	@Column
 	private String observacao;
-
-	@OneToMany(mappedBy = "professor")
-	@JsonIgnore
-	private List<TurmaProfessor> turmas;
 
 	@Column(name = "data_nascimento")
 	@Temporal(TemporalType.DATE)
@@ -185,14 +177,6 @@ public class Professor {
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
-	}
-
-	public List<TurmaProfessor> getTurmas() {
-		return turmas;
-	}
-
-	public void setTurmas(List<TurmaProfessor> turmas) {
-		this.turmas = turmas;
 	}
 
 	public Date getDataNascimento() {

@@ -2,7 +2,6 @@ package br.com.julios.ccc.negocio;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -11,21 +10,15 @@ import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.daos.MatriculaDAO;
 import br.com.julios.ccc.daos.TurmaDAO;
-import br.com.julios.ccc.daos.TurmaProfessorDAO;
-import br.com.julios.ccc.domains.DiasSemana;
 import br.com.julios.ccc.domains.Matricula;
 import br.com.julios.ccc.domains.Professor;
 import br.com.julios.ccc.domains.Turma;
-import br.com.julios.ccc.domains.TurmaProfessor;
 
 @Service
 public class TurmaApi {
 
 	@Autowired
 	TurmaDAO turmaDAO;
-
-	@Autowired
-	TurmaProfessorDAO turmaProfessorDAO;
 
 	@Autowired
 	MatriculaDAO matriculaDAO;
@@ -40,11 +33,6 @@ public class TurmaApi {
 		turma.setCodigo(geraCodigo(turma));
 
 		turmaDAO.save(turma);
-		Iterable<TurmaProfessor> turmaProfessor = turma.getProfessores();
-		for (TurmaProfessor tp : turmaProfessor) {
-			tp.setTurma(turma);
-			turmaProfessorDAO.save(tp);
-		}
 	}
 
 	public void atualizarTurma(Turma turma) {
@@ -71,19 +59,20 @@ public class TurmaApi {
 	private String geraCodigo(Turma turma) {
 		StringBuffer retorno = new StringBuffer();
 
-		List<DiasSemana> dias = turma.getDiasSemana();
-		dias.sort(new Comparator<DiasSemana>() {
-
-			public int compare(DiasSemana o1, DiasSemana o2) {
-				if (o1.getId() < o2.getId())
-					return 1;
-				return 0;
-			}
-
-		});
-		for (DiasSemana dia : dias) {
-			retorno.append(dia.getId());
-		}
+		if (turma.isDomingo())
+			retorno.append("1");
+		if (turma.isSegunda())
+			retorno.append("2");
+		if (turma.isTerca())
+			retorno.append("3");
+		if (turma.isQuarta())
+			retorno.append("4");
+		if (turma.isQuinta())
+			retorno.append("5");
+		if (turma.isSexta())
+			retorno.append("6");
+		if (turma.isSabado())
+			retorno.append("7");
 
 		retorno.append(turma.getHorarioInicial().substring(0, turma.getHorarioInicial().indexOf(":")));
 
@@ -93,49 +82,48 @@ public class TurmaApi {
 	}
 
 	public void validaProfessoresIguais(Turma turma) throws Exception {
-		Professor prof1 = turma.getProfessores().get(0).getProfessor();
-		Professor prof2 = turma.getProfessores().get(1).getProfessor();
-
-		if (prof1.getId() == prof2.getId())
+		if (turma.getProfessor1().getId() == turma.getProfessor2().getId())
 			throw new Exception("Os Professores não podem ser os mesmos!");
-
 	}
 
 	public void validaSala(Turma turma) throws Exception {
 
-		List<Turma> turmas = turmaDAO.getTurmasPorSalaEDias(turma.getSala(), turma.getDiasSemana());
+		List<Turma> turmas = turmaDAO.getTurmasPorSala(turma.getSala());
 
 		if (existeTurmaConflitoHorario(turma, turmas))
 			throw new Exception("A Sala já esta ocupada por outra turma nesse horario e dia");
 	}
 
-	public void validaHorarioProfessores(Turma turma) throws Exception {
+	public void validaHorarioProfessores(Turma turma, Professor professor) throws Exception {
 
-		List<TurmaProfessor> turmaProfessor = turma.getProfessores();
+		List<Turma> turmas = turmaDAO.getTurmaPorProfessor(professor);
 
-		for (TurmaProfessor turmaProfessor2 : turmaProfessor) {
-			List<Turma> turmas = turmaDAO.getTurmaPorProfessorEDia(turmaProfessor2.getProfessor(),
-					turma.getDiasSemana());
-
-			if (existeTurmaConflitoHorario(turma, turmas))
-				throw new Exception("Professor(a) " + turmaProfessor2.getProfessor().getNome()
-						+ " tem outra turma nesse mesmo horario! ");
-		}
+		if (existeTurmaConflitoHorario(turma, turmas))
+			throw new Exception("Professor(a) " + professor.getNome() + " tem outra turma nesse mesmo horario! ");
 
 	}
 
 	private boolean existeTurmaConflitoHorario(Turma turma, List<Turma> turmas) throws Exception {
+
 		DateFormat sdf = new SimpleDateFormat("HH:mm");
 		Date horaInicial = sdf.parse(turma.getHorarioInicial());
 		Date horaFinal = sdf.parse(turma.getHorarioFinal());
 
 		for (Turma turma2 : turmas) {
-			Date h1 = sdf.parse(turma2.getHorarioInicial());
-			Date h2 = sdf.parse(turma2.getHorarioFinal());
-			if (horaFinal.after(h1) && horaFinal.before(h2) || horaInicial.after(h1) && horaInicial.before(h2)
-					|| (horaInicial.before(h1) && horaFinal.after(h1))) {
-				return true;
+			if ((turma.isDomingo() && turma2.isDomingo()) || (turma.isSegunda() && turma2.isSegunda())
+					|| (turma.isTerca() && turma2.isTerca()) || (turma.isQuarta() && turma2.isQuarta())
+					|| (turma.isQuinta() && turma2.isQuinta()) || (turma.isSexta() && turma2.isSexta())
+					|| (turma.isSabado() && turma2.isSabado())) 
+			{
+				
+				Date h1 = sdf.parse(turma2.getHorarioInicial());
+				Date h2 = sdf.parse(turma2.getHorarioFinal());
+				if (horaFinal.after(h1) && horaFinal.before(h2) || horaInicial.after(h1) && horaInicial.before(h2)
+						|| (horaInicial.before(h1) && horaFinal.after(h1))) {
+					return true;
+				}
 			}
+
 		}
 		return false;
 	}

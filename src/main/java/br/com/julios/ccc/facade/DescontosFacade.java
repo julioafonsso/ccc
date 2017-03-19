@@ -19,5 +19,13 @@ public class DescontosFacade {
 	public void cadastrarDesconto(Descontos desconto){
 		descontosApi.cadastrar(desconto);
 	}
+
+	public Descontos getdesconto(Long id) {
+		return descontosApi.getdesconto(id);
+	}
+
+	public void alterarDesconto(Descontos desconto) {
+		descontosApi.alterar(desconto);
+	}
 	
 }

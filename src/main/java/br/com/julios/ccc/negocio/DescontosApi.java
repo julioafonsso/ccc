@@ -20,4 +20,12 @@ public class DescontosApi {
 		descontosDAO.save(desconto);
 	}
 
+	public Descontos getdesconto(Long id) {
+		return descontosDAO.findOne(id);
+	}
+
+	public void alterar(Descontos desconto) {
+		descontosDAO.save(desconto);
+	}
+
 }

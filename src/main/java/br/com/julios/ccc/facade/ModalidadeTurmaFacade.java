@@ -33,5 +33,10 @@ public class ModalidadeTurmaFacade {
 		modalidadeTurmaApi.apagarModalidade(modalidadeTurma);
 	}
 
+
+	public ModalidadeTurma getmodalidadeTurma(Long id) {
+		return modalidadeTurmaApi.getmodalidadeTurma(id);
+	}
+
 	
 }

@@ -35,4 +35,8 @@ public class ModalidadeTurmaApi {
 				
 	}
 
+	public ModalidadeTurma getmodalidadeTurma(Long id) {
+		return modalidadeTurmaDAO.findOne(id);
+	}
+
 }

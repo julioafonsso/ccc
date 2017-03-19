@@ -10,8 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -40,12 +38,7 @@ public class Turma {
 	@ManyToOne
 	@JoinColumn (name = "modalidade_id")
 	private ModalidadeTurma modalidade;
-	
-	@ManyToMany
-	@JoinTable(name = "turma_dias", joinColumns = @JoinColumn(name = "turma_id"), inverseJoinColumns = @JoinColumn(name = "dias_semana_id"))
-	@JsonIgnoreProperties("turmas")
-	private List<DiasSemana> diasSemana;
-	
+		
 	@JsonFormat(pattern="yyyy-MM-dd")
 	@Column(name = "data_inicio")
 	private Date dataInicio;
@@ -74,9 +67,19 @@ public class Turma {
 	@JoinColumn (name = "nivel_turma_id")
 	private NivelTurma nivel;
 	
-	@OneToMany(mappedBy = "turma")
-	@JsonIgnoreProperties("turma")
-	private List<TurmaProfessor> professores;
+	
+	@ManyToOne
+	private Professor professor1;
+	
+	@Column
+	private double percentualProfessor1;
+	
+	@ManyToOne
+	private Professor professor2;
+	
+	@Column
+	private double percentualProfessor2;
+	
 	
 	@OneToMany(mappedBy = "turma")
 		@JsonIgnoreProperties("turma")
@@ -89,6 +92,26 @@ public class Turma {
 	@Formula("(select count(*) from matricula ta , aluno a where a.id = ta.aluno_id and a.sexo = 'F' and ta.turma_id = id and ta.data_exclusao is null	)")
 	private int qtdAlunas;
 
+	@Column
+	private boolean domingo;
+	
+	@Column
+	private boolean segunda;
+	
+	@Column
+	private boolean terca;
+	
+	@Column
+	private boolean quarta;
+	
+	@Column
+	private boolean quinta;
+	
+	@Column
+	private boolean sexta;
+	
+	@Column
+	private boolean sabado;
 	//Getters and Setters
 
 	
@@ -117,13 +140,7 @@ public class Turma {
 		this.modalidade = modalidade;
 	}
 
-	public List<DiasSemana> getDiasSemana() {
-		return diasSemana;
-	}
-
-	public void setDiasSemana(List<DiasSemana> diasSemana) {
-		this.diasSemana = diasSemana;
-	}
+	
 	
 	public Date getDataInicio() {
 		return dataInicio;
@@ -197,15 +214,6 @@ public class Turma {
 		this.nivel = nivel;
 	}
 
-	public List<TurmaProfessor> getProfessores() {
-		return professores;
-	}
-
-	public void setProfessores(List<TurmaProfessor> professores) {
-		this.professores = professores;
-	}
-
-
 	public List<Matricula> getMatriculas() {
 		return matriculas;
 	}
@@ -216,6 +224,94 @@ public class Turma {
 
 	public long getId() {
 		return id;
+	}
+	
+	public Professor getProfessor1() {
+		return professor1;
+	}
+
+	public void setProfessor1(Professor professor1) {
+		this.professor1 = professor1;
+	}
+
+	public Professor getProfessor2() {
+		return professor2;
+	}
+
+	public void setProfessor2(Professor professor2) {
+		this.professor2 = professor2;
+	}
+
+	public double getPercentualProfessor1() {
+		return percentualProfessor1;
+	}
+
+	public void setPercentualProfessor1(double percentualProfessor1) {
+		this.percentualProfessor1 = percentualProfessor1;
+	}
+
+	public double getPercentualProfessor2() {
+		return percentualProfessor2;
+	}
+
+	public void setPercentualProfessor2(double percentualProfessor2) {
+		this.percentualProfessor2 = percentualProfessor2;
+	}
+
+	public boolean isDomingo() {
+		return domingo;
+	}
+
+	public void setDomingo(boolean domingo) {
+		this.domingo = domingo;
+	}
+
+	public boolean isSegunda() {
+		return segunda;
+	}
+
+	public void setSegunda(boolean segunda) {
+		this.segunda = segunda;
+	}
+
+	public boolean isTerca() {
+		return terca;
+	}
+
+	public void setTerca(boolean terca) {
+		this.terca = terca;
+	}
+
+	public boolean isQuarta() {
+		return quarta;
+	}
+
+	public void setQuarta(boolean quarta) {
+		this.quarta = quarta;
+	}
+
+	public boolean isQuinta() {
+		return quinta;
+	}
+
+	public void setQuinta(boolean quinta) {
+		this.quinta = quinta;
+	}
+
+	public boolean isSexta() {
+		return sexta;
+	}
+
+	public void setSexta(boolean sexta) {
+		this.sexta = sexta;
+	}
+
+	public boolean isSabado() {
+		return sabado;
+	}
+
+	public void setSabado(boolean sabado) {
+		this.sabado = sabado;
 	}
 	
 	

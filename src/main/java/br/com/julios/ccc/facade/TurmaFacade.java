@@ -29,7 +29,8 @@ public class TurmaFacade {
 	public void cadastrarTurma(Turma turma) throws Exception {
 		turmaApi.validaProfessoresIguais(turma);
 		turmaApi.validaSala(turma);
-		turmaApi.validaHorarioProfessores(turma);
+		turmaApi.validaHorarioProfessores(turma, turma.getProfessor1());
+		turmaApi.validaHorarioProfessores(turma, turma.getProfessor2());
 		turmaApi.cadastrarTurma(turma);
 		
 	}

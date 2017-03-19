@@ -8,55 +8,53 @@ import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.daos.PagamentoProfessorDAO;
 import br.com.julios.ccc.daos.ProfessorDAO;
-import br.com.julios.ccc.daos.TurmaProfessorDAO;
+import br.com.julios.ccc.daos.TurmaDAO;
 import br.com.julios.ccc.domains.FluxoCaixa;
 import br.com.julios.ccc.domains.Mensalidades;
 import br.com.julios.ccc.domains.PagamentoProfessor;
 import br.com.julios.ccc.domains.Professor;
 import br.com.julios.ccc.domains.Turma;
-import br.com.julios.ccc.domains.TurmaProfessor;
 
 @Service
 public class ProfessorApi {
-	
+
 	@Autowired
 	ProfessorDAO professorDAO;
-	
-	@Autowired
-	TurmaProfessorDAO turmaProfessorDAO;
-	
+
 	@Autowired
 	PagamentoProfessorDAO pagamentoDAO;
-	
+
+	@Autowired
+	TurmaDAO turmaDAO;
 
 	public Iterable<Professor> getProfessores() {
-		
+
 		return professorDAO.findAll();
 	}
 
 	public void cadastrarProfessor(Professor professor) {
 		professorDAO.save(professor);
-				
+
 	}
 
 	public void atualizarProfessor(Professor professor) {
 		professorDAO.save(professor);
-		
+
 	}
 
 	public void apagarProfessor(Professor professor) {
 		professorDAO.delete(professor);
-				
+
 	}
-	
-	public Professor getProfessor(Long idProfessor){
+
+	public Professor getProfessor(Long idProfessor) {
 		return professorDAO.findOne(idProfessor);
-	
+
 	}
-	
-	public List<TurmaProfessor> getTurmas(Long idProfessor){
-		Professor p = professorDAO.findOne(idProfessor);
-		return p.getTurmas();
+
+	public List<Turma> getTurmas(Long idProfessor) {
+		Professor prof = professorDAO.findOne(idProfessor);
+		return turmaDAO.findByProfessor1OrProfessor2(prof, prof);
 	}
 
 	public List<PagamentoProfessor> getSalarioProfessorPendente(Long idProfessor) {
@@ -77,15 +75,22 @@ public class ProfessorApi {
 			pagamentoDAO.save(pagamentoProfessor);
 		}
 	}
-	
-	public void cadastarPagamentosFuturos(List<Mensalidades> mensalidades, Turma turma){
+
+	public void cadastarPagamentosFuturos(List<Mensalidades> mensalidades, Turma turma) {
 		for (Mensalidades mensalidade : mensalidades) {
-			List<TurmaProfessor> professores = turma.getProfessores();
-			for (TurmaProfessor turmaProfessor : professores) {
-				Professor professor = turmaProfessor.getProfessor();
+			Professor prof1 = mensalidade.getMatricula().getTurma().getProfessor1();
+			if (prof1 != null) {
 				PagamentoProfessor pagamento = new PagamentoProfessor();
 				pagamento.setMensalidade(mensalidade);
-				pagamento.setProfessor(professor);
+				pagamento.setProfessor(prof1);
+				pagamentoDAO.save(pagamento);
+			}
+
+			Professor prof2 = mensalidade.getMatricula().getTurma().getProfessor2();
+			if (prof2 != null) {
+				PagamentoProfessor pagamento = new PagamentoProfessor();
+				pagamento.setMensalidade(mensalidade);
+				pagamento.setProfessor(prof2);
 				pagamentoDAO.save(pagamento);
 			}
 		}
@@ -103,29 +108,26 @@ public class ProfessorApi {
 
 	public void validaCPF(Professor professor) throws Exception {
 		Professor a = professorDAO.findByCpf(professor.getCpfSemFormat());
-		if(a !=  null)
-		{
+		if (a != null) {
 			throw new Exception("CPF já cadastrado!");
 		}
-		
+
 	}
 
 	public void validaEmail(Professor professor) throws Exception {
 		Professor a = professorDAO.findByEmail(professor.getEmail());
-		if(a !=  null)
-		{
+		if (a != null) {
 			throw new Exception("E-mail já cadastrado!");
 		}
-		
+
 	}
 
-	public void validaRG(Professor professor)  throws Exception {
+	public void validaRG(Professor professor) throws Exception {
 		Professor a = professorDAO.findByRg(professor.getRg());
-		if(a !=  null)
-		{
+		if (a != null) {
 			throw new Exception("RG já cadastrado!");
 		}
-		
+
 	}
-	
+
 }
