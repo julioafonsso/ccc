@@ -14,23 +14,22 @@ import org.springframework.stereotype.Service;
 import br.com.julios.ccc.daos.FluxoCaixaDAO;
 import br.com.julios.ccc.domains.Extrato;
 import br.com.julios.ccc.domains.FluxoCaixa;
+import br.com.julios.ccc.domains.TipoFluxoCaixa;
 
 @Service
 public class ExtratoApi {
 
 	@Autowired
 	FluxoCaixaDAO fluxoDAO;
+	
+	@Autowired
+	TipoFluxoCaixaApi tipoApi;
 
-	public List<Extrato> getExtrato(Date dataInicio, Date dataFim) {
-		
-		HashMap<String, Extrato> map = new HashMap<String, Extrato>();
-		
+	private List<Extrato> tratarDados(List<FluxoCaixa> dados) {
+
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Double saldoAtual = fluxoDAO.getSaldoAteData(dataInicio);
-		if(saldoAtual == null)
-			saldoAtual = new Double(0);
-		
-		List<FluxoCaixa> dados = fluxoDAO.findByDataBetweenOrderByData(dataInicio, dataFim);
+		HashMap<String, Extrato> map = new HashMap<String, Extrato>();
+		Double saldoAtual = new Double(0);
 
 		for (FluxoCaixa fluxoCaixa : dados) {
 			Extrato valor;
@@ -41,21 +40,21 @@ public class ExtratoApi {
 				valor = new Extrato();
 				valor.setData(sdf.format(fluxoCaixa.getData()));
 			}
-				
+
 			valor.setValor(saldoAtual);
 			valor.addFluxoCaixa(fluxoCaixa);
 
 			map.put(sdf.format(fluxoCaixa.getData()), valor);
 		}
 		List<Extrato> retorno = new ArrayList<Extrato>(map.values());
-		
-		retorno.sort(new Comparator<Extrato>(){
+
+		retorno.sort(new Comparator<Extrato>() {
 
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			
+
 			@Override
 			public int compare(Extrato e1, Extrato e2) {
-				
+
 				Date d1;
 				Date d2;
 				try {
@@ -65,22 +64,44 @@ public class ExtratoApi {
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-				
+
 				return 0;
-				
-				
-				
-				
-			}});
-			return retorno;
+
+			}
+		});
+		return retorno;
+
+	}
+
+	public List<Extrato> getExtrato(Date dataInicio, Date dataFim) {
+		List<FluxoCaixa> dados = fluxoDAO.findByDataBetweenOrderByData(dataInicio, dataFim);
+		return tratarDados(dados);
+	}
+
+	public List<Extrato> getExtrato(TipoFluxoCaixa tipo, Date dataInicio, Date dataFim) {
+
+		List<FluxoCaixa> dados = fluxoDAO.findByTipoFluxoAndDataBetweenOrderByData(tipo, dataInicio, dataFim);
+		return tratarDados(dados);
 	}
 
 	public Object[] getExtratoConsolidado(Date dInicio, Date dFim, boolean indEntrada) {
-		return fluxoDAO.findSum(dInicio, dFim,indEntrada);
+		List retorno = new ArrayList<Object>();
 		
-		
-		
-		
+		Object[] dadosConsolidados = fluxoDAO.findConsolidado(dInicio, dFim, indEntrada);
+		for (Object object : dadosConsolidados) {
+			TipoFluxoCaixa tipo = tipoApi.getTipoFluxoCaixa((Long) ((Object[])object)[3]);
+			Object[] dados = new Object[5];
+			dados[0] = ((Object[])object)[0] ;
+			dados[1] = ((Object[])object)[1] ;
+			dados[2] = ((Object[])object)[2] ;
+			dados[3] = ((Object[])object)[3] ;
+			
+			
+			dados[4] =  getExtrato(tipo, dInicio, dFim);
+			retorno.add(dados);
+		}
+		return retorno.toArray() ;
+
 	}
 
 }
