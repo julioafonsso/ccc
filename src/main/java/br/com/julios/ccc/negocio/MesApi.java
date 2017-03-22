@@ -1,5 +1,6 @@
 package br.com.julios.ccc.negocio;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -35,6 +36,25 @@ public class MesApi {
 	
 	public MesReferencia getProximoMes(MesReferencia mes){
 		return mesDAO.findOne(mes.getId() + 1);
+	}
+	
+	public Date getPrimeiroDiasMesAtual() throws ParseException{
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		MesReferencia mesAtual = getMesAtual();
+
+		String primeiroDia = "01" + "/" + mesAtual.getMes() + "/" + mesAtual.getAno();
+		
+		return sdf.parse(primeiroDia);
+
+	}
+
+	public Date getPrimeiroDia(MesReferencia mesAtual) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		String primeiroDia = "01" + "/" + mesAtual.getMes() + "/" + mesAtual.getAno();
+		
+		return sdf.parse(primeiroDia);
+
 	}
 	
 }

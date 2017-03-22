@@ -29,12 +29,16 @@ public class MatriculaApi {
 	@Autowired
 	MensalidadesDAO mensalidadeDAO;
 
+	@Autowired
+	TurmaApi turmaApi;
+
 	public Matricula getMatricula(Long id) {
 		return matriculaDAO.findOne(id);
 	}
 
 	public void matricularAluno(Matricula matricula) {
 		matricula.setDataMatricula(new Date());
+		matricula.setDataExclusao(matricula.getTurma().getDataTermino());
 		matriculaDAO.save(matricula);
 	}
 
@@ -44,32 +48,12 @@ public class MatriculaApi {
 	}
 
 	public void validaExisteMatricula(Matricula matricula) throws Exception {
-		Matricula m = matriculaDAO.findByAlunoAndTurmaAndDataExclusaoIsNull(matricula.getAluno(), matricula.getTurma());
+		Matricula m = matriculaDAO.getMatricula(matricula.getAluno(), matricula.getTurma());
 		if (m != null)
 			throw new Exception("Aluno já matriculado nessa turma!");
 	}
 
-	public Mensalidades criarMensalidade(Matricula matricula, MesReferencia mes) throws ParseException {
-
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		String strVencimento = matricula.getDiaVencimento() + "/" + mes.getMes() + "/" + mes.getAno();
-
-		Date vencimento = sdf.parse(strVencimento);
-
-		if (!existeMensalidade(matricula, mes)) {
-			Mensalidades mensalidade = new Mensalidades();
-			mensalidade.setValorMensalidade(matricula.getTurma().getMensalidade());
-			mensalidade.setMatricula(matricula);
-			mensalidade.setMesReferencia(mes);
-			mensalidade.setDataVencimento(vencimento);
-			mensalidadeDAO.save(mensalidade);
-			return mensalidade;
-		}
-		return null;
-
-	}
-
-	private boolean existeMensalidade(Matricula matricula, MesReferencia mes) {
+	public boolean existeMensalidade(Matricula matricula, MesReferencia mes) {
 		Mensalidades mensalidade = mensalidadeDAO.findByMesReferenciaAndMatricula(mes, matricula);
 		return mensalidade != null;
 	}
@@ -85,19 +69,17 @@ public class MatriculaApi {
 		return mensalidadeDAO.getMensalidadesParaPagar(matricula);
 	}
 
-	public Mensalidades criarMensalidadeCalculadoPeriodo(Matricula matricula, MesReferencia mesAtual)
+	public Mensalidades criarMensalidade(Matricula matricula, MesReferencia mesAtual, Date dataInicio)
 			throws ParseException {
+
 		Turma turma = matricula.getTurma();
 
 		int aulasTotais = 0;
 		int aulasMatriculado = 0;
 
 		Calendar c = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-		String primeiroDia = "01" + "/" + mesAtual.getMes() + "/" + mesAtual.getAno();
-
-		c.setTime(sdf.parse(primeiroDia));
+		c.setTime(mesApi.getPrimeiroDia(mesAtual));
 
 		int idMes = c.get(Calendar.MONTH);
 		int idMesAtual = idMes;
@@ -106,10 +88,13 @@ public class MatriculaApi {
 			int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 			if (turma.temAula(dayOfWeek)) {
 				aulasTotais++;
-				if (c.getTime().after(new Date()))
+				if (!c.getTime().before(dataInicio)
+						&& (turma.getDataTermino() == null || !c.getTime().after(turma.getDataTermino())))
 					aulasMatriculado++;
+
 			}
 			c.add(Calendar.DATE, 1);
+
 			idMesAtual = c.get(Calendar.MONTH);
 		}
 
@@ -117,6 +102,8 @@ public class MatriculaApi {
 
 		MesReferencia mes = mesApi.getProximoMes();
 		String strVencimento = matricula.getDiaVencimento() + "/" + mes.getMes() + "/" + mes.getAno();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 		Mensalidades mensalidade = new Mensalidades();
 		mensalidade.setValorMensalidade(valorMensalidade);
@@ -133,5 +120,7 @@ public class MatriculaApi {
 			mensalidadeDAO.save(mensalidade);
 		}
 	}
+
+	
 
 }

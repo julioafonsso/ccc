@@ -1,11 +1,11 @@
-package br.com.julios.ccc.facade;
+	package br.com.julios.ccc.facade;
 
 import java.util.List;
 
-import javax.validation.ConstraintViolationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import br.com.julios.ccc.componentes.ExceptionValidacoes;
@@ -21,6 +21,7 @@ import br.com.julios.ccc.negocio.MatriculaApi;
 import br.com.julios.ccc.negocio.ProfessorApi;
 
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class AlunoFacade {
 
 	@Autowired
@@ -50,17 +51,16 @@ public class AlunoFacade {
 	}
 
 	public void cadastrarAluno(Aluno aluno) throws Exception {
-		try {
 			alunoApi.validaCPF(aluno);
 			alunoApi.validaEmail(aluno);
 			alunoApi.validaRG(aluno);
 			alunoApi.cadastrarAluno(aluno);
-		} catch (ConstraintViolationException e) {
-			throw new Exception(validacao.getMessage(e.getConstraintViolations()));
-		}
 	}
 
-	public void atualizarAluno(Aluno aluno) {
+	public void atualizarAluno(Aluno aluno) throws Exception {
+		alunoApi.validaCPF(aluno);
+		alunoApi.validaEmail(aluno);
+		alunoApi.validaRG(aluno);
 		alunoApi.atualizarAluno(aluno);
 	}
 
@@ -78,7 +78,7 @@ public class AlunoFacade {
 
 	public List<Mensalidades> getDebitos(Long idAluno) throws Exception {
 		Aluno aluno = alunoApi.getAluno(idAluno);
-		List<Mensalidades> mensalidades = alunoApi.criarMensalidadesFuturas(aluno);
+		alunoApi.criarMensalidadesFuturas(aluno);
 		
 		return alunoApi.getMensalidadesParaPagar(aluno);
 	}

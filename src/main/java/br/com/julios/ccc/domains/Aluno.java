@@ -92,7 +92,7 @@ public class Aluno {
 
 	@OneToMany(mappedBy = "aluno")
 	@JsonIgnore
-	@Where(clause = "data_exclusao is null")
+	@Where(clause = "data_exclusao is null or data_exclusao > CURRENT_DATE")
 	private List<Matricula> matriculas;
 
 	// Getters and Setters

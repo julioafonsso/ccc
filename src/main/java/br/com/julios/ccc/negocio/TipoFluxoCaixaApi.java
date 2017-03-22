@@ -1,5 +1,7 @@
 package br.com.julios.ccc.negocio;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,7 @@ public class TipoFluxoCaixaApi {
 
 	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixa() 
 	{
-				return tipoFluxoCaixaDAO.findAll();
+		return tipoFluxoCaixaDAO.findByDataExclusaoIsNull();
 	}
 
 	public void cadastrarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) 
@@ -31,16 +33,17 @@ public class TipoFluxoCaixaApi {
 
 	public void apagarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) 
 	{
-		tipoFluxoCaixaDAO.delete(tipoFluxoCaixa);
+		tipoFluxoCaixa.setDataExclusao(new Date());
+		tipoFluxoCaixaDAO.save(tipoFluxoCaixa);
 		
 	}
 
 	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixaEntrada() {
-		return tipoFluxoCaixaDAO.findByIndEntrada(true);
+		return tipoFluxoCaixaDAO.findByIndEntradaAndDataExclusaoIsNull(true);
 	}
 
 	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixaSaida() {
-		return tipoFluxoCaixaDAO.findByIndEntrada(false);
+		return tipoFluxoCaixaDAO.findByIndEntradaAndDataExclusaoIsNull(false);
 	}
 
 	public TipoFluxoCaixa getTipoFluxoCaixa(Long id) {

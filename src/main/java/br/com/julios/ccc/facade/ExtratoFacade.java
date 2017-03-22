@@ -5,11 +5,14 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.julios.ccc.domains.Extrato;
 import br.com.julios.ccc.negocio.ExtratoApi;
 
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class ExtratoFacade {
 
 	@Autowired

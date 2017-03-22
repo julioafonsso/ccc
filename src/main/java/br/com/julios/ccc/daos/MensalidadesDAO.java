@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import br.com.julios.ccc.domains.Aluno;
 import br.com.julios.ccc.domains.Matricula;
 import br.com.julios.ccc.domains.Mensalidades;
 import br.com.julios.ccc.domains.MesReferencia;
 
+@Repository
 public interface MensalidadesDAO extends JpaRepository<Mensalidades, Long>{
 	
 	

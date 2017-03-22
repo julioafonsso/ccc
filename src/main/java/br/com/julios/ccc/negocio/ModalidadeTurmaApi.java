@@ -1,5 +1,7 @@
 package br.com.julios.ccc.negocio;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,12 @@ public class ModalidadeTurmaApi {
 	@Autowired
 	ModalidadeTurmaDAO modalidadeTurmaDAO;
 
+	@Autowired
+	TurmaApi turmaApi;
+	
 	public Iterable<ModalidadeTurma> getmodalidadeTurma() 
 	{
-				return modalidadeTurmaDAO.findAll();
+				return modalidadeTurmaDAO.findByDataExclusaoIsNull();
 	}
 
 	public void cadastarModalidade(ModalidadeTurma modalidadeTurma) 
@@ -31,12 +36,18 @@ public class ModalidadeTurmaApi {
 
 	public void apagarModalidade(ModalidadeTurma modalidadeTurma) 
 	{
-		modalidadeTurmaDAO.delete(modalidadeTurma);
+		modalidadeTurma.setDataExclusao(new Date());
+		modalidadeTurmaDAO.save(modalidadeTurma);
 				
 	}
 
 	public ModalidadeTurma getmodalidadeTurma(Long id) {
 		return modalidadeTurmaDAO.findOne(id);
+	}
+
+	public void validaExisteTurmaAtiva(ModalidadeTurma modalidade) throws Exception {
+		if(!modalidade.getTurmas().isEmpty())
+			throw new Exception("Modalidade não pode ser excluida! \n Existe turma com essa modalidade");
 	}
 
 }

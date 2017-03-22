@@ -53,10 +53,10 @@ public class TipoFluxoCaixaController {
 		FluxoCaixaFacade.atualizarTipoFluxoCaixa(tipoFluxoCaixa);
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE)
-	public void apagarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa)
+	@RequestMapping(value = "{id}",method = RequestMethod.DELETE)
+	public void apagarTipoFluxoCaixa(@PathVariable("id") Long id) throws Exception
 	{
-		FluxoCaixaFacade.apagarTipoFluxoCaixa(tipoFluxoCaixa);
+		FluxoCaixaFacade.apagarTipoFluxoCaixa(id);
 	}
 	
 

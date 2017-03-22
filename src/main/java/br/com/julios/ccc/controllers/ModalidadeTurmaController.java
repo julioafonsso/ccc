@@ -45,10 +45,10 @@ public class ModalidadeTurmaController {
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE)
-	public void apagarModalidade(@RequestBody 	ModalidadeTurma modalidadeTurma)
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	public void apagarModalidade(@PathVariable("id") Long id) throws Exception
 	{
-		modalidadeTurmaFacade.apagarModalidade(modalidadeTurma);
+		modalidadeTurmaFacade.apagarModalidade(id);
 	}
 	
 

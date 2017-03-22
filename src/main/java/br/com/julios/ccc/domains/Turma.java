@@ -84,7 +84,7 @@ public class Turma {
 	
 	@OneToMany(mappedBy = "turma")
 		@JsonIgnoreProperties("turma")
-	@Where(clause = "data_exclusao is null")
+	@Where(clause = "data_exclusao is null or data_exclusao > CURRENT_DATE")
 	@JsonIgnore
 	private List<Matricula> matriculas;
 	

@@ -1,6 +1,7 @@
 package br.com.julios.ccc.negocio;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +26,7 @@ public class TurmaApi {
 
 	public Iterable<Turma> getTurmas() {
 
-		return turmaDAO.findAll();
+		return turmaDAO.getTurmas();
 	}
 
 	public void cadastrarTurma(Turma turma) {
@@ -37,11 +38,12 @@ public class TurmaApi {
 
 	public void atualizarTurma(Turma turma) {
 		turmaDAO.save(turma);
-
 	}
 
-	public void apagarTurma(Turma turma) {
-		turmaDAO.delete(turma);
+	public void apagarTurma(Turma turma) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		turma.setDataTermino(sdf.parse( sdf.format(new Date()))	);
+		turmaDAO.save(turma);
 
 	}
 
@@ -52,7 +54,7 @@ public class TurmaApi {
 
 	public Iterable<Matricula> getAlunosTurma(Long idTurma) {
 		Turma turma = turmaDAO.findOne(idTurma);
-		return matriculaDAO.findByTurmaAndDataExclusaoIsNull(turma);
+		return matriculaDAO.getAlunosDaTurma(turma);
 
 	}
 
@@ -126,6 +128,15 @@ public class TurmaApi {
 
 		}
 		return false;
+	}
+
+	public void atualizaDataExclusaoMatriculas(Turma turma) throws Exception {
+		Iterable<Matricula> matriculas = getAlunosTurma(turma.getId());
+		for (Matricula matricula : matriculas) {
+			matricula.setDataExclusao(turma.getDataTermino());
+			matriculaDAO.save(matricula);
+		}
+		
 	}
 
 }

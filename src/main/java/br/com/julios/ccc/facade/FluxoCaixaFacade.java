@@ -2,6 +2,8 @@ package br.com.julios.ccc.facade;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.julios.ccc.domains.FluxoCaixa;
 import br.com.julios.ccc.domains.TipoFluxoCaixa;
@@ -9,6 +11,7 @@ import br.com.julios.ccc.negocio.FluxoCaixaApi;
 import br.com.julios.ccc.negocio.TipoFluxoCaixaApi;
 
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class FluxoCaixaFacade {
 
 	@Autowired
@@ -54,7 +57,9 @@ public class FluxoCaixaFacade {
 		
 	}
 
-	public void apagarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) {
+	public void apagarTipoFluxoCaixa(Long id) throws Exception {
+		TipoFluxoCaixa tipoFluxoCaixa = tipoFluxoCaixaApi.getTipoFluxoCaixa(id);
+		tipoFluxoCaixa.validaExisteFluxoCaixa(tipoFluxoCaixa);
 		tipoFluxoCaixaApi.apagarTipoFluxoCaixa(tipoFluxoCaixa);
 		
 	}

@@ -29,19 +29,17 @@ public class ExtratoApi {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		HashMap<String, Extrato> map = new HashMap<String, Extrato>();
-		Double saldoAtual = new Double(0);
 
 		for (FluxoCaixa fluxoCaixa : dados) {
 			Extrato valor;
 			valor = map.get(sdf.format(fluxoCaixa.getData()));
-			saldoAtual += fluxoCaixa.getValor();
-
+			
 			if (valor == null) {
 				valor = new Extrato();
 				valor.setData(sdf.format(fluxoCaixa.getData()));
 			}
-
-			valor.setValor(saldoAtual);
+			
+			valor.addValor(fluxoCaixa.getValor());
 			valor.addFluxoCaixa(fluxoCaixa);
 
 			map.put(sdf.format(fluxoCaixa.getData()), valor);
@@ -85,7 +83,7 @@ public class ExtratoApi {
 	}
 
 	public Object[] getExtratoConsolidado(Date dInicio, Date dFim, boolean indEntrada) {
-		List retorno = new ArrayList<Object>();
+		List<Object> retorno = new ArrayList<Object>();
 		
 		Object[] dadosConsolidados = fluxoDAO.findConsolidado(dInicio, dFim, indEntrada);
 		for (Object object : dadosConsolidados) {

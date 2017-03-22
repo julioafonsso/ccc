@@ -53,17 +53,17 @@ public class TurmaController {
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarTurma(@RequestBody Turma turma){
+	public void atualizarTurma(@RequestBody Turma turma) throws Exception{
 		turmaFacade.atualizarTurma(turma);
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE)
-	public void apagarTurma(@RequestBody Turma turma){
-		turmaFacade.apagarTurma(turma);
+	@RequestMapping(value="{id}" , method = RequestMethod.DELETE)
+	public void apagarTurma(@PathVariable("id") long id) throws Exception{
+		turmaFacade.apagarTurma(id);
 	}
 
 	@RequestMapping(value="matricula/{id}" , method = RequestMethod.DELETE)
-	public void apagarTurma(@PathVariable("id") long id){
+	public void excluirMatricula(@PathVariable("id") long id){
 		matriculaFacade.excluirMatricula(id);
 	}
 }

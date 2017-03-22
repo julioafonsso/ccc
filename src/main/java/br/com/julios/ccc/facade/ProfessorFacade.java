@@ -2,10 +2,10 @@ package br.com.julios.ccc.facade;
 
 import java.util.List;
 
-import javax.validation.ConstraintViolationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.julios.ccc.componentes.ExceptionValidacoes;
 import br.com.julios.ccc.domains.FluxoCaixa;
@@ -17,6 +17,7 @@ import br.com.julios.ccc.negocio.FtpApi;
 import br.com.julios.ccc.negocio.ProfessorApi;
 
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class ProfessorFacade {
 
 	@Autowired
@@ -36,18 +37,17 @@ public class ProfessorFacade {
 	}
 
 	public void cadastrarProfessor(Professor professor) throws Exception {
-		try {
 			professorApi.validaCPF(professor);
 			professorApi.validaEmail(professor);
 			professorApi.validaRG(professor);
 
 			professorApi.cadastrarProfessor(professor);
-		} catch (ConstraintViolationException e) {
-			throw new Exception(validacao.getMessage(e.getConstraintViolations()));
-		}
 	}
 
-	public void atualizarProfessor(Professor professor) {
+	public void atualizarProfessor(Professor professor) throws Exception {
+		professorApi.validaCPF(professor);
+		professorApi.validaEmail(professor);
+		professorApi.validaRG(professor);
 		professorApi.atualizarProfessor(professor);
 
 	}

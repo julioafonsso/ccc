@@ -3,8 +3,6 @@ package br.com.julios.ccc.daos;
 import java.util.Date;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +12,6 @@ import br.com.julios.ccc.domains.FluxoCaixa;
 import br.com.julios.ccc.domains.TipoFluxoCaixa;
 
 @Repository
-@Transactional
 public interface FluxoCaixaDAO extends JpaRepository<FluxoCaixa, Long> {
 
 	public FluxoCaixa findByValor(double valor);

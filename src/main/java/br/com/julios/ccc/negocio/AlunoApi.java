@@ -9,11 +9,13 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
+import br.com.julios.ccc.componentes.cpf.CPFValidador;
 import br.com.julios.ccc.daos.AlunoDAO;
 import br.com.julios.ccc.daos.MensalidadesDAO;
 import br.com.julios.ccc.domains.Aluno;
 import br.com.julios.ccc.domains.Matricula;
 import br.com.julios.ccc.domains.Mensalidades;
+import br.com.julios.ccc.domains.MesReferencia;
 import br.com.julios.ccc.util.Util;
 
 @Service
@@ -27,10 +29,9 @@ public class AlunoApi {
 
 	@Autowired
 	MensalidadesDAO mensalidadeDAO;
-	
+
 	@Autowired
 	MatriculaApi matriculaApi;
-	
 
 	public void cadastrarAluno(Aluno aluno) throws Exception {
 		alunoDAO.save(aluno);
@@ -80,44 +81,52 @@ public class AlunoApi {
 
 		return mensalidadeDAO.getMensalidadesParaPagar(aluno);
 	}
-	
+
 	public void validaCPF(Aluno aluno) throws Exception {
+		CPFValidador cpfV = new CPFValidador();
+		if(!cpfV.isValid(aluno.getCpf(), null))
+			throw new Exception("CPF Invalido!");
 		Aluno a = alunoDAO.findByCpf(aluno.getCpfSemFormat());
-		if(a !=  null)
-		{
+		if (a != null) {
 			throw new Exception("CPF já cadastrado!");
 		}
-		
+
 	}
 
 	public void validaEmail(Aluno aluno) throws Exception {
 		Aluno a = alunoDAO.findByEmail(aluno.getEmail());
-		if(a !=  null)
-		{
+		if (a != null) {
 			throw new Exception("E-mail já cadastrado!");
 		}
-		
+
 	}
 
-	public void validaRG(Aluno aluno)  throws Exception {
+	public void validaRG(Aluno aluno) throws Exception {
 		Aluno a = alunoDAO.findByRg(aluno.getRg());
-		if(a !=  null)
-		{
+		if (a != null) {
 			throw new Exception("RG já cadastrado!");
 		}
-		
+
 	}
 
 	public List<Mensalidades> criarMensalidadesFuturas(Aluno aluno) throws Exception {
 		List<Mensalidades> retorno = new ArrayList<Mensalidades>();
-		List<Matricula> matriculas =aluno.getMatriculas();
+		List<Matricula> matriculas = aluno.getMatriculas();
+		MesReferencia mesAtual = mesApi.getMesAtual();
+
 		for (Matricula matricula : matriculas) {
-			Mensalidades mensalidade = matriculaApi.criarMensalidade(matricula, mesApi.getMesAtual());
-			if(mensalidade != null)
-				retorno.add(mensalidade);
+			if (!matriculaApi.existeMensalidade(matricula, mesAtual)) {
+
+				Mensalidades mensalidade = matriculaApi.criarMensalidade(matricula, mesApi.getMesAtual(),
+						mesApi.getPrimeiroDia(mesAtual));
+
+				if (mensalidade != null)
+					retorno.add(mensalidade);
+
+			}
 		}
-		
+
 		return retorno;
-		
+
 	}
 }

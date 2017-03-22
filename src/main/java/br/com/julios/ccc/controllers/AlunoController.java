@@ -2,8 +2,6 @@ package br.com.julios.ccc.controllers;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,9 +28,9 @@ public class AlunoController {
 	@Autowired
 	FtpFacade fileFacade;
 
-
-	@Autowired
-	private HttpServletRequest http;
+//
+//	@Autowired
+//	private HttpServletRequest http;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public Iterable<Aluno> getAlunos(@RequestParam(value = "nome", required = false) String nome,
@@ -50,7 +48,7 @@ public class AlunoController {
 	
 
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarAluno(@RequestBody Aluno aluno) {
+	public void atualizarAluno(@RequestBody Aluno aluno) throws Exception {
 		alunoFacade.atualizarAluno(aluno);
 	}
 

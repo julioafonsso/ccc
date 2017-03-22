@@ -34,7 +34,7 @@ public class ProfessorController {
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarProfessor(@RequestBody Professor professor){
+	public void atualizarProfessor(@RequestBody Professor professor) throws Exception{
 		professorFacade.atualizarProfessor(professor);
 	}
 	

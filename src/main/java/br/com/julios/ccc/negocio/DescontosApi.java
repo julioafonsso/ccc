@@ -1,5 +1,7 @@
 package br.com.julios.ccc.negocio;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,8 @@ public class DescontosApi {
 	DescontosDAO descontosDAO;
 	
 	public Iterable<Descontos> getdescontos() {
-		return descontosDAO.findAll();
+		
+		return descontosDAO.findByDataExclusaoIsNull();
 }
 
 	public void cadastrar(Descontos desconto) {
@@ -25,6 +28,17 @@ public class DescontosApi {
 	}
 
 	public void alterar(Descontos desconto) {
+		descontosDAO.save(desconto);
+	}
+
+	public void validaExisteDescontoMatriculaAtiva(Descontos desconto) throws Exception {
+		if(!desconto.getMatriculas().isEmpty())
+			throw new Exception("Desconto não pode ser excluido! \n Existe matriculas com esse desconto!");
+		
+	}
+
+	public void deletar(Descontos desconto) {
+		desconto.setDataExclusao(new Date());
 		descontosDAO.save(desconto);
 	}
 

@@ -42,4 +42,8 @@ public class DescontosController {
 		descontoFacade.alterarDesconto(desconto);
 	}
 	
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	public void deletar(@PathVariable("id") Long id) throws Exception{
+		descontoFacade.deletar(id);
+	}
 }

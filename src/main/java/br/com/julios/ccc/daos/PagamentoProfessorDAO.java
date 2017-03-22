@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import br.com.julios.ccc.domains.Mensalidades;
 import br.com.julios.ccc.domains.PagamentoProfessor;
 
+@Repository
 public interface PagamentoProfessorDAO extends CrudRepository<PagamentoProfessor, Long> {
 
 	public List<PagamentoProfessor> findByMensalidade(Mensalidades mensalidade);

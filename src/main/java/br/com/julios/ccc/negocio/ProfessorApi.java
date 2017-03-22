@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.julios.ccc.componentes.cpf.CPFValidador;
 import br.com.julios.ccc.daos.PagamentoProfessorDAO;
 import br.com.julios.ccc.daos.ProfessorDAO;
 import br.com.julios.ccc.daos.TurmaDAO;
@@ -108,6 +109,10 @@ public class ProfessorApi {
 	}
 
 	public void validaCPF(Professor professor) throws Exception {
+		CPFValidador cpfV = new CPFValidador();
+		if(!cpfV.isValid(professor.getCpf(), null))
+			throw new Exception("CPF Invalido!");
+
 		Professor a = professorDAO.findByCpf(professor.getCpfSemFormat());
 		if (a != null) {
 			throw new Exception("CPF já cadastrado!");

@@ -1,5 +1,6 @@
 package br.com.julios.ccc.domains;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -29,6 +30,17 @@ public class TipoFluxoCaixa {
 	@Column
 	private boolean indEntrada;
 	
+	@Column
+	private Date dataExclusao;
+	
+	public Date getDataExclusao() {
+		return dataExclusao;
+	}
+
+	public void setDataExclusao(Date dataExclusao) {
+		this.dataExclusao = dataExclusao;
+	}
+
 	@OneToMany(mappedBy = "tipoFluxo")
 	@JsonIgnore
 	private List<FluxoCaixa> fluxos;
@@ -61,6 +73,12 @@ public class TipoFluxoCaixa {
 
 	public void setFluxos(List<FluxoCaixa> fluxos) {
 		this.fluxos = fluxos;
+	}
+
+	public void validaExisteFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) throws Exception {
+		if(!tipoFluxoCaixa.getFluxos().isEmpty())
+			throw new Exception("Tipo Fluxo não pode ser apagado! \n Existe Fluxo Caixa desse Tipo Fluxo!");
+		
 	}
 	
 
