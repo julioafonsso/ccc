@@ -76,10 +76,15 @@ public class ExtratoApi {
 		return tratarDados(dados);
 	}
 
-	public List<Extrato> getExtrato(TipoFluxoCaixa tipo, Date dataInicio, Date dataFim) {
+	public List<Extrato> getExtratoAgrupadoData(TipoFluxoCaixa tipo, Date dataInicio, Date dataFim) {
 
 		List<FluxoCaixa> dados = fluxoDAO.findByTipoFluxoAndDataBetweenOrderByData(tipo, dataInicio, dataFim);
 		return tratarDados(dados);
+	}
+	
+	public List<FluxoCaixa> getFluxos(TipoFluxoCaixa tipo, Date dataInicio, Date dataFim) {
+
+		return fluxoDAO.findByTipoFluxoAndDataBetweenOrderByData(tipo, dataInicio, dataFim);
 	}
 
 	public Object[] getExtratoConsolidado(Date dInicio, Date dFim, boolean indEntrada) {
@@ -95,7 +100,7 @@ public class ExtratoApi {
 			dados[3] = ((Object[])object)[3] ;
 			
 			
-			dados[4] =  getExtrato(tipo, dInicio, dFim);
+			dados[4] =  getFluxos(tipo, dInicio, dFim);
 			retorno.add(dados);
 		}
 		return retorno.toArray() ;
