@@ -15,11 +15,11 @@ import br.com.julios.ccc.domains.Turma;
 @Repository
 public interface TurmaDAO extends CrudRepository<Turma, Long> {
 
-	@Query("select t from Turma t where t.sala = ?1 ")
+	@Query("select t from Turma t where t.sala = ?1 and (t.dataTermino is null or t.dataTermino > CURRENT_DATE)")
 	public List<Turma> getTurmasPorSala(Salas sala);
 
 	
-	@Query("select t from Turma t where (t.professor1 = ?1 or t.professor2 = ?1 ) ")
+	@Query("select t from Turma t where (t.professor1 = ?1 or t.professor2 = ?1 ) and (t.dataTermino is null or t.dataTermino > CURRENT_DATE)")
 	public List<Turma> getTurmaPorProfessor(Professor professor);
 
 	

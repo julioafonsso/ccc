@@ -67,6 +67,11 @@ public class AlunoController {
 		return alunoFacade.getAluno(idAluno);
 	}
 
+	@RequestMapping(value = "{id}/pagamentos", method = RequestMethod.GET)
+	public List<Mensalidades> getPagamentos(@PathVariable("id") Long idAluno) throws Exception {
+		return alunoFacade.getPagamentos(idAluno);
+	}
+	
 	@RequestMapping(value = "{id}/turmas", method = RequestMethod.GET)
 	public List<Matricula> getTurmas(@PathVariable("id") Long idAluno) {
 		return alunoFacade.getMatriculas(idAluno);
@@ -76,5 +81,8 @@ public class AlunoController {
 	public List<Mensalidades> getDebitos(@PathVariable("id") Long idAluno) throws Exception {
 		return alunoFacade.getDebitos(idAluno);
 	}
+	
+	
+
 
 }

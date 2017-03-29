@@ -92,4 +92,10 @@ public class AlunoFacade {
 		professorApi.cadastarPagamentosFuturos(mensalidadeParaPagar);
 	}
 
+	
+	public List<Mensalidades> getPagamentos(Long idAluno) {
+		Aluno aluno = alunoApi.getAluno(idAluno);
+		return alunoApi.getPagamentos(aluno);
+	}
+
 }

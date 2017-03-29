@@ -127,6 +127,9 @@ public class AlunoApi {
 		}
 
 		return retorno;
+	}
 
+	public List<Mensalidades> getPagamentos(Aluno aluno) {
+		return mensalidadeDAO.getMensalidadesPaga(aluno);
 	}
 }

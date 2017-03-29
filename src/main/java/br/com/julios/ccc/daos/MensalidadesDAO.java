@@ -21,6 +21,10 @@ public interface MensalidadesDAO extends JpaRepository<Mensalidades, Long>{
 	@Query("select m from Mensalidades m where m.fluxoCaixa is null and m.matricula = ?1")
 	public List<Mensalidades> getMensalidadesParaPagar(Matricula matricula);
 
+
+	@Query("select m from Mensalidades m where m.fluxoCaixa is not null and m.matricula.aluno = ?1 and m.dataExclusao is null and (m.matricula.turma.dataTermino is null or m.matricula.turma.dataTermino > CURRENT_DATE)")
+	public List<Mensalidades> getMensalidadesPaga(Aluno aluno);
+	
 	
 	public Mensalidades findByMesReferenciaAndMatricula(MesReferencia mes, Matricula matricula);
 }
