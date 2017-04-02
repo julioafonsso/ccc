@@ -85,4 +85,8 @@ public class FluxoCaixaApi {
 		
 	}
 
+	public FluxoCaixa getFluxo(Long idFluxo) {
+		return fluxoCaixaDAO.findOne(idFluxo);
+	}
+
 }

@@ -1,5 +1,6 @@
 package br.com.julios.ccc.daos;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,8 +23,8 @@ public interface MensalidadesDAO extends JpaRepository<Mensalidades, Long>{
 	public List<Mensalidades> getMensalidadesParaPagar(Matricula matricula);
 
 
-	@Query("select m from Mensalidades m where m.fluxoCaixa is not null and m.matricula.aluno = ?1 and m.dataExclusao is null and (m.matricula.turma.dataTermino is null or m.matricula.turma.dataTermino > CURRENT_DATE)")
-	public List<Mensalidades> getMensalidadesPaga(Aluno aluno);
+	@Query("select m from Mensalidades m where m.fluxoCaixa is not null and m.matricula.aluno = ?1 and m.dataExclusao is null and (m.matricula.turma.dataTermino is null or m.matricula.turma.dataTermino > CURRENT_DATE) and m.fluxoCaixa.data between ?2 and ?3")
+	public List<Mensalidades> getMensalidadesPaga(Aluno aluno, Date diaInicio, Date diaFim);
 	
 	
 	public Mensalidades findByMesReferenciaAndMatricula(MesReferencia mes, Matricula matricula);

@@ -1,5 +1,6 @@
 	package br.com.julios.ccc.facade;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,9 +94,9 @@ public class AlunoFacade {
 	}
 
 	
-	public List<Mensalidades> getPagamentos(Long idAluno) {
+	public List<Mensalidades> getPagamentos(Long idAluno, Date diaInicio, Date diaFim) {
 		Aluno aluno = alunoApi.getAluno(idAluno);
-		return alunoApi.getPagamentos(aluno);
+		return alunoApi.getPagamentos(aluno, diaInicio, diaFim);
 	}
 
 }

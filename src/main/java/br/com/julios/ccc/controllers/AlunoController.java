@@ -1,5 +1,8 @@
 package br.com.julios.ccc.controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,9 +70,22 @@ public class AlunoController {
 		return alunoFacade.getAluno(idAluno);
 	}
 
-	@RequestMapping(value = "{id}/pagamentos", method = RequestMethod.GET)
-	public List<Mensalidades> getPagamentos(@PathVariable("id") Long idAluno) throws Exception {
-		return alunoFacade.getPagamentos(idAluno);
+	@RequestMapping(value = "{id}/pagamentos/{dataInicio}/{dataFim}", method = RequestMethod.GET)
+	public List<Mensalidades> getPagamentos(@PathVariable("id") Long idAluno, @PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws Exception {
+		
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+		
+		Date diaInicio = sdf.parse(dataInicio);
+		Date diaFim = sdf.parse(dataFim);
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(diaFim);
+		c.add(Calendar.DATE, c.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
+		diaFim = c.getTime();
+
+		
+		return alunoFacade.getPagamentos(idAluno, diaInicio, diaFim);
 	}
 	
 	@RequestMapping(value = "{id}/turmas", method = RequestMethod.GET)

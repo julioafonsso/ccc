@@ -1,6 +1,7 @@
 package br.com.julios.ccc.negocio;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,7 +130,7 @@ public class AlunoApi {
 		return retorno;
 	}
 
-	public List<Mensalidades> getPagamentos(Aluno aluno) {
-		return mensalidadeDAO.getMensalidadesPaga(aluno);
+	public List<Mensalidades> getPagamentos(Aluno aluno, Date diaInicio, Date diaFim) {
+		return mensalidadeDAO.getMensalidadesPaga(aluno, diaInicio, diaFim);
 	}
 }

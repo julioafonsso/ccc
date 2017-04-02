@@ -1,5 +1,9 @@
 package br.com.julios.ccc.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.julios.ccc.domains.FluxoCaixa;
 import br.com.julios.ccc.domains.PagamentoProfessor;
 import br.com.julios.ccc.domains.Professor;
 import br.com.julios.ccc.domains.Turma;
@@ -48,9 +53,30 @@ public class ProfessorController {
 		return professorFacade.getProfessor(idProfessor);
 	}
 	
+	@RequestMapping(value = "detalhe-pagamento/{id}", method = RequestMethod.GET)
+	public List<PagamentoProfessor> getDetalhePagamento(@PathVariable("id") Long idProfessor){
+		return professorFacade.getDetalhePagamento(idProfessor);
+	}
+	
 	@RequestMapping(value = "{id}/turmas", method = RequestMethod.GET)
 	public List<Turma> getTurmas(@PathVariable("id") Long idProfessor) {
 		return professorFacade.getTurmas(idProfessor);
+	}
+	
+	@RequestMapping(value = "{id}/recibos/{dataInicio}/{dataFim}", method = RequestMethod.GET)
+	public List<FluxoCaixa> getRecibos(@PathVariable("id") Long idProfessor, @PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws ParseException {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+		
+		Date diaInicio = sdf.parse(dataInicio);
+		Date diaFim = sdf.parse(dataFim);
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(diaFim);
+		c.add(Calendar.DATE, c.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
+		diaFim = c.getTime();
+		
+		return professorFacade.getRecibos(idProfessor,diaInicio, diaFim);
 	}
 	
 	@RequestMapping(value = "{id}/salario", method = RequestMethod.POST)

@@ -136,4 +136,12 @@ public class ProfessorApi {
 
 	}
 
+	public List<FluxoCaixa> getRecibos(Professor professor, Date diaInicio, Date diaFim) {
+		return pagamentoDAO.getRecibosCosolidados(professor, diaInicio, diaFim);
+	}
+
+	public List<PagamentoProfessor> getDetalheRecibo(FluxoCaixa fluxo) {
+		return pagamentoDAO.getDetalheRecibo(fluxo);
+	}
+
 }

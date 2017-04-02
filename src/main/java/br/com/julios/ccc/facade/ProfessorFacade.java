@@ -1,5 +1,6 @@
 package br.com.julios.ccc.facade;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +76,15 @@ public class ProfessorFacade {
 		Professor prof = professorApi.getProfessor(idProfessor);
 		FluxoCaixa fluxo = fluxoApi.cadastrarFluxoCaixaPagamentoProfessor(prof, valorParaPagar);
 		professorApi.pagamentoProfessor(pagamento, fluxo);
+	}
+
+	public List<FluxoCaixa> getRecibos(Long idProfessor, Date diaInicio, Date diaFim) {
+		Professor professor = professorApi.getProfessor(idProfessor);
+		return professorApi.getRecibos(professor, diaInicio, diaFim);
+	}
+
+	public List<PagamentoProfessor> getDetalhePagamento(Long idFluxo) {
+		FluxoCaixa fluxo = fluxoApi.getFluxo(idFluxo);
+		return professorApi.getDetalheRecibo(fluxo);
 	}
 }
