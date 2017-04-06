@@ -84,8 +84,9 @@ public class TurmaApi {
 	}
 
 	public void validaProfessoresIguais(Turma turma) throws Exception {
-		if (turma.getProfessor1().getId() == turma.getProfessor2().getId())
-			throw new Exception("Os Professores não podem ser os mesmos!");
+		if (turma.getProfessor1() != null && turma.getProfessor2() != null)
+			if (turma.getProfessor1().getId() == turma.getProfessor2().getId())
+				throw new Exception("Os Professores não podem ser os mesmos!");
 	}
 
 	public void validaSala(Turma turma) throws Exception {
@@ -97,7 +98,8 @@ public class TurmaApi {
 	}
 
 	public void validaHorarioProfessores(Turma turma, Professor professor) throws Exception {
-
+		if(professor == null)
+			return;
 		List<Turma> turmas = turmaDAO.getTurmaPorProfessor(professor);
 
 		if (existeTurmaConflitoHorario(turma, turmas))

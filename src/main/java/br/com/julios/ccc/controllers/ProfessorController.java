@@ -80,7 +80,7 @@ public class ProfessorController {
 	}
 	
 	@RequestMapping(value = "{id}/salario", method = RequestMethod.POST)
-	public void cadastrarRecebimento(@PathVariable("id") Long idProfessor){
+	public void cadastrarRecebimento(@PathVariable("id") Long idProfessor) throws Exception{
 		 professorFacade.pagamentoProfessor(idProfessor);
 	}
 	

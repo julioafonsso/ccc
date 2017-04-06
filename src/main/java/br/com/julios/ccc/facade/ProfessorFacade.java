@@ -13,6 +13,7 @@ import br.com.julios.ccc.domains.FluxoCaixa;
 import br.com.julios.ccc.domains.PagamentoProfessor;
 import br.com.julios.ccc.domains.Professor;
 import br.com.julios.ccc.domains.Turma;
+import br.com.julios.ccc.negocio.EmailApi;
 import br.com.julios.ccc.negocio.FluxoCaixaApi;
 import br.com.julios.ccc.negocio.FtpApi;
 import br.com.julios.ccc.negocio.ProfessorApi;
@@ -33,6 +34,9 @@ public class ProfessorFacade {
 	@Autowired
 	ExceptionValidacoes validacao;
 
+	@Autowired
+	EmailApi email;
+	
 	public Iterable<Professor> getProfessores() {
 		return professorApi.getProfessores();
 	}
@@ -70,12 +74,14 @@ public class ProfessorFacade {
 		return professorApi.getSalarioProfessorPendente(idProfessor);
 	}
 
-	public void pagamentoProfessor(Long idProfessor) {
+	public void pagamentoProfessor(Long idProfessor) throws Exception {
 		List<PagamentoProfessor> pagamento = getSalarioProfessorPendente(idProfessor);
 		Double valorParaPagar = professorApi.getValorParaPagar(pagamento);
 		Professor prof = professorApi.getProfessor(idProfessor);
 		FluxoCaixa fluxo = fluxoApi.cadastrarFluxoCaixaPagamentoProfessor(prof, valorParaPagar);
 		professorApi.pagamentoProfessor(pagamento, fluxo);
+		
+		email.enviarEmailPagametoProfessor(pagamento, fluxo, prof);
 	}
 
 	public List<FluxoCaixa> getRecibos(Long idProfessor, Date diaInicio, Date diaFim) {

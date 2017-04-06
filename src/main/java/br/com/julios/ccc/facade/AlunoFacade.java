@@ -16,6 +16,7 @@ import br.com.julios.ccc.domains.FluxoCaixa;
 import br.com.julios.ccc.domains.Matricula;
 import br.com.julios.ccc.domains.Mensalidades;
 import br.com.julios.ccc.negocio.AlunoApi;
+import br.com.julios.ccc.negocio.EmailApi;
 import br.com.julios.ccc.negocio.FluxoCaixaApi;
 import br.com.julios.ccc.negocio.FtpApi;
 import br.com.julios.ccc.negocio.MatriculaApi;
@@ -45,6 +46,9 @@ public class AlunoFacade {
 	
 	@Autowired
 	ExceptionValidacoes validacao;
+	
+	@Autowired
+	EmailApi email;
 
 	public Iterable<Aluno> getAlunos(String nome, String cpf, String email) throws Exception {
 
@@ -91,6 +95,8 @@ public class AlunoFacade {
 		FluxoCaixa fluxo = fluxoApi.cadastrarFluxoCaixaPagamentoMensalidade(mensalidadeParaPagar);
 		matriculaApi.pagarMensalidade(mensalidadeParaPagar, fluxo);
 		professorApi.cadastarPagamentosFuturos(mensalidadeParaPagar);
+		
+		email.enviarEmailReciboMensalidade(mensalidadeParaPagar);
 	}
 
 	

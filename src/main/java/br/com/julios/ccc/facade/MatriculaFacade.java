@@ -13,6 +13,7 @@ import br.com.julios.ccc.domains.FluxoCaixa;
 import br.com.julios.ccc.domains.Matricula;
 import br.com.julios.ccc.domains.Mensalidades;
 import br.com.julios.ccc.negocio.AlunoApi;
+import br.com.julios.ccc.negocio.EmailApi;
 import br.com.julios.ccc.negocio.FluxoCaixaApi;
 import br.com.julios.ccc.negocio.MatriculaApi;
 import br.com.julios.ccc.negocio.MesApi;
@@ -36,6 +37,9 @@ public class MatriculaFacade {
 
 	@Autowired
 	MesApi mesApi;
+	
+	@Autowired
+	EmailApi email;
 
 	public void matricularAluno(Matricula matricula) throws Exception {
 		Aluno aluno = alunoApi.getAluno(matricula.getAluno().getId());
@@ -45,12 +49,14 @@ public class MatriculaFacade {
 		FluxoCaixa pagamentoMatricula = fluxoApi.lancamentoMatricula(aluno, matricula.getTurma(), matricula.getValor());
 
 		matricula.setPagamentroMatricula(pagamentoMatricula);
-
+		
 		matriculaApi.matricularAluno(matricula);
 
 		matriculaApi.criarMensalidade(matricula, mesApi.getMesAtual(), new Date());
 
 		matriculaApi.criarMensalidade(matricula, mesApi.getProximoMes(), mesApi.getPrimeiroDia(mesApi.getProximoMes()));
+		
+		email.enviarEmailReciboMatricula(matricula, pagamentoMatricula);
 
 	}
 
