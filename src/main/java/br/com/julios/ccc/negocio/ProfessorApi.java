@@ -1,5 +1,8 @@
 package br.com.julios.ccc.negocio;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -58,8 +61,13 @@ public class ProfessorApi {
 		return turmaDAO.findByProfessor1OrProfessor2(prof, prof);
 	}
 
-	public List<PagamentoProfessor> getSalarioProfessorPendente(Long idProfessor) {
-		return pagamentoDAO.getPagamentosPendentes(idProfessor);
+	public List<PagamentoProfessor> getSalarioProfessorPendente(Long idProfessor, String mes) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+		Calendar c = Calendar.getInstance();
+		c.setTime(sdf.parse(mes));
+		c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+		
+		return pagamentoDAO.getPagamentosPendentesNoPeriodo(idProfessor, sdf.parse(mes), c.getTime());
 	}
 
 	public Double getValorParaPagar(List<PagamentoProfessor> salario) {
@@ -114,7 +122,7 @@ public class ProfessorApi {
 			throw new Exception("CPF Invalido!");
 
 		Professor a = professorDAO.findByCpf(professor.getCpfSemFormat());
-		if (a != null) {
+		if (a != null && a.getId() != professor.getId()) {
 			throw new Exception("CPF já cadastrado!");
 		}
 
@@ -122,7 +130,7 @@ public class ProfessorApi {
 
 	public void validaEmail(Professor professor) throws Exception {
 		Professor a = professorDAO.findByEmail(professor.getEmail());
-		if (a != null) {
+		if (a != null && a.getId() != professor.getId()) {
 			throw new Exception("E-mail já cadastrado!");
 		}
 
@@ -130,7 +138,7 @@ public class ProfessorApi {
 
 	public void validaRG(Professor professor) throws Exception {
 		Professor a = professorDAO.findByRg(professor.getRg());
-		if (a != null) {
+		if (a != null && a.getId() != professor.getId()) {
 			throw new Exception("RG já cadastrado!");
 		}
 
@@ -144,4 +152,8 @@ public class ProfessorApi {
 		return pagamentoDAO.getDetalheRecibo(fluxo);
 	}
 
+	public PagamentoProfessor getSalario(Long id)
+	{
+		return pagamentoDAO.findOne(id);
+	}
 }

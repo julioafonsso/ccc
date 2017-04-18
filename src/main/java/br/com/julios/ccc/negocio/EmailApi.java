@@ -102,7 +102,7 @@ public class EmailApi {
 	
 	private String getStyleCabecalho()
 	{
-		return "style='text-align: center; color: #ffff00'";
+		return "style='text-align: center; color: #FF6347'";
 	}
 	
 	private String getStyleLabel(){
@@ -143,11 +143,11 @@ public class EmailApi {
 			builder.append("<tr>");
 			builder.append("<td "+getStyleTD(i) + ">"+ pg.getMensalidade().getMatricula().getTurma().getCodigo() +"</td>");
 			builder.append("<td "+getStyleTD(i) + ">"+ pg.getMensalidade().getMatricula().getAluno().getNome() +"</td>");
-			builder.append("<td "+getStyleTD(i) + ">"+ new DecimalFormat("#.##").format(pg.getMensalidade().getFluxoCaixa().getValor()) +"</td>");
+			builder.append("<td "+getStyleTD(i) + "> R$ "+ new DecimalFormat("#.##").format(pg.getMensalidade().getFluxoCaixa().getValor()) +"</td>");
 			builder.append("<td "+getStyleTD(i) + ">"+ pg.getPercentual() +" %</td>");
 			
 			 
-			builder.append("<td "+getStyleTD(i) + "> R$"+ new DecimalFormat("#.##").format(pg.getFluxoCaixa().getValor() *-1) +"</td>");
+			builder.append("<td "+getStyleTD(i) + "> R$ "+ new DecimalFormat("#.##").format(pg.getFluxoCaixa().getValor() *-1) +"</td>");
 			builder.append("</tr>");
 			i++;
 		}
@@ -220,26 +220,27 @@ public class EmailApi {
 		builder.append("<title>Recibo Centro Cultura Carioca</title>");
 		builder.append("</head>");
 		builder.append("<body >");
-		builder.append("<div style='background-color: #f4a460 ;'>");
 		builder.append("<div>");
+//		builder.append("<div style='background-color: #f4a460 ;'>");
+		builder.append("<div style='text-align: center'>");
 		builder.append("<a href=\"https://dancaccc.com.br\">");
 		builder.append(
-				"<img src=\"https://dancaccc.com.br/wp-content/themes/site/library/i/logo.png\" >");
+				"<img width='60%' height='25%' src='http://controle-ccc.website/imagens/logo.jpg' >");
 		builder.append("</a>");
 		builder.append("</div>");
 		builder.append(conteudo);
 		builder.append("<div>");
-		builder.append("<h2 style=\"text-align: center; color: #ffff00\">");
+		builder.append("<h2 style=\"text-align: center; color: #FF6347\">");
 		builder.append("*** ");
 		builder.append(getMensagem());
 		builder.append(" *** ");
 		builder.append("</h2>");
 		builder.append("</div>");
-		builder.append("<div >");
-		builder.append(
-				"<a href=\"http://www.novorioantigo.com.br\" class=\"novo-rio\" target=\"_blank\"><img style=\"width: 100%;max-width: 513px;max-height: 162px;height: auto;display: table;margin: 34px auto 0 auto;\" src=\"https://dancaccc.com.br/wp-content/themes/site/library/i/logo-casas-03.png\"></a>");
-		builder.append("</div>");
-		builder.append("</div>");
+//		builder.append("<div >");
+//		builder.append(
+//				"<a href=\"http://www.novorioantigo.com.br\" class=\"novo-rio\" target=\"_blank\"><img style=\"width: 100%;max-width: 513px;max-height: 162px;height: auto;display: table;margin: 34px auto 0 auto;\" src=\"https://dancaccc.com.br/wp-content/themes/site/library/i/logo-casas-03.png\"></a>");
+//		builder.append("</div>");
+//		builder.append("</div>");
 		builder.append("</body>");
 		builder.append("</html>");
 		

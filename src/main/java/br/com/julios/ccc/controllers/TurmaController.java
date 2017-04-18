@@ -1,5 +1,7 @@
 package br.com.julios.ccc.controllers;
 
+import java.text.ParseException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,9 +63,19 @@ public class TurmaController {
 	public void apagarTurma(@PathVariable("id") long id) throws Exception{
 		turmaFacade.apagarTurma(id);
 	}
+	
+	@RequestMapping(value="matricula/{id}/desconto" , method = RequestMethod.DELETE)
+	public void apagarDesconto(@PathVariable("id") long id) throws Exception{
+		matriculaFacade.apagarDesconto(id);
+	}
 
+	@RequestMapping(value="matricula/{id}/desconto/{idDesconto}" , method = RequestMethod.PUT)
+	public void alterarDesconto(@PathVariable("id") long id, @PathVariable("idDesconto") long idDesconto) throws Exception{
+		matriculaFacade.alterarDesconto(id, idDesconto);
+	}
+	
 	@RequestMapping(value="matricula/{id}" , method = RequestMethod.DELETE)
-	public void excluirMatricula(@PathVariable("id") long id){
+	public void excluirMatricula(@PathVariable("id") long id) throws ParseException{
 		matriculaFacade.excluirMatricula(id);
 	}
 }

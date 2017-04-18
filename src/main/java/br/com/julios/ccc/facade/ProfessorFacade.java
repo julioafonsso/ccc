@@ -1,5 +1,7 @@
 package br.com.julios.ccc.facade;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -70,12 +72,27 @@ public class ProfessorFacade {
 		return professorApi.getTurmas(idProfessor);
 	}
 
-	public List<PagamentoProfessor> getSalarioProfessorPendente(Long idProfessor) {
-		return professorApi.getSalarioProfessorPendente(idProfessor);
+	public List<PagamentoProfessor> getSalarioProfessorPendente(Long idProfessor, String mes) throws ParseException {
+		return professorApi.getSalarioProfessorPendente(idProfessor, mes);
 	}
 
-	public void pagamentoProfessor(Long idProfessor) throws Exception {
-		List<PagamentoProfessor> pagamento = getSalarioProfessorPendente(idProfessor);
+	public void pagamentoProfessor(Long idProfessor, Long idSalario) throws Exception
+	{
+		PagamentoProfessor pp = professorApi.getSalario(idSalario);
+		Professor prof = professorApi.getProfessor(idProfessor);
+		FluxoCaixa fluxo = fluxoApi.cadastrarFluxoCaixaPagamentoProfessor(prof, pp.getValor());
+		
+		List<PagamentoProfessor> pagamento = new ArrayList<PagamentoProfessor>();
+		
+		pagamento.add(pp);
+		
+		professorApi.pagamentoProfessor(pagamento, fluxo);
+		
+		email.enviarEmailPagametoProfessor(pagamento, fluxo, prof);
+	}
+	
+	public void pagamentoProfessor(Long idProfessor, String mes) throws Exception {
+		List<PagamentoProfessor> pagamento = getSalarioProfessorPendente(idProfessor, mes);
 		Double valorParaPagar = professorApi.getValorParaPagar(pagamento);
 		Professor prof = professorApi.getProfessor(idProfessor);
 		FluxoCaixa fluxo = fluxoApi.cadastrarFluxoCaixaPagamentoProfessor(prof, valorParaPagar);

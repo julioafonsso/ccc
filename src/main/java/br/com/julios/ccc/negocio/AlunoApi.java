@@ -88,7 +88,7 @@ public class AlunoApi {
 		if(!cpfV.isValid(aluno.getCpf(), null))
 			throw new Exception("CPF Invalido!");
 		Aluno a = alunoDAO.findByCpf(aluno.getCpfSemFormat());
-		if (a != null) {
+		if (a != null && a.getId() != aluno.getId() ) {
 			throw new Exception("CPF já cadastrado!");
 		}
 
@@ -96,7 +96,7 @@ public class AlunoApi {
 
 	public void validaEmail(Aluno aluno) throws Exception {
 		Aluno a = alunoDAO.findByEmail(aluno.getEmail());
-		if (a != null) {
+		if (a != null && a.getId() != aluno.getId()) {
 			throw new Exception("E-mail já cadastrado!");
 		}
 
@@ -104,7 +104,7 @@ public class AlunoApi {
 
 	public void validaRG(Aluno aluno) throws Exception {
 		Aluno a = alunoDAO.findByRg(aluno.getRg());
-		if (a != null) {
+		if (a != null && a.getId() != aluno.getId()) {
 			throw new Exception("RG já cadastrado!");
 		}
 

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.daos.MatriculaDAO;
 import br.com.julios.ccc.daos.MensalidadesDAO;
+import br.com.julios.ccc.domains.Descontos;
 import br.com.julios.ccc.domains.FluxoCaixa;
 import br.com.julios.ccc.domains.Matricula;
 import br.com.julios.ccc.domains.Mensalidades;
@@ -37,13 +38,16 @@ public class MatriculaApi {
 	}
 
 	public void matricularAluno(Matricula matricula) {
+		if(matricula.getDesconto() != null && matricula.getDesconto().getId() == 0)
+			matricula.setDesconto(null);
 		matricula.setDataMatricula(new Date());
 		matricula.setDataExclusao(matricula.getTurma().getDataTermino());
 		matriculaDAO.save(matricula);
 	}
 
-	public void excluirMatricula(Matricula matricula) {
-		matricula.setDataExclusao(new Date());
+	public void excluirMatricula(Matricula matricula) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		matricula.setDataExclusao(sdf.parse(sdf.format(new Date())));
 		matriculaDAO.save(matricula);
 	}
 
@@ -119,6 +123,16 @@ public class MatriculaApi {
 			mensalidade.setDataExclusao(new Date());
 			mensalidadeDAO.save(mensalidade);
 		}
+	}
+
+	public void apagarDesconto(Matricula matricula) {
+		matricula.setDesconto(null);
+		matriculaDAO.save(matricula);
+	}
+
+	public void alterarDesconto(Matricula matricula, Descontos desconto) {
+		matricula.setDesconto(desconto);
+		matriculaDAO.save(matricula);
 	}
 
 	

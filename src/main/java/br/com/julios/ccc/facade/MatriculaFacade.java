@@ -1,5 +1,6 @@
 package br.com.julios.ccc.facade;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -9,10 +10,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.julios.ccc.domains.Aluno;
+import br.com.julios.ccc.domains.Descontos;
 import br.com.julios.ccc.domains.FluxoCaixa;
 import br.com.julios.ccc.domains.Matricula;
 import br.com.julios.ccc.domains.Mensalidades;
 import br.com.julios.ccc.negocio.AlunoApi;
+import br.com.julios.ccc.negocio.DescontosApi;
 import br.com.julios.ccc.negocio.EmailApi;
 import br.com.julios.ccc.negocio.FluxoCaixaApi;
 import br.com.julios.ccc.negocio.MatriculaApi;
@@ -40,6 +43,9 @@ public class MatriculaFacade {
 	
 	@Autowired
 	EmailApi email;
+	
+	@Autowired
+	DescontosApi descontoApi;
 
 	public void matricularAluno(Matricula matricula) throws Exception {
 		Aluno aluno = alunoApi.getAluno(matricula.getAluno().getId());
@@ -60,12 +66,24 @@ public class MatriculaFacade {
 
 	}
 
-	public void excluirMatricula(long id) {
+	public void excluirMatricula(long id) throws ParseException {
 		Matricula matricula = matriculaApi.getMatricula(id);
 		List<Mensalidades> mensalidades = matriculaApi.getMensalidadesParaPagar(matricula);
 		matriculaApi.excluirMatricula(matricula);
 		matriculaApi.exlcuirMensalidades(mensalidades);
 
+	}
+
+	public void apagarDesconto(long id) {
+		Matricula matricula = matriculaApi.getMatricula(id);
+		matriculaApi.apagarDesconto(matricula);
+	}
+
+	public void alterarDesconto(long id, long idDesconto) {
+		Matricula matricula = matriculaApi.getMatricula(id);
+		Descontos desconto = descontoApi.getdesconto(idDesconto);
+		matriculaApi.alterarDesconto(matricula, desconto);
+		
 	}
 
 }

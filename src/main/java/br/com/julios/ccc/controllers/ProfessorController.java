@@ -79,14 +79,20 @@ public class ProfessorController {
 		return professorFacade.getRecibos(idProfessor,diaInicio, diaFim);
 	}
 	
-	@RequestMapping(value = "{id}/salario", method = RequestMethod.POST)
-	public void cadastrarRecebimento(@PathVariable("id") Long idProfessor) throws Exception{
-		 professorFacade.pagamentoProfessor(idProfessor);
+	@RequestMapping(value = "{id}/salario-periodo/{mes}", method = RequestMethod.POST)
+	public void cadastrarRecebimento(@PathVariable("id") Long idProfessor, @PathVariable("mes") String mes) throws Exception{
+		 professorFacade.pagamentoProfessor(idProfessor,mes);
 	}
 	
-	@RequestMapping(value = "{id}/salario-pendente", method = RequestMethod.GET)
-	public List<PagamentoProfessor> getSalarioProfessorPendente(@PathVariable("id") Long idProfessor){
-		return professorFacade.getSalarioProfessorPendente(idProfessor);
+	@RequestMapping(value = "{id}/salario/{idSalario}", method = RequestMethod.POST)
+	public void cadastrarRecebimento(@PathVariable("id") Long idProfessor, @PathVariable("idSalario") Long idSalario) throws Exception{
+		 professorFacade.pagamentoProfessor(idProfessor,idSalario);
+	}
+	
+	@RequestMapping(value = "{id}/salario-pendente/{mes}", method = RequestMethod.GET)
+	public List<PagamentoProfessor> getSalarioProfessorPendente(@PathVariable("id") Long idProfessor, @PathVariable("mes") String mes) throws Exception{
+		
+		return professorFacade.getSalarioProfessorPendente(idProfessor, mes);
 	}
 
 }
