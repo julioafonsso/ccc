@@ -25,6 +25,9 @@ public class FluxoCaixa {
 	private double valor;
 	
 	@Column
+	private double quantidade;
+	
+	@Column
 	private String descricao;
 	
 	@Column(name = "data_fluxo")
@@ -80,8 +83,12 @@ public class FluxoCaixa {
 	}
 
 	
-	
-	
-	
+	public double getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(double quantidade) {
+		this.quantidade = quantidade;
+	}
 
 }

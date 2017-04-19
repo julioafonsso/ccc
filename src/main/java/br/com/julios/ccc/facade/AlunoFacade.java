@@ -83,7 +83,7 @@ public class AlunoFacade {
 
 	public List<Mensalidades> getDebitos(Long idAluno) throws Exception {
 		Aluno aluno = alunoApi.getAluno(idAluno);
-		alunoApi.criarMensalidadesFuturas(aluno);
+//		alunoApi.criarMensalidadesFuturas(aluno);
 		
 		return alunoApi.getMensalidadesParaPagar(aluno);
 	}
@@ -95,6 +95,8 @@ public class AlunoFacade {
 		FluxoCaixa fluxo = fluxoApi.cadastrarFluxoCaixaPagamentoMensalidade(mensalidadeParaPagar);
 		matriculaApi.pagarMensalidade(mensalidadeParaPagar, fluxo);
 		professorApi.cadastarPagamentosFuturos(mensalidadeParaPagar);
+		
+		matriculaApi.criarMensalidade(mensalidadeParaPagar.getMatricula());
 		
 		email.enviarEmailReciboMensalidade(mensalidadeParaPagar);
 	}

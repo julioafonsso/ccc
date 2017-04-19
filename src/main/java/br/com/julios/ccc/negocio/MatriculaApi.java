@@ -73,6 +73,18 @@ public class MatriculaApi {
 		return mensalidadeDAO.getMensalidadesParaPagar(matricula);
 	}
 
+	public Mensalidades criarMensalidade(Matricula matricula)throws ParseException{
+		List<Mensalidades> mensalidades = mensalidadeDAO.getMensalidades(matricula);
+		MesReferencia mes = null;
+		if(!mensalidades.isEmpty())
+			mes = mesApi.getProximoMes(mensalidades.get(0).getMesReferencia());
+		else
+			mes = mesApi.getMesAtual();
+
+		return criarMensalidade(matricula,mes ,mesApi.getPrimeiroDia(mes) );
+		
+	}
+	
 	public Mensalidades criarMensalidade(Matricula matricula, MesReferencia mesAtual, Date dataInicio)
 			throws ParseException {
 

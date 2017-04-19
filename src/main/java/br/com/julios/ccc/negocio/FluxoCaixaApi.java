@@ -32,6 +32,9 @@ public class FluxoCaixaApi {
 		if (!fluxoCaixa.getTipoFluxo().isIndEntrada())
 			fluxoCaixa.setValor(fluxoCaixa.getValor() * -1);
 		
+		if(fluxoCaixa.getQuantidade() < 1)
+			fluxoCaixa.setQuantidade(1);
+		
 		fluxoCaixaDAO.save(fluxoCaixa);
 		return fluxoCaixa;
 	}
