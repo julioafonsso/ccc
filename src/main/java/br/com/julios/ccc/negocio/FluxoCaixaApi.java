@@ -47,6 +47,7 @@ public class FluxoCaixaApi {
 		FluxoCaixa fluxo = new FluxoCaixa();
 		fluxo.setData(new Date());
 		fluxo.setDescricao("Recebimento Mensalidade Aluno : " + mensalidade.getMatricula().getAluno().getNome());
+		fluxo.setObservacao("Mensalidade do Mês :" + mensalidade.getMesReferencia().getNomeMes()  + "  de " +  mensalidade.getMesReferencia().getAno());
 		fluxo.setTipoFluxo(tipoFluxoMensalidade);
 		fluxo.setValor(mensalidade.getValorParaPagar());
 

@@ -30,6 +30,10 @@ public class FluxoCaixa {
 	@Column
 	private String descricao;
 	
+	@Column
+	private String observacao;
+	
+	
 	@Column(name = "data_fluxo")
 	private Date data;
 	
@@ -89,6 +93,14 @@ public class FluxoCaixa {
 
 	public void setQuantidade(double quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 
 }
