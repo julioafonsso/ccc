@@ -57,14 +57,14 @@ public class AlunoFacade {
 
 	public void cadastrarAluno(Aluno aluno) throws Exception {
 			alunoApi.validaCPF(aluno);
-			alunoApi.validaEmail(aluno);
+//			alunoApi.validaEmail(aluno);
 			alunoApi.validaRG(aluno);
 			alunoApi.cadastrarAluno(aluno);
 	}
 
 	public void atualizarAluno(Aluno aluno) throws Exception {
 		alunoApi.validaCPF(aluno);
-		alunoApi.validaEmail(aluno);
+//		alunoApi.validaEmail(aluno);
 		alunoApi.validaRG(aluno);
 		alunoApi.atualizarAluno(aluno);
 	}
