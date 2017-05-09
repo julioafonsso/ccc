@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import br.com.julios.ccc.componentes.cpf.CPFValidador;
 import br.com.julios.ccc.daos.PagamentoProfessorDAO;
 import br.com.julios.ccc.daos.ProfessorDAO;
+import br.com.julios.ccc.daos.TipoTurmaDAO;
 import br.com.julios.ccc.daos.TurmaDAO;
 import br.com.julios.ccc.domains.FluxoCaixa;
 import br.com.julios.ccc.domains.Mensalidades;
@@ -30,6 +31,9 @@ public class ProfessorApi {
 
 	@Autowired
 	TurmaDAO turmaDAO;
+	
+	@Autowired
+	TipoTurmaDAO tipoTurmaDAO;
 
 	public Iterable<Professor> getProfessores() {
 
@@ -58,7 +62,7 @@ public class ProfessorApi {
 
 	public List<Turma> getTurmas(Long idProfessor) {
 		Professor prof = professorDAO.findOne(idProfessor);
-		return turmaDAO.findByProfessor1OrProfessor2(prof, prof);
+		return turmaDAO.getTurmaPorProfessor(prof);
 	}
 
 	public List<PagamentoProfessor> getSalarioProfessorPendente(Long idProfessor, String mes) throws ParseException {

@@ -53,6 +53,22 @@ public class FluxoCaixaApi {
 
 		return cadastrarFluxoCaixa(fluxo);
 	}
+	
+	public FluxoCaixa cadastrarFluxoCaixaAulaParticular(Mensalidades mensalidade, Integer qtdAulas) throws Exception{
+
+		TipoFluxoCaixa tipoFluxoMensalidade = tipoFluxoCaixaDAO.findOne(TipoFluxoCaixa.AULA_PARTICULAR);
+		
+		FluxoCaixa fluxo = new FluxoCaixa();
+		fluxo.setData(new Date());
+		fluxo.setDescricao("Aula Particular Aluno : " + mensalidade.getMatricula().getAluno().getNome());
+		fluxo.setObservacao("");
+		fluxo.setTipoFluxo(tipoFluxoMensalidade);
+		fluxo.setQuantidade(qtdAulas);
+		fluxo.setValor(mensalidade.getValorParaPagar());
+
+		return cadastrarFluxoCaixa(fluxo);
+		
+	}
 
 	public void atualizarFluxoCaixa(FluxoCaixa fluxoCaixa) {
 		fluxoCaixaDAO.save(fluxoCaixa);

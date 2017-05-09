@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.daos.MatriculaDAO;
+import br.com.julios.ccc.daos.TipoTurmaDAO;
 import br.com.julios.ccc.daos.TurmaDAO;
 import br.com.julios.ccc.domains.Matricula;
 import br.com.julios.ccc.domains.Professor;
+import br.com.julios.ccc.domains.TipoTurma;
 import br.com.julios.ccc.domains.Turma;
 
 @Service
@@ -22,6 +24,9 @@ public class TurmaApi {
 	TurmaDAO turmaDAO;
 
 	@Autowired
+	TipoTurmaDAO tipoTurmaDAO;
+	
+	@Autowired
 	MatriculaDAO matriculaDAO;
 
 	public Iterable<Turma> getTurmas() {
@@ -30,9 +35,10 @@ public class TurmaApi {
 	}
 
 	public void cadastrarTurma(Turma turma) {
-
+		TipoTurma tipo = tipoTurmaDAO.findOne(TipoTurma.TURMA);
+		
 		turma.setCodigo(geraCodigo(turma));
-
+		turma.setTipo(tipo);
 		turmaDAO.save(turma);
 	}
 
@@ -54,7 +60,7 @@ public class TurmaApi {
 
 	public Iterable<Matricula> getAlunosTurma(Long idTurma) {
 		Turma turma = turmaDAO.findOne(idTurma);
-		return matriculaDAO.getAlunosDaTurma(turma);
+		return turma.getMatriculas();
 
 	}
 
@@ -138,6 +144,17 @@ public class TurmaApi {
 			matricula.setDataExclusao(turma.getDataTermino());
 			matriculaDAO.save(matricula);
 		}
+		
+	}
+
+	public Turma cadastrarTurmaParticular(Turma turma) {
+		TipoTurma tipo = tipoTurmaDAO.findOne(TipoTurma.AULA_PARTICULAR);
+		turma.setNivel(null);
+		turma.setSala(null);
+		
+		turma.setCodigo("Particular");
+		turma.setTipo(tipo);
+		return turmaDAO.save(turma);
 		
 	}
 

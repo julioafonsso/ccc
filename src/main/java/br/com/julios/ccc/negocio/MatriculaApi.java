@@ -11,11 +11,13 @@ import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.daos.MatriculaDAO;
 import br.com.julios.ccc.daos.MensalidadesDAO;
+import br.com.julios.ccc.domains.Aluno;
 import br.com.julios.ccc.domains.Descontos;
 import br.com.julios.ccc.domains.FluxoCaixa;
 import br.com.julios.ccc.domains.Matricula;
 import br.com.julios.ccc.domains.Mensalidades;
 import br.com.julios.ccc.domains.MesReferencia;
+import br.com.julios.ccc.domains.TipoTurma;
 import br.com.julios.ccc.domains.Turma;
 
 @Service
@@ -32,17 +34,17 @@ public class MatriculaApi {
 
 	@Autowired
 	TurmaApi turmaApi;
-
+	
 	public Matricula getMatricula(Long id) {
 		return matriculaDAO.findOne(id);
 	}
 
-	public void matricularAluno(Matricula matricula) {
-		if(matricula.getDesconto() != null && matricula.getDesconto().getId() == 0)
+	public Matricula matricularAluno(Matricula matricula) {
+		if (matricula.getDesconto() != null && matricula.getDesconto().getId() == 0)
 			matricula.setDesconto(null);
 		matricula.setDataMatricula(new Date());
 		matricula.setDataExclusao(matricula.getTurma().getDataTermino());
-		matriculaDAO.save(matricula);
+		return matriculaDAO.save(matricula);
 	}
 
 	public void excluirMatricula(Matricula matricula) throws ParseException {
@@ -73,23 +75,43 @@ public class MatriculaApi {
 		return mensalidadeDAO.getMensalidadesParaPagar(matricula);
 	}
 
-	public Mensalidades criarMensalidade(Matricula matricula)throws ParseException{
+	public Mensalidades criarMensalidade(Matricula matricula) throws ParseException {
 		List<Mensalidades> mensalidades = mensalidadeDAO.getMensalidades(matricula);
 		MesReferencia mes = null;
-		if(!mensalidades.isEmpty())
+		if (!mensalidades.isEmpty())
 			mes = mesApi.getProximoMes(mensalidades.get(0).getMesReferencia());
 		else
 			mes = mesApi.getMesAtual();
 
-		return criarMensalidade(matricula,mes ,mesApi.getPrimeiroDia(mes) );
-		
+		return criarMensalidade(matricula, mes, mesApi.getPrimeiroDia(mes));
+
 	}
-	
+
 	public Mensalidades criarMensalidade(Matricula matricula, MesReferencia mesAtual, Date dataInicio)
 			throws ParseException {
 
 		Turma turma = matricula.getTurma();
+		double valorMensalidade = turma.getMensalidade();
+		
+		if(turma.getTipo().getId() == TipoTurma.TURMA)
+			valorMensalidade = calculaMensalidade(dataInicio, turma, mesAtual);
+		
 
+		MesReferencia mes = mesApi.getProximoMes();
+		String strVencimento = matricula.getDiaVencimento() + "/" + mes.getMes() + "/" + mes.getAno();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+		Mensalidades mensalidade = new Mensalidades();
+		mensalidade.setValorMensalidade(valorMensalidade);
+		mensalidade.setMatricula(matricula);
+		mensalidade.setMesReferencia(mesAtual);
+		mensalidade.setDataVencimento(sdf.parse(strVencimento));
+		mensalidadeDAO.save(mensalidade);
+		return mensalidade;
+	}
+
+	private Double calculaMensalidade(Date dataInicio, Turma turma, MesReferencia mesAtual ) throws ParseException{
 		int aulasTotais = 0;
 		int aulasMatriculado = 0;
 
@@ -115,21 +137,10 @@ public class MatriculaApi {
 		}
 
 		Double valorMensalidade = turma.getMensalidade() / aulasTotais * aulasMatriculado;
-
-		MesReferencia mes = mesApi.getProximoMes();
-		String strVencimento = matricula.getDiaVencimento() + "/" + mes.getMes() + "/" + mes.getAno();
-
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-		Mensalidades mensalidade = new Mensalidades();
-		mensalidade.setValorMensalidade(valorMensalidade);
-		mensalidade.setMatricula(matricula);
-		mensalidade.setMesReferencia(mesAtual);
-		mensalidade.setDataVencimento(sdf.parse(strVencimento));
-		mensalidadeDAO.save(mensalidade);
-		return mensalidade;
+		return valorMensalidade;
 	}
-
+	
+	
 	public void exlcuirMensalidades(List<Mensalidades> mensalidades) {
 		for (Mensalidades mensalidade : mensalidades) {
 			mensalidade.setDataExclusao(new Date());
@@ -147,6 +158,18 @@ public class MatriculaApi {
 		matriculaDAO.save(matricula);
 	}
 
-	
+	public Matricula matricularAluno(Turma turma, Aluno aluno) {
+		Matricula matricula = new Matricula();
+		matricula.setAluno(aluno);
+		matricula.setTurma(turma);
+		matricula.setDesconto(null);
+		return matricularAluno(matricula);
+
+	}
+
+	public List<Mensalidades> getAulasParticulares(Aluno aluno, Date diaInicio, Date diaFim) {
+		
+		return mensalidadeDAO.getPagamentoAulaParticular(aluno,  diaInicio, diaFim);
+	}
 
 }

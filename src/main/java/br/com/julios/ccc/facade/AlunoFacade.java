@@ -12,15 +12,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import br.com.julios.ccc.componentes.ExceptionValidacoes;
 import br.com.julios.ccc.daos.MensalidadesDAO;
 import br.com.julios.ccc.domains.Aluno;
+import br.com.julios.ccc.domains.AulaParticular;
 import br.com.julios.ccc.domains.FluxoCaixa;
 import br.com.julios.ccc.domains.Matricula;
 import br.com.julios.ccc.domains.Mensalidades;
+import br.com.julios.ccc.domains.Turma;
 import br.com.julios.ccc.negocio.AlunoApi;
 import br.com.julios.ccc.negocio.EmailApi;
 import br.com.julios.ccc.negocio.FluxoCaixaApi;
 import br.com.julios.ccc.negocio.FtpApi;
 import br.com.julios.ccc.negocio.MatriculaApi;
 import br.com.julios.ccc.negocio.ProfessorApi;
+import br.com.julios.ccc.negocio.TurmaApi;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
@@ -28,6 +31,9 @@ public class AlunoFacade {
 
 	@Autowired
 	AlunoApi alunoApi;
+	
+	@Autowired
+	TurmaApi turmaApi;
 
 	@Autowired
 	FtpApi ftp;
@@ -105,6 +111,25 @@ public class AlunoFacade {
 	public List<Mensalidades> getPagamentos(Long idAluno, Date diaInicio, Date diaFim) {
 		Aluno aluno = alunoApi.getAluno(idAluno);
 		return alunoApi.getPagamentos(aluno, diaInicio, diaFim);
+	}
+
+	public void cadastrarAulaParticular(AulaParticular aula, Long idAluno ) throws Exception {
+		Aluno aluno = alunoApi.getAluno(idAluno);
+		Turma turma = turmaApi.cadastrarTurmaParticular(aula.getTurma());
+		
+		Matricula matricula = matriculaApi.matricularAluno(turma, aluno);
+		Mensalidades mensalidade = matriculaApi.criarMensalidade(matricula);
+		mensalidade.setValorParaPagar(mensalidade.getValorMensalidade());
+		FluxoCaixa fluxo = fluxoApi.cadastrarFluxoCaixaAulaParticular(mensalidade, aula.getQtd());
+		matriculaApi.pagarMensalidade(mensalidade, fluxo);
+		
+		professorApi.cadastarPagamentosFuturos(mensalidade);
+		
+	}
+
+	public List<Mensalidades> getAulasParticulares(Long idAluno, Date diaInicio, Date diaFim) {
+		Aluno aluno = alunoApi.getAluno(idAluno);
+		return matriculaApi.getAulasParticulares(aluno, diaInicio, diaFim);
 	}
 
 }

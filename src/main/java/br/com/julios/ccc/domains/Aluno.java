@@ -2,7 +2,6 @@ package br.com.julios.ccc.domains;
 
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,15 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.julios.ccc.componentes.cpf.CPF;
@@ -90,20 +86,9 @@ public class Aluno {
 	@Column
 	private String foto;
 
-	@OneToMany(mappedBy = "aluno")
-	@JsonIgnore
-	@Where(clause = "data_exclusao is null or data_exclusao > CURRENT_DATE")
-	private List<Matricula> matriculas;
 
 	// Getters and Setters
 
-	public List<Matricula> getMatriculas() {
-		return matriculas;
-	}
-
-	public void setMatriculas(List<Matricula> matriculas) {
-		this.matriculas = matriculas;
-	}
 
 	public String getCpf() throws Exception {
 		if(cpf != null && cpf.length() > 0){

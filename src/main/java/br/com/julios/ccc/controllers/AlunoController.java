@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.julios.ccc.domains.Aluno;
+import br.com.julios.ccc.domains.AulaParticular;
 import br.com.julios.ccc.domains.Matricula;
 import br.com.julios.ccc.domains.Mensalidades;
 import br.com.julios.ccc.facade.AlunoFacade;
@@ -98,6 +99,27 @@ public class AlunoController {
 		return alunoFacade.getDebitos(idAluno);
 	}
 	
+	@RequestMapping(value = "{id}/aula-particular", method = RequestMethod.POST)
+	public void cadastrarAulaParticular(@PathVariable("id") Long idAluno, @RequestBody AulaParticular aula) throws Exception {
+		alunoFacade.cadastrarAulaParticular(aula, idAluno);
+		
+	}
+	
+	@RequestMapping(value = "{id}/aula-particular/{dataInicio}/{dataFim}", method = RequestMethod.GET)
+	public List<Mensalidades> consultarAulaParticular(@PathVariable("id") Long idAluno, @PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws Exception {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+		
+		Date diaInicio = sdf.parse(dataInicio);
+		Date diaFim = sdf.parse(dataFim);
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(diaFim);
+		c.add(Calendar.DATE, c.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
+		diaFim = c.getTime();
+
+		return alunoFacade.getAulasParticulares(idAluno, diaInicio, diaFim);
+	}
 	
 
 

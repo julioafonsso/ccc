@@ -83,7 +83,7 @@ public class Turma {
 	
 	
 	@OneToMany(mappedBy = "turma")
-		@JsonIgnoreProperties("turma")
+	@JsonIgnoreProperties("turma")
 	@Where(clause = "data_exclusao is null or data_exclusao > CURRENT_DATE")
 	@JsonIgnore
 	private List<Matricula> matriculas;
@@ -93,6 +93,9 @@ public class Turma {
 	
 	@Formula("(select count(*) from matricula ta , aluno a where a.id = ta.aluno_id and a.sexo = 'F' and ta.turma_id = id and ta.data_exclusao is null	)")
 	private int qtdAlunas;
+	
+	@ManyToOne
+	private TipoTurma tipo;
 
 	@Column
 	private boolean domingo;
@@ -333,6 +336,14 @@ public class Turma {
 			return isSabado();
 		return false;
 		
+	}
+
+	public TipoTurma getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoTurma tipo) {
+		this.tipo = tipo;
 	}
 	
 	

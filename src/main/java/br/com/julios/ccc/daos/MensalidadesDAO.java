@@ -29,9 +29,13 @@ public interface MensalidadesDAO extends JpaRepository<Mensalidades, Long>{
 	
 
 
-	@Query("select m from Mensalidades m where m.fluxoCaixa is not null and m.matricula.aluno = ?1 and m.dataExclusao is null and (m.matricula.turma.dataTermino is null or m.matricula.turma.dataTermino > CURRENT_DATE) and m.fluxoCaixa.data between ?2 and ?3")
+	@Query("select m from Mensalidades m where m.fluxoCaixa is not null and m.matricula.turma.id = 1 and m.matricula.aluno = ?1 and m.dataExclusao is null and (m.matricula.turma.dataTermino is null or m.matricula.turma.dataTermino > CURRENT_DATE) and m.fluxoCaixa.data between ?2 and ?3")
 	public List<Mensalidades> getMensalidadesPaga(Aluno aluno, Date diaInicio, Date diaFim);
 	
 	
 	public Mensalidades findByMesReferenciaAndMatricula(MesReferencia mes, Matricula matricula);
+
+	
+	@Query("select m from Mensalidades m where m.fluxoCaixa is not null and m.matricula.turma.tipo.id = 2 and m.matricula.aluno = ?1 and m.dataExclusao is null and (m.matricula.turma.dataTermino is null or m.matricula.turma.dataTermino > CURRENT_DATE) and m.fluxoCaixa.data between ?2 and ?3")
+	public List<Mensalidades> getPagamentoAulaParticular(Aluno aluno, Date diaInicio, Date diaFim);
 }

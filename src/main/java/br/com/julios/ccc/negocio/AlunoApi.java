@@ -12,11 +12,13 @@ import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.componentes.cpf.CPFValidador;
 import br.com.julios.ccc.daos.AlunoDAO;
+import br.com.julios.ccc.daos.MatriculaDAO;
 import br.com.julios.ccc.daos.MensalidadesDAO;
 import br.com.julios.ccc.domains.Aluno;
 import br.com.julios.ccc.domains.Matricula;
 import br.com.julios.ccc.domains.Mensalidades;
 import br.com.julios.ccc.domains.MesReferencia;
+import br.com.julios.ccc.domains.TipoTurma;
 import br.com.julios.ccc.util.Util;
 
 @Service
@@ -33,6 +35,9 @@ public class AlunoApi {
 
 	@Autowired
 	MatriculaApi matriculaApi;
+	
+	@Autowired
+	MatriculaDAO matriculaDAO;
 
 	public void cadastrarAluno(Aluno aluno) throws Exception {
 		alunoDAO.save(aluno);
@@ -75,7 +80,8 @@ public class AlunoApi {
 
 	public List<Matricula> getMatriculas(Long idAluno) {
 		Aluno a = alunoDAO.findOne(idAluno);
-		return a.getMatriculas();
+		
+		return matriculaDAO.getMatriculas(a, TipoTurma.TURMA);
 	}
 
 	public List<Mensalidades> getMensalidadesParaPagar(Aluno aluno) {
@@ -112,7 +118,7 @@ public class AlunoApi {
 
 	public List<Mensalidades> criarMensalidadesFuturas(Aluno aluno) throws Exception {
 		List<Mensalidades> retorno = new ArrayList<Mensalidades>();
-		List<Matricula> matriculas = aluno.getMatriculas();
+		List<Matricula> matriculas = getMatriculas(aluno.getId());
 		MesReferencia mesAtual = mesApi.getMesAtual();
 
 		for (Matricula matricula : matriculas) {
@@ -133,4 +139,6 @@ public class AlunoApi {
 	public List<Mensalidades> getPagamentos(Aluno aluno, Date diaInicio, Date diaFim) {
 		return mensalidadeDAO.getMensalidadesPaga(aluno, diaInicio, diaFim);
 	}
+
+	
 }
