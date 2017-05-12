@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.julios.ccc.domains.Usuario;
 import br.com.julios.ccc.facade.LoginFacade;
+import br.com.julios.ccc.infra.bd.model.UsuarioDO;
 
 @Controller
 @ResponseBody
@@ -19,7 +19,7 @@ public class LoginController {
 	LoginFacade login;
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public Usuario login(@RequestBody Usuario usuario) throws Exception{
+	public UsuarioDO login(@RequestBody UsuarioDO usuario) throws Exception{
 		return login.login(usuario);
 	}
 	

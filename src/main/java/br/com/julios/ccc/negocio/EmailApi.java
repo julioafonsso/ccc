@@ -12,14 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.componentes.EmailProperties;
-import br.com.julios.ccc.daos.MsgEmailDAO;
-import br.com.julios.ccc.domains.FluxoCaixa;
-import br.com.julios.ccc.domains.Matricula;
-import br.com.julios.ccc.domains.MensagemEmail;
-import br.com.julios.ccc.domains.Mensalidades;
-import br.com.julios.ccc.domains.PagamentoProfessor;
-import br.com.julios.ccc.domains.Professor;
-import br.com.julios.ccc.domains.Turma;
+import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
+import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
+import br.com.julios.ccc.infra.bd.model.MatriculaDO;
+import br.com.julios.ccc.infra.bd.model.MensagemEmailDO;
+import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
+import br.com.julios.ccc.infra.bd.model.PagamentoProfessorDO;
+import br.com.julios.ccc.infra.bd.model.TurmaDO;
 
 @Service
 public class EmailApi {
@@ -27,23 +26,23 @@ public class EmailApi {
 	@Autowired
 	EmailProperties emailProperties;
 	
-	@Autowired
-	MsgEmailDAO msgEmail;
+//	@Autowired
+//	MsgEmailDAO msgEmail;
 
 	public static void main(String[] args) throws Exception {
 		EmailApi e = new EmailApi();
 		e.enviarEmailReciboMensalidade(null);
 	}
 
-	public void enviarEmailReciboMatricula(Matricula matricula, FluxoCaixa fluxo) throws Exception {
+	public void enviarEmailReciboMatricula(MatriculaDO matricula, FluxoCaixaDO fluxo) throws Exception {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		HtmlEmail email = getConfigHmlEmail();
 		email.addTo(matricula.getAluno().getEmail());
-		email.setSubject(
-				"Recibo Pagamento Matricula " + matricula.getTurma().getModalidade().getNome() + " "
-						+ matricula.getTurma().getNivel().getNome());
+//		email.setSubject(
+//				"Recibo Pagamento Matricula " + matricula.getTurma().getModalidade().getNome() + " "
+//						+ matricula.getTurma().getNivel().getNome());
 
 		StringBuilder builder = new StringBuilder();
 		
@@ -56,7 +55,7 @@ public class EmailApi {
 		builder.replace( index, index +8,getDiasTurma(matricula.getTurma()));
 		
 		index = builder.indexOf("{{horario}}");
-		builder.replace( index, index +11,matricula.getTurma().getHorarioInicial() + " - " + matricula.getTurma().getHorarioFinal() );
+//		builder.replace( index, index +11,matricula.getTurma().getHorarioInicial() + " - " + matricula.getTurma().getHorarioFinal() );
 		
 		
 		index = builder.indexOf("{{valor}}");
@@ -79,16 +78,16 @@ public class EmailApi {
 		email.send();
 	}
 
-	public void enviarEmailReciboMensalidade(Mensalidades mensalidade) throws Exception {
+	public void enviarEmailReciboMensalidade(MensalidadeDO mensalidade) throws Exception {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		HtmlEmail email = getConfigHmlEmail();
 		email.addTo(mensalidade.getMatricula().getAluno().getEmail());
-		email.setSubject(
-				"Recibo Pagamento Mensalidade " + mensalidade.getMatricula().getTurma().getModalidade().getNome() + " "
-						+ mensalidade.getMatricula().getTurma().getNivel().getNome() + " - Mes "
-						+ mensalidade.getMesReferencia().getMes() + "/" + mensalidade.getMesReferencia().getAno());
+//		email.setSubject(
+//				"Recibo Pagamento Mensalidade " + mensalidade.getMatricula().getTurma().getModalidade().getNome() + " "
+//						+ mensalidade.getMatricula().getTurma().getNivel().getNome() + " - Mes "
+//						+ mensalidade.getMesReferencia().getMes() + "/" + mensalidade.getMesReferencia().getAno());
 
 		StringBuilder builder = new StringBuilder();
 		
@@ -101,7 +100,7 @@ public class EmailApi {
 		builder.replace( index, index +8,getDiasTurma(mensalidade.getMatricula().getTurma()));
 		
 		index = builder.indexOf("{{horario}}");
-		builder.replace( index, index +11,mensalidade.getMatricula().getTurma().getHorarioInicial() + " - " + mensalidade.getMatricula().getTurma().getHorarioFinal() );
+//		builder.replace( index, index +11,mensalidade.getMatricula().getTurma().getHorarioInicial() + " - " + mensalidade.getMatricula().getTurma().getHorarioFinal() );
 		
 		index = builder.indexOf("{{mesReferencia}}");
 		builder.replace( index, index +17, mensalidade.getMesReferencia().getMes() + "/" + mensalidade.getMesReferencia().getAno());
@@ -146,7 +145,7 @@ public class EmailApi {
 		return "style='display: inline-block; max-width: 100%; margin-bottom: 5px; font-weight: bold; color:#000000'";
 	}
 	
-	public void enviarEmailPagametoProfessor(List<PagamentoProfessor> pagamentos, FluxoCaixa fluxo, Professor professor) throws Exception{
+	public void enviarEmailPagametoProfessor(List<PagamentoProfessorDO> pagamentos, FluxoCaixaDO fluxo, FuncionarioDO professor) throws Exception{
 		HtmlEmail email = getConfigHmlEmail();
 		email.addTo(professor.getEmail());
 		email.setSubject("Detalhe de Pagamentos ");
@@ -176,7 +175,7 @@ public class EmailApi {
 		builder.append("</thead>");
 		builder.append("<tbody>");
 		int i =0;
-		for (PagamentoProfessor pg : pagamentos) {
+		for (PagamentoProfessorDO pg : pagamentos) {
 			builder.append("<tr>");
 			builder.append("<td "+getStyleTD(i) + ">"+ pg.getMensalidade().getMatricula().getTurma().getCodigo() +"</td>");
 			builder.append("<td "+getStyleTD(i) + ">"+ pg.getMensalidade().getMatricula().getAluno().getNome() +"</td>");
@@ -207,43 +206,43 @@ public class EmailApi {
 		return "style='width: 100%; max-width: 100%; margin-bottom: 20px; border: 1px solid #ddd;'";
 	}
 
-	private String getDiasTurma(Turma turma) {
+	private String getDiasTurma(TurmaDO turma) {
 		StringBuilder sb = new StringBuilder();
-		String separador = "";
-		if (turma.isDomingo()) {
-			sb.append(separador).append("Domingo");
-			separador = " - ";
-		}
-
-		if (turma.isSegunda()) {
-			sb.append(separador).append("Segunda");
-			separador = " - ";
-		}
-
-		if (turma.isTerca()) {
-			sb.append(separador).append("Terça");
-			separador = " - ";
-		}
-
-		if (turma.isQuarta()) {
-			sb.append(separador).append("Quarta");
-			separador = " - ";
-		}
-
-		if (turma.isQuinta()) {
-			sb.append(separador).append("Quinta");
-			separador = " - ";
-		}
-
-		if (turma.isSexta()) {
-			sb.append(separador).append("Sexta");
-			separador = " - ";
-		}
-
-		if (turma.isSabado()) {
-			sb.append(separador).append("Sabado");
-			separador = " - ";
-		}
+//		String separador = "";
+//		if (turma.isDomingo()) {
+//			sb.append(separador).append("Domingo");
+//			separador = " - ";
+//		}
+//
+//		if (turma.isSegunda()) {
+//			sb.append(separador).append("Segunda");
+//			separador = " - ";
+//		}
+//
+//		if (turma.isTerca()) {
+//			sb.append(separador).append("Terça");
+//			separador = " - ";
+//		}
+//
+//		if (turma.isQuarta()) {
+//			sb.append(separador).append("Quarta");
+//			separador = " - ";
+//		}
+//
+//		if (turma.isQuinta()) {
+//			sb.append(separador).append("Quinta");
+//			separador = " - ";
+//		}
+//
+//		if (turma.isSexta()) {
+//			sb.append(separador).append("Sexta");
+//			separador = " - ";
+//		}
+//
+//		if (turma.isSabado()) {
+//			sb.append(separador).append("Sabado");
+//			separador = " - ";
+//		}
 
 		return sb.toString();
 	}
@@ -285,10 +284,11 @@ public class EmailApi {
 	}
 
 	private String getMensagem() {
-		String msg = msgEmail.getMesage();
-		if(msg == null)
-			return "";
-		return msg;
+//		String msg = msgEmail.getMesage();
+//		if(msg == null)
+//			return "";
+//		return msg;
+		return null;
 	}
 
 	private HtmlEmail getConfigHmlEmail() throws Exception {
@@ -316,11 +316,12 @@ public class EmailApi {
 
 	}
 
-	public MensagemEmail getMensagemEmail() {
-		return msgEmail.getMensagemEmail();
+	public MensagemEmailDO getMensagemEmail() {
+//		return msgEmail.getMensagemEmail();
+		return null;
 	}
 
-	public void atualizarMensagem(MensagemEmail msg) {
-		msgEmail.save(msg);
+	public void atualizarMensagem(MensagemEmailDO msg) {
+//		msgEmail.save(msg);
 	}
 }

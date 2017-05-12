@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.julios.ccc.domains.Extrato;
+import br.com.julios.ccc.infra.bd.model.ExtratoDO;
 import br.com.julios.ccc.negocio.ExtratoApi;
 
 @Service
@@ -18,7 +18,7 @@ public class ExtratoFacade {
 	@Autowired
 	ExtratoApi extratoApi;
 	
-	public Collection<Extrato> getExtrato(Date dInicio, Date dFim) {
+	public Collection<ExtratoDO> getExtrato(Date dInicio, Date dFim) {
 		return extratoApi.getExtrato(dInicio, dFim);
 	}
 

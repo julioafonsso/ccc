@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.julios.ccc.domains.FluxoCaixa;
 import br.com.julios.ccc.facade.FluxoCaixaFacade;
+import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
 
 @Controller
 @ResponseBody
@@ -19,23 +19,20 @@ public class FluxoCaixaController {
 	FluxoCaixaFacade fluxoCaixaFacade;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public Iterable<FluxoCaixa> getFluxosCaixa(){
-		return fluxoCaixaFacade.getFluxosCaixa();
+	public Iterable<FluxoCaixaDO> getFluxosCaixa(){
+		return null;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarFluxoCaixa(@RequestBody FluxoCaixa fluxoCaixa){
-		fluxoCaixaFacade.cadastrarFluxoCaixa(fluxoCaixa);
+	public void cadastrarFluxoCaixa(@RequestBody FluxoCaixaDO fluxoCaixa){
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarFluxoCaixa(@RequestBody FluxoCaixa fluxoCaixa){
-		fluxoCaixaFacade.atualizarFluxoCaixa(fluxoCaixa);
+	public void atualizarFluxoCaixa(@RequestBody FluxoCaixaDO fluxoCaixa){
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)
-	public void apagarFluxoCaixa(@RequestBody FluxoCaixa fluxoCaixa){
-		fluxoCaixaFacade.apagarFluxoCaixa(fluxoCaixa);
+	public void apagarFluxoCaixa(@RequestBody FluxoCaixaDO fluxoCaixa){
 	}
 	
 	

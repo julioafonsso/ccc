@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.julios.ccc.domains.Matricula;
-import br.com.julios.ccc.domains.Turma;
 import br.com.julios.ccc.facade.MatriculaFacade;
 import br.com.julios.ccc.facade.TurmaFacade;
+import br.com.julios.ccc.infra.bd.model.MatriculaDO;
+import br.com.julios.ccc.infra.bd.model.TurmaDO;
 
 @Controller
 @ResponseBody
@@ -27,55 +27,48 @@ public class TurmaController {
 	MatriculaFacade matriculaFacade;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public Iterable<Turma> getTurmas(){
-		return turmaFacade.getTurmas();
+	public Iterable<TurmaDO> getTurmas(){
+		return null;
 	}
 
 	@RequestMapping(value="{id}/alunos" ,method = RequestMethod.GET)
-	public Iterable<Matricula> getAlunos(@PathVariable("id") Long idTurma){
-		return turmaFacade.getAlunosTurma(idTurma);
+	public Iterable<MatriculaDO> getAlunos(@PathVariable("id") Long idTurma){
+		return null;
 	}
 
 	
 	@RequestMapping(value = "{id}", method= RequestMethod.GET)
-	public Turma getTurma(@PathVariable("id") long id)
+	public TurmaDO getTurma(@PathVariable("id") long id)
 	{
-		return turmaFacade.getTurma(id);
+		return null;
 	}
 	
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarTurma(@RequestBody Turma turma) throws Exception{
-		turmaFacade.cadastrarTurma(turma);
+	public void cadastrarTurma(@RequestBody TurmaDO turma) throws Exception{
 	}
 	
 	@RequestMapping(value = "matricula", method = RequestMethod.POST)
-	public void matricularAluno(@RequestBody Matricula matricula) throws Exception{
-		matriculaFacade.matricularAluno(matricula);
+	public void matricularAluno(@RequestBody MatriculaDO matricula) throws Exception{
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarTurma(@RequestBody Turma turma) throws Exception{
-		turmaFacade.atualizarTurma(turma);
+	public void atualizarTurma(@RequestBody TurmaDO turma) throws Exception{
 	}
 	
 	@RequestMapping(value="{id}" , method = RequestMethod.DELETE)
 	public void apagarTurma(@PathVariable("id") long id) throws Exception{
-		turmaFacade.apagarTurma(id);
 	}
 	
 	@RequestMapping(value="matricula/{id}/desconto" , method = RequestMethod.DELETE)
 	public void apagarDesconto(@PathVariable("id") long id) throws Exception{
-		matriculaFacade.apagarDesconto(id);
 	}
 
 	@RequestMapping(value="matricula/{id}/desconto/{idDesconto}" , method = RequestMethod.PUT)
 	public void alterarDesconto(@PathVariable("id") long id, @PathVariable("idDesconto") long idDesconto) throws Exception{
-		matriculaFacade.alterarDesconto(id, idDesconto);
 	}
 	
 	@RequestMapping(value="matricula/{id}" , method = RequestMethod.DELETE)
 	public void excluirMatricula(@PathVariable("id") long id) throws ParseException{
-		matriculaFacade.excluirMatricula(id);
 	}
 }

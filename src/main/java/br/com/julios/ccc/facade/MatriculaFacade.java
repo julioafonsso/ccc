@@ -9,11 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.julios.ccc.domains.Aluno;
-import br.com.julios.ccc.domains.Descontos;
-import br.com.julios.ccc.domains.FluxoCaixa;
-import br.com.julios.ccc.domains.Matricula;
-import br.com.julios.ccc.domains.Mensalidades;
+import br.com.julios.ccc.infra.bd.model.AlunoDO;
+import br.com.julios.ccc.infra.bd.model.DescontosDO;
+import br.com.julios.ccc.infra.bd.model.MatriculaDO;
+import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.negocio.AlunoApi;
 import br.com.julios.ccc.negocio.DescontosApi;
 import br.com.julios.ccc.negocio.EmailApi;
@@ -47,14 +46,14 @@ public class MatriculaFacade {
 	@Autowired
 	DescontosApi descontoApi;
 
-	public void matricularAluno(Matricula matricula) throws Exception {
-		Aluno aluno = alunoApi.getAluno(matricula.getAluno().getId());
+	public void matricularAluno(MatriculaDO matricula) throws Exception {
+		AlunoDO aluno = alunoApi.getAluno(matricula.getAluno().getId());
 
 		matriculaApi.validaExisteMatricula(matricula);
 
-		FluxoCaixa pagamentoMatricula = fluxoApi.lancamentoMatricula(aluno, matricula.getTurma(), matricula.getValor());
+//		FluxoCaixaDO pagamentoMatricula = fluxoApi.lancamentoMatricula(aluno, matricula.getTurma(), matricula.getValor());
 
-		matricula.setPagamentroMatricula(pagamentoMatricula);
+//		matricula.setPagamentroMatricula(pagamentoMatricula);
 		
 		matriculaApi.matricularAluno(matricula);
 
@@ -62,26 +61,26 @@ public class MatriculaFacade {
 
 		matriculaApi.criarMensalidade(matricula, mesApi.getProximoMes(), mesApi.getPrimeiroDia(mesApi.getProximoMes()));
 		
-		email.enviarEmailReciboMatricula(matricula, pagamentoMatricula);
+//		email.enviarEmailReciboMatricula(matricula, pagamentoMatricula);
 
 	}
 
 	public void excluirMatricula(long id) throws ParseException {
-		Matricula matricula = matriculaApi.getMatricula(id);
-		List<Mensalidades> mensalidades = matriculaApi.getMensalidadesParaPagar(matricula);
+		MatriculaDO matricula = matriculaApi.getMatricula(id);
+		List<MensalidadeDO> mensalidades = matriculaApi.getMensalidadesParaPagar(matricula);
 		matriculaApi.excluirMatricula(matricula);
 		matriculaApi.exlcuirMensalidades(mensalidades);
 
 	}
 
 	public void apagarDesconto(long id) {
-		Matricula matricula = matriculaApi.getMatricula(id);
+		MatriculaDO matricula = matriculaApi.getMatricula(id);
 		matriculaApi.apagarDesconto(matricula);
 	}
 
 	public void alterarDesconto(long id, long idDesconto) {
-		Matricula matricula = matriculaApi.getMatricula(id);
-		Descontos desconto = descontoApi.getdesconto(idDesconto);
+		MatriculaDO matricula = matriculaApi.getMatricula(id);
+		DescontosDO desconto = descontoApi.getdesconto(idDesconto);
 		matriculaApi.alterarDesconto(matricula, desconto);
 		
 	}

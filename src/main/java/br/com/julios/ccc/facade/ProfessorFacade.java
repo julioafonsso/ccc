@@ -11,10 +11,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.julios.ccc.componentes.ExceptionValidacoes;
-import br.com.julios.ccc.domains.FluxoCaixa;
-import br.com.julios.ccc.domains.PagamentoProfessor;
-import br.com.julios.ccc.domains.Professor;
-import br.com.julios.ccc.domains.Turma;
+import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
+import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
+import br.com.julios.ccc.infra.bd.model.PagamentoProfessorDO;
+import br.com.julios.ccc.infra.bd.model.TurmaDO;
 import br.com.julios.ccc.negocio.EmailApi;
 import br.com.julios.ccc.negocio.FluxoCaixaApi;
 import br.com.julios.ccc.negocio.FtpApi;
@@ -39,11 +39,11 @@ public class ProfessorFacade {
 	@Autowired
 	EmailApi email;
 	
-	public Iterable<Professor> getProfessores() {
+	public Iterable<FuncionarioDO> getProfessores() {
 		return professorApi.getProfessores();
 	}
 
-	public void cadastrarProfessor(Professor professor) throws Exception {
+	public void cadastrarProfessor(FuncionarioDO professor) throws Exception {
 			professorApi.validaCPF(professor);
 			professorApi.validaEmail(professor);
 			professorApi.validaRG(professor);
@@ -51,7 +51,7 @@ public class ProfessorFacade {
 			professorApi.cadastrarProfessor(professor);
 	}
 
-	public void atualizarProfessor(Professor professor) throws Exception {
+	public void atualizarProfessor(FuncionarioDO professor) throws Exception {
 		professorApi.validaCPF(professor);
 		professorApi.validaEmail(professor);
 		professorApi.validaRG(professor);
@@ -59,30 +59,30 @@ public class ProfessorFacade {
 
 	}
 
-	public void apagarProfessor(Professor professor) {
+	public void apagarProfessor(FuncionarioDO professor) {
 		professorApi.apagarProfessor(professor);
 
 	}
 
-	public Professor getProfessor(Long idProfessor) {
+	public FuncionarioDO getProfessor(Long idProfessor) {
 		return professorApi.getProfessor(idProfessor);
 	}
 
-	public List<Turma> getTurmas(Long idProfessor) {
+	public List<TurmaDO> getTurmas(Long idProfessor) {
 		return professorApi.getTurmas(idProfessor);
 	}
 
-	public List<PagamentoProfessor> getSalarioProfessorPendente(Long idProfessor, String mes) throws ParseException {
+	public List<PagamentoProfessorDO> getSalarioProfessorPendente(Long idProfessor, String mes) throws ParseException {
 		return professorApi.getSalarioProfessorPendente(idProfessor, mes);
 	}
 
 	public void pagamentoProfessor(Long idProfessor, Long idSalario) throws Exception
 	{
-		PagamentoProfessor pp = professorApi.getSalario(idSalario);
-		Professor prof = professorApi.getProfessor(idProfessor);
-		FluxoCaixa fluxo = fluxoApi.cadastrarFluxoCaixaPagamentoProfessor(prof, pp.getValor());
+		PagamentoProfessorDO pp = professorApi.getSalario(idSalario);
+		FuncionarioDO prof = professorApi.getProfessor(idProfessor);
+		FluxoCaixaDO fluxo = fluxoApi.cadastrarFluxoCaixaPagamentoProfessor(prof, pp.getValor());
 		
-		List<PagamentoProfessor> pagamento = new ArrayList<PagamentoProfessor>();
+		List<PagamentoProfessorDO> pagamento = new ArrayList<PagamentoProfessorDO>();
 		
 		pagamento.add(pp);
 		
@@ -92,22 +92,22 @@ public class ProfessorFacade {
 	}
 	
 	public void pagamentoProfessor(Long idProfessor, String mes) throws Exception {
-		List<PagamentoProfessor> pagamento = getSalarioProfessorPendente(idProfessor, mes);
+		List<PagamentoProfessorDO> pagamento = getSalarioProfessorPendente(idProfessor, mes);
 		Double valorParaPagar = professorApi.getValorParaPagar(pagamento);
-		Professor prof = professorApi.getProfessor(idProfessor);
-		FluxoCaixa fluxo = fluxoApi.cadastrarFluxoCaixaPagamentoProfessor(prof, valorParaPagar);
+		FuncionarioDO prof = professorApi.getProfessor(idProfessor);
+		FluxoCaixaDO fluxo = fluxoApi.cadastrarFluxoCaixaPagamentoProfessor(prof, valorParaPagar);
 		professorApi.pagamentoProfessor(pagamento, fluxo);
 		
 		email.enviarEmailPagametoProfessor(pagamento, fluxo, prof);
 	}
 
-	public List<FluxoCaixa> getRecibos(Long idProfessor, Date diaInicio, Date diaFim) {
-		Professor professor = professorApi.getProfessor(idProfessor);
+	public List<FluxoCaixaDO> getRecibos(Long idProfessor, Date diaInicio, Date diaFim) {
+		FuncionarioDO professor = professorApi.getProfessor(idProfessor);
 		return professorApi.getRecibos(professor, diaInicio, diaFim);
 	}
 
-	public List<PagamentoProfessor> getDetalhePagamento(Long idFluxo) {
-		FluxoCaixa fluxo = fluxoApi.getFluxo(idFluxo);
+	public List<PagamentoProfessorDO> getDetalhePagamento(Long idFluxo) {
+		FluxoCaixaDO fluxo = fluxoApi.getFluxo(idFluxo);
 		return professorApi.getDetalheRecibo(fluxo);
 	}
 }

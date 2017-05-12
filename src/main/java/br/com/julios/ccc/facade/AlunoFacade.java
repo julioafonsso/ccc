@@ -1,4 +1,4 @@
-	package br.com.julios.ccc.facade;
+package br.com.julios.ccc.facade;
 
 import java.util.Date;
 import java.util.List;
@@ -10,13 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import br.com.julios.ccc.componentes.ExceptionValidacoes;
-import br.com.julios.ccc.daos.MensalidadesDAO;
-import br.com.julios.ccc.domains.Aluno;
-import br.com.julios.ccc.domains.AulaParticular;
-import br.com.julios.ccc.domains.FluxoCaixa;
-import br.com.julios.ccc.domains.Matricula;
-import br.com.julios.ccc.domains.Mensalidades;
-import br.com.julios.ccc.domains.Turma;
+import br.com.julios.ccc.infra.bd.model.AlunoDO;
+import br.com.julios.ccc.infra.bd.model.AulaParticularDO;
+import br.com.julios.ccc.infra.bd.model.MatriculaDO;
+import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.negocio.AlunoApi;
 import br.com.julios.ccc.negocio.EmailApi;
 import br.com.julios.ccc.negocio.FluxoCaixaApi;
@@ -31,104 +28,107 @@ public class AlunoFacade {
 
 	@Autowired
 	AlunoApi alunoApi;
-	
+
 	@Autowired
 	TurmaApi turmaApi;
 
 	@Autowired
 	FtpApi ftp;
-	
+
 	@Autowired
 	FluxoCaixaApi fluxoApi;
 
 	@Autowired
 	MatriculaApi matriculaApi;
-	
+
 	@Autowired
 	ProfessorApi professorApi;
-	
-	@Autowired
-	MensalidadesDAO mensDAO;
-	
+
+	// @Autowired
+	// MensalidadesDAO mensDAO;
+
 	@Autowired
 	ExceptionValidacoes validacao;
-	
+
 	@Autowired
 	EmailApi email;
 
-	public Iterable<Aluno> getAlunos(String nome, String cpf, String email) throws Exception {
+	public Iterable<AlunoDO> getAlunos(String nome, String cpf, String email) throws Exception {
 
 		return alunoApi.getAlunos(nome, cpf, email);
 	}
 
-	public void cadastrarAluno(Aluno aluno) throws Exception {
-			alunoApi.validaCPF(aluno);
-//			alunoApi.validaEmail(aluno);
-			alunoApi.validaRG(aluno);
-			alunoApi.cadastrarAluno(aluno);
+	public void cadastrarAluno(AlunoDO aluno) throws Exception {
+		alunoApi.validaCPF(aluno);
+		// alunoApi.validaEmail(aluno);
+		alunoApi.validaRG(aluno);
+		alunoApi.cadastrarAluno(aluno);
 	}
 
-	public void atualizarAluno(Aluno aluno) throws Exception {
+	public void atualizarAluno(AlunoDO aluno) throws Exception {
 		alunoApi.validaCPF(aluno);
-//		alunoApi.validaEmail(aluno);
+		// alunoApi.validaEmail(aluno);
 		alunoApi.validaRG(aluno);
 		alunoApi.atualizarAluno(aluno);
 	}
 
-	public void apagarAluno(Aluno aluno) {
+	public void apagarAluno(AlunoDO aluno) {
 		alunoApi.apagarAluno(aluno);
 	}
 
-	public Aluno getAluno(@PathVariable("id") Long idAluno) {
+	public AlunoDO getAluno(@PathVariable("id") Long idAluno) {
 		return alunoApi.getAluno(idAluno);
 	}
 
-	public List<Matricula> getMatriculas(Long idAluno) {
+	public List<MatriculaDO> getMatriculas(Long idAluno) {
 		return alunoApi.getMatriculas(idAluno);
 	}
 
-	public List<Mensalidades> getDebitos(Long idAluno) throws Exception {
-		Aluno aluno = alunoApi.getAluno(idAluno);
-//		alunoApi.criarMensalidadesFuturas(aluno);
-		
+	public List<MensalidadeDO> getDebitos(Long idAluno) throws Exception {
+		AlunoDO aluno = alunoApi.getAluno(idAluno);
+		// alunoApi.criarMensalidadesFuturas(aluno);
+
 		return alunoApi.getMensalidadesParaPagar(aluno);
 	}
-	
-	public void pagarMensalidade(Mensalidades mensalidade) throws Exception {
-		Mensalidades mensalidadeParaPagar = mensDAO.findOne(mensalidade.getId());
-		mensalidadeParaPagar.setValorParaPagar(mensalidade.getValorParaPagar());
-		
-		FluxoCaixa fluxo = fluxoApi.cadastrarFluxoCaixaPagamentoMensalidade(mensalidadeParaPagar);
-		matriculaApi.pagarMensalidade(mensalidadeParaPagar, fluxo);
-		professorApi.cadastarPagamentosFuturos(mensalidadeParaPagar);
-		
-		matriculaApi.criarMensalidade(mensalidadeParaPagar.getMatricula());
-		
-		email.enviarEmailReciboMensalidade(mensalidadeParaPagar);
+
+	public void pagarMensalidade(MensalidadeDO mensalidade) throws Exception {
+		// MensalidadeDO mensalidadeParaPagar =
+		// mensDAO.findOne(mensalidade.getId());
+		// mensalidadeParaPagar.setValorParaPagar(mensalidade.getValorParaPagar());
+		//
+		// FluxoCaixaDO fluxo =
+		// fluxoApi.cadastrarFluxoCaixaPagamentoMensalidade(mensalidadeParaPagar);
+		// matriculaApi.pagarMensalidade(mensalidadeParaPagar, fluxo);
+		// professorApi.cadastarPagamentosFuturos(mensalidadeParaPagar);
+		//
+		// matriculaApi.criarMensalidade(mensalidadeParaPagar.getMatricula());
+		//
+		// email.enviarEmailReciboMensalidade(mensalidadeParaPagar);
 	}
 
-	
-	public List<Mensalidades> getPagamentos(Long idAluno, Date diaInicio, Date diaFim) {
-		Aluno aluno = alunoApi.getAluno(idAluno);
+	public List<MensalidadeDO> getPagamentos(Long idAluno, Date diaInicio, Date diaFim) {
+		AlunoDO aluno = alunoApi.getAluno(idAluno);
 		return alunoApi.getPagamentos(aluno, diaInicio, diaFim);
 	}
 
-	public void cadastrarAulaParticular(AulaParticular aula, Long idAluno ) throws Exception {
-		Aluno aluno = alunoApi.getAluno(idAluno);
-		Turma turma = turmaApi.cadastrarTurmaParticular(aula.getTurma());
-		
-		Matricula matricula = matriculaApi.matricularAluno(turma, aluno);
-		Mensalidades mensalidade = matriculaApi.criarMensalidade(matricula);
-		mensalidade.setValorParaPagar(mensalidade.getValorMensalidade());
-		FluxoCaixa fluxo = fluxoApi.cadastrarFluxoCaixaAulaParticular(mensalidade, aula.getQtd());
-		matriculaApi.pagarMensalidade(mensalidade, fluxo);
-		
-		professorApi.cadastarPagamentosFuturos(mensalidade);
-		
+	public void cadastrarAulaParticular(AulaParticularDO aula, Long idAluno) throws Exception {
+		// AlunoDO aluno = alunoApi.getAluno(idAluno);
+		// TurmaDO turma = turmaApi.cadastrarTurmaParticular(aula.getTurma());
+		//
+		// MatriculaDO matricula = matriculaApi.matricularAluno(turma, aluno);
+		// MensalidadeDO mensalidade = matriculaApi.criarMensalidade(matricula);
+		// mensalidade.setValorParaPagar(mensalidade.getValorMensalidade());
+		// FluxoCaixaDO fluxo =
+		// fluxoApi.cadastrarFluxoCaixaAulaParticular(mensalidade,
+		// aula.getQtd());
+		// matriculaApi.pagarMensalidade(mensalidade, fluxo);
+		//
+		// professorApi.cadastarPagamentosFuturos(mensalidade);
+		//
 	}
 
-	public List<Mensalidades> getAulasParticulares(Long idAluno, Date diaInicio, Date diaFim) {
-		Aluno aluno = alunoApi.getAluno(idAluno);
+	public List<MensalidadeDO> getAulasParticulares(Long idAluno, Date diaInicio, Date diaFim) {
+		AlunoDO aluno = alunoApi.getAluno(idAluno);
 		return matriculaApi.getAulasParticulares(aluno, diaInicio, diaFim);
 	}
 

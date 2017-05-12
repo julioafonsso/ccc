@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.julios.ccc.domains.ModalidadeTurma;
+import br.com.julios.ccc.infra.bd.model.ModalidadeTurmaDO;
 import br.com.julios.ccc.negocio.ModalidadeTurmaApi;
 
 @Service
@@ -18,30 +18,30 @@ public class ModalidadeTurmaFacade {
 	
 	
 		
-	public Iterable<ModalidadeTurma> getmodalidadeTurma() {
+	public Iterable<ModalidadeTurmaDO> getmodalidadeTurma() {
 		return modalidadeTurmaApi.getmodalidadeTurma();
 	}
 
 
-	public void cadastarModalidade(ModalidadeTurma modalidade) {
+	public void cadastarModalidade(ModalidadeTurmaDO modalidade) {
 		modalidadeTurmaApi.cadastarModalidade(modalidade);
 	}
 
 
-	public void atualizarModalidade(ModalidadeTurma modalidadeTurma) {
+	public void atualizarModalidade(ModalidadeTurmaDO modalidadeTurma) {
 		modalidadeTurmaApi.atualizarModalidade(modalidadeTurma);
 		
 	}
 
 
 	public void apagarModalidade(Long id) throws Exception {
-		ModalidadeTurma modalidade = modalidadeTurmaApi.getmodalidadeTurma(id);
+		ModalidadeTurmaDO modalidade = modalidadeTurmaApi.getmodalidadeTurma(id);
 		modalidadeTurmaApi.validaExisteTurmaAtiva(modalidade);
 		modalidadeTurmaApi.apagarModalidade(modalidade);
 	}
 
 
-	public ModalidadeTurma getmodalidadeTurma(Long id) {
+	public ModalidadeTurmaDO getmodalidadeTurma(Long id) {
 		return modalidadeTurmaApi.getmodalidadeTurma(id);
 	}
 

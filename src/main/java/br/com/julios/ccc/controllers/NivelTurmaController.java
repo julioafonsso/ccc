@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.julios.ccc.domains.NivelTurma;
+import br.com.julios.ccc.infra.bd.model.NivelTurmaDO;
 import br.com.julios.ccc.negocio.NivelTurmaApi;
 
 @Controller
@@ -18,8 +18,8 @@ public class NivelTurmaController {
 	NivelTurmaApi nivelTurmaApi;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public Iterable<NivelTurma> getnivelTurma(){
-		return nivelTurmaApi.getnivelTurma();
+	public Iterable<NivelTurmaDO> getnivelTurma(){
+		return null;
 	}
 
 }

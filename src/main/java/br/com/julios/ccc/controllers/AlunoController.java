@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.julios.ccc.domains.Aluno;
-import br.com.julios.ccc.domains.AulaParticular;
-import br.com.julios.ccc.domains.Matricula;
-import br.com.julios.ccc.domains.Mensalidades;
 import br.com.julios.ccc.facade.AlunoFacade;
 import br.com.julios.ccc.facade.FtpFacade;
+import br.com.julios.ccc.infra.bd.model.AlunoDO;
+import br.com.julios.ccc.infra.bd.model.AulaParticularDO;
+import br.com.julios.ccc.infra.bd.model.MatriculaDO;
+import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 
 @Controller
 @ResponseBody
@@ -37,42 +37,38 @@ public class AlunoController {
 //	private HttpServletRequest http;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public Iterable<Aluno> getAlunos(@RequestParam(value = "nome", required = false) String nome,
+	public Iterable<AlunoDO> getAlunos(@RequestParam(value = "nome", required = false) String nome,
 			@RequestParam(value = "cpf", required = false) String cpf,
 			@RequestParam(value = "email", required = false) String email) throws Exception {
 
-		return alunoFacade.getAlunos(nome, cpf, email);
+		return null;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarAluno(@RequestBody Aluno aluno) throws Exception {
-		alunoFacade.cadastrarAluno(aluno);
+	public void cadastrarAluno(@RequestBody AlunoDO aluno) throws Exception {
 	}
 
 	
 
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarAluno(@RequestBody Aluno aluno) throws Exception {
-		alunoFacade.atualizarAluno(aluno);
+	public void atualizarAluno(@RequestBody AlunoDO aluno) throws Exception {
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)
-	public void apagarAluno(Aluno aluno) {
-		alunoFacade.apagarAluno(aluno);
+	public void apagarAluno(AlunoDO aluno) {
 	}
 
 	@RequestMapping(value = "pagamento", method = RequestMethod.POST)
-	public void efetuarPagamento(@RequestBody Mensalidades mensalidade) throws Exception {
-		alunoFacade.pagarMensalidade(mensalidade);
+	public void efetuarPagamento(@RequestBody MensalidadeDO mensalidade) throws Exception {
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public Aluno getAluno(@PathVariable("id") Long idAluno) {
-		return alunoFacade.getAluno(idAluno);
+	public AlunoDO getAluno(@PathVariable("id") Long idAluno) {
+		return null;
 	}
 
 	@RequestMapping(value = "{id}/pagamentos/{dataInicio}/{dataFim}", method = RequestMethod.GET)
-	public List<Mensalidades> getPagamentos(@PathVariable("id") Long idAluno, @PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws Exception {
+	public List<MensalidadeDO> getPagamentos(@PathVariable("id") Long idAluno, @PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws Exception {
 		
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
@@ -86,27 +82,27 @@ public class AlunoController {
 		diaFim = c.getTime();
 
 		
-		return alunoFacade.getPagamentos(idAluno, diaInicio, diaFim);
+//		return alunoFacade.getPagamentos(idAluno, diaInicio, diaFim);
+		return null;
 	}
 	
 	@RequestMapping(value = "{id}/turmas", method = RequestMethod.GET)
-	public List<Matricula> getTurmas(@PathVariable("id") Long idAluno) {
-		return alunoFacade.getMatriculas(idAluno);
+	public List<MatriculaDO> getTurmas(@PathVariable("id") Long idAluno) {
+		return null;
 	}
 
 	@RequestMapping(value = "{id}/debitos", method = RequestMethod.GET)
-	public List<Mensalidades> getDebitos(@PathVariable("id") Long idAluno) throws Exception {
-		return alunoFacade.getDebitos(idAluno);
+	public List<MensalidadeDO> getDebitos(@PathVariable("id") Long idAluno) throws Exception {
+		return null;
 	}
 	
 	@RequestMapping(value = "{id}/aula-particular", method = RequestMethod.POST)
-	public void cadastrarAulaParticular(@PathVariable("id") Long idAluno, @RequestBody AulaParticular aula) throws Exception {
-		alunoFacade.cadastrarAulaParticular(aula, idAluno);
+	public void cadastrarAulaParticular(@PathVariable("id") Long idAluno, @RequestBody AulaParticularDO aula) throws Exception {
 		
 	}
 	
 	@RequestMapping(value = "{id}/aula-particular/{dataInicio}/{dataFim}", method = RequestMethod.GET)
-	public List<Mensalidades> consultarAulaParticular(@PathVariable("id") Long idAluno, @PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws Exception {
+	public List<MensalidadeDO> consultarAulaParticular(@PathVariable("id") Long idAluno, @PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws Exception {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
 		
@@ -117,8 +113,8 @@ public class AlunoController {
 		c.setTime(diaFim);
 		c.add(Calendar.DATE, c.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
 		diaFim = c.getTime();
-
-		return alunoFacade.getAulasParticulares(idAluno, diaInicio, diaFim);
+		
+		return null;
 	}
 	
 

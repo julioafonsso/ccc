@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.julios.ccc.domains.FluxoCaixa;
-import br.com.julios.ccc.domains.TipoFluxoCaixa;
+import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
+import br.com.julios.ccc.infra.bd.model.TipoFluxoCaixaDO;
 import br.com.julios.ccc.negocio.FluxoCaixaApi;
 import br.com.julios.ccc.negocio.TipoFluxoCaixaApi;
 
@@ -20,51 +20,51 @@ public class FluxoCaixaFacade {
 	@Autowired
 	TipoFluxoCaixaApi tipoFluxoCaixaApi;
 	
-	public Iterable<FluxoCaixa> getFluxosCaixa() {
+	public Iterable<FluxoCaixaDO> getFluxosCaixa() {
 		return fluxoApi.getFluxosCaixa();
 	}
 
-	public void cadastrarFluxoCaixa(FluxoCaixa fluxoCaixa) {
+	public void cadastrarFluxoCaixa(FluxoCaixaDO fluxoCaixa) {
 		fluxoApi.cadastrarFluxoCaixa(fluxoCaixa);
 	}
 
-	public void atualizarFluxoCaixa(FluxoCaixa fluxoCaixa) {
+	public void atualizarFluxoCaixa(FluxoCaixaDO fluxoCaixa) {
 		fluxoApi.atualizarFluxoCaixa(fluxoCaixa);
 	}
 
-	public void apagarFluxoCaixa(FluxoCaixa fluxoCaixa) {
+	public void apagarFluxoCaixa(FluxoCaixaDO fluxoCaixa) {
 		fluxoApi.apagarFluxoCaixa(fluxoCaixa);
 	}
 
-	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixa() {
+	public Iterable<TipoFluxoCaixaDO> getTipoFluxoCaixa() {
 		return tipoFluxoCaixaApi.getTipoFluxoCaixa();
 	}
 
-	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixaEntrada() {
+	public Iterable<TipoFluxoCaixaDO> getTipoFluxoCaixaEntrada() {
 		return tipoFluxoCaixaApi.getTipoFluxoCaixaEntrada();
 	}
 
-	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixaSaida() {
+	public Iterable<TipoFluxoCaixaDO> getTipoFluxoCaixaSaida() {
 		return tipoFluxoCaixaApi.getTipoFluxoCaixaSaida();
 	}
 
-	public void cadastrarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) {
+	public void cadastrarTipoFluxoCaixa(TipoFluxoCaixaDO tipoFluxoCaixa) {
 		tipoFluxoCaixaApi.cadastrarTipoFluxoCaixa(tipoFluxoCaixa);
 	}
 
-	public void atualizarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) {
+	public void atualizarTipoFluxoCaixa(TipoFluxoCaixaDO tipoFluxoCaixa) {
 		tipoFluxoCaixaApi.atualizarTipoFluxoCaixa(tipoFluxoCaixa);
 		
 	}
 
 	public void apagarTipoFluxoCaixa(Long id) throws Exception {
-		TipoFluxoCaixa tipoFluxoCaixa = tipoFluxoCaixaApi.getTipoFluxoCaixa(id);
-		tipoFluxoCaixa.validaExisteFluxoCaixa(tipoFluxoCaixa);
+		TipoFluxoCaixaDO tipoFluxoCaixa = tipoFluxoCaixaApi.getTipoFluxoCaixa(id);
+//		tipoFluxoCaixa.validaExisteFluxoCaixa(tipoFluxoCaixa);
 		tipoFluxoCaixaApi.apagarTipoFluxoCaixa(tipoFluxoCaixa);
 		
 	}
 
-	public TipoFluxoCaixa getTipoFluxoCaixa(Long id) {
+	public TipoFluxoCaixaDO getTipoFluxoCaixa(Long id) {
 		return tipoFluxoCaixaApi.getTipoFluxoCaixa(id);
 	}
 

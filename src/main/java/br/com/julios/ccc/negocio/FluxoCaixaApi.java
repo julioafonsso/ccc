@@ -1,19 +1,16 @@
 
 package br.com.julios.ccc.negocio;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.julios.ccc.daos.FluxoCaixaDAO;
-import br.com.julios.ccc.daos.TipoFluxoCaixaDAO;
-import br.com.julios.ccc.domains.Aluno;
-import br.com.julios.ccc.domains.FluxoCaixa;
-import br.com.julios.ccc.domains.Mensalidades;
-import br.com.julios.ccc.domains.Professor;
-import br.com.julios.ccc.domains.TipoFluxoCaixa;
-import br.com.julios.ccc.domains.Turma;
+import br.com.julios.ccc.infra.bd.daos.FluxoCaixaDAO;
+import br.com.julios.ccc.infra.bd.daos.TipoFluxoCaixaDAO;
+import br.com.julios.ccc.infra.bd.model.AlunoDO;
+import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
+import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
+import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
+import br.com.julios.ccc.infra.bd.model.TurmaDO;
 
 @Service
 public class FluxoCaixaApi {
@@ -24,11 +21,11 @@ public class FluxoCaixaApi {
 	@Autowired 
 	TipoFluxoCaixaDAO tipoFluxoCaixaDAO;
 
-	public Iterable<FluxoCaixa> getFluxosCaixa() {
+	public Iterable<FluxoCaixaDO> getFluxosCaixa() {
 		return fluxoCaixaDAO.findAll();
 	}
 
-	public FluxoCaixa cadastrarFluxoCaixa(FluxoCaixa fluxoCaixa) {
+	public FluxoCaixaDO cadastrarFluxoCaixa(FluxoCaixaDO fluxoCaixa) {
 		if (!fluxoCaixa.getTipoFluxo().isIndEntrada())
 			fluxoCaixa.setValor(fluxoCaixa.getValor() * -1);
 		
@@ -39,73 +36,75 @@ public class FluxoCaixaApi {
 		return fluxoCaixa;
 	}
 
-	public FluxoCaixa cadastrarFluxoCaixaPagamentoMensalidade(Mensalidades mensalidade) throws Exception{
+	public FluxoCaixaDO cadastrarFluxoCaixaPagamentoMensalidade(MensalidadeDO mensalidade) throws Exception{
 		
 		
-		TipoFluxoCaixa tipoFluxoMensalidade = tipoFluxoCaixaDAO.findOne(TipoFluxoCaixa.MENSALIDADE);
-		
-		FluxoCaixa fluxo = new FluxoCaixa();
-		fluxo.setData(new Date());
-		fluxo.setDescricao("Recebimento Mensalidade Aluno : " + mensalidade.getMatricula().getAluno().getNome());
-		fluxo.setObservacao("Mensalidade do Mês :" + mensalidade.getMesReferencia().getNomeMes()  + "  de " +  mensalidade.getMesReferencia().getAno());
-		fluxo.setTipoFluxo(tipoFluxoMensalidade);
-		fluxo.setValor(mensalidade.getValorParaPagar());
-
-		return cadastrarFluxoCaixa(fluxo);
+//		TipoFluxoCaixaDO tipoFluxoMensalidade = tipoFluxoCaixaDAO.findOne(TipoFluxoCaixaDO.MENSALIDADE);
+//		
+//		FluxoCaixaDO fluxo = new FluxoCaixaDO();
+//		fluxo.setData(new Date());
+//		fluxo.setDescricao("Recebimento Mensalidade Aluno : " + mensalidade.getMatricula().getAluno().getNome());
+//		fluxo.setObservacao("Mensalidade do Mês :" + mensalidade.getMesReferencia().getNomeMes()  + "  de " +  mensalidade.getMesReferencia().getAno());
+//		fluxo.setTipoFluxo(tipoFluxoMensalidade);
+//		fluxo.setValor(mensalidade.getValorParaPagar());
+//
+//		return cadastrarFluxoCaixa(fluxo);
+		return null;
 	}
 	
-	public FluxoCaixa cadastrarFluxoCaixaAulaParticular(Mensalidades mensalidade, Integer qtdAulas) throws Exception{
+	public FluxoCaixaDO cadastrarFluxoCaixaAulaParticular(MensalidadeDO mensalidade, Integer qtdAulas) throws Exception{
 
-		TipoFluxoCaixa tipoFluxoMensalidade = tipoFluxoCaixaDAO.findOne(TipoFluxoCaixa.AULA_PARTICULAR);
-		
-		FluxoCaixa fluxo = new FluxoCaixa();
-		fluxo.setData(new Date());
-		fluxo.setDescricao("Aula Particular Aluno : " + mensalidade.getMatricula().getAluno().getNome());
-		fluxo.setObservacao("");
-		fluxo.setTipoFluxo(tipoFluxoMensalidade);
-		fluxo.setQuantidade(qtdAulas);
-		fluxo.setValor(mensalidade.getValorParaPagar());
-
-		return cadastrarFluxoCaixa(fluxo);
-		
+//		TipoFluxoCaixaDO tipoFluxoMensalidade = tipoFluxoCaixaDAO.findOne(TipoFluxoCaixaDO.AULA_PARTICULAR);
+//		
+//		FluxoCaixaDO fluxo = new FluxoCaixaDO();
+//		fluxo.setData(new Date());
+//		fluxo.setDescricao("Aula Particular Aluno : " + mensalidade.getMatricula().getAluno().getNome());
+//		fluxo.setObservacao("");
+//		fluxo.setTipoFluxo(tipoFluxoMensalidade);
+//		fluxo.setQuantidade(qtdAulas);
+//		fluxo.setValor(mensalidade.getValorParaPagar());
+//
+//		return cadastrarFluxoCaixa(fluxo);
+		return null;
 	}
 
-	public void atualizarFluxoCaixa(FluxoCaixa fluxoCaixa) {
+	public void atualizarFluxoCaixa(FluxoCaixaDO fluxoCaixa) {
 		fluxoCaixaDAO.save(fluxoCaixa);
 	}
 
-	public void apagarFluxoCaixa(FluxoCaixa fluxoCaixa) {
+	public void apagarFluxoCaixa(FluxoCaixaDO fluxoCaixa) {
 		fluxoCaixaDAO.delete(fluxoCaixa);
 	}
 
-	public FluxoCaixa cadastrarFluxoCaixaPagamentoProfessor(Professor professor, Double valor) {
-		TipoFluxoCaixa tipoFluxoPagamentoProfessor = tipoFluxoCaixaDAO.findOne(TipoFluxoCaixa.PAGAMENTO_PROFESSOR);
-		
-
-		FluxoCaixa fluxo = new FluxoCaixa();
-		fluxo.setData(new Date());
-		fluxo.setDescricao("Pagamento Professor: " + professor.getNome());
-		fluxo.setTipoFluxo(tipoFluxoPagamentoProfessor);
-		fluxo.setValor(valor);
-
-		return cadastrarFluxoCaixa(fluxo);
-
+	public FluxoCaixaDO cadastrarFluxoCaixaPagamentoProfessor(FuncionarioDO professor, Double valor) {
+//		TipoFluxoCaixaDO tipoFluxoPagamentoProfessor = tipoFluxoCaixaDAO.findOne(TipoFluxoCaixaDO.PAGAMENTO_PROFESSOR);
+//		
+//
+//		FluxoCaixaDO fluxo = new FluxoCaixaDO();
+//		fluxo.setData(new Date());
+//		fluxo.setDescricao("Pagamento Professor: " + professor.getNome());
+//		fluxo.setTipoFluxo(tipoFluxoPagamentoProfessor);
+//		fluxo.setValor(valor);
+//
+//		return cadastrarFluxoCaixa(fluxo);
+		return null;
 	}
 
-	public FluxoCaixa lancamentoMatricula(Aluno aluno, Turma turma, Double valor) {
-		TipoFluxoCaixa tipoFluxoMatricula = tipoFluxoCaixaDAO.findOne(TipoFluxoCaixa.MATRICULA);
-		FluxoCaixa fluxo = new FluxoCaixa();
-		fluxo.setData(new Date());
-		fluxo.setDescricao("Matricula do Aluno: " + aluno.getNome() + " - Turma Codigo: " + turma.getCodigo());
-		fluxo.setTipoFluxo(tipoFluxoMatricula);
-		fluxo.setValor(valor);
+	public FluxoCaixaDO lancamentoMatricula(AlunoDO aluno, TurmaDO turma, Double valor) {
+//		TipoFluxoCaixaDO tipoFluxoMatricula = tipoFluxoCaixaDAO.findOne(TipoFluxoCaixaDO.MATRICULA);
+//		FluxoCaixaDO fluxo = new FluxoCaixaDO();
+//		fluxo.setData(new Date());
+//		fluxo.setDescricao("Matricula do Aluno: " + aluno.getNome() + " - Turma Codigo: " + turma.getCodigo());
+//		fluxo.setTipoFluxo(tipoFluxoMatricula);
+//		fluxo.setValor(valor);
+//
+//		return cadastrarFluxoCaixa(fluxo);
 
-		return cadastrarFluxoCaixa(fluxo);
-
+		return null;
 		
 	}
 
-	public FluxoCaixa getFluxo(Long idFluxo) {
+	public FluxoCaixaDO getFluxo(Long idFluxo) {
 		return fluxoCaixaDAO.findOne(idFluxo);
 	}
 

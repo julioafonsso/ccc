@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.julios.ccc.domains.Extrato;
 import br.com.julios.ccc.facade.ExtratoFacade;
+import br.com.julios.ccc.infra.bd.model.ExtratoDO;
 
 @Controller
 @ResponseBody
@@ -26,13 +26,13 @@ public class ExtratoController {
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
 	@RequestMapping(value = "{dataInicio}/{dataFim}", method = RequestMethod.GET)
-	public Collection<Extrato> getExtrato(@PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim)
+	public Collection<ExtratoDO> getExtrato(@PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim)
 			throws ParseException {
 
 		Date dInicio = sdf.parse(dataInicio);
 		Date dFim = sdf.parse(dataFim);
 
-		return extratoFacade.getExtrato(dInicio, dFim);
+		return null;
 
 	}
 

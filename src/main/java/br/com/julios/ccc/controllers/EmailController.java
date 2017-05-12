@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.julios.ccc.domains.MensagemEmail;
+import br.com.julios.ccc.infra.bd.model.MensagemEmailDO;
 import br.com.julios.ccc.negocio.EmailApi;
 
 @Controller
@@ -19,13 +19,12 @@ public class EmailController {
 	EmailApi email;
 	
 	@RequestMapping(value = "mensagem", method = RequestMethod.GET)
-	public MensagemEmail getMensagemEmail(){
-		return email.getMensagemEmail();
+	public MensagemEmailDO getMensagemEmail(){
+		return null;
 	}
 	
 	@RequestMapping(value = "mensagem", method = RequestMethod.PUT)
-	public void atualizarMensagemEmail(@RequestBody MensagemEmail msg){
-		email.atualizarMensagem(msg);
+	public void atualizarMensagemEmail(@RequestBody MensagemEmailDO msg){
 	}
 	
 }

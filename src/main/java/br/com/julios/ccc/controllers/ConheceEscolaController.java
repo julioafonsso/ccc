@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.julios.ccc.domains.ConheceEscola;
+import br.com.julios.ccc.infra.bd.model.ConheceEscolaDO;
 import br.com.julios.ccc.negocio.ConheceEscolaApi;
 
 @Controller
@@ -15,10 +15,10 @@ import br.com.julios.ccc.negocio.ConheceEscolaApi;
 public class ConheceEscolaController {
 	@Autowired
 	ConheceEscolaApi conheceEscolaApi;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public Iterable<ConheceEscola> getconheceEscola(){
-		return conheceEscolaApi.getconheceEscola();
+	public Iterable<ConheceEscolaDO> getconheceEscola() {
+		return null;
 	}
 
 }

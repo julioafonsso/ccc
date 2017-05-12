@@ -2,51 +2,53 @@ package br.com.julios.ccc.negocio;
 
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.julios.ccc.daos.TipoFluxoCaixaDAO;
-import br.com.julios.ccc.domains.TipoFluxoCaixa;
+import br.com.julios.ccc.infra.bd.daos.TipoFluxoCaixaDAO;
+import br.com.julios.ccc.infra.bd.model.TipoFluxoCaixaDO;
 
 @Service
 public class TipoFluxoCaixaApi {
 	
-	@Autowired
+//	@Autowired
 	TipoFluxoCaixaDAO tipoFluxoCaixaDAO;
 
-	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixa() 
+	public Iterable<TipoFluxoCaixaDO> getTipoFluxoCaixa() 
 	{
-		return tipoFluxoCaixaDAO.findByDataExclusaoIsNull();
+//		return tipoFluxoCaixaDAO.findByDataExclusaoIsNull();
+		return null;
 	}
 
-	public void cadastrarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) 
+	public void cadastrarTipoFluxoCaixa(TipoFluxoCaixaDO tipoFluxoCaixa) 
 	{
 		tipoFluxoCaixaDAO.save(tipoFluxoCaixa);
 		
 	}
 
-	public void atualizarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) 
+	public void atualizarTipoFluxoCaixa(TipoFluxoCaixaDO tipoFluxoCaixa) 
 	{
 		tipoFluxoCaixaDAO.save(tipoFluxoCaixa);
 				
 	}
 
-	public void apagarTipoFluxoCaixa(TipoFluxoCaixa tipoFluxoCaixa) 
+	public void apagarTipoFluxoCaixa(TipoFluxoCaixaDO tipoFluxoCaixa) 
 	{
 		tipoFluxoCaixa.setDataExclusao(new Date());
 		tipoFluxoCaixaDAO.save(tipoFluxoCaixa);
 		
 	}
 
-	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixaEntrada() {
-		return tipoFluxoCaixaDAO.findByIndEntradaAndDataExclusaoIsNull(true);
+	public Iterable<TipoFluxoCaixaDO> getTipoFluxoCaixaEntrada() {
+//		return tipoFluxoCaixaDAO.findByIndEntradaAndDataExclusaoIsNull(true);
+		return null;
 	}
 
-	public Iterable<TipoFluxoCaixa> getTipoFluxoCaixaSaida() {
-		return tipoFluxoCaixaDAO.findByIndEntradaAndDataExclusaoIsNull(false);
+	public Iterable<TipoFluxoCaixaDO> getTipoFluxoCaixaSaida() {
+//		return tipoFluxoCaixaDAO.findByIndEntradaAndDataExclusaoIsNull(false);
+		return null;
 	}
 
-	public TipoFluxoCaixa getTipoFluxoCaixa(Long id) {
+	public TipoFluxoCaixaDO getTipoFluxoCaixa(Long id) {
 		return tipoFluxoCaixaDAO.findOne(id);
 	}
 

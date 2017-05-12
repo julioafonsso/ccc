@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.julios.ccc.domains.ModalidadeTurma;
 import br.com.julios.ccc.facade.ModalidadeTurmaFacade;
+import br.com.julios.ccc.infra.bd.model.ModalidadeTurmaDO;
 
 @Controller
 @ResponseBody
@@ -20,35 +20,32 @@ public class ModalidadeTurmaController {
 	ModalidadeTurmaFacade modalidadeTurmaFacade;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public Iterable<ModalidadeTurma> getmodalidadeTurma()
+	public Iterable<ModalidadeTurmaDO> getmodalidadeTurma()
 	{
-		return modalidadeTurmaFacade.getmodalidadeTurma();
+		return null;
 	}
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public ModalidadeTurma getdesconto(@PathVariable("id") Long id){
-		return modalidadeTurmaFacade.getmodalidadeTurma(id);
+	public ModalidadeTurmaDO getdesconto(@PathVariable("id") Long id){
+		return null;
 	}
 	
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarModalidade(@RequestBody ModalidadeTurma modalidade)
+	public void cadastrarModalidade(@RequestBody ModalidadeTurmaDO modalidade)
 	{
-		modalidadeTurmaFacade.cadastarModalidade(modalidade);
 		
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarModalidade(@RequestBody ModalidadeTurma modalidadeTurma)
+	public void atualizarModalidade(@RequestBody ModalidadeTurmaDO modalidadeTurma)
 	{
-		modalidadeTurmaFacade.atualizarModalidade(modalidadeTurma);
 		
 	}
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public void apagarModalidade(@PathVariable("id") Long id) throws Exception
 	{
-		modalidadeTurmaFacade.apagarModalidade(id);
 	}
 	
 

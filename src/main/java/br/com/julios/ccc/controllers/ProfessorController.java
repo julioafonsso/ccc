@@ -14,57 +14,61 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.julios.ccc.domains.FluxoCaixa;
-import br.com.julios.ccc.domains.PagamentoProfessor;
-import br.com.julios.ccc.domains.Professor;
-import br.com.julios.ccc.domains.Turma;
-import br.com.julios.ccc.facade.ProfessorFacade;
+import br.com.julios.ccc.infra.bd.daos.FuncionarioDAO;
+import br.com.julios.ccc.infra.bd.daos.TurmaColetivaDAO;
+import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
+import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
+import br.com.julios.ccc.infra.bd.model.PagamentoProfessorDO;
+import br.com.julios.ccc.infra.dto.funcionario.cadastro.CadastroFuncionario;
+import br.com.julios.ccc.infra.dto.funcionario.consulta.ConsultaFuncionario;
+import br.com.julios.ccc.infra.dto.turma.consulta.ConsultaTurma;
 
 @Controller
 @ResponseBody
 @RequestMapping("/professores")
 public class ProfessorController {
+
+	@Autowired
+	FuncionarioDAO funcDAO;
 	
 	@Autowired
-	ProfessorFacade professorFacade;
+	TurmaColetivaDAO turmaColetivaDAO;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public Iterable<Professor> getProfessores(){
-		return professorFacade.getProfessores();
+	public List<ConsultaFuncionario> getProfessores(){
+		return funcDAO.getProfessores();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarProfessor(@RequestBody Professor professor) throws Exception{
-		professorFacade.cadastrarProfessor(professor);
+	public void cadastrarProfessor(@RequestBody CadastroFuncionario professor) throws Exception{
+		
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarProfessor(@RequestBody Professor professor) throws Exception{
-		professorFacade.atualizarProfessor(professor);
+	public void atualizarProfessor(@RequestBody FuncionarioDO professor) throws Exception{
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE)
-	public void apagarProfessor(@RequestBody Professor professor){
-		professorFacade.apagarProfessor(professor);
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	public void apagarProfessor(@PathVariable("id") Long idProfessor){
 	}
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public Professor getProfessor(@PathVariable("id") Long idProfessor){
-		return professorFacade.getProfessor(idProfessor);
+	public ConsultaFuncionario getProfessor(@PathVariable("id") Long idProfessor){
+		return funcDAO.getProfessor(idProfessor);
 	}
 	
 	@RequestMapping(value = "detalhe-pagamento/{id}", method = RequestMethod.GET)
-	public List<PagamentoProfessor> getDetalhePagamento(@PathVariable("id") Long idProfessor){
-		return professorFacade.getDetalhePagamento(idProfessor);
+	public List<PagamentoProfessorDO> getDetalhePagamento(@PathVariable("id") Long idProfessor){
+		return null;
 	}
 	
-	@RequestMapping(value = "{id}/turmas", method = RequestMethod.GET)
-	public List<Turma> getTurmas(@PathVariable("id") Long idProfessor) {
-		return professorFacade.getTurmas(idProfessor);
+	@RequestMapping(value = "{id}/turmas-coletivas", method = RequestMethod.GET)
+	public List<ConsultaTurma> getTurmas(@PathVariable("id") Long idProfessor) {
+		return turmaColetivaDAO.getTurmasDoProfessor(idProfessor);
 	}
 	
 	@RequestMapping(value = "{id}/recibos/{dataInicio}/{dataFim}", method = RequestMethod.GET)
-	public List<FluxoCaixa> getRecibos(@PathVariable("id") Long idProfessor, @PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws ParseException {
+	public List<FluxoCaixaDO> getRecibos(@PathVariable("id") Long idProfessor, @PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws ParseException {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
 		
@@ -76,23 +80,20 @@ public class ProfessorController {
 		c.add(Calendar.DATE, c.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
 		diaFim = c.getTime();
 		
-		return professorFacade.getRecibos(idProfessor,diaInicio, diaFim);
+		return null;
 	}
 	
 	@RequestMapping(value = "{id}/salario-periodo/{mes}", method = RequestMethod.POST)
 	public void cadastrarRecebimento(@PathVariable("id") Long idProfessor, @PathVariable("mes") String mes) throws Exception{
-		 professorFacade.pagamentoProfessor(idProfessor,mes);
 	}
 	
 	@RequestMapping(value = "{id}/salario/{idSalario}", method = RequestMethod.POST)
 	public void cadastrarRecebimento(@PathVariable("id") Long idProfessor, @PathVariable("idSalario") Long idSalario) throws Exception{
-		 professorFacade.pagamentoProfessor(idProfessor,idSalario);
 	}
 	
 	@RequestMapping(value = "{id}/salario-pendente/{mes}", method = RequestMethod.GET)
-	public List<PagamentoProfessor> getSalarioProfessorPendente(@PathVariable("id") Long idProfessor, @PathVariable("mes") String mes) throws Exception{
-		
-		return professorFacade.getSalarioProfessorPendente(idProfessor, mes);
+	public List<PagamentoProfessorDO> getSalarioProfessorPendente(@PathVariable("id") Long idProfessor, @PathVariable("mes") String mes) throws Exception{
+		return null;		
 	}
 
 }

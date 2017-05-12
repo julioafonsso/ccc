@@ -11,10 +11,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.julios.ccc.daos.FluxoCaixaDAO;
-import br.com.julios.ccc.domains.Extrato;
-import br.com.julios.ccc.domains.FluxoCaixa;
-import br.com.julios.ccc.domains.TipoFluxoCaixa;
+import br.com.julios.ccc.infra.bd.daos.FluxoCaixaDAO;
+import br.com.julios.ccc.infra.bd.model.ExtratoDO;
+import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
+import br.com.julios.ccc.infra.bd.model.TipoFluxoCaixaDO;
 
 @Service
 public class ExtratoApi {
@@ -25,17 +25,17 @@ public class ExtratoApi {
 	@Autowired
 	TipoFluxoCaixaApi tipoApi;
 
-	private List<Extrato> tratarDados(List<FluxoCaixa> dados) {
+	private List<ExtratoDO> tratarDados(List<FluxoCaixaDO> dados) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		HashMap<String, Extrato> map = new HashMap<String, Extrato>();
+		HashMap<String, ExtratoDO> map = new HashMap<String, ExtratoDO>();
 
-		for (FluxoCaixa fluxoCaixa : dados) {
-			Extrato valor;
+		for (FluxoCaixaDO fluxoCaixa : dados) {
+			ExtratoDO valor;
 			valor = map.get(sdf.format(fluxoCaixa.getData()));
 			
 			if (valor == null) {
-				valor = new Extrato();
+				valor = new ExtratoDO();
 				valor.setData(sdf.format(fluxoCaixa.getData()));
 			}
 			
@@ -44,14 +44,14 @@ public class ExtratoApi {
 
 			map.put(sdf.format(fluxoCaixa.getData()), valor);
 		}
-		List<Extrato> retorno = new ArrayList<Extrato>(map.values());
+		List<ExtratoDO> retorno = new ArrayList<ExtratoDO>(map.values());
 
-		retorno.sort(new Comparator<Extrato>() {
+		retorno.sort(new Comparator<ExtratoDO>() {
 
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 			@Override
-			public int compare(Extrato e1, Extrato e2) {
+			public int compare(ExtratoDO e1, ExtratoDO e2) {
 
 				Date d1;
 				Date d2;
@@ -71,39 +71,42 @@ public class ExtratoApi {
 
 	}
 
-	public List<Extrato> getExtrato(Date dataInicio, Date dataFim) {
-		List<FluxoCaixa> dados = fluxoDAO.findByDataBetweenOrderByData(dataInicio, dataFim);
-		return tratarDados(dados);
+	public List<ExtratoDO> getExtrato(Date dataInicio, Date dataFim) {
+//		List<FluxoCaixaDO> dados = fluxoDAO.findByDataBetweenOrderByData(dataInicio, dataFim);
+//		return tratarDados(dados);
+		return null;
 	}
 
-	public List<Extrato> getExtratoAgrupadoData(TipoFluxoCaixa tipo, Date dataInicio, Date dataFim) {
+	public List<ExtratoDO> getExtratoAgrupadoData(TipoFluxoCaixaDO tipo, Date dataInicio, Date dataFim) {
 
-		List<FluxoCaixa> dados = fluxoDAO.findByTipoFluxoAndDataBetweenOrderByData(tipo, dataInicio, dataFim);
-		return tratarDados(dados);
+//		List<FluxoCaixaDO> dados = fluxoDAO.findByTipoFluxoAndDataBetweenOrderByData(tipo, dataInicio, dataFim);
+//		return tratarDados(dados);
+		return null;
 	}
 	
-	public List<FluxoCaixa> getFluxos(TipoFluxoCaixa tipo, Date dataInicio, Date dataFim) {
-
-		return fluxoDAO.findByTipoFluxoAndDataBetweenOrderByData(tipo, dataInicio, dataFim);
+	public List<FluxoCaixaDO> getFluxos(TipoFluxoCaixaDO tipo, Date dataInicio, Date dataFim) {
+		return null;
+//		return fluxoDAO.findByTipoFluxoAndDataBetweenOrderByData(tipo, dataInicio, dataFim);
 	}
 
 	public Object[] getExtratoConsolidado(Date dInicio, Date dFim, boolean indEntrada) {
-		List<Object> retorno = new ArrayList<Object>();
-		
-		Object[] dadosConsolidados = fluxoDAO.findConsolidado(dInicio, dFim, indEntrada);
-		for (Object object : dadosConsolidados) {
-			TipoFluxoCaixa tipo = tipoApi.getTipoFluxoCaixa((Long) ((Object[])object)[3]);
-			Object[] dados = new Object[5];
-			dados[0] = ((Object[])object)[0] ;
-			dados[1] = ((Object[])object)[1] ;
-			dados[2] = ((Object[])object)[2] ;
-			dados[3] = ((Object[])object)[3] ;
-			
-			
-			dados[4] =  getFluxos(tipo, dInicio, dFim);
-			retorno.add(dados);
-		}
-		return retorno.toArray() ;
+//		List<Object> retorno = new ArrayList<Object>();
+//		
+//		Object[] dadosConsolidados = fluxoDAO.findConsolidado(dInicio, dFim, indEntrada);
+//		for (Object object : dadosConsolidados) {
+//			TipoFluxoCaixaDO tipo = tipoApi.getTipoFluxoCaixa((Long) ((Object[])object)[3]);
+//			Object[] dados = new Object[5];
+//			dados[0] = ((Object[])object)[0] ;
+//			dados[1] = ((Object[])object)[1] ;
+//			dados[2] = ((Object[])object)[2] ;
+//			dados[3] = ((Object[])object)[3] ;
+//			
+//			
+//			dados[4] =  getFluxos(tipo, dInicio, dFim);
+//			retorno.add(dados);
+//		}
+//		return retorno.toArray() ;
+		return null;
 
 	}
 

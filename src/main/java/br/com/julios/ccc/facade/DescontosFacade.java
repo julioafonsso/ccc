@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.julios.ccc.domains.Descontos;
+import br.com.julios.ccc.infra.bd.model.DescontosDO;
 import br.com.julios.ccc.negocio.DescontosApi;
 
 @Service
@@ -16,24 +16,24 @@ public class DescontosFacade {
 	@Autowired
 	DescontosApi descontosApi;
 	
-	public Iterable<Descontos> getdescontos(){
+	public Iterable<DescontosDO> getdescontos(){
 		return descontosApi.getdescontos();
 	}
 	
-	public void cadastrarDesconto(Descontos desconto){
+	public void cadastrarDesconto(DescontosDO desconto){
 		descontosApi.cadastrar(desconto);
 	}
 
-	public Descontos getdesconto(Long id) {
+	public DescontosDO getdesconto(Long id) {
 		return descontosApi.getdesconto(id);
 	}
 
-	public void alterarDesconto(Descontos desconto) {
+	public void alterarDesconto(DescontosDO desconto) {
 		descontosApi.alterar(desconto);
 	}
 
 	public void deletar(Long id) throws Exception {
-		Descontos desconto = descontosApi.getdesconto(id);
+		DescontosDO desconto = descontosApi.getdesconto(id);
 		descontosApi.validaExisteDescontoMatriculaAtiva(desconto);
 		descontosApi.deletar(desconto);
 	}

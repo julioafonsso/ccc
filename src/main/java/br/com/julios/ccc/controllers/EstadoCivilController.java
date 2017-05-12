@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.julios.ccc.domains.EstadoCivil;
+import br.com.julios.ccc.infra.bd.model.EstadoCivilDO;
 import br.com.julios.ccc.negocio.EstadoCivilApi;
 
 @Controller
@@ -18,8 +18,8 @@ public class EstadoCivilController {
 	EstadoCivilApi estadoCivilApi;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public Iterable<EstadoCivil> getestadoCivil(){
-		return estadoCivilApi.getestadoCivil();
+	public Iterable<EstadoCivilDO> getestadoCivil(){
+		return null;
 		
 	}
 
