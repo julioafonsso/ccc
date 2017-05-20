@@ -1,8 +1,10 @@
-package br.com.julios.ccc.infra.dto.turma.cadastro;
+package br.com.julios.ccc.infra.dto.turma.individual;
 
 import java.util.Date;
 
-public class CadastroAulaIndividual extends CadastroTurma{
+import br.com.julios.ccc.infra.dto.turma.CadastroTurmaDTO;
+
+public class CadastroAulaIndividualDTO extends CadastroTurmaDTO{
 	
 	private Integer qtdAulasContratadas;
 	private Integer qtdAulasRestantes;

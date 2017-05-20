@@ -1,8 +1,6 @@
 package br.com.julios.ccc.controllers;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,112 +9,137 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.julios.ccc.facade.AlunoFacade;
-import br.com.julios.ccc.facade.FtpFacade;
-import br.com.julios.ccc.infra.bd.model.AlunoDO;
-import br.com.julios.ccc.infra.bd.model.AulaParticularDO;
-import br.com.julios.ccc.infra.bd.model.MatriculaDO;
-import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
+import br.com.julios.ccc.infra.bd.daos.AlunoDAO;
+import br.com.julios.ccc.infra.bd.daos.MatriculaDAO;
+import br.com.julios.ccc.infra.bd.daos.MensalidadeDAO;
+import br.com.julios.ccc.infra.dto.aluno.CadastroAlunoDTO;
+import br.com.julios.ccc.infra.dto.aluno.ConsultaAlunoDTO;
+import br.com.julios.ccc.infra.dto.matricula.ConsultaMatriculaDTO;
+import br.com.julios.ccc.infra.dto.menslidade.ConsultaMensalidadeDTO;
+import br.com.julios.ccc.negocio.aluno.AlunoRepositorio;
+import br.com.julios.ccc.negocio.mensalidade.MensalidadeRepositorio;
 
 @Controller
 @ResponseBody
 @RequestMapping("/alunos")
 public class AlunoController {
 
-	@Autowired
-	AlunoFacade alunoFacade;
 
 	@Autowired
-	FtpFacade fileFacade;
+	AlunoRepositorio alunoRepositorio;
 
+	@Autowired
+	AlunoDAO alunoDAO;
+	
+	@Autowired
+	MatriculaDAO matriculaDAO;
+
+	@Autowired
+	MensalidadeDAO mensalidadeDAO;
+	
+	@Autowired
+	MensalidadeRepositorio mensalidadeRepositorio;
+	
 //
 //	@Autowired
 //	private HttpServletRequest http;
 
-	@RequestMapping(method = RequestMethod.GET)
-	public Iterable<AlunoDO> getAlunos(@RequestParam(value = "nome", required = false) String nome,
-			@RequestParam(value = "cpf", required = false) String cpf,
-			@RequestParam(value = "email", required = false) String email) throws Exception {
-
-		return null;
-	}
-
-	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarAluno(@RequestBody AlunoDO aluno) throws Exception {
-	}
-
-	
-
-	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarAluno(@RequestBody AlunoDO aluno) throws Exception {
-	}
-
-	@RequestMapping(method = RequestMethod.DELETE)
-	public void apagarAluno(AlunoDO aluno) {
-	}
-
-	@RequestMapping(value = "pagamento", method = RequestMethod.POST)
-	public void efetuarPagamento(@RequestBody MensalidadeDO mensalidade) throws Exception {
-	}
+//	@RequestMapping(method = RequestMethod.GET)
+//	public Iterable<AlunoDO> getAlunos(@RequestParam(value = "nome", required = false) String nome,
+//			@RequestParam(value = "cpf", required = false) String cpf,
+//			@RequestParam(value = "email", required = false) String email) throws Exception {
+//
+//		return null;
+//	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public AlunoDO getAluno(@PathVariable("id") Long idAluno) {
-		return null;
-	}
-
-	@RequestMapping(value = "{id}/pagamentos/{dataInicio}/{dataFim}", method = RequestMethod.GET)
-	public List<MensalidadeDO> getPagamentos(@PathVariable("id") Long idAluno, @PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws Exception {
-		
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
-		
-		Date diaInicio = sdf.parse(dataInicio);
-		Date diaFim = sdf.parse(dataFim);
-		
-		Calendar c = Calendar.getInstance();
-		c.setTime(diaFim);
-		c.add(Calendar.DATE, c.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
-		diaFim = c.getTime();
-
-		
-//		return alunoFacade.getPagamentos(idAluno, diaInicio, diaFim);
-		return null;
+	public ConsultaAlunoDTO getAluno(@PathVariable("id") Long idAluno) {
+		return alunoDAO.getAlunos(idAluno);
 	}
 	
 	@RequestMapping(value = "{id}/turmas", method = RequestMethod.GET)
-	public List<MatriculaDO> getTurmas(@PathVariable("id") Long idAluno) {
-		return null;
+	public List<ConsultaMatriculaDTO> getTurmas(@PathVariable("id") Long idAluno) {
+		return matriculaDAO.getMatriculas(idAluno);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public List<ConsultaAlunoDTO> getAlunos() throws Exception {
+		return alunoDAO.getAlunos();
 	}
 
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public void cadastrarAluno(@RequestBody CadastroAlunoDTO aluno) throws Exception {
+		alunoRepositorio.getAluno(aluno).cadastrar();;
+	}
+
+	
 	@RequestMapping(value = "{id}/debitos", method = RequestMethod.GET)
-	public List<MensalidadeDO> getDebitos(@PathVariable("id") Long idAluno) throws Exception {
-		return null;
+	public List<ConsultaMensalidadeDTO> getDebitos(@PathVariable("id") Long idAluno) throws Exception {
+		return mensalidadeDAO.getMensalidadesAluno(idAluno);
 	}
-	
-	@RequestMapping(value = "{id}/aula-particular", method = RequestMethod.POST)
-	public void cadastrarAulaParticular(@PathVariable("id") Long idAluno, @RequestBody AulaParticularDO aula) throws Exception {
-		
-	}
-	
-	@RequestMapping(value = "{id}/aula-particular/{dataInicio}/{dataFim}", method = RequestMethod.GET)
-	public List<MensalidadeDO> consultarAulaParticular(@PathVariable("id") Long idAluno, @PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws Exception {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
-		
-		Date diaInicio = sdf.parse(dataInicio);
-		Date diaFim = sdf.parse(dataFim);
-		
-		Calendar c = Calendar.getInstance();
-		c.setTime(diaFim);
-		c.add(Calendar.DATE, c.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
-		diaFim = c.getTime();
-		
-		return null;
+	@RequestMapping(value = "{idAluno}/debitos/{idMensalidade}/pagamento", method = RequestMethod.POST)
+	public void efetuarPagamento(@PathVariable("idAluno") Long idAluno, @PathVariable("idMensalidade") Long idMensalidade, @RequestBody Double valor) throws ParseException
+	{
+		mensalidadeRepositorio.getMensalidade(idMensalidade).pagar(valor);
 	}
 	
+	
+//	@RequestMapping(method = RequestMethod.PUT)
+//	public void atualizarAluno(@RequestBody AlunoDO aluno) throws Exception {
+//	}
+//
+//	@RequestMapping(method = RequestMethod.DELETE)
+//	public void apagarAluno(AlunoDO aluno) {
+//	}
+//
+//	@RequestMapping(value = "{id}/pagamentos/{dataInicio}/{dataFim}", method = RequestMethod.GET)
+//	public List<MensalidadeDO> getPagamentos(@PathVariable("id") Long idAluno, @PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws Exception {
+//		
+//		
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+//		
+//		Date diaInicio = sdf.parse(dataInicio);
+//		Date diaFim = sdf.parse(dataFim);
+//		
+//		Calendar c = Calendar.getInstance();
+//		c.setTime(diaFim);
+//		c.add(Calendar.DATE, c.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
+//		diaFim = c.getTime();
+//
+//		
+//		return alunoFacade.getPagamentos(idAluno, diaInicio, diaFim);
+//		return null;
+//	}
+//	
+//	
+//
+//	
+//	
+//	@RequestMapping(value = "{id}/aula-particular", method = RequestMethod.POST)
+//	public void cadastrarAulaParticular(@PathVariable("id") Long idAluno, @RequestBody AulaParticularDO aula) throws Exception {
+//		
+//	}
+//	
+//	@RequestMapping(value = "{id}/aula-particular/{dataInicio}/{dataFim}", method = RequestMethod.GET)
+//	public List<MensalidadeDO> consultarAulaParticular(@PathVariable("id") Long idAluno, @PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws Exception {
+//
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+//		
+//		Date diaInicio = sdf.parse(dataInicio);
+//		Date diaFim = sdf.parse(dataFim);
+//		
+//		Calendar c = Calendar.getInstance();
+//		c.setTime(diaFim);
+//		c.add(Calendar.DATE, c.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
+//		diaFim = c.getTime();
+//		
+//		return null;
+//	}
+//	
 
 
 }

@@ -1,6 +1,11 @@
-package br.com.julios.ccc.infra.dto.turma.cadastro;
+package br.com.julios.ccc.infra.dto.turma.coletiva;
 
-public class CadastroTurmaColetiva {
+import java.text.ParseException;
+import java.util.Date;
+
+import br.com.julios.ccc.infra.dto.turma.CadastroTurmaDTO;
+
+public class CadastroTurmaColetivaDTO extends CadastroTurmaDTO {
 
 	private Long idProfessor2;
 	private Double percentualProfessor2;
@@ -8,6 +13,8 @@ public class CadastroTurmaColetiva {
 	private Double valorMensalidade;
 	private String horarioInicial;
 	private String horarioFinal;
+	private Date dataInicio;
+	private Date dataFim;
 	private boolean domingo;
 	private boolean segunda;
 	private boolean terca;
@@ -15,7 +22,6 @@ public class CadastroTurmaColetiva {
 	private boolean quinta;
 	private boolean sexta;
 	private boolean sabado;
-
 	private Long idNivel;
 	private Long idSala;
 
@@ -65,6 +71,22 @@ public class CadastroTurmaColetiva {
 
 	public void setHorarioFinal(String horarioFinal) {
 		this.horarioFinal = horarioFinal;
+	}
+
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setDataInicio(String dataInicio) throws ParseException {
+		this.dataInicio = sdf.parse(dataInicio);
+	}
+
+	public Date getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(String dataFim) throws ParseException {
+		this.dataFim = sdf.parse(dataFim);
 	}
 
 	public boolean isDomingo() {
@@ -138,4 +160,5 @@ public class CadastroTurmaColetiva {
 	public void setIdSala(Long idSala) {
 		this.idSala = idSala;
 	}
+
 }

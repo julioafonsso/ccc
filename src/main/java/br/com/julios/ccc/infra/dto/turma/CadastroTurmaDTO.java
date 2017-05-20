@@ -1,12 +1,16 @@
-package br.com.julios.ccc.infra.dto.turma.cadastro;
+package br.com.julios.ccc.infra.dto.turma;
 
-public class CadastroTurma {
+import java.text.SimpleDateFormat;
 
+public class CadastroTurmaDTO {
+
+	protected SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	
 	private Long id;
-
 	private Long idProfessor1;
 	private Double percentualProfessor1;
 	private Long idModalidade;
+	
 	public Long getId() {
 		return id;
 	}
@@ -31,6 +35,7 @@ public class CadastroTurma {
 	public void setIdModalidade(Long idModalidade) {
 		this.idModalidade = idModalidade;
 	}
+	
 	
 
 

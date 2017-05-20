@@ -69,7 +69,6 @@ public class TurmaColetivaDO extends TurmaDO {
 	@Column
 	private boolean sabado;
 
-	
 	public Date getDataInicio() {
 		return dataInicio;
 	}
@@ -116,6 +115,30 @@ public class TurmaColetivaDO extends TurmaDO {
 
 	public void setVagas(Integer vagas) {
 		this.vagas = vagas;
+	}
+
+	public SalaDO getSala() {
+		return sala;
+	}
+
+	public void setSala(SalaDO sala) {
+		this.sala = sala;
+	}
+
+	public NivelTurmaDO getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(NivelTurmaDO nivel) {
+		this.nivel = nivel;
+	}
+
+	public FuncionarioDO getProfessor2() {
+		return professor2;
+	}
+
+	public void setProfessor2(FuncionarioDO professor2) {
+		this.professor2 = professor2;
 	}
 
 	public Double getPercentualProfessor2() {
@@ -182,17 +205,6 @@ public class TurmaColetivaDO extends TurmaDO {
 		this.sabado = sabado;
 	}
 
-	public SalaDO getSala() {
-		return sala;
-	}
-
-	public NivelTurmaDO getNivel() {
-		return nivel;
-	}
-
-	public FuncionarioDO getProfessor2() {
-		return professor2;
-	}
-
+	
 	
 }

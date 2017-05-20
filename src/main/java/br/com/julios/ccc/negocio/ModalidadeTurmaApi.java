@@ -47,8 +47,8 @@ public class ModalidadeTurmaApi {
 	}
 
 	public void validaExisteTurmaAtiva(ModalidadeTurmaDO modalidade) throws Exception {
-		if(!modalidade.getTurmas().isEmpty())
-			throw new Exception("Modalidade não pode ser excluida! \n Existe turma com essa modalidade");
+//		if(!modalidade.getTurmas().isEmpty())
+//			throw new Exception("Modalidade não pode ser excluida! \n Existe turma com essa modalidade");
 	}
 
 }

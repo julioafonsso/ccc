@@ -1,7 +1,6 @@
 package br.com.julios.ccc.infra.bd.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,7 +17,7 @@ public class MatriculaDO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "turma_id")
@@ -30,16 +28,13 @@ public class MatriculaDO {
 	private AlunoDO aluno;
 
 	@Column(name = "dia_vencimento")
-	private int diaVencimento;
+	private Long diaVencimento;
 
 	@Column(name = "data_matricula")
 	private Date dataMatricula;
 	
 	@Column(name = "data_exclusao")
 	private Date dataExclusao;
-	
-	@OneToMany(mappedBy="matricula")
-	private List<MensalidadeDO> pagamentos;
 	
 	@ManyToOne
 	private DescontosDO desconto;
@@ -57,14 +52,6 @@ public class MatriculaDO {
 
 	public Date getDataExclusao() {
 		return dataExclusao;
-	}
-
-	public List<MensalidadeDO> getPagamentos() {
-		return pagamentos;
-	}
-
-	public void setPagamentos(List<MensalidadeDO> pagamentos) {
-		this.pagamentos = pagamentos;
 	}
 
 	public DescontosDO getDesconto() {
@@ -103,15 +90,15 @@ public class MatriculaDO {
 		this.aluno = aluno;
 	}
 
-	public int getDiaVencimento() {
+	public Long getDiaVencimento() {
 		return diaVencimento;
 	}
 
-	public void setDiaVencimento(int diaVencimento) {
+	public void setDiaVencimento(Long diaVencimento) {
 		this.diaVencimento = diaVencimento;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 

@@ -19,6 +19,11 @@ public class WorkShop extends Turma {
 	protected void setPercentualProfessor2(Double percentualProfessor2) {
 		this.percentualProfessor2 = percentualProfessor2;
 	}
+	@Override
+	public String getCodigo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

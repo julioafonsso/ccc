@@ -1,9 +1,13 @@
-package br.com.julios.ccc.infra.dto.funcionario.cadastro;
+package br.com.julios.ccc.infra.dto.funcionario;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CadastroFuncionario {
+public class CadastroFuncionarioDTO {
 
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	
 	private Long id;
 	private String cpf;
 	private String telefone;
@@ -13,7 +17,14 @@ public class CadastroFuncionario {
 	private Date dataAdmissao;
 	private String foto;
 	private String observacao;
+	private String nome;
 	
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -47,14 +58,15 @@ public class CadastroFuncionario {
 	public Date getDataNascimento() {
 		return dataNascimento;
 	}
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
+	public void setDataNascimento(String dataNascimento) throws ParseException {
+		
+		this.dataNascimento = sdf.parse(dataNascimento);
 	}
 	public Date getdataAdmissao() {
 		return dataAdmissao;
 	}
-	public void setdataAdmissao(Date dataAdmissao) {
-		this.dataAdmissao = dataAdmissao;
+	public void setdataAdmissao(String dataAdmissao) throws ParseException {
+		this.dataAdmissao = sdf.parse(dataAdmissao);
 	}
 	public String getFoto() {
 		return foto;
@@ -66,7 +78,7 @@ public class CadastroFuncionario {
 		return observacao;
 	}
 	public void setObservacao(String observacao) {
-		observacao = observacao;
+		this.observacao = observacao;
 	} 
 	
 		

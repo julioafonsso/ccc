@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.julios.ccc.infra.bd.model.AlunoDO;
 import br.com.julios.ccc.infra.bd.model.DescontosDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
@@ -47,7 +46,7 @@ public class MatriculaFacade {
 	DescontosApi descontoApi;
 
 	public void matricularAluno(MatriculaDO matricula) throws Exception {
-		AlunoDO aluno = alunoApi.getAluno(matricula.getAluno().getId());
+//		AlunoDO aluno = alunoApi.getAluno(matricula.getAluno().getId());
 
 		matriculaApi.validaExisteMatricula(matricula);
 

@@ -1,15 +1,43 @@
-package br.com.julios.ccc.infra.dto.turma.consulta;
+package br.com.julios.ccc.infra.dto.turma.coletiva;
 
-public class ConsultaTurmaColetiva extends ConsultaTurma {
+import java.util.Date;
 
-	public ConsultaTurmaColetiva(Long id, Long idProfessor1, String nomeProfessor1, Double percentualProfessor1,
-			Long idModalidade, String nomeModalidade, Long idProfessor2, String nomeProfessor2,
-			Double percentualProfessor2, Integer qtdVagas, Double valorMensalidade, String horarioInicial,
-			String horarioFinal, boolean domingo, boolean segunda, boolean terca, boolean quarta, boolean quinta,
-			boolean sexta, boolean sabado, Long idNivel, String nomeNivel, Long idSala, String nomeSala,
-			Integer qtdAlunos, Integer qtdAlunas) {
+import br.com.julios.ccc.infra.dto.turma.ConsultaTurmaDTO;
 
-		super(id, idProfessor1, nomeProfessor1, percentualProfessor1, idModalidade, nomeModalidade);
+public class ConsultaTurmaColetivaDTO extends ConsultaTurmaDTO {
+
+	public ConsultaTurmaColetivaDTO(Long id,
+			String codigo,
+			Long idProfessor1, 
+			String nomeProfessor1, 
+			Double percentualProfessor1,
+			Long idModalidade, 
+			String nomeModalidade, 
+			Long idProfessor2, 
+			String nomeProfessor2,
+			Double percentualProfessor2, 
+			Integer qtdVagas, 
+			Double valorMensalidade, 
+			String horarioInicial,
+			String horarioFinal, 
+			boolean domingo, 
+			boolean segunda, 
+			boolean terca, 
+			boolean quarta, 
+			boolean quinta,
+			boolean sexta, 
+			boolean sabado, 
+			Long idNivel, 
+			String nomeNivel, 
+			Long idSala, 
+			String nomeSala,
+			Integer qtdAlunos, 
+			Integer qtdAlunas,
+			Date dataInicio,
+			Date dataTermino  
+			) {
+
+		super(id,codigo, idProfessor1, nomeProfessor1, percentualProfessor1, idModalidade, nomeModalidade);
 
 		setIdProfessor2(idProfessor2);
 		setNomeProfessor2(nomeProfessor2);
@@ -31,6 +59,8 @@ public class ConsultaTurmaColetiva extends ConsultaTurma {
 		setNomeSala(nomeSala);
 		setQtdAlunos(qtdAlunos);
 		setQtdAlunas(qtdAlunas);
+		setDataInicio(dataInicio);
+		setDataTermino(dataTermino);
 	}
 
 	private Long idProfessor2;
@@ -53,6 +83,24 @@ public class ConsultaTurmaColetiva extends ConsultaTurma {
 	private String nomeSala;
 	private Integer qtdAlunos;
 	private Integer qtdAlunas;
+	private Date dataInicio;
+	private Date dataTermino; 
+
+	public Date getDataTermino() {
+		return dataTermino;
+	}
+
+	public void setDataTermino(Date dataTermino) {
+		this.dataTermino = dataTermino;
+	}
+
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
 
 	public Long getIdProfessor2() {
 		return idProfessor2;

@@ -42,6 +42,11 @@ public class AulaIndividual extends Turma{
 	protected void setValorPago(Double valorPago) {
 		this.valorPago = valorPago;
 	}
+	@Override
+	public String getCodigo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

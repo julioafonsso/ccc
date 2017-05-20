@@ -152,20 +152,20 @@ public class MatriculaApi {
 	}
 
 	public void apagarDesconto(MatriculaDO matricula) {
-		matricula.setDesconto(null);
+//		matricula.setDesconto(null);
 		matriculaDAO.save(matricula);
 	}
 
 	public void alterarDesconto(MatriculaDO matricula, DescontosDO desconto) {
-		matricula.setDesconto(desconto);
+//		matricula.setDesconto(desconto);
 		matriculaDAO.save(matricula);
 	}
 
 	public MatriculaDO matricularAluno(TurmaDO turma, AlunoDO aluno) {
 		MatriculaDO matricula = new MatriculaDO();
-		matricula.setAluno(aluno);
-		matricula.setTurma(turma);
-		matricula.setDesconto(null);
+//		matricula.setAluno(aluno);
+//		matricula.setTurma(turma);
+//		matricula.setDesconto(null);
 		return matricularAluno(matricula);
 
 	}

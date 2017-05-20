@@ -10,12 +10,12 @@ import javax.persistence.Table;
 public class EstadoCivilDO {
 
 	@Id
-	private Integer id;
+	private Long id;
 	
 	@Column
 	private String nome;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 

@@ -1,6 +1,5 @@
 package br.com.julios.ccc.infra.bd.model;
 
-import java.text.ParseException;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -17,7 +16,6 @@ import org.hibernate.validator.constraints.Email;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.julios.ccc.componentes.cpf.CPF;
-import br.com.julios.ccc.util.Util;
 
 @Entity
 @Table(name = "aluno")
@@ -106,14 +104,6 @@ public class AlunoDO {
 		}
 	}
 
-	public String getCpfSemFormat(){
-		return cpf;
-	}
-	
-	public void setDataNascimento(String dataNascimento) throws ParseException {
-		this.dataNascimento = Util.parseDate(dataNascimento);
-	}
-	
 	public String getTelefone() {
 		if(telefone != null )
 		{

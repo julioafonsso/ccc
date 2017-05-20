@@ -27,7 +27,7 @@ public class MensalidadeDO {
 	
 	@OneToOne
 	@JoinColumn(name="id_fluxo_caixa")
-	private FluxoCaixaDO fluxoCaixa;
+	private FluxoCaixaDO pagamentoMensalidade;
 
 	@ManyToOne
 	@JoinColumn(name="id_matricula")
@@ -54,14 +54,27 @@ public class MensalidadeDO {
 		return mesReferencia;
 	}
 
-	public FluxoCaixaDO getFluxoCaixa() {
-		return fluxoCaixa;
+	public void setMesReferencia(MesReferenciaDO mesReferencia) {
+		this.mesReferencia = mesReferencia;
+	}
+
+	
+
+	public FluxoCaixaDO getPagamentoMensalidade() {
+		return pagamentoMensalidade;
+	}
+
+	public void setPagamentoMensalidade(FluxoCaixaDO pagamentoMensalidade) {
+		this.pagamentoMensalidade = pagamentoMensalidade;
 	}
 
 	public MatriculaDO getMatricula() {
 		return matricula;
 	}
 
+	public void setMatricula(MatriculaDO matricula) {
+		this.matricula = matricula;
+	}
 
 	public Double getValorMensalidade() {
 		return valorMensalidade;
@@ -87,8 +100,7 @@ public class MensalidadeDO {
 		this.dataExclusao = dataExclusao;
 	}
 
-	
-	
+
 
 	
 }

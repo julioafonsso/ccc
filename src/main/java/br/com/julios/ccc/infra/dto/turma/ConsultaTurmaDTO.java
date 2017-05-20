@@ -1,8 +1,8 @@
-package br.com.julios.ccc.infra.dto.turma.consulta;
+package br.com.julios.ccc.infra.dto.turma;
 
-public class ConsultaTurma {
+public class ConsultaTurmaDTO {
 
-	public ConsultaTurma(Long id, Long idProfessor1, String nomeProfessor1, Double percentualProfessor1,
+	public ConsultaTurmaDTO( Long id,String codigo , Long idProfessor1, String nomeProfessor1, Double percentualProfessor1,
 			Long idModalidade, String nomeModalidade) {
 		setId(id);
 		setIdProfessor1(idProfessor1);
@@ -10,6 +10,7 @@ public class ConsultaTurma {
 		setPercentualProfessor1(percentualProfessor1);
 		setIdModalidade(idModalidade);
 		setNomeModalidade(nomeModalidade);
+		setCodigo(codigo);
 	}
 
 	private Long id;
@@ -18,6 +19,16 @@ public class ConsultaTurma {
 	private Double percentualProfessor1;
 	private Long idModalidade;
 	private String nomeModalidade;
+	private String codigo;
+	
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
 
 	public Long getId() {
 		return id;

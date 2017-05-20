@@ -69,22 +69,50 @@ public class FuncionarioDO {
 	@Column
 	private Double valeTransporte;
 
-	// Getters and Setters
-	
+	public String getCpf() throws Exception {
+		if(cpf != null && cpf.length() > 0){
+			return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9);
+		}
+		return null;
+
+	}
+
+	public void setCpf(String cpf) throws Exception {
+		if(cpf != null && cpf.length() > 0){
+			this.cpf = cpf.replaceAll("[^0-9]", "");
+		} else{
+			this.cpf = cpf;
+		}
+	}
+
+	public String getTelefone() {
+		if(telefone != null )
+		{
+			if(telefone.length() == 11)
+			{
+				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 7) + "-"  + telefone.substring(7);
+			}
+			else{
+				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 6) + "-"  + telefone.substring(6);
+			}
+		}
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		if(telefone != null && telefone.length() > 0){
+			this.telefone = telefone.replaceAll("[^0-9]", "");
+		} else{
+			this.telefone = telefone;
+		}
+	}
+
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
 	}
 
 	public String getNome() {
@@ -135,14 +163,6 @@ public class FuncionarioDO {
 		this.complemento = complemento;
 	}
 
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
 	public Date getDataAdmissao() {
 		return dataAdmissao;
 	}
@@ -175,6 +195,14 @@ public class FuncionarioDO {
 		this.foto = foto;
 	}
 
+	public TipoFuncionarioDO getTipoFuncionario() {
+		return tipoFuncionario;
+	}
+
+	public void setTipoFuncionario(TipoFuncionarioDO tipoFuncionario) {
+		this.tipoFuncionario = tipoFuncionario;
+	}
+
 	public Double getSalario() {
 		return salario;
 	}
@@ -190,12 +218,7 @@ public class FuncionarioDO {
 	public void setValeTransporte(Double valeTransporte) {
 		this.valeTransporte = valeTransporte;
 	}
-
-	public TipoFuncionarioDO getTipoFuncionario() {
-		return tipoFuncionario;
-	}
-	
-	
+		
 
 	
 }

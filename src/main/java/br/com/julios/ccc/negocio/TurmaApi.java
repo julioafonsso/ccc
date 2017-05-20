@@ -50,30 +50,7 @@ public class TurmaApi {
 		return null;
 	}
 
-	private String geraCodigo(TurmaDO turma) {
-		StringBuffer retorno = new StringBuffer();
-//
-//		if (turma.isDomingo())
-//			retorno.append("1");
-//		if (turma.isSegunda())
-//			retorno.append("2");
-//		if (turma.isTerca())
-//			retorno.append("3");
-//		if (turma.isQuarta())
-//			retorno.append("4");
-//		if (turma.isQuinta())
-//			retorno.append("5");
-//		if (turma.isSexta())
-//			retorno.append("6");
-//		if (turma.isSabado())
-//			retorno.append("7");
-//
-//		retorno.append(turma.getHorarioInicial().substring(0, turma.getHorarioInicial().indexOf(":")));
-//
-//		retorno.append(turma.getSala().getId());
-		return retorno.toString();
 
-	}
 
 	public void validaProfessoresIguais(TurmaDO turma) throws Exception {
 //		if (turma.getProfessor1() != null && turma.getProfessor2() != null)

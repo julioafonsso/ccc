@@ -1,16 +1,17 @@
-package br.com.julios.ccc.infra.dto.funcionario.consulta;
+package br.com.julios.ccc.infra.dto.funcionario;
 
 import java.util.Date;
 
-public class ConsultaFuncionario {
+public class ConsultaFuncionarioDTO {
 
-	public ConsultaFuncionario() {
+	public ConsultaFuncionarioDTO() {
 	}
 
-	public ConsultaFuncionario(Long id, String cpf, String telefone, String email, String rg, String foto,
+	public ConsultaFuncionarioDTO(Long id,String nome, String cpf, String telefone, String email, String rg, String foto,
 			String observacao, Date dataNascimento, Date dataAdmissao, Long idTipoFuncionario,
 			String nomeTipoFuncionario) {
 		setId(id);
+		setNome(nome);
 		setCpf(cpf);
 		setTelefone(telefone);
 		setEmail(email);
@@ -25,6 +26,7 @@ public class ConsultaFuncionario {
 	}
 
 	private Long id;
+	private String nome;
 	private String cpf;
 	private String telefone;
 	private String email;
@@ -44,6 +46,15 @@ public class ConsultaFuncionario {
 		this.id = id;
 	}
 
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	
 	public String getCpf() {
 		return cpf;
 	}
