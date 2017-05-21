@@ -1,5 +1,6 @@
 package br.com.julios.ccc.infra.bd.daos;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,7 +23,6 @@ public interface MensalidadeDAO extends JpaRepository<MensalidadeDO, Long>{
 			" m.mesReferencia.mes, " +
 			" m.mesReferencia.ano, " + 
 			" m.valorMensalidade, " + 
-//			" m.matricula.desconto.valor " +
 			" d.valor " +
 			") from MensalidadeDO m "
 			+ " LEFT OUTER JOIN  m.matricula.desconto AS d "
@@ -31,6 +31,22 @@ public interface MensalidadeDAO extends JpaRepository<MensalidadeDO, Long>{
 			+ " and m.matricula.aluno.id = ?1 ")
 	public List<ConsultaMensalidadeDTO> getMensalidadesAluno(Long idAluno);
 
+	@Query("select new br.com.julios.ccc.infra.dto.menslidade.ConsultaMensalidadeDTO(" +
+			" m.id, "
+			+ " m.matricula.turma.codigo, " + 
+			" m.matricula.turma.modalidade.nome, " + 
+			" m.dataVencimento, " +
+			" m.mesReferencia.mes, " +
+			" m.mesReferencia.ano, " + 
+			" m.pagamentoMensalidade.valor, " + 
+			" m.pagamentoMensalidade.data " +
+			") from MensalidadeDO m "
+			+ " where m.dataExclusao is null "
+			+ " and m.pagamentoMensalidade is not null "
+			+ " and m.matricula.aluno.id = ?1 "
+			+ " and m.pagamentoMensalidade.data between ?2 and ?3")
+	public List<ConsultaMensalidadeDTO> getMensalidadesPagasAluno(Long idAluno, Date diaInicio, Date diaFim);
+	
 	@Query("select count (*) from MensalidadeDO m where m.matricula.aluno.id = ?1"
 			+ " and m.dataExclusao is null")
 	public Long getQtdMensalidades(Long idMatricula);

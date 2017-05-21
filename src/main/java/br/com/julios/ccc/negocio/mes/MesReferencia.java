@@ -100,5 +100,33 @@ public class MesReferencia {
 		this.setAno(this.getAnoNext());
 
 	}
+	
+	public String getNomeMes(){
+		if(this.getMes().longValue() == 1)
+			return "Janeiro";
+		if(this.getMes().longValue() == 2)
+			return "Fevereiro";
+		if(this.getMes().longValue() == 3)
+			return "Março";
+		if(this.getMes().longValue() == 4)
+			return "Abril";
+		if(this.getMes().longValue() == 5)
+			return "Maio";
+		if(this.getMes().longValue() == 6)
+			return "Junho";
+		if(this.getMes().longValue() == 7)
+			return "Julho";
+		if(this.getMes().longValue() == 8)
+			return "Agosto";
+		if(this.getMes().longValue() == 9)
+			return "Setembro";
+		if(this.getMes().longValue() == 10)
+			return "Outubro";
+		if(this.getMes().longValue() == 11)
+			return "Novembro";
+		if(this.getMes().longValue() == 12)
+			return "Dezembro";
+		return "";
+	}
 
 }

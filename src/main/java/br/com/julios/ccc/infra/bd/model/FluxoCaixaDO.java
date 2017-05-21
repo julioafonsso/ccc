@@ -25,7 +25,7 @@ public class FluxoCaixaDO {
 	private Double valor;
 	
 	@Column
-	private Integer quantidade;
+	private Long quantidade;
 	
 	@Column
 	private String descricao;
@@ -73,11 +73,11 @@ public class FluxoCaixaDO {
 		this.valor = valor;
 	}
 
-	public Integer getQuantidade() {
+	public Long getQuantidade() {
 		return quantidade;
 	}
 
-	public void setQuantidade(Integer quantidade) {
+	public void setQuantidade(Long quantidade) {
 		this.quantidade = quantidade;
 	}
 
@@ -101,7 +101,13 @@ public class FluxoCaixaDO {
 	public TipoFluxoCaixaDO getTipoFluxo() {
 		return tipoFluxo;
 	}
+	
+	
 
+
+	public void setTipoFluxo(TipoFluxoCaixaDO tipoFluxo) {
+		this.tipoFluxo = tipoFluxo;
+	}
 
 	public UsuarioDO getUserLancamento() {
 		return userLancamento;

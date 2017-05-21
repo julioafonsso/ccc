@@ -11,7 +11,10 @@ import br.com.julios.ccc.infra.bd.daos.DescontoDAO;
 import br.com.julios.ccc.infra.bd.daos.MatriculaDAO;
 import br.com.julios.ccc.infra.bd.daos.TurmaDAO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
+import br.com.julios.ccc.infra.dto.CadastroFluxoCaixaDTO;
 import br.com.julios.ccc.infra.dto.matricula.CadastroMatriculaDTO;
+import br.com.julios.ccc.negocio.aluno.Aluno;
+import br.com.julios.ccc.negocio.aluno.AlunoRepositorio;
 import br.com.julios.ccc.negocio.desconto.Desconto;
 import br.com.julios.ccc.negocio.desconto.DescontoRepositorio;
 import br.com.julios.ccc.negocio.fluxos.FluxoCaixa;
@@ -37,16 +40,19 @@ public class MatriculaRepositorio {
 	private DescontoRepositorio descontoRepositorio;
 	
 	@Autowired
-	MatriculaDAO mDAO;
+	private AlunoRepositorio alunoRepositorio;
 	
 	@Autowired
-	TurmaDAO turmaDAO;
+	private MatriculaDAO mDAO;
 	
 	@Autowired
-	AlunoDAO alunoDAO;
+	private TurmaDAO turmaDAO;
 	
 	@Autowired
-	DescontoDAO descontoDAO;
+	private AlunoDAO alunoDAO;
+	
+	@Autowired
+	private DescontoDAO descontoDAO;
 	
 	
 	public Matricula getMatricula(CadastroMatriculaDTO cadastro)
@@ -88,23 +94,26 @@ public class MatriculaRepositorio {
 		matricula.setId(mDO.getId());
 	}
 
-	public Mensalidade getMensalidade(Matricula matricula) throws ParseException {
-		return mensalidadeRepositorio.getMensalidade(matricula);
+	protected Mensalidade getMensalidade(Matricula matricula) throws ParseException {
+		return this.mensalidadeRepositorio.getMensalidade(matricula);
 	}
 
-	public FluxoCaixa getFluxoPagamentoMatricula(Double valor) {
-
-		return this.fluxoRepositorio.getFluxoPagamentoMatricula(valor);
+	protected FluxoCaixa getFluxoPagamentoMatricula(CadastroFluxoCaixaDTO cadastro) {
+		return this.fluxoRepositorio.getFluxoPagamentoMatricula(cadastro);
 	}
 	
 	protected TurmaColetiva getTurmaColetiva(Long idTurma) throws ParseException {
-		return turmaRepositorio.getTurma(idTurma);
+		return this.turmaRepositorio.getTurma(idTurma);
 	}
 
 	protected Desconto getDesconto(Long idDesconto) {
-		return descontoRepositorio.getDesconto(idDesconto);
+		return this.descontoRepositorio.getDesconto(idDesconto);
 	}
 
+	protected Aluno getAluno(Long idAluno) throws Exception
+	{
+		return this.alunoRepositorio.getAluno(idAluno);
+	}
 	
 	
 }

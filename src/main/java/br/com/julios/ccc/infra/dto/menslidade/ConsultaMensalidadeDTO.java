@@ -2,18 +2,48 @@ package br.com.julios.ccc.infra.dto.menslidade;
 
 import java.util.Date;
 
-import br.com.julios.ccc.infra.bd.model.DescontosDO;
-
 public class ConsultaMensalidadeDTO {
+	
 	private Long id;
 	private String nomeModalidade;
 	private Date dataVencimento;
+	private Date dataPagamento;
 	private String mesReferencia;
 	private Double valorMensalidade;
 	private Double valorCalculado;
 	private Long desconto;
 	private String codigoTurma;
 	
+	
+	public ConsultaMensalidadeDTO(Long id,String codigoTurma, String nomeModalidade, Date dataVencimento,
+			Long mes, Long ano, Double valorMensalidade, Long desconto) {
+
+		this.setId(id);
+		this.setCodigoTurma(codigoTurma);
+		this.setNomeModalidade(nomeModalidade);
+		this.setDesconto(desconto);
+		this.setDataVencimento(dataVencimento);
+		this.setMesReferencia(mes, ano);
+		this.setValorMensalidade(valorMensalidade);
+		this.calculaValor();
+
+	}
+
+	
+	public ConsultaMensalidadeDTO(Long id,String codigoTurma, String nomeModalidade, Date dataVencimento,
+			Long mes, Long ano, Double valorMensalidade, Date dataPagamento) {
+
+		this.setId(id);
+		this.setCodigoTurma(codigoTurma);
+		this.setNomeModalidade(nomeModalidade);
+		this.setDesconto(desconto);
+		this.setDataVencimento(dataVencimento);
+		this.setMesReferencia(mes, ano);
+		this.setValorMensalidade(valorMensalidade);
+		this.setDataPagamento(dataPagamento);
+
+	}
+
 	
 	public String getCodigoTurma() {
 		return codigoTurma;
@@ -33,20 +63,7 @@ public class ConsultaMensalidadeDTO {
 		this.desconto = desconto;
 	}
 
-	public ConsultaMensalidadeDTO(Long id,String codigoTurma, String nomeModalidade, Date dataVencimento,
-			Long mes, Long ano, Double valorMensalidade, Long desconto) {
-
-		this.setId(id);
-		this.setCodigoTurma(codigoTurma);
-		this.setNomeModalidade(nomeModalidade);
-		this.setDesconto(desconto);
-		this.setDataVencimento(dataVencimento);
-		this.setMesReferencia(mes, ano);
-		this.setValorMensalidade(valorMensalidade);
-		this.calculaValor();
-
-	}
-
+	
 	private void setMesReferencia(Long mes, Long ano) {
 		this.setMesReferencia(mes + "/" + ano);
 		
@@ -109,4 +126,16 @@ public class ConsultaMensalidadeDTO {
 		this.valorCalculado = valorCalculado;
 	}
 
+
+	public Date getDataPagamento() {
+		return dataPagamento;
+	}
+
+
+	public void setDataPagamento(Date dataPagamento) {
+		this.dataPagamento = dataPagamento;
+	}
+
+	
+	
 }

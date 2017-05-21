@@ -2,7 +2,23 @@ package br.com.julios.ccc.negocio.fluxos;
 
 import java.util.Date;
 
+import br.com.julios.ccc.infra.dto.CadastroFluxoCaixaDTO;
+
 public class FluxoCaixa {
+
+	protected FluxoCaixa(CadastroFluxoCaixaDTO cadastro, FluxoCaixaRepositorio fluxoPagamentoRepositorio) {
+		this.setRepositorio(fluxoPagamentoRepositorio);
+		this.setIdFluxo(cadastro.getId());
+		this.setDataFluxo(cadastro.getData());
+		this.setDescricao(cadastro.getDescricao());
+		this.setObservacao(cadastro.getObservacao());
+		this.setIdTipoFluxo(cadastro.getIdTipo());
+		this.setValorFluxo(cadastro.getValor());
+		this.setQtd(cadastro.getQtd());
+
+	}
+
+	private FluxoCaixaRepositorio repositorio;
 
 	private Long idFluxo;
 	private Long idTipoFluxo;
@@ -10,22 +26,26 @@ public class FluxoCaixa {
 	private Double valorFluxo;
 	private String observacao;
 	private String descricao;
-	private Integer qtd;
-	
-	public Integer getQtd() {
-		return qtd;
+	private Long qtd;
+
+	private FluxoCaixaRepositorio getRepositorio() {
+		return repositorio;
 	}
 
-	protected void setQtd(Integer qtd) {
-		this.qtd = qtd;
+	public Long getIdFluxo() {
+		return idFluxo;
 	}
 
-	protected void setObservacao(String observacao) {
-		this.observacao = observacao;
+	public Long getIdTipoFluxo() {
+		return idTipoFluxo;
 	}
 
-	protected void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public Date getDataFluxo() {
+		return dataFluxo;
+	}
+
+	public Double getValorFluxo() {
+		return valorFluxo;
 	}
 
 	public String getObservacao() {
@@ -36,40 +56,48 @@ public class FluxoCaixa {
 		return descricao;
 	}
 
-	private FluxoCaixaRepositorio repositorio;
-	
-	
-	public FluxoCaixa(FluxoCaixaRepositorio fluxoPagamentoRepositorio) {
-		this.repositorio = fluxoPagamentoRepositorio;
+	public Long getQtd() {
+		return qtd;
 	}
-	
+
+	private void setRepositorio(FluxoCaixaRepositorio repositorio) {
+		this.repositorio = repositorio;
+	}
+
 	protected void setIdFluxo(Long idFluxo) {
 		this.idFluxo = idFluxo;
 	}
-	public Long getIdFluxo() {
-		return idFluxo;
-	}
-	public Long getIdTipoFluxo() {
-		return idTipoFluxo;
-	}
-	public Date getDataFluxo() {
-		return dataFluxo;
-	}
-	public Double getValorFluxo() {
-		return valorFluxo;
-	}
-	protected void setIdTipoFluxo(Long idTipoFluxo) {
+
+	private void setIdTipoFluxo(Long idTipoFluxo) {
 		this.idTipoFluxo = idTipoFluxo;
 	}
-	protected void setDataFluxo(Date dataFluxo) {
+
+	private void setDataFluxo(Date dataFluxo) {
 		this.dataFluxo = dataFluxo;
 	}
-	protected void setValorFluxo(Double valorFluxo) {
+
+	private void setValorFluxo(Double valorFluxo) {
 		this.valorFluxo = valorFluxo;
 	}
 
-	public void cadastrar() {
-		this.repositorio.cadastrar(this);
+	private void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
-	
+
+	private void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	private void setQtd(Long qtd) {
+		this.qtd = qtd;
+	}
+
+	public void cadastrar() {
+
+		if (this.getDataFluxo() == null)
+			this.setDataFluxo(new Date());
+
+		this.getRepositorio().cadastrar(this);
+	}
+
 }

@@ -14,30 +14,56 @@ import br.com.julios.ccc.infra.dto.aluno.CadastroAlunoDTO;
 public class AlunoRepositorio {
 
 	@Autowired
-	AlunoDAO alunoDAO;
+	private AlunoDAO alunoDAO;
 	
 	@Autowired
-	BairroDAO bairroDAO;
+	private BairroDAO bairroDAO;
 	
 	@Autowired
-	EstadoCivilDAO estadoCivilDAO;
+	private EstadoCivilDAO estadoCivilDAO;
 	
 	@Autowired
-	ConheceEscolaDAO conheceEscolaDAO;
+	private ConheceEscolaDAO conheceEscolaDAO;
 
 	public Aluno getAluno(CadastroAlunoDTO cadastro){
 		return new Aluno(cadastro, this);
+	}
+	
+	public Aluno getAluno(Long idAluno) throws Exception {
+		AlunoDO alunoDO = this.alunoDAO.findOne(idAluno);
+		CadastroAlunoDTO cadastro = new CadastroAlunoDTO();
+		
+		cadastro.setCidade(alunoDO.getCidade());
+		cadastro.setComplemento(alunoDO.getComplemento());
+		cadastro.setCpf(alunoDO.getCpf());
+		cadastro.setDataNascimento(alunoDO.getDataNascimento());
+		cadastro.setEmail(alunoDO.getEmail());
+		cadastro.setEndereco(alunoDO.getEndereco());
+		cadastro.setFoto(cadastro.getFoto());
+		cadastro.setId(alunoDO.getId());
+		cadastro.setIdBairro(alunoDO.getBairro().getId());
+		cadastro.setIdConheceEscola(alunoDO.getConheceEscola().getId());
+		cadastro.setIdEstadoCivil(alunoDO.getEstadoCivil().getId());
+		cadastro.setNome(alunoDO.getNome());
+		cadastro.setNumero(alunoDO.getNumero());
+		cadastro.setObservacao(alunoDO.getObservacao());
+		cadastro.setProfissao(alunoDO.getProfissao());
+		cadastro.setRg(alunoDO.getRg());
+		cadastro.setSexo(alunoDO.getSexo());
+		cadastro.setTelefone(alunoDO.getTelefone());
+		
+		return getAluno(cadastro);
 	}
 
 	protected Long qtdAlunoComCPF(String cpf) {
 		return alunoDAO.countByCpf(cpf);
 	}
 
-	public Long qtdAlunoComRG(String rg) {
+	protected Long qtdAlunoComRG(String rg) {
 		return alunoDAO.countByRg(rg);
 	}
 
-	public Long qtdAlunoComEmail(String email) {
+	protected Long qtdAlunoComEmail(String email) {
 		return alunoDAO.countByEmail(email);
 	}
 
@@ -66,4 +92,6 @@ public class AlunoRepositorio {
 		alunoDAO.save(alunoDO);
 		
 	}
+
+	
 }

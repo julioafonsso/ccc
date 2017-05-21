@@ -11,6 +11,7 @@ import br.com.julios.ccc.infra.bd.daos.MensalidadeDAO;
 import br.com.julios.ccc.infra.bd.daos.MesReferenciaDAO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
+import br.com.julios.ccc.infra.dto.CadastroFluxoCaixaDTO;
 import br.com.julios.ccc.infra.dto.menslidade.CadastroMensalidadeDTO;
 import br.com.julios.ccc.negocio.fluxos.FluxoCaixa;
 import br.com.julios.ccc.negocio.fluxos.FluxoCaixaRepositorio;
@@ -72,26 +73,20 @@ public class MensalidadeRepositorio {
 		
 	}
 
-
-
 	protected Matricula getMatricula(Long idMatricula) {
 
-		return matriculaRepositorio.getMatricula(idMatricula);
+		return this.matriculaRepositorio.getMatricula(idMatricula);
 	}
 
 	protected Long getQtdMensalidades(Long idMatricula) {
-		return mDAO.getQtdMensalidades(idMatricula);
-	}
-	
-	protected FluxoCaixa getFluxo(Double valor){
-		return this.fluxoRepositorio.getFluxoPagamentoMensalidade(valor);
+		return this.mDAO.getQtdMensalidades(idMatricula);
 	}
 
 	protected void atualizarPagamento(Mensalidade mensalidade) {
 		MensalidadeDO mensalidadeDO = mDAO.findOne(mensalidade.getId());
 		mensalidadeDO.setPagamentoMensalidade(fluxoDAO.findOne(mensalidade.getPagamento().getIdFluxo()));
 		mensalidadeDO.setDesconto(matriculaDAO.findOne(mensalidade.getIdMatricula()).getDesconto());
-		mDAO.save(mensalidadeDO);
+		this.mDAO.save(mensalidadeDO);
 		
 	}
 
@@ -106,6 +101,10 @@ public class MensalidadeRepositorio {
 	protected Long getQtdMensalidadeMes(Long idMatricula, Long idMes) {
 		return this.mDAO.getQtdMensalidadeMes(idMatricula, idMes);
 		
+	}
+
+	protected FluxoCaixa getFluxo(CadastroFluxoCaixaDTO cadastro) {
+		return this.fluxoRepositorio.getFluxoPagamentoMensalidade(cadastro);
 	}
 	
 }

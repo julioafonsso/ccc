@@ -1,5 +1,8 @@
 package br.com.julios.ccc.controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +33,10 @@ public class AlunoController {
 
 	@Autowired
 	AlunoRepositorio alunoRepositorio;
-	
+
 	@Autowired
 	MensalidadeRepositorio mensalidadeRepositorio;
-	
+
 	@Autowired
 	FuncionarioRepositorio funcionarioRepositorio;
 
@@ -46,7 +49,6 @@ public class AlunoController {
 	@Autowired
 	MensalidadeDAO mensalidadeDAO;
 
-	
 	//
 	// @Autowired
 	// private HttpServletRequest http;
@@ -88,20 +90,36 @@ public class AlunoController {
 	}
 
 	@RequestMapping(value = "{idAluno}/debitos/{idMensalidade}/pagamento", method = RequestMethod.POST)
-	public void efetuarPagamento(@PathVariable("idAluno") Long idAluno, @PathVariable("idMensalidade") Long idMensalidade, @RequestBody Double valor) throws Exception
-	{
-		Mensalidade mensalidade = 		mensalidadeRepositorio.getMensalidade(idMensalidade);
+	public void efetuarPagamento(@PathVariable("idAluno") Long idAluno,
+			@PathVariable("idMensalidade") Long idMensalidade, @RequestBody Double valor) throws Exception {
+		Mensalidade mensalidade = mensalidadeRepositorio.getMensalidade(idMensalidade);
 		Funcionario prof1 = mensalidade.getMatricula().getTurma().getProfessor1();
 		Funcionario prof2 = mensalidade.getMatricula().getTurma().getProfessor2();
-		
+
 		mensalidade.pagar(valor);
-		
-		if(prof1 != null)
+
+		if (prof1 != null)
 			prof1.criarComissaoProfessor(mensalidade, valor);
-		
-		
-		if(prof2 != null)
+
+		if (prof2 != null)
 			prof2.criarComissaoProfessor(mensalidade, valor);
+	}
+
+	@RequestMapping(value = "{id}/pagamentos/{dataInicio}/{dataFim}", method = RequestMethod.GET)
+	public List<ConsultaMensalidadeDTO> getPagamentos(@PathVariable("id") Long idAluno,
+			@PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws Exception {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+
+		Date diaInicio = sdf.parse(dataInicio);
+		Date diaFim = sdf.parse(dataFim);
+
+		Calendar c = Calendar.getInstance();
+		c.setTime(diaFim);
+		c.add(Calendar.DATE, c.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
+		diaFim = c.getTime();
+
+		return mensalidadeDAO.getMensalidadesPagasAluno(idAluno, diaInicio, diaFim); 
 	}
 
 	// @RequestMapping(method = RequestMethod.PUT)
@@ -112,27 +130,6 @@ public class AlunoController {
 	// public void apagarAluno(AlunoDO aluno) {
 	// }
 	//
-	// @RequestMapping(value = "{id}/pagamentos/{dataInicio}/{dataFim}", method
-	// = RequestMethod.GET)
-	// public List<MensalidadeDO> getPagamentos(@PathVariable("id") Long
-	// idAluno, @PathVariable("dataInicio") String dataInicio,
-	// @PathVariable("dataFim") String dataFim) throws Exception {
-	//
-	//
-	// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
-	//
-	// Date diaInicio = sdf.parse(dataInicio);
-	// Date diaFim = sdf.parse(dataFim);
-	//
-	// Calendar c = Calendar.getInstance();
-	// c.setTime(diaFim);
-	// c.add(Calendar.DATE, c.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
-	// diaFim = c.getTime();
-	//
-	//
-	// return alunoFacade.getPagamentos(idAluno, diaInicio, diaFim);
-	// return null;
-	// }
 	//
 	//
 	//

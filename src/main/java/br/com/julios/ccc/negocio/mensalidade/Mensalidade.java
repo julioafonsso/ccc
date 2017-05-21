@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import br.com.julios.ccc.infra.dto.CadastroFluxoCaixaDTO;
 import br.com.julios.ccc.infra.dto.menslidade.CadastroMensalidadeDTO;
 import br.com.julios.ccc.negocio.fluxos.FluxoCaixa;
 import br.com.julios.ccc.negocio.matricula.Matricula;
@@ -137,8 +138,14 @@ public class Mensalidade {
 		return pagamento;
 	}
 
-	public void pagar(Double valor) throws ParseException {
-		this.pagamento = this.getRepositorio().getFluxo(valor);
+	public void pagar(Double valor) throws Exception {
+		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
+		cadastro.setData(new Date());
+		cadastro.setQtd(new Long(1));
+		cadastro.setValor(valor);
+		cadastro.setDescricao("Aluno - " + this.getMatricula().getAluno().getNome() );
+		cadastro.setObservacao("Mes Referencia " + this.getMes().getNomeMes() + " " + this.getMes().getAno());
+		this.pagamento = this.getRepositorio().getFluxo(cadastro);
 		pagamento.cadastrar();
 		this.getRepositorio().atualizarPagamento(this);
 		this.criarMensalidade();

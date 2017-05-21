@@ -3,7 +3,9 @@ package br.com.julios.ccc.negocio.matricula;
 import java.text.ParseException;
 import java.util.Date;
 
+import br.com.julios.ccc.infra.dto.CadastroFluxoCaixaDTO;
 import br.com.julios.ccc.infra.dto.matricula.CadastroMatriculaDTO;
+import br.com.julios.ccc.negocio.aluno.Aluno;
 import br.com.julios.ccc.negocio.desconto.Desconto;
 import br.com.julios.ccc.negocio.turma.coletiva.TurmaColetiva;
 
@@ -19,6 +21,7 @@ public class Matricula {
 	private Long idDesconto;
 	private Date dataMatricula;
 	
+	private Aluno aluno;
 	private TurmaColetiva turma;
 	private Desconto desconto;
 
@@ -95,7 +98,7 @@ public class Matricula {
 		return repositorio;
 	}
 
-	public void cadastrar() throws ParseException{
+	public void cadastrar() throws Exception{
 		this.repositorio.cadastrar(this);
 		this.cadastrarPagamentoMatricula();
 		this.cadastrarMensalidade();
@@ -106,9 +109,15 @@ public class Matricula {
 		this.repositorio.getMensalidade(this).criarMensalidade();;
 	}
 
-	private void cadastrarPagamentoMatricula()
+	private void cadastrarPagamentoMatricula() throws Exception
 	{
-		this.repositorio.getFluxoPagamentoMatricula(this.getValor()).cadastrar();
+		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
+		cadastro.setData(this.getDataMatricula());
+		cadastro.setQtd(new Long(1));
+		cadastro.setValor(this.getValor());
+		cadastro.setDescricao("Aluno : " + this.getAluno().getNome());
+		
+		this.repositorio.getFluxoPagamentoMatricula(cadastro).cadastrar();
 	}
 	
 	public TurmaColetiva getTurma() throws ParseException {
@@ -121,6 +130,13 @@ public class Matricula {
 		if (this.desconto == null)
 			this.desconto = this.getRepositorio().getDesconto(this.getIdDesconto());
 		return desconto;
+	}
+	
+	public Aluno getAluno() throws Exception{
+		if(this.aluno == null)
+			this.aluno = this.getRepositorio().getAluno(this.getIdAluno());
+		
+		return this.aluno;
 	}
 
 	
