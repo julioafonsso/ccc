@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import br.com.julios.ccc.infra.dto.turma.coletiva.CadastroTurmaColetivaDTO;
+import br.com.julios.ccc.negocio.funcionario.Funcionario;
 import br.com.julios.ccc.negocio.mes.MesReferencia;
 import br.com.julios.ccc.negocio.turma.Turma;
 
@@ -28,11 +29,16 @@ public class TurmaColetiva extends Turma {
 	private Long idNivel;
 	private Long idSala;
 
-	private TurmaColetivaRepositorio repositorio;
+	private TurmaColetivaRepositorio getRepositorio() {
+		return (TurmaColetivaRepositorio) super.getTurmaRepositorio();
+	}
+
+
 
 	public TurmaColetiva(CadastroTurmaColetivaDTO cadastro, TurmaColetivaRepositorio turmaColetivaRepositorio) {
 
-		this.repositorio = turmaColetivaRepositorio;
+		super.setTurmaRepositorio(turmaColetivaRepositorio);
+		
 
 		this.setId(cadastro.getId());
 		this.setIdProfessor1(cadastro.getIdProfessor1());
@@ -198,9 +204,9 @@ public class TurmaColetiva extends Turma {
 		this.validaProfessorIgual();
 		this.validaHorarioProfessores();
 		this.validaSala();
-		this.repositorio.cadastrar(this);
-
+		this.getRepositorio().cadastrar(this);
 	}
+
 
 	private void validaProfessorIgual() {
 
@@ -264,7 +270,7 @@ public class TurmaColetiva extends Turma {
 			idMesAtual = c.get(Calendar.MONTH);
 		}
 
-		return aulasTotais/ aulasMatriculado;
+		return aulasMatriculado/aulasTotais;
 	
 
 
@@ -290,5 +296,26 @@ public class TurmaColetiva extends Turma {
 	
 		return false;
 	}
+
+
+
+	public Funcionario getProfessor2() {
+		return null;
+	}
+
+
+
+	public Double getPercentualProfessor(Funcionario funcionario) throws Exception {
+		if(funcionario.getId().equals(this.getIdProfessor1()))
+			return this.getPercentualProfessor1();
+		if(funcionario.getId().equals(this.getIdProfessor2()))
+			return this.getPercentualProfessor2();
+		
+		throw new Exception("Professor não está nessa turma");
+		
+		
+	}
+
+	
 
 }

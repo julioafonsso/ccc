@@ -1,12 +1,25 @@
 package br.com.julios.ccc.negocio.turma;
 
+import br.com.julios.ccc.negocio.funcionario.Funcionario;
+
 public abstract class Turma {
+
+	protected TurmaRepositorio turmaRepositorio;
+	
+	protected TurmaRepositorio getTurmaRepositorio() {
+		return turmaRepositorio;
+	}
+	protected void setTurmaRepositorio(TurmaRepositorio turmaRepositorio) {
+		this.turmaRepositorio = turmaRepositorio;
+	}
 
 	private Long id;
 
 	private Long idProfessor1;
+	private Funcionario professor1;
 	private Double percentualProfessor1;
 	private Long idModalidade;
+	
 	protected void setId(Long id) {
 		this.id = id;
 	}
@@ -32,7 +45,16 @@ public abstract class Turma {
 		return idModalidade;
 	}
 	
+	
 	public abstract String getCodigo();
 	
+	public Funcionario getProfessor1() throws Exception
+	{
+		if(this.professor1 == null){
+			this.professor1 = this.getTurmaRepositorio().getProfessor(this.getIdProfessor1());
+		}
+		
+		return this.professor1;
+	}
 	
 }

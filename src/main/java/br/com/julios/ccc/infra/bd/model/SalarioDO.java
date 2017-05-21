@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -37,6 +38,17 @@ public class SalarioDO {
 	@Column
 	private Date dataExclusao;
 
+	@OneToOne
+	private MensalidadeDO mensalidade;
+	
+	public MensalidadeDO getMensalidade() {
+		return mensalidade;
+	}
+
+	public void setMensalidade(MensalidadeDO mensalidade) {
+		this.mensalidade = mensalidade;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -63,6 +75,15 @@ public class SalarioDO {
 
 	public MesReferenciaDO getMesReferencia() {
 		return mesReferencia;
+	}
+
+	
+	public void setMesReferencia(MesReferenciaDO mesReferencia) {
+		this.mesReferencia = mesReferencia;
+	}
+
+	public void setFluxoCaixa(FluxoCaixaDO fluxoCaixa) {
+		this.fluxoCaixa = fluxoCaixa;
 	}
 
 	public FluxoCaixaDO getFluxoCaixa() {

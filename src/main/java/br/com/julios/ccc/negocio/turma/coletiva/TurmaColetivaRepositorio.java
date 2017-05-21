@@ -13,9 +13,10 @@ import br.com.julios.ccc.infra.bd.daos.SalaDAO;
 import br.com.julios.ccc.infra.bd.daos.TurmaColetivaDAO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.CadastroTurmaColetivaDTO;
+import br.com.julios.ccc.negocio.turma.TurmaRepositorio;
 
 @Service
-public class TurmaColetivaRepositorio {
+public class TurmaColetivaRepositorio extends TurmaRepositorio{
 
 	protected SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
@@ -75,8 +76,14 @@ public class TurmaColetivaRepositorio {
 	public TurmaColetiva getTurma(Long idTurma) throws ParseException {
 		TurmaColetivaDO tDO = turmaDAO.findOne(idTurma);
 		CadastroTurmaColetivaDTO cadastro = new CadastroTurmaColetivaDTO();
-		cadastro.setIdProfessor2(tDO.getProfessor2().getId());
+		cadastro.setIdProfessor1(tDO.getProfessor1().getId());
+		cadastro.setPercentualProfessor1(tDO.getPercentualProfessor1());
+		
+		if(tDO.getProfessor2() != null)
+			cadastro.setIdProfessor2(tDO.getProfessor2().getId());
+		
 		cadastro.setPercentualProfessor2(tDO.getPercentualProfessor2());
+		
 		cadastro.setQtdVagas(tDO.getVagas());
 		cadastro.setValorMensalidade(tDO.getMensalidade());
 		cadastro.setHorarioInicial(tDO.getHorarioInicial());

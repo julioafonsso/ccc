@@ -60,13 +60,21 @@ public class CadastroFuncionarioDTO {
 	}
 	public void setDataNascimento(String dataNascimento) throws ParseException {
 		
-		this.dataNascimento = sdf.parse(dataNascimento);
+		this.setDataNascimento( sdf.parse(dataNascimento));
 	}
-	public Date getdataAdmissao() {
+	public void setDataNascimento(Date dataNascimento){
+		this.dataNascimento = dataNascimento;
+	}
+	
+	public Date getDataAdmissao() {
 		return dataAdmissao;
 	}
-	public void setdataAdmissao(String dataAdmissao) throws ParseException {
-		this.dataAdmissao = sdf.parse(dataAdmissao);
+	public void setDataAdmissao(String dataAdmissao) throws ParseException {
+		this.setDataAdmissao(sdf.parse(dataAdmissao));
+	}
+	
+	public void setDataAdmissao(Date dataAdmissao){
+		this.dataAdmissao = dataAdmissao;
 	}
 	public String getFoto() {
 		return foto;

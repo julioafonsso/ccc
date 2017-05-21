@@ -1,6 +1,5 @@
 package br.com.julios.ccc.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,16 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.julios.ccc.facade.FluxoCaixaFacade;
 import br.com.julios.ccc.infra.bd.model.TipoFluxoCaixaDO;
 
 @Controller
 @ResponseBody
 @RequestMapping("/tipo-fluxo-caixa")
 public class TipoFluxoCaixaController {
-	
-	@Autowired
-	FluxoCaixaFacade FluxoCaixaFacade;
 	
 	
 	
@@ -54,7 +49,6 @@ public class TipoFluxoCaixaController {
 	@RequestMapping(value = "{id}",method = RequestMethod.DELETE)
 	public void apagarTipoFluxoCaixa(@PathVariable("id") Long id) throws Exception
 	{
-		FluxoCaixaFacade.apagarTipoFluxoCaixa(id);
 	}
 	
 

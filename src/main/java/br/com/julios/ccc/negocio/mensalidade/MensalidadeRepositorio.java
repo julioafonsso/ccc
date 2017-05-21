@@ -9,18 +9,15 @@ import br.com.julios.ccc.infra.bd.daos.FluxoCaixaDAO;
 import br.com.julios.ccc.infra.bd.daos.MatriculaDAO;
 import br.com.julios.ccc.infra.bd.daos.MensalidadeDAO;
 import br.com.julios.ccc.infra.bd.daos.MesReferenciaDAO;
+import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.dto.menslidade.CadastroMensalidadeDTO;
-import br.com.julios.ccc.negocio.desconto.Desconto;
-import br.com.julios.ccc.negocio.desconto.DescontoRepositorio;
 import br.com.julios.ccc.negocio.fluxos.FluxoCaixa;
 import br.com.julios.ccc.negocio.fluxos.FluxoCaixaRepositorio;
 import br.com.julios.ccc.negocio.matricula.Matricula;
 import br.com.julios.ccc.negocio.matricula.MatriculaRepositorio;
 import br.com.julios.ccc.negocio.mes.MesReferencia;
 import br.com.julios.ccc.negocio.mes.MesRerefenciaRepositorio;
-import br.com.julios.ccc.negocio.turma.coletiva.TurmaColetiva;
-import br.com.julios.ccc.negocio.turma.coletiva.TurmaColetivaRepositorio;
 
 @Service
 public class MensalidadeRepositorio {
@@ -30,12 +27,6 @@ public class MensalidadeRepositorio {
 	
 	@Autowired
 	private MesRerefenciaRepositorio mesRepositorio;
-	
-	@Autowired
-	private TurmaColetivaRepositorio turmaRepositorio;
-	
-	@Autowired
-	private DescontoRepositorio descontoRepositorio;
 	
 	@Autowired
 	private FluxoCaixaRepositorio fluxoRepositorio;
@@ -65,28 +56,23 @@ public class MensalidadeRepositorio {
 		cadastro.setId(mensalidadeDO.getId());
 		cadastro.setIdMatricula(mensalidadeDO.getMatricula().getId());
 		cadastro.setIdMesReferecia(mensalidadeDO.getMesReferencia().getId());
+		cadastro.setDataVencimento(mensalidadeDO.getDataVencimento());
 		return new Mensalidade(cadastro, this);
 	}
 	
 	
 	protected void cadastrar(Mensalidade mensalidade) {
+		MatriculaDO matricula = matriculaDAO.findOne(mensalidade.getIdMatricula());
 		MensalidadeDO mdo = new MensalidadeDO();
 		mdo.setDataVencimento(mensalidade.getDataVencimento());
-		mdo.setMatricula(matriculaDAO.findOne(mensalidade.getIdMatricula()));
+		mdo.setMatricula(matricula);
 		mdo.setMesReferencia(mesDAO.findOne(mensalidade.getMes().getId()));
 		mdo.setValorMensalidade(mensalidade.getValor());
-		
 		mDAO.save(mdo);
 		
 	}
 
-	protected TurmaColetiva getTurmaColetiva(Long idTurma) throws ParseException {
-		return turmaRepositorio.getTurma(idTurma);
-	}
 
-	protected Desconto getDesconto(Long idDesconto) {
-		return descontoRepositorio.getDesconto(idDesconto);
-	}
 
 	protected Matricula getMatricula(Long idMatricula) {
 
@@ -104,6 +90,7 @@ public class MensalidadeRepositorio {
 	protected void atualizarPagamento(Mensalidade mensalidade) {
 		MensalidadeDO mensalidadeDO = mDAO.findOne(mensalidade.getId());
 		mensalidadeDO.setPagamentoMensalidade(fluxoDAO.findOne(mensalidade.getPagamento().getIdFluxo()));
+		mensalidadeDO.setDesconto(matriculaDAO.findOne(mensalidade.getIdMatricula()).getDesconto());
 		mDAO.save(mensalidadeDO);
 		
 	}

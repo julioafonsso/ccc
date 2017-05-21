@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.util.Date;
 
 import br.com.julios.ccc.infra.dto.matricula.CadastroMatriculaDTO;
+import br.com.julios.ccc.negocio.desconto.Desconto;
+import br.com.julios.ccc.negocio.turma.coletiva.TurmaColetiva;
 
 public class Matricula {
 
@@ -16,6 +18,11 @@ public class Matricula {
 	private Long diaVencimento;
 	private Long idDesconto;
 	private Date dataMatricula;
+	
+	private TurmaColetiva turma;
+	private Desconto desconto;
+
+	
 	MatriculaRepositorio repositorio;
 	
 	public Matricula(CadastroMatriculaDTO cadastro, MatriculaRepositorio matriculaRepositorio) {
@@ -103,5 +110,18 @@ public class Matricula {
 	{
 		this.repositorio.getFluxoPagamentoMatricula(this.getValor()).cadastrar();
 	}
+	
+	public TurmaColetiva getTurma() throws ParseException {
+		if (this.turma == null)
+			this.turma = this.getRepositorio().getTurmaColetiva(this.getIdTurma());
+		return turma;
+	}
+
+	public Desconto getDesconto() {
+		if (this.desconto == null)
+			this.desconto = this.getRepositorio().getDesconto(this.getIdDesconto());
+		return desconto;
+	}
+
 	
 }

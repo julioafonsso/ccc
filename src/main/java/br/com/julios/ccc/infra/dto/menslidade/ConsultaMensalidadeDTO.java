@@ -43,7 +43,6 @@ public class ConsultaMensalidadeDTO {
 		this.setDataVencimento(dataVencimento);
 		this.setMesReferencia(mes, ano);
 		this.setValorMensalidade(valorMensalidade);
-		this.setValorCalculado(valorCalculado);
 		this.calculaValor();
 
 	}
@@ -57,7 +56,7 @@ public class ConsultaMensalidadeDTO {
 		if (new Date().after(this.getDataVencimento())) {
 			this.setValorCalculado(this.getValorMensalidade() * 1.1);
 		} else {
-			this.setValorCalculado(this.getValorMensalidade() - (this.getValorMensalidade() * this.getDesconto()));
+			this.setValorCalculado(this.getValorMensalidade() - (this.getValorMensalidade() * this.getDesconto() / 100));
 		}
 	}
 

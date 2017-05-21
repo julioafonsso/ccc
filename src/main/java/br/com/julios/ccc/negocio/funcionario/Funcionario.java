@@ -2,36 +2,15 @@ package br.com.julios.ccc.negocio.funcionario;
 
 import java.util.Date;
 
+import br.com.julios.ccc.infra.bd.model.TipoFuncionarioDO;
+import br.com.julios.ccc.infra.dto.funcionario.CadastroFuncionarioDTO;
+import br.com.julios.ccc.negocio.mensalidade.Mensalidade;
+import br.com.julios.ccc.negocio.mes.MesReferencia;
+
 public class Funcionario {
 
 	private FuncionarioRepositorio repositorio;
-	
-	public Funcionario(FuncionarioRepositorio funcionarioRepositorio) {
-		this.repositorio = funcionarioRepositorio;
-	}
 
-	public void cadastrar() throws Exception{
-		this.validaCpfExistente();
-		this.validaEmailExistente();
-		this.validaRGExistente();
-		this.repositorio.cadastrar(this);
-	}
-	
-	private void validaCpfExistente() throws Exception{
-		if(repositorio.qtdFuncionarioComCPF(this.getCpf()).longValue() > 0)
-			throw new Exception("CPF já cadastrado");
-	}
-	
-	private void validaRGExistente() throws Exception{
-		if(repositorio.qtdFuncionarioComRG(this.getRg()).longValue() > 0)
-			throw new Exception("RG já cadastrado");
-	}
-	
-	private void validaEmailExistente() throws Exception{
-		if(repositorio.qtdFuncionarioComEmail(this.getEmail()).longValue() > 0)
-			throw new Exception("Email já cadastrado");
-	}
-	
 	private Long id;
 	private String cpf;
 	private String telefone;
@@ -43,78 +22,154 @@ public class Funcionario {
 	private String observacao;
 	private Long tipo;
 	private String nome;
+
+	private FuncionarioRepositorio getRepositorio() {
+		return repositorio;
+	}
+
+	private void setRepositorio(FuncionarioRepositorio repositorio) {
+		this.repositorio = repositorio;
+	}
 	
-	protected String getNome() {
-		return nome;
+	public Funcionario(FuncionarioRepositorio funcionarioRepositorio, CadastroFuncionarioDTO funcionarioDTO) {
+		this.setRepositorio(funcionarioRepositorio);
+		this.setNome(funcionarioDTO.getNome());
+		this.setCpf(funcionarioDTO.getCpf());
+		this.setDataAdmissao(funcionarioDTO.getDataAdmissao());
+		this.setDataNascimento(funcionarioDTO.getDataNascimento());
+		this.setEmail(funcionarioDTO.getEmail());
+		this.setFoto(funcionarioDTO.getFoto());
+		this.setId(funcionarioDTO.getId());
+		this.setObservacao(funcionarioDTO.getObservacao());
+		this.setRg(funcionarioDTO.getRg());
+		this.setTelefone(funcionarioDTO.getTelefone());
+		this.setTipo(TipoFuncionarioDO.PROFESSOR);
 	}
-	protected void setNome(String nome) {
-		this.nome = nome;
-	}
-	
-	protected Long getId() {
-		return id;
-	}
-	protected void setId(Long id) {
+
+	private void setId(Long id) {
 		this.id = id;
 	}
-	protected String getCpf() {
-		return cpf;
-	}
-	protected void setCpf(String cpf) {
+
+	private void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	protected String getTelefone() {
-		return telefone;
-	}
-	protected void setTelefone(String telefone) {
+
+	private void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	protected String getEmail() {
-		return email;
-	}
-	protected void setEmail(String email) {
+
+	private void setEmail(String email) {
 		this.email = email;
 	}
-	protected String getRg() {
-		return rg;
-	}
-	protected void setRg(String rg) {
+
+	private void setRg(String rg) {
 		this.rg = rg;
 	}
-	protected Date getDataNascimento() {
-		return dataNascimento;
-	}
-	protected void setDataNascimento(Date dataNascimento) {
+
+	private void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-	protected Date getDataAdmissao() {
-		return dataAdmissao;
-	}
-	protected void setDataAdmissao(Date dataAdmissao) {
+
+	private void setDataAdmissao(Date dataAdmissao) {
 		this.dataAdmissao = dataAdmissao;
 	}
-	protected String getFoto() {
-		return foto;
-	}
-	protected void setFoto(String foto) {
+
+	private void setFoto(String foto) {
 		this.foto = foto;
 	}
-	protected String getObservacao() {
-		return observacao;
-	}
-	protected void setObservacao(String observacao) {
+
+	private void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
 
-	protected void setTipo(Long tipo) {
+	private void setTipo(Long tipo) {
 		this.tipo = tipo;
 	}
-	
-	protected Long getTipo()
-	{
+
+	private void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getRg() {
+		return rg;
+	}
+
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public Date getDataAdmissao() {
+		return dataAdmissao;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public Long getTipo() {
 		return tipo;
 	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void cadastrar() throws Exception {
+		this.validaCpfExistente();
+		this.validaEmailExistente();
+		this.validaRGExistente();
+		this.repositorio.cadastrar(this);
+	}
+
+	private void validaCpfExistente() throws Exception {
+		if (repositorio.qtdFuncionarioComCPF(this.getCpf()).longValue() > 0)
+			throw new Exception("CPF já cadastrado");
+	}
+
+	private void validaRGExistente() throws Exception {
+		if (repositorio.qtdFuncionarioComRG(this.getRg()).longValue() > 0)
+			throw new Exception("RG já cadastrado");
+	}
+
+	private void validaEmailExistente() throws Exception {
+		if (repositorio.qtdFuncionarioComEmail(this.getEmail()).longValue() > 0)
+			throw new Exception("Email já cadastrado");
+	}
+
+	public void criarComissaoProfessor(Mensalidade mensalidade, Double valorPago) throws Exception {
+		if (!this.getTipo().equals(TipoFuncionarioDO.PROFESSOR))
+			throw new Exception("Funcioario não é um professor");
+
+		Double valor = new Double(0.0);
+
+		MesReferencia mes = this.getRepositorio().getMesAtual();
+
+		valor = mensalidade.getMatricula().getTurma().getPercentualProfessor(this) * valorPago;
+		
+		this.getRepositorio().criarSalario(mensalidade, mes, valor, this);
+
+	}
+
 	
-	
-	
+
 }

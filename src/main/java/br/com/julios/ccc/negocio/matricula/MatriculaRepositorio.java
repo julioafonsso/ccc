@@ -12,10 +12,14 @@ import br.com.julios.ccc.infra.bd.daos.MatriculaDAO;
 import br.com.julios.ccc.infra.bd.daos.TurmaDAO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.dto.matricula.CadastroMatriculaDTO;
+import br.com.julios.ccc.negocio.desconto.Desconto;
+import br.com.julios.ccc.negocio.desconto.DescontoRepositorio;
 import br.com.julios.ccc.negocio.fluxos.FluxoCaixa;
 import br.com.julios.ccc.negocio.fluxos.FluxoCaixaRepositorio;
 import br.com.julios.ccc.negocio.mensalidade.Mensalidade;
 import br.com.julios.ccc.negocio.mensalidade.MensalidadeRepositorio;
+import br.com.julios.ccc.negocio.turma.coletiva.TurmaColetiva;
+import br.com.julios.ccc.negocio.turma.coletiva.TurmaColetivaRepositorio;
 
 @Service
 public class MatriculaRepositorio {
@@ -25,6 +29,12 @@ public class MatriculaRepositorio {
 	
 	@Autowired
 	MensalidadeRepositorio mensalidadeRepositorio;
+	
+	@Autowired
+	private TurmaColetivaRepositorio turmaRepositorio;
+	
+	@Autowired
+	private DescontoRepositorio descontoRepositorio;
 	
 	@Autowired
 	MatriculaDAO mDAO;
@@ -85,6 +95,14 @@ public class MatriculaRepositorio {
 	public FluxoCaixa getFluxoPagamentoMatricula(Double valor) {
 
 		return this.fluxoRepositorio.getFluxoPagamentoMatricula(valor);
+	}
+	
+	protected TurmaColetiva getTurmaColetiva(Long idTurma) throws ParseException {
+		return turmaRepositorio.getTurma(idTurma);
+	}
+
+	protected Desconto getDesconto(Long idDesconto) {
+		return descontoRepositorio.getDesconto(idDesconto);
 	}
 
 	

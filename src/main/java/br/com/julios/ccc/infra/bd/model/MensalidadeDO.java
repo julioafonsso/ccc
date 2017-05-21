@@ -42,6 +42,18 @@ public class MensalidadeDO {
 	@Column
 	private Date dataExclusao;
 
+	@ManyToOne
+	@JoinColumn(name="id_desconto")
+	private DescontosDO desconto;
+
+	public DescontosDO getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(DescontosDO desconto) {
+		this.desconto = desconto;
+	}
+
 	public Long getId() {
 		return id;
 	}
