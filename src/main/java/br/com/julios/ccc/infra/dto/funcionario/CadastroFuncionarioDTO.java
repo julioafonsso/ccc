@@ -19,8 +19,20 @@ public class CadastroFuncionarioDTO {
 	private String observacao;
 	private String nome;
 	
+	private Double Salario;
+	private Double valeTransporte;
+	private Long idTipo;
+	
+	
+	
 	public String getNome() {
 		return nome;
+	}
+	public Long getIdTipo() {
+		return idTipo;
+	}
+	public void setIdTipo(Long idTipo) {
+		this.idTipo = idTipo;
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
@@ -87,7 +99,32 @@ public class CadastroFuncionarioDTO {
 	}
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
-	} 
+	}
+	public Double getSalario() {
+		return Salario;
+	}
+	
+	public Double getValeTransporte() {
+		return valeTransporte;
+	}
+	
+	public void setValeTransporte(String valeTransporte) {
+		this.valeTransporte = new Double(valeTransporte.replaceAll(",", ""));
+	}
+	
+	public void setSalario(String salario) {
+		Salario = new Double(salario.replaceAll(",", ""));
+	}
+	
+	public void setValeTransporte(Double valeTransporte) {
+		this.valeTransporte = valeTransporte;
+	}
+	
+	public void setSalario(Double salario) {
+		Salario = salario;
+	}
+	
+	
 	
 		
 }

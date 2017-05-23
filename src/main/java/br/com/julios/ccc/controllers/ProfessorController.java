@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import br.com.julios.ccc.negocio.funcionario.FuncionarioRepositorio;
 
 @Controller
 @ResponseBody
+@Transactional(propagation = Propagation.REQUIRED)
 @RequestMapping("/professores")
 public class ProfessorController {
 

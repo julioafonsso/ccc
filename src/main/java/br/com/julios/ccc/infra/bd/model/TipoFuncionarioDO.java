@@ -12,6 +12,7 @@ import javax.persistence.Table;
 public class TipoFuncionarioDO {
 
 	public final static Long PROFESSOR = new Long(1);
+	public final static Long FUNCIONARIO = new Long(2);
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

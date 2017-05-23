@@ -22,6 +22,8 @@ public class Funcionario {
 	private String observacao;
 	private Long tipo;
 	private String nome;
+	private Double salario;
+	private Double valeTransporte;
 
 	private FuncionarioRepositorio getRepositorio() {
 		return repositorio;
@@ -43,7 +45,9 @@ public class Funcionario {
 		this.setObservacao(funcionarioDTO.getObservacao());
 		this.setRg(funcionarioDTO.getRg());
 		this.setTelefone(funcionarioDTO.getTelefone());
-		this.setTipo(TipoFuncionarioDO.PROFESSOR);
+		this.setTipo(funcionarioDTO.getIdTipo());
+		this.setSalario(funcionarioDTO.getSalario());
+		this.setValeTransporte(funcionarioDTO.getValeTransporte());
 	}
 
 	private void setId(Long id) {
@@ -132,6 +136,22 @@ public class Funcionario {
 
 	public String getNome() {
 		return nome;
+	}
+
+	public Double getSalario() {
+		return salario;
+	}
+
+	public Double getValeTransporte() {
+		return valeTransporte;
+	}
+
+	private void setSalario(Double salario) {
+		this.salario = salario;
+	}
+
+	private void setValeTransporte(Double valeTransporte) {
+		this.valeTransporte = valeTransporte;
 	}
 
 	public void cadastrar() throws Exception {
