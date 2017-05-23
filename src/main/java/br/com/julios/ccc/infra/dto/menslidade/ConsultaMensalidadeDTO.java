@@ -111,6 +111,8 @@ public class ConsultaMensalidadeDTO {
 	}
 
 	public Double getValorMensalidade() {
+		if(this.valorMensalidade == null)
+			return new Double(0);
 		return valorMensalidade;
 	}
 

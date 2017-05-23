@@ -11,10 +11,7 @@ import br.com.julios.ccc.infra.bd.daos.MensalidadeDAO;
 import br.com.julios.ccc.infra.bd.daos.MesReferenciaDAO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
-import br.com.julios.ccc.infra.dto.CadastroFluxoCaixaDTO;
 import br.com.julios.ccc.infra.dto.menslidade.CadastroMensalidadeDTO;
-import br.com.julios.ccc.negocio.fluxos.FluxoCaixa;
-import br.com.julios.ccc.negocio.fluxos.FluxoCaixaRepositorio;
 import br.com.julios.ccc.negocio.matricula.Matricula;
 import br.com.julios.ccc.negocio.matricula.MatriculaRepositorio;
 import br.com.julios.ccc.negocio.mes.MesReferencia;
@@ -28,9 +25,6 @@ public class MensalidadeRepositorio {
 	
 	@Autowired
 	private MesRerefenciaRepositorio mesRepositorio;
-	
-	@Autowired
-	private FluxoCaixaRepositorio fluxoRepositorio;
 	
 	@Autowired
 	private MensalidadeDAO mDAO;
@@ -70,7 +64,7 @@ public class MensalidadeRepositorio {
 		mdo.setMesReferencia(mesDAO.findOne(mensalidade.getMes().getId()));
 		mdo.setValorMensalidade(mensalidade.getValor());
 		mDAO.save(mdo);
-		
+		mensalidade.setId(mdo.getId());
 	}
 
 	protected Matricula getMatricula(Long idMatricula) {
@@ -103,8 +97,5 @@ public class MensalidadeRepositorio {
 		
 	}
 
-	protected FluxoCaixa getFluxo(CadastroFluxoCaixaDTO cadastro) {
-		return this.fluxoRepositorio.getFluxoPagamentoMensalidade(cadastro);
-	}
 	
 }

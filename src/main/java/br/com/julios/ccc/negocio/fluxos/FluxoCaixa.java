@@ -100,4 +100,5 @@ public class FluxoCaixa {
 		this.getRepositorio().cadastrar(this);
 	}
 
+	
 }

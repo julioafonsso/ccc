@@ -101,23 +101,21 @@ public class Matricula {
 	public void cadastrar() throws Exception{
 		this.repositorio.cadastrar(this);
 		this.cadastrarPagamentoMatricula();
-		this.cadastrarMensalidade();
 	}
 	
-	private void cadastrarMensalidade() throws ParseException {
-		
-		this.repositorio.getMensalidade(this).criarMensalidade();;
-	}
 
 	private void cadastrarPagamentoMatricula() throws Exception
 	{
-		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
-		cadastro.setData(this.getDataMatricula());
-		cadastro.setQtd(new Long(1));
-		cadastro.setValor(this.getValor());
-		cadastro.setDescricao("Aluno : " + this.getAluno().getNome());
-		
-		this.repositorio.getFluxoPagamentoMatricula(cadastro).cadastrar();
+		if(this.getValor().doubleValue() > 0)
+		{
+			CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
+			cadastro.setData(this.getDataMatricula());
+			cadastro.setQtd(new Long(1));
+			cadastro.setValor(this.getValor());
+			cadastro.setDescricao("Aluno : " + this.getAluno().getNome());
+			
+			this.repositorio.getFluxoPagamentoMatricula(cadastro).cadastrar();
+		}
 	}
 	
 	public TurmaColetiva getTurma() throws ParseException {

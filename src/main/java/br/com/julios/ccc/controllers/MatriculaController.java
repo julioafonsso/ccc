@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.julios.ccc.infra.dto.matricula.CadastroMatriculaDTO;
+import br.com.julios.ccc.negocio.matricula.Matricula;
 import br.com.julios.ccc.negocio.matricula.MatriculaRepositorio;
+import br.com.julios.ccc.negocio.mensalidade.Mensalidade;
+import br.com.julios.ccc.negocio.mensalidade.MensalidadeRepositorio;
 
 @Controller
 @ResponseBody
@@ -21,9 +24,16 @@ public class MatriculaController {
 	@Autowired
 	MatriculaRepositorio matriculaRepositorio;
 	
+	@Autowired
+	MensalidadeRepositorio mensalidadeRepositorio;
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public void matricular(@RequestBody CadastroMatriculaDTO cadastro) throws Exception{
-		matriculaRepositorio.getMatricula(cadastro).cadastrar();
+		Matricula matricula =  matriculaRepositorio.getMatricula(cadastro);
+		matricula.cadastrar();
+		
+		Mensalidade mensalidade = mensalidadeRepositorio.getMensalidade(matricula);
+		mensalidade.criarMensalidade();
 	}
 
 }

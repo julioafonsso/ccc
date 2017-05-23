@@ -7,25 +7,28 @@ import br.com.julios.ccc.infra.dto.turma.ConsultaTurmaDTO;
 public class ConsultaAulaIndividualDTO extends ConsultaTurmaDTO{
 	
 	public ConsultaAulaIndividualDTO(Long id,String codigo, Long idProfessor1, String nomeProfessor1, Double percentualProfessor1,
-			Long idModalidade, String nomeModalidade) {
+			Long idModalidade, String nomeModalidade, Long qtdAulasContratadas, Date dataContratacao, Double valor) {
 		super(id, codigo, idProfessor1, nomeProfessor1, percentualProfessor1, idModalidade, nomeModalidade);
+		this.setDataContratacao(dataContratacao);
+		this.setQtdAulasContratadas(qtdAulasContratadas);
+		this.setValorPago(valor);
 	}
-	private Integer qtdAulasContratadas;
-	private Integer qtdAulasRestantes;
+	private Long qtdAulasContratadas;
+	private Long qtdAulasRestantes;
 	private Date dataContratacao;
 	private Date dataUltimaAula;
 	private Double valorPago;
 	
-	public Integer getQtdAulasContratadas() {
+	public Long getQtdAulasContratadas() {
 		return qtdAulasContratadas;
 	}
-	public void setQtdAulasContratadas(Integer qtdAulasContratadas) {
+	public void setQtdAulasContratadas(Long qtdAulasContratadas) {
 		this.qtdAulasContratadas = qtdAulasContratadas;
 	}
-	public Integer getQtdAulasRestantes() {
+	public Long getQtdAulasRestantes() {
 		return qtdAulasRestantes;
 	}
-	public void setQtdAulasRestantes(Integer qtdAulasRestantes) {
+	public void setQtdAulasRestantes(Long qtdAulasRestantes) {
 		this.qtdAulasRestantes = qtdAulasRestantes;
 	}
 	public Date getDataContratacao() {

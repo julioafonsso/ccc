@@ -15,16 +15,49 @@ public class AulaParticularDO extends TurmaDO{
 	
 	
 	@Column
-	private Integer qtdAulasContratadas;
+	private Long qtdAulasContratadas;
 	
 	@Column
-	private Integer qtdAulasRestantes;
+	private Long qtdAulasRestantes;
 	
 	@Column
 	private Date dataContratacao;
 	
 	@Column
 	private Date dataUltimaAula;
+
+	public Long getQtdAulasContratadas() {
+		return qtdAulasContratadas;
+	}
+
+	public void setQtdAulasContratadas(Long qtdAulasContratadas) {
+		this.qtdAulasContratadas = qtdAulasContratadas;
+	}
+
+	public Long getQtdAulasRestantes() {
+		return qtdAulasRestantes;
+	}
+
+	public void setQtdAulasRestantes(Long qtdAulasRestantes) {
+		this.qtdAulasRestantes = qtdAulasRestantes;
+	}
+
+	public Date getDataContratacao() {
+		return dataContratacao;
+	}
+
+	public void setDataContratacao(Date dataContratacao) {
+		this.dataContratacao = dataContratacao;
+	}
+
+	public Date getDataUltimaAula() {
+		return dataUltimaAula;
+	}
+
+	public void setDataUltimaAula(Date dataUltimaAula) {
+		this.dataUltimaAula = dataUltimaAula;
+	}
+	
 	
 	
 	

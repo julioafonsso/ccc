@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import br.com.julios.ccc.infra.dto.CadastroFluxoCaixaDTO;
 import br.com.julios.ccc.infra.dto.menslidade.CadastroMensalidadeDTO;
 import br.com.julios.ccc.negocio.fluxos.FluxoCaixa;
 import br.com.julios.ccc.negocio.matricula.Matricula;
@@ -36,6 +35,22 @@ public class Mensalidade {
 
 	}
 
+	private void setMatricula(Matricula matricula) {
+		this.matricula = matricula;
+	}
+
+	private void setValor(Double valor) {
+		this.valor = valor;
+	}
+
+	private void setMes(MesReferencia mes) {
+		this.mes = mes;
+	}
+
+	private void setPagamento(FluxoCaixa pagamento) {
+		this.pagamento = pagamento;
+	}
+
 	private void setDataVencimento(Date dataVencimento) {
 		this.dataVencimento = dataVencimento;
 
@@ -55,6 +70,13 @@ public class Mensalidade {
 
 	}
 
+	public void criarMensalidade(Double valor) throws Exception {
+		this.setDataVencimento(new Date());
+		this.setMes(this.getRepositorio().getMesAtual());
+		this.setValor(valor);
+		this.getRepositorio().cadastrar(this);
+	}
+
 	private void calculaValorMensalidade() throws ParseException {
 
 		Date primeiroDia = null;
@@ -66,7 +88,7 @@ public class Mensalidade {
 
 		Double percentualAulas = this.getMatricula().getTurma().getPercentualMes(this.getMes(), primeiroDia);
 
-		this.valor = this.getMatricula().getTurma().getValorMensalidade() * percentualAulas;
+		this.setValor(this.getMatricula().getTurma().getValorMensalidade() * percentualAulas);
 	}
 
 	private void calcularVencimentoProximoMes() throws ParseException {
@@ -74,13 +96,12 @@ public class Mensalidade {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 		Date d1 = sdf.parse(sdf.format(this.getMatricula().getDataMatricula()));
+		this.setDataVencimento(this.dataVencimento = sdf.parse(this.getMatricula().getDiaVencimento().toString() + "/"
+				+ this.getMes().getMes().toString() + "/" + this.getMes().getAno().toString()));
 
-		this.dataVencimento = sdf.parse(this.getMatricula().getDiaVencimento().toString() + "/"
-				+ this.getMes().getMes().toString() + "/" + this.getMes().getAno().toString());
-
-		if (this.dataVencimento.before(d1)) {
-			this.dataVencimento = sdf.parse(this.getMatricula().getDiaVencimento().toString() + "/"
-					+ this.getMes().getMesNext().toString() + "/" + this.getMes().getAnoNext().toString());
+		if (this.getDataVencimento().before(d1)) {
+			this.setDataVencimento(this.dataVencimento = sdf.parse(this.getMatricula().getDiaVencimento().toString()
+					+ "/" + this.getMes().getMesNext().toString() + "/" + this.getMes().getAnoNext().toString()));
 		}
 	}
 
@@ -108,7 +129,7 @@ public class Mensalidade {
 		return dataVencimento;
 	}
 
-	private void setId(Long id) {
+	protected void setId(Long id) {
 		this.id = id;
 	}
 
@@ -119,14 +140,14 @@ public class Mensalidade {
 	private void setIdMesReferencia(Long idMesReferencia) {
 
 		if (idMesReferencia == null)
-			this.mes = this.getRepositorio().getMesAtual();
+			this.setMes(this.getRepositorio().getMesAtual());
 		else
-			this.mes = this.getRepositorio().getMes(idMesReferencia);
+			this.setMes(this.getRepositorio().getMes(idMesReferencia));
 	}
 
 	public Matricula getMatricula() {
 		if (this.matricula == null)
-			this.matricula = this.getRepositorio().getMatricula(this.getIdMatricula());
+			this.setMatricula(getRepositorio().getMatricula(this.getIdMatricula()));
 		return matricula;
 	}
 
@@ -138,17 +159,9 @@ public class Mensalidade {
 		return pagamento;
 	}
 
-	public void pagar(Double valor) throws Exception {
-		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
-		cadastro.setData(new Date());
-		cadastro.setQtd(new Long(1));
-		cadastro.setValor(valor);
-		cadastro.setDescricao("Aluno - " + this.getMatricula().getAluno().getNome() );
-		cadastro.setObservacao("Mes Referencia " + this.getMes().getNomeMes() + " " + this.getMes().getAno());
-		this.pagamento = this.getRepositorio().getFluxo(cadastro);
-		pagamento.cadastrar();
+	public void pagar(FluxoCaixa pagamento) throws Exception {
+		this.setPagamento(pagamento);
 		this.getRepositorio().atualizarPagamento(this);
-		this.criarMensalidade();
-
 	}
+	
 }
