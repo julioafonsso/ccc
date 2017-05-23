@@ -11,6 +11,7 @@ import br.com.julios.ccc.negocio.turma.Turma;
 
 public class TurmaColetiva extends Turma {
 
+	
 	private Long idProfessor2;
 	private Double percentualProfessor2;
 	private Integer qtdVagas;
@@ -29,6 +30,8 @@ public class TurmaColetiva extends Turma {
 	private Long idNivel;
 	private Long idSala;
 
+	private Funcionario professor2;
+	
 	private TurmaColetivaRepositorio getRepositorio() {
 		return (TurmaColetivaRepositorio) super.getTurmaRepositorio();
 	}
@@ -298,9 +301,15 @@ public class TurmaColetiva extends Turma {
 	}
 
 
+	private void setProfessor2(Funcionario professor2)
+	{
+		this.professor2 = professor2;
+	}
 
-	public Funcionario getProfessor2() {
-		return null;
+	public Funcionario getProfessor2() throws Exception {
+		if(this.professor2 == null)
+			this.setProfessor2(this.getRepositorio().getProfessor(this.getIdProfessor2()));
+		return this.professor2;
 	}
 
 

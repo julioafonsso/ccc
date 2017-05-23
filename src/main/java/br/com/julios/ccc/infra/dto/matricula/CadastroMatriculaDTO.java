@@ -51,8 +51,8 @@ public class CadastroMatriculaDTO {
 	public Double getValor() {
 		return valor;
 	}
-	public void setValor(Double valor) {
-		this.valor = valor;
+	public void setValor(String valor) {
+		this.valor = new Double(valor.replaceAll(",", ""));
 	}
 	
 	

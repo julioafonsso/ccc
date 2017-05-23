@@ -10,8 +10,8 @@ public class CadastroAulaIndividualDTO extends CadastroTurmaDTO {
 	public Double getValorPago() {
 		return valorPago;
 	}
-	public void setValorPago(Double valorPago) {
-		this.valorPago = valorPago;
+	public void setValorPago(String valorPago) {
+		this.valorPago = new Double(valorPago.replaceAll(",", ""));
 	}
 	public Long getQtdAulas() {
 		return qtdAulas;

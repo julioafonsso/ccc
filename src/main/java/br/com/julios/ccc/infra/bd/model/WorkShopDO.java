@@ -1,5 +1,7 @@
 package br.com.julios.ccc.infra.bd.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -14,26 +16,95 @@ public class WorkShopDO extends TurmaDO{
 	
 	@ManyToOne
 	@JoinColumn(name="id_funcionario_2")
-	private FuncionarioDO funcionario2;
+	private FuncionarioDO professor2;
 	
 	@Column
-	private Double percentualFuncionario2;
+	private Double percentualProfessor2;
+	
 
-	public FuncionarioDO getFuncionario2() {
-		return funcionario2;
+	@Column(name = "data_inicio")
+	private Date dataInicio;
+	
+	@Column(name = "data_termino")
+	private Date dataTermino;
+	
+	@Column(name = "horario_inicial")
+	private String horarioInicial;
+	
+	@Column(name = "horario_final")
+	private String horarioFinal;
+	
+	@Column
+	private Double mensalidade;
+	
+	@Column
+	private Integer vagas;
+
+	public FuncionarioDO getProfessor2() {
+		return professor2;
 	}
 
-	public void setFuncionario2(FuncionarioDO funcionario2) {
-		this.funcionario2 = funcionario2;
+	public void setProfessor2(FuncionarioDO professor2) {
+		this.professor2 = professor2;
 	}
 
-	public Double getPercentualFuncionario2() {
-		return percentualFuncionario2;
+	public Double getPercentualProfessor2() {
+		return percentualProfessor2;
 	}
 
-	public void setPercentualFuncionario2(Double percentualFuncionario2) {
-		this.percentualFuncionario2 = percentualFuncionario2;
+	public void setPercentualProfessor2(Double percentualProfessor2) {
+		this.percentualProfessor2 = percentualProfessor2;
 	}
+
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+
+	public Date getDataTermino() {
+		return dataTermino;
+	}
+
+	public void setDataTermino(Date dataTermino) {
+		this.dataTermino = dataTermino;
+	}
+
+	public String getHorarioInicial() {
+		return horarioInicial;
+	}
+
+	public void setHorarioInicial(String horarioInicial) {
+		this.horarioInicial = horarioInicial;
+	}
+
+	public String getHorarioFinal() {
+		return horarioFinal;
+	}
+
+	public void setHorarioFinal(String horarioFinal) {
+		this.horarioFinal = horarioFinal;
+	}
+
+	public Double getMensalidade() {
+		return mensalidade;
+	}
+
+	public void setMensalidade(Double mensalidade) {
+		this.mensalidade = mensalidade;
+	}
+
+	public Integer getVagas() {
+		return vagas;
+	}
+
+	public void setVagas(Integer vagas) {
+		this.vagas = vagas;
+	}
+
+	
 	
 	
 }
