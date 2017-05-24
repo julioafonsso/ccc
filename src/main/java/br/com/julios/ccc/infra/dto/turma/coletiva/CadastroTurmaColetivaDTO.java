@@ -41,6 +41,10 @@ public class CadastroTurmaColetivaDTO extends CadastroTurmaDTO {
 		this.percentualProfessor2 = new Double(percentualProfessor2.replaceAll(",", ""));
 	}
 
+	public void setPercentualProfessor2(Double percentualProfessor2) {
+		this.percentualProfessor2 = percentualProfessor2;
+	}
+	
 	public Integer getQtdVagas() {
 		return qtdVagas;
 	}
@@ -57,6 +61,10 @@ public class CadastroTurmaColetivaDTO extends CadastroTurmaDTO {
 		this.valorMensalidade = new Double(valorMensalidade.replaceAll(",", ""));
 	}
 
+	public void setValorMensalidade(Double valorMensalidade) {
+		this.valorMensalidade = valorMensalidade;
+	}
+	
 	public String getHorarioInicial() {
 		return horarioInicial;
 	}

@@ -17,7 +17,7 @@ import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensagemEmailDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
-import br.com.julios.ccc.infra.bd.model.PagamentoProfessorDO;
+import br.com.julios.ccc.infra.bd.model.ComissaoProfessorDO;
 import br.com.julios.ccc.infra.bd.model.TurmaDO;
 
 @Service
@@ -145,7 +145,7 @@ public class EmailApi {
 		return "style='display: inline-block; max-width: 100%; margin-bottom: 5px; font-weight: bold; color:#000000'";
 	}
 	
-	public void enviarEmailPagametoProfessor(List<PagamentoProfessorDO> pagamentos, FluxoCaixaDO fluxo, FuncionarioDO professor) throws Exception{
+	public void enviarEmailPagametoProfessor(List<ComissaoProfessorDO> pagamentos, FluxoCaixaDO fluxo, FuncionarioDO professor) throws Exception{
 		HtmlEmail email = getConfigHmlEmail();
 		email.addTo(professor.getEmail());
 		email.setSubject("Detalhe de Pagamentos ");
@@ -175,7 +175,7 @@ public class EmailApi {
 		builder.append("</thead>");
 		builder.append("<tbody>");
 		int i =0;
-		for (PagamentoProfessorDO pg : pagamentos) {
+		for (ComissaoProfessorDO pg : pagamentos) {
 			builder.append("<tr>");
 //			builder.append("<td "+getStyleTD(i) + ">"+ pg.getMensalidade().getMatricula().getTurma().getCodigo() +"</td>");
 //			builder.append("<td "+getStyleTD(i) + ">"+ pg.getMensalidade().getMatricula().getAluno().getNome() +"</td>");

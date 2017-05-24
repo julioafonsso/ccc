@@ -26,11 +26,34 @@ public interface FuncionarioDAO extends JpaRepository<FuncionarioDO, Long>{
 			+ " f.dataNascimento, "
 			+ " f.dataAdmissao, "
 			+ " f.tipoFuncionario.id, "
-			+ " f.tipoFuncionario.nome "
+			+ " f.tipoFuncionario.nome,"
+			+ " f.salario,"
+			+ " f.valeTransporte "
 			+ ") FROM FuncionarioDO f "
 			+ " where f.tipoFuncionario.id = 1 "
 			)
 	public List<ConsultaFuncionarioDTO> getProfessores();
+	
+	@Query("SELECT new br.com.julios.ccc.infra.dto.funcionario.ConsultaFuncionarioDTO( "
+			+ " f.id, "
+			+ " f.nome, "
+			+ " f.cpf, "
+			+ " f.telefone, "
+			+ " f.email, "
+			+ " f.rg, "
+			+ " f.foto, "
+			+ " f.observacao,  "
+			+ " f.dataNascimento, "
+			+ " f.dataAdmissao, "
+			+ " f.tipoFuncionario.id, "
+			+ " f.tipoFuncionario.nome,"
+			+ " f.salario,"
+			+ " f.valeTransporte "
+			+ ") FROM FuncionarioDO f "
+			+ " where f.tipoFuncionario.id = 2 "
+			)
+	public List<ConsultaFuncionarioDTO> getFuncionarios();
+	
 
 	@Query("SELECT new br.com.julios.ccc.infra.dto.funcionario.ConsultaFuncionarioDTO( "
 			+ " f.id, "
@@ -44,11 +67,13 @@ public interface FuncionarioDAO extends JpaRepository<FuncionarioDO, Long>{
 			+ " f.dataNascimento, "
 			+ " f.dataAdmissao, "
 			+ " f.tipoFuncionario.id, "
-			+ " f.tipoFuncionario.nome "
+			+ " f.tipoFuncionario.nome,"
+			+ " f.salario,"
+			+ " f.valeTransporte "
 			+ ") FROM FuncionarioDO f "
 			+ " where f.id = ?1"
 			)
-	public ConsultaFuncionarioDTO getProfessor(Long idProfessor);
+	public ConsultaFuncionarioDTO getFuncionario(Long idProfessor);
 
 	@Query("select count(*) from FuncionarioDO f where f.cpf = ?1")
 	public Long countByCpf(String cpf);

@@ -24,9 +24,11 @@ public interface MensalidadeDAO extends JpaRepository<MensalidadeDO, Long>{
 			" m.mesReferencia.ano, " + 
 			" m.valorMensalidade, " + 
 			" d.valor " +
-			") from MensalidadeDO m "
+			") from MensalidadeDO m ,"
+			+ " TurmaColetivaDO tc "
 			+ " LEFT OUTER JOIN  m.matricula.desconto AS d "
 			+ " where m.dataExclusao is null "
+			+ " and m.matricula.turma.id = tc.id"
 			+ " and m.pagamentoMensalidade is null "
 			+ " and m.matricula.aluno.id = ?1 ")
 	public List<ConsultaMensalidadeDTO> getMensalidadesAluno(Long idAluno);
@@ -40,9 +42,11 @@ public interface MensalidadeDAO extends JpaRepository<MensalidadeDO, Long>{
 			" m.mesReferencia.ano, " + 
 			" m.pagamentoMensalidade.valor, " + 
 			" m.pagamentoMensalidade.data " +
-			") from MensalidadeDO m "
+			") from MensalidadeDO m, "
+			+ " TurmaColetivaDO tc "
 			+ " where m.dataExclusao is null "
 			+ " and m.pagamentoMensalidade is not null "
+			+ " and m.matricula.turma.id = tc.id"
 			+ " and m.matricula.aluno.id = ?1 "
 			+ " and m.pagamentoMensalidade.data between ?2 and ?3")
 	public List<ConsultaMensalidadeDTO> getMensalidadesPagasAluno(Long idAluno, Date diaInicio, Date diaFim);

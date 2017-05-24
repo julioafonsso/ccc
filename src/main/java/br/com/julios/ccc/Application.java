@@ -31,6 +31,14 @@ public class Application extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		configureApplication(new SpringApplicationBuilder()).run(args);
+		
+//		String tmp = "1.000,000";
+//		tmp = tmp.replaceAll("\\.", "").replaceAll(",", "");
+//		
+//		tmp = tmp.substring(0, tmp.length() - 2) + "." + tmp.substring(tmp.length() -2);
+//		
+//		System.out.println(new Double(tmp));
+		
 	}
 
 	private static SpringApplicationBuilder configureApplication(SpringApplicationBuilder builder) {

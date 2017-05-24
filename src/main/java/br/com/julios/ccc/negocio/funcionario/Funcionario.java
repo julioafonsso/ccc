@@ -32,7 +32,7 @@ public class Funcionario {
 	private void setRepositorio(FuncionarioRepositorio repositorio) {
 		this.repositorio = repositorio;
 	}
-	
+
 	public Funcionario(FuncionarioRepositorio funcionarioRepositorio, CadastroFuncionarioDTO funcionarioDTO) {
 		this.setRepositorio(funcionarioRepositorio);
 		this.setNome(funcionarioDTO.getNome());
@@ -50,7 +50,7 @@ public class Funcionario {
 		this.setValeTransporte(funcionarioDTO.getValeTransporte());
 	}
 
-	private void setId(Long id) {
+	protected void setId(Long id) {
 		this.id = id;
 	}
 
@@ -159,6 +159,11 @@ public class Funcionario {
 		this.validaEmailExistente();
 		this.validaRGExistente();
 		this.repositorio.cadastrar(this);
+		if(this.getTipo().longValue() == 2)
+		{
+			this.criarSalario();
+			this.criarValeTransporte();
+		}
 	}
 
 	private void validaCpfExistente() throws Exception {
@@ -185,11 +190,22 @@ public class Funcionario {
 		MesReferencia mes = this.getRepositorio().getMesAtual();
 
 		valor = mensalidade.getMatricula().getTurma().getPercentualProfessor(this) * valorPago;
-		
-		this.getRepositorio().criarSalario(mensalidade, mes, valor, this);
+
+		this.getRepositorio().criarComissao(mensalidade, mes, valor, this);
 
 	}
 
-	
+	public void criarSalario() {
+		MesReferencia mes = this.getRepositorio().getMesAtual();
+
+		this.getRepositorio().criarSalario(this, mes);
+
+	}
+
+	public void criarValeTransporte() {
+		MesReferencia mes = this.getRepositorio().getMesAtual();
+
+		this.getRepositorio().criarValeTransporte(this, mes);
+	}
 
 }

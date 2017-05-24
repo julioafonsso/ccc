@@ -1,16 +1,22 @@
 package br.com.julios.ccc.negocio.funcionario;
 
+import java.text.ParseException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.julios.ccc.infra.bd.daos.ComissaoProfessorDAO;
 import br.com.julios.ccc.infra.bd.daos.FuncionarioDAO;
 import br.com.julios.ccc.infra.bd.daos.MensalidadeDAO;
 import br.com.julios.ccc.infra.bd.daos.MesReferenciaDAO;
 import br.com.julios.ccc.infra.bd.daos.SalarioDAO;
 import br.com.julios.ccc.infra.bd.daos.TipoFuncionarioDAO;
+import br.com.julios.ccc.infra.bd.daos.ValeTransporteDAO;
+import br.com.julios.ccc.infra.bd.model.ComissaoProfessorDO;
 import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.SalarioDO;
 import br.com.julios.ccc.infra.bd.model.TipoFuncionarioDO;
+import br.com.julios.ccc.infra.bd.model.ValeTransporteDO;
 import br.com.julios.ccc.infra.dto.funcionario.CadastroFuncionarioDTO;
 import br.com.julios.ccc.negocio.mensalidade.Mensalidade;
 import br.com.julios.ccc.negocio.mes.MesReferencia;
@@ -25,11 +31,17 @@ public class FuncionarioRepositorio {
 	@Autowired
 	FuncionarioDAO funcDAO;
 	
+	@Autowired
+	SalarioDAO salarioDAO;
+	
+	@Autowired
+	ValeTransporteDAO valeDAO;
+	
 	@Autowired 
 	TipoFuncionarioDAO tipoFuncDAO;
 	
 	@Autowired
-	SalarioDAO salarioDAO;
+	ComissaoProfessorDAO comissaoDAO;
 	
 	@Autowired
 	MensalidadeDAO mensalidadeDAO;
@@ -82,6 +94,8 @@ public class FuncionarioRepositorio {
 		func.setValeTransporte(funcionario.getValeTransporte());
 		funcDAO.save(func);
 		
+		funcionario.setId(func.getId());
+		
 	}
 
 	protected Long qtdFuncionarioComCPF(String cpf) {
@@ -100,17 +114,39 @@ public class FuncionarioRepositorio {
 		return mesRepositorio.getMesAtual();
 	}
 
-	protected void criarSalario(Mensalidade mensalidade, MesReferencia mes, Double valor, Funcionario funcionario) {
+	protected void criarComissao(Mensalidade mensalidade, MesReferencia mes, Double valor, Funcionario funcionario) throws ParseException, Exception {
 		
-		SalarioDO salario = new SalarioDO();
+		ComissaoProfessorDO salario = new ComissaoProfessorDO();
 		
 		salario.setFuncionario(funcDAO.findOne(funcionario.getId()));
 		salario.setMesReferencia(mesDAO.findOne(mes.getId()));
 		salario.setValor(valor);
 		salario.setMensalidade(mensalidadeDAO.findOne(mensalidade.getId()));
+		salario.setPercentual(mensalidade.getMatricula().getTurma().getPercentualProfessor(funcionario));
+		comissaoDAO.save(salario);
 		
+		
+	}
+
+	public void criarSalario(Funcionario funcionario, MesReferencia mes) {
+		SalarioDO salario = new SalarioDO();
+		
+		salario.setFuncionario(funcDAO.findOne(funcionario.getId()));
+		salario.setMesReferencia(mesDAO.findOne(mes.getId()));
+		salario.setValor(funcionario.getSalario());
+				
 		salarioDAO.save(salario);
 		
+	}
+	
+	public void criarValeTransporte(Funcionario funcionario, MesReferencia mes) {
+		ValeTransporteDO salario = new ValeTransporteDO();
+		
+		salario.setFuncionario(funcDAO.findOne(funcionario.getId()));
+		salario.setMesReferencia(mesDAO.findOne(mes.getId()));
+		salario.setValor(funcionario.getValeTransporte());
+				
+		valeDAO.save(salario);
 		
 	}
 

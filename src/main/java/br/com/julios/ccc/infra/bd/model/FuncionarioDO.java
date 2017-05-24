@@ -60,7 +60,7 @@ public class FuncionarioDO {
 	private String foto;
 	
 	@ManyToOne
-	@JoinColumn(name="id_tipo_funcionario", updatable=false, insertable=false)
+	@JoinColumn(name="id_tipo_funcionario")
 	private TipoFuncionarioDO tipoFuncionario;
 	
 	@Column

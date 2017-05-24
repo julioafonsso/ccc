@@ -1,5 +1,6 @@
 package br.com.julios.ccc.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.julios.ccc.infra.bd.daos.ComissaoProfessorDAO;
 import br.com.julios.ccc.infra.bd.daos.FuncionarioDAO;
 import br.com.julios.ccc.infra.bd.daos.TurmaColetivaDAO;
 import br.com.julios.ccc.infra.dto.funcionario.CadastroFuncionarioDTO;
 import br.com.julios.ccc.infra.dto.funcionario.ConsultaFuncionarioDTO;
+import br.com.julios.ccc.infra.dto.funcionario.pagamentos.ConsultaComissaoDTO;
+import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaDTO;
 import br.com.julios.ccc.negocio.funcionario.FuncionarioRepositorio;
 
 @Controller
@@ -33,6 +37,9 @@ public class ProfessorController {
 	@Autowired
 	FuncionarioRepositorio funcRep;
 	
+	@Autowired
+	ComissaoProfessorDAO comissaoDAO;
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public List<ConsultaFuncionarioDTO> getProfessores(){
 		return funcDAO.getProfessores();
@@ -45,8 +52,24 @@ public class ProfessorController {
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ConsultaFuncionarioDTO getProfessor(@PathVariable("id") Long idProfessor){
-		return funcDAO.getProfessor(idProfessor);
+		return funcDAO.getFuncionario(idProfessor);
 	}
+
+	@RequestMapping(value = "{id}/turmas", method = RequestMethod.GET)
+	public List<ConsultaTurmaColetivaDTO> getTurmas(@PathVariable("id") Long idProfessor) {
+		return turmaColetivaDAO.getTurmasDoProfessor(idProfessor);
+	}
+	
+	@RequestMapping(value = "{id}/salario-pendente/{mes}", method = RequestMethod.GET)
+	public List<ConsultaComissaoDTO> getSalarioProfessorPendente(@PathVariable("id") Long idProfessor, @PathVariable("mes") String mes) throws Exception{
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+		SimpleDateFormat sdfMes = new SimpleDateFormat("MM");
+		SimpleDateFormat sdfAno = new SimpleDateFormat("yyyy");
+		
+		
+		return comissaoDAO.getComissoesPendentes(idProfessor, new Long(sdfMes.format(sdf.parse(mes))), new Long(sdfAno.format(sdf.parse(mes))));		
+	}
+
 	
 //	@RequestMapping(method = RequestMethod.PUT)
 //	public void atualizarProfessor(@RequestBody FuncionarioDO professor) throws Exception{
@@ -61,10 +84,6 @@ public class ProfessorController {
 //		return null;
 //	}
 //	
-//	@RequestMapping(value = "{id}/d", method = RequestMethod.GET)
-//	public List<ConsultaTurma> getTurmas(@PathVariable("id") Long idProfessor) {
-//		return turmaColetivaDAO.getTurmasDoProfessor(idProfessor);
-//	}
 //	
 //	@RequestMapping(value = "{id}/recibos/{dataInicio}/{dataFim}", method = RequestMethod.GET)
 //	public List<FluxoCaixaDO> getRecibos(@PathVariable("id") Long idProfessor, @PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws ParseException {

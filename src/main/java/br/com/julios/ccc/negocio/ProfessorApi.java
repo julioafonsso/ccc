@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
 import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
-import br.com.julios.ccc.infra.bd.model.PagamentoProfessorDO;
+import br.com.julios.ccc.infra.bd.model.ComissaoProfessorDO;
 import br.com.julios.ccc.infra.bd.model.TurmaDO;
 
 @Service
@@ -60,7 +60,7 @@ public class ProfessorApi {
 		return null;
 	}
 
-	public List<PagamentoProfessorDO> getSalarioProfessorPendente(Long idProfessor, String mes) throws ParseException {
+	public List<ComissaoProfessorDO> getSalarioProfessorPendente(Long idProfessor, String mes) throws ParseException {
 //		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
 //		Calendar c = Calendar.getInstance();
 //		c.setTime(sdf.parse(mes));
@@ -70,15 +70,15 @@ public class ProfessorApi {
 		return null;
 	}
 
-	public Double getValorParaPagar(List<PagamentoProfessorDO> salario) {
+	public Double getValorParaPagar(List<ComissaoProfessorDO> salario) {
 		Double total = new Double(0);
-		for (PagamentoProfessorDO pagamento : salario) {
+		for (ComissaoProfessorDO pagamento : salario) {
 			total += pagamento.getValor();
 		}
 		return total;
 	}
 
-	public void pagamentoProfessor(List<PagamentoProfessorDO> pagamento, FluxoCaixaDO fluxo) {
+	public void pagamentoProfessor(List<ComissaoProfessorDO> pagamento, FluxoCaixaDO fluxo) {
 //		for (PagamentoProfessorDO pagamentoProfessor : pagamento) {
 //			pagamentoProfessor.setFluxoCaixa(fluxo);
 //			pagamentoDAO.save(pagamentoProfessor);
@@ -149,12 +149,12 @@ public class ProfessorApi {
 		return null;
 	}
 
-	public List<PagamentoProfessorDO> getDetalheRecibo(FluxoCaixaDO fluxo) {
+	public List<ComissaoProfessorDO> getDetalheRecibo(FluxoCaixaDO fluxo) {
 //		return pagamentoDAO.getDetalheRecibo(fluxo);
 		return null;
 	}
 
-	public PagamentoProfessorDO getSalario(Long id)
+	public ComissaoProfessorDO getSalario(Long id)
 	{
 //		return pagamentoDAO.findOne(id);
 		return null;

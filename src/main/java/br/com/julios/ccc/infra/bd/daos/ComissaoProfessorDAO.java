@@ -1,0 +1,38 @@
+package br.com.julios.ccc.infra.bd.daos;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import br.com.julios.ccc.infra.bd.model.ComissaoProfessorDO;
+import br.com.julios.ccc.infra.dto.funcionario.pagamentos.ConsultaComissaoDTO;
+
+@Repository
+public interface ComissaoProfessorDAO extends JpaRepository<ComissaoProfessorDO, Long>{
+
+	
+	
+	@Query("select new br.com.julios.ccc.infra.dto.funcionario.pagamentos.ConsultaComissaoDTO("
+			+ " c.id, "
+			+ " c.funcionario.id, "
+			+ " c.funcionario.nome, "
+			+ " c.mesReferencia.mes, "
+			+ " c.mesReferencia.ano, "
+			+ " c.valor , "
+			+ " c.mensalidade.matricula.aluno.id, "
+			+ " c.mensalidade.matricula.aluno.nome, "
+			+ " c.percentual, "
+			+ " c.mensalidade.pagamentoMensalidade.valor,"
+			+ " c.mensalidade.matricula.turma.codigo,"
+			+ " c.mensalidade.matricula.turma.modalidade.nome,"
+			+ " c.mensalidade.valorMensalidade " 
+			+ ")"
+			+ " from ComissaoProfessorDO c where c.fluxoCaixa is null"
+			+ " and c.funcionario.id = ?1 and"
+			+ " c.mesReferencia.mes = ?2 and"
+			+ " c.mesReferencia.ano = ?3 "
+			)
+	public List<ConsultaComissaoDTO> getComissoesPendentes(Long idProfessor, Long mes, Long ano);
+}

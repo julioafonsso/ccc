@@ -14,7 +14,7 @@ public class TurmaRepositorio {
 	
 	public Funcionario getProfessor(Long idFuncionario) throws Exception
 	{
-		return funcRep.getProfessor(idFuncionario);
+		return funcRep.getFuncionario(idFuncionario);
 	}
 	
 }

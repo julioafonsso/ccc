@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import br.com.julios.ccc.util.Util;
+
 public class CadastroFuncionarioDTO {
 
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -19,7 +21,7 @@ public class CadastroFuncionarioDTO {
 	private String observacao;
 	private String nome;
 	
-	private Double Salario;
+	private Double salario;
 	private Double valeTransporte;
 	private Long idTipo;
 	
@@ -101,7 +103,7 @@ public class CadastroFuncionarioDTO {
 		this.observacao = observacao;
 	}
 	public Double getSalario() {
-		return Salario;
+		return salario;
 	}
 	
 	public Double getValeTransporte() {
@@ -109,11 +111,14 @@ public class CadastroFuncionarioDTO {
 	}
 	
 	public void setValeTransporte(String valeTransporte) {
-		this.valeTransporte = new Double(valeTransporte.replaceAll(",", ""));
+		this.setValeTransporte(Util.convertToDouble(valeTransporte));
 	}
 	
 	public void setSalario(String salario) {
-		Salario = new Double(salario.replaceAll(",", ""));
+		
+				
+		this.setSalario(Util.convertToDouble(salario));
+		
 	}
 	
 	public void setValeTransporte(Double valeTransporte) {
@@ -121,7 +126,7 @@ public class CadastroFuncionarioDTO {
 	}
 	
 	public void setSalario(Double salario) {
-		Salario = salario;
+		this.salario = salario;
 	}
 	
 	

@@ -7,6 +7,17 @@ import java.util.Date;
 public class Util {
 
 	
+	public static Double convertToDouble(String valor)
+	{
+		String tmp = valor.replaceAll("\\.","").replaceAll(",", "");
+		
+		
+		tmp = tmp.substring(0, tmp.length() - 2) + "." + tmp.substring(tmp.length() -2);
+		
+		return new Double(tmp);
+
+	}
+	
 	public static String parametroVazio(String param){
 		if(param == null || param.length() == 0)
 			return null;

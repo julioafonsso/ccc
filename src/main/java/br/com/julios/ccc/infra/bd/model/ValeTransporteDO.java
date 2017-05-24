@@ -5,8 +5,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="salarios")
+@Table(name="vale_transporte")
 @PrimaryKeyJoinColumn(name="id")
-public class SalarioDO extends PagamentoFuncionariosDO{
+public class ValeTransporteDO extends PagamentoFuncionariosDO {
 
 }

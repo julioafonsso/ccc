@@ -7,11 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "pagamento_professor")
-public class PagamentoProfessorDO extends SalarioDO{
+@PrimaryKeyJoinColumn(name="id")
+public class ComissaoProfessorDO extends PagamentoFuncionariosDO{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

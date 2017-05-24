@@ -9,19 +9,24 @@ public class ConsultaFuncionarioDTO {
 
 	public ConsultaFuncionarioDTO(Long id,String nome, String cpf, String telefone, String email, String rg, String foto,
 			String observacao, Date dataNascimento, Date dataAdmissao, Long idTipoFuncionario,
-			String nomeTipoFuncionario) {
-		setId(id);
-		setNome(nome);
-		setCpf(cpf);
-		setTelefone(telefone);
-		setEmail(email);
-		setRg(rg);
-		setFoto(foto);
-		setObservacao(observacao);
-		setDataNascimento(dataNascimento);
-		setDataAdmissao(dataAdmissao);
-		setIdTipoFuncionario(idTipoFuncionario);
-		setNomeTipoFuncionario(nomeTipoFuncionario);
+			String nomeTipoFuncionario,
+			Double salario,
+			Double valeTransporte
+			) {
+		this.setId(id);
+		this.setNome(nome);
+		this.setCpf(cpf);
+		this.setTelefone(telefone);
+		this.setEmail(email);
+		this.setRg(rg);
+		this.setFoto(foto);
+		this.setObservacao(observacao);
+		this.setDataNascimento(dataNascimento);
+		this.setDataAdmissao(dataAdmissao);
+		this.setIdTipoFuncionario(idTipoFuncionario);
+		this.setNomeTipoFuncionario(nomeTipoFuncionario);
+		this.setSalario(salario);
+		this.setValeTransporte(valeTransporte);
 
 	}
 
@@ -37,6 +42,25 @@ public class ConsultaFuncionarioDTO {
 	private Date dataAdmissao;
 	private Long idTipoFuncionario;
 	private String nomeTipoFuncionario;
+	private Double salario;
+	private Double valeTransporte;
+	
+	
+	public Double getSalario() {
+		return salario;
+	}
+
+	public void setSalario(Double salario) {
+		this.salario = salario;
+	}
+
+	public Double getValeTransporte() {
+		return valeTransporte;
+	}
+
+	public void setValeTransporte(Double valeTransporte) {
+		this.valeTransporte = valeTransporte;
+	}
 
 	public Long getId() {
 		return id;
@@ -134,5 +158,7 @@ public class ConsultaFuncionarioDTO {
 	public void setNomeTipoFuncionario(String nomeTipoFuncionario) {
 		this.nomeTipoFuncionario = nomeTipoFuncionario;
 	}
+	
+	
 
 }

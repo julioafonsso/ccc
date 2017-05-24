@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,7 +35,12 @@ public class FuncionarioController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public List<ConsultaFuncionarioDTO> getProfessores(){
-		return funcDAO.getProfessores();
+		return funcDAO.getFuncionarios();
+	}
+	
+	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	public ConsultaFuncionarioDTO getProfessor(@PathVariable("id") Long idProfessor){
+		return funcDAO.getFuncionario(idProfessor);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
