@@ -13,21 +13,24 @@ public class ModalidadeTurmaRepositorio {
 	@Autowired
 	ModalidadeTurmaDAO modDAO;
 	
-	public ModalidadeTurma getModalidade(ModalidadeDTO modalidade)
+	public ModalidadeTurmaDO getModalidade(ModalidadeDTO cadastro) throws Exception
 	{
-		return new ModalidadeTurma(modalidade, this);
+		ModalidadeTurmaDO modalidade = new ModalidadeTurmaDO();
+		modalidade.setNome(cadastro.getNome());
+		
+		return modalidade;
 	}
 
-	protected void cadastrar(ModalidadeTurma modalidadeTurma) {
-		ModalidadeTurmaDO mod = new ModalidadeTurmaDO();
-		mod.setNome(modalidadeTurma.getNome());
-		modDAO.save(mod);
+	public void cadastrar(ModalidadeTurmaDO modalidadeTurma) {
+		modDAO.save(modalidadeTurma);
 	}
 	
 	
-	protected Integer qtdModalidadesPorNome(String nome)
-	{
-		return modDAO.countModalidadePorNome(nome);
+	
+
+	public ModalidadeTurmaDO getModalidadePorNome(String nome) {
+		return this.modDAO.getModalidadePorNome(nome);
+		
 	}
 	
 	

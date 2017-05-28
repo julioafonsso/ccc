@@ -8,10 +8,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.negocio.desconto.DescontoRepositorio;
 
 @Entity
 @Table(name = "tipo_desconto")
 public class DescontosDO {
+	
+	@Transient
+	DescontoRepositorio repositorio;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -55,5 +62,19 @@ public class DescontosDO {
 	public Long getId() {
 		return id;
 	}
+
+
+	public DescontoRepositorio getRepositorio() {
+		if(this.repositorio == null)
+			this.repositorio = Contexto.bean(DescontoRepositorio.class);
+		return repositorio;
+	}
+
+	public void cadastrar() {
+		this.getRepositorio().cadastrar(this);
+		
+	}
+	
+	
 
 }

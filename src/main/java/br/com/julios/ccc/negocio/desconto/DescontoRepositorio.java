@@ -13,33 +13,22 @@ public class DescontoRepositorio {
 	@Autowired
 	DescontoDAO descontoDAO;
 	
-	public Desconto getDesconto(DescontoDTO cadastro){
-		return new Desconto(cadastro, this);
+	public DescontosDO getDesconto(DescontoDTO cadastro){
+		DescontosDO desconto = new DescontosDO();
+		desconto.setNome(cadastro.getNome());
+		desconto.setValor(cadastro.getValor());
+		return desconto;
 	}
 
-	protected void cadastrar(Desconto desconto) {
-		DescontosDO descontoDO = new DescontosDO();
-		descontoDO.setNome(desconto.getNome());
-		descontoDO.setValor(desconto.getValor());
-		descontoDAO.save(descontoDO);
+	public void cadastrar(DescontosDO desconto) {
+		
+		descontoDAO.save(desconto);
 		
 	}
 
-	public Desconto getDesconto(Long idDesconto) {
-		DescontosDO dDO = null;
+	public DescontosDO getDesconto(Long idDesconto) {
 		
-		if(idDesconto != null)
-			dDO = descontoDAO.findOne(idDesconto);
-		
-		DescontoDTO dto = new DescontoDTO();
-		if(dDO != null)
-		{
-			dto.setId(dDO.getId());
-			dto.setNome(dDO.getNome());
-			dto.setValor(dDO.getValor());
-		}
-		
-		return getDesconto(dto);
+		return descontoDAO.findOne(idDesconto);
 	}
 	
 }

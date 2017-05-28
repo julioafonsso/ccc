@@ -1,5 +1,6 @@
 package br.com.julios.ccc.infra.bd.model;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,11 +11,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.negocio.matricula.MatriculaRepositorio;
 
 @Entity
 @Table(name = "matricula")
 public class MatriculaDO {
 
+	@Transient
+	private MatriculaRepositorio repositorio;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -100,6 +108,35 @@ public class MatriculaDO {
 
 	public Long getId() {
 		return id;
+	}
+
+	public MatriculaRepositorio getRepositorio() {
+		if(this.repositorio == null)
+			this.repositorio = Contexto.bean(MatriculaRepositorio.class);
+		return repositorio;
+	}
+
+	public void cadastrar(){
+		this.getRepositorio().cadastrar(this);
+	}
+
+	public String getNomeAluno() {
+		this.getAluno().getNome();
+		return null;
+	}
+
+	public Double getValorMensalidade() {
+		return this.getRepositorio().getTurmaColetiva(this.getTurma()).getMensalidade();
+	}
+
+	public Double getPercentualDeAulasMes(MesReferenciaDO mesReferenciaDO, Date primeiroDia) throws ParseException {
+		
+		return this.getRepositorio().getTurmaColetiva(this.getTurma()).getPercentualMes(mesReferenciaDO, primeiroDia);
+		
+	}
+	
+	public Double getPercentualProfessor(FuncionarioDO professor) {
+		return this.getTurma().getPercentual(professor);
 	}
 
 }

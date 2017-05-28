@@ -18,22 +18,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import br.com.julios.ccc.infra.bd.daos.AlunoDAO;
 import br.com.julios.ccc.infra.bd.daos.MatriculaDAO;
 import br.com.julios.ccc.infra.bd.daos.MensalidadeDAO;
+import br.com.julios.ccc.infra.bd.model.AlunoDO;
+import br.com.julios.ccc.infra.bd.model.AulaParticularDO;
+import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
+import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
+import br.com.julios.ccc.infra.bd.model.MatriculaDO;
+import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
+import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.aluno.CadastroAlunoDTO;
 import br.com.julios.ccc.infra.dto.aluno.ConsultaAlunoDTO;
-import br.com.julios.ccc.infra.dto.matricula.CadastroMatriculaDTO;
 import br.com.julios.ccc.infra.dto.matricula.ConsultaMatriculaDTO;
 import br.com.julios.ccc.infra.dto.menslidade.ConsultaMensalidadeDTO;
 import br.com.julios.ccc.infra.dto.turma.individual.CadastroAulaIndividualDTO;
 import br.com.julios.ccc.infra.dto.turma.individual.ConsultaAulaIndividualDTO;
 import br.com.julios.ccc.negocio.aluno.AlunoRepositorio;
-import br.com.julios.ccc.negocio.fluxos.FluxoCaixa;
 import br.com.julios.ccc.negocio.fluxos.FluxoCaixaRepositorio;
-import br.com.julios.ccc.negocio.funcionario.Funcionario;
-import br.com.julios.ccc.negocio.matricula.Matricula;
 import br.com.julios.ccc.negocio.matricula.MatriculaRepositorio;
-import br.com.julios.ccc.negocio.mensalidade.Mensalidade;
 import br.com.julios.ccc.negocio.mensalidade.MensalidadeRepositorio;
-import br.com.julios.ccc.negocio.turma.individual.AulaIndividual;
 import br.com.julios.ccc.negocio.turma.individual.AulaIndividualRepositorio;
 
 @Controller
@@ -43,42 +44,32 @@ import br.com.julios.ccc.negocio.turma.individual.AulaIndividualRepositorio;
 public class AlunoController {
 
 	@Autowired
-	AlunoRepositorio alunoRepositorio;
+	private AlunoRepositorio alunoRepositorio;
 
 	@Autowired
-	MensalidadeRepositorio mensalidadeRepositorio;
+	private MensalidadeRepositorio mensalidadeRepositorio;
 
 	@Autowired
-	AulaIndividualRepositorio aulaIndividualRepositorio;
+	private AulaIndividualRepositorio aulaIndividualRepositorio;
 
 	@Autowired
-	FluxoCaixaRepositorio pagamentoRepositorio;
+	private FluxoCaixaRepositorio pagamentoRepositorio;
 
 	@Autowired
-	MatriculaRepositorio matriculaRepositorio;
+	private MatriculaRepositorio matriculaRepositorio;
 
 	@Autowired
-	AlunoDAO alunoDAO;
+	private AlunoDAO alunoDAO;
 
 	@Autowired
-	MatriculaDAO matriculaDAO;
+	private MatriculaDAO matriculaDAO;
 
 	@Autowired
-	MensalidadeDAO mensalidadeDAO;
+	private MensalidadeDAO mensalidadeDAO;
 
 	//
 	// @Autowired
 	// private HttpServletRequest http;
-
-	// @RequestMapping(method = RequestMethod.GET)
-	// public Iterable<AlunoDO> getAlunos(@RequestParam(value = "nome", required
-	// = false) String nome,
-	// @RequestParam(value = "cpf", required = false) String cpf,
-	// @RequestParam(value = "email", required = false) String email) throws
-	// Exception {
-	//
-	// return null;
-	// }
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ConsultaAlunoDTO getAluno(@PathVariable("id") Long idAluno) {
@@ -109,23 +100,25 @@ public class AlunoController {
 	@RequestMapping(value = "{idAluno}/debitos/{idMensalidade}/pagamento", method = RequestMethod.POST)
 	public void efetuarPagamento(@PathVariable("idAluno") Long idAluno,
 			@PathVariable("idMensalidade") Long idMensalidade, @RequestBody Double valor) throws Exception {
-		Mensalidade mensalidade = mensalidadeRepositorio.getMensalidade(idMensalidade);
+		MensalidadeDO mensalidade = mensalidadeRepositorio.getMensalidade(idMensalidade);
 
-		Funcionario prof1 = mensalidade.getMatricula().getTurma().getProfessor1();
-		Funcionario prof2 = mensalidade.getMatricula().getTurma().getProfessor2();
+		TurmaColetivaDO turma = (TurmaColetivaDO) mensalidade.getTurma();
 
-		FluxoCaixa pagamento = pagamentoRepositorio.getPagamentoMensalidade(mensalidade, valor);
+		FluxoCaixaDO pagamento = pagamentoRepositorio.getPagamentoMensalidade(mensalidade, valor);
 
 		pagamento.cadastrar();
 
-		mensalidade.pagar(pagamento);
-		mensalidade.criarMensalidade();
+		mensalidade.cadastrarPagamento(pagamento);
 
-		if (prof1 != null)
-			prof1.criarComissaoProfessor(mensalidade, valor);
+		List<FuncionarioDO> professores = turma.getProfessores();
 
-		if (prof2 != null)
-			prof2.criarComissaoProfessor(mensalidade, valor);
+		for (FuncionarioDO func : professores) {
+			func.criarComissaoProfessor(mensalidade);
+		}
+
+		MensalidadeDO mensalidadeNova = mensalidadeRepositorio.getMensalidade(mensalidade.getMatricula(), mensalidade.getMesReferencia().getProximoMes());
+		mensalidadeNova.cadastrar();
+
 	}
 
 	@RequestMapping(value = "{id}/pagamentos/{dataInicio}/{dataFim}", method = RequestMethod.GET)
@@ -149,29 +142,26 @@ public class AlunoController {
 	public void cadastrarAulaParticular(@PathVariable("id") Long idAluno,
 			@RequestBody CadastroAulaIndividualDTO cadastro) throws Exception {
 
-		AulaIndividual turma = this.aulaIndividualRepositorio.getAula(cadastro);
+		AulaParticularDO turma = this.aulaIndividualRepositorio.getAula(cadastro);
 
 		turma.cadastrar();
 
-		CadastroMatriculaDTO cadastroMatricula = new CadastroMatriculaDTO();
+		AlunoDO aluno = this.alunoRepositorio.getAluno(idAluno);
 
-		cadastroMatricula.setDataMatricula(new Date());
-		cadastroMatricula.setIdAluno(idAluno);
-		cadastroMatricula.setIdTurma(turma.getId());
-		cadastroMatricula.setValor(new Double(0));
-
-		Matricula matricula = matriculaRepositorio.getMatricula(cadastroMatricula);
+		MatriculaDO matricula = matriculaRepositorio.getMatricula(aluno, turma);
 		matricula.cadastrar();
 
-		Mensalidade mensalidade = mensalidadeRepositorio.getMensalidade(matricula);
-		mensalidade.criarMensalidade(cadastro.getValorPago());
+		MensalidadeDO mensalidade = mensalidadeRepositorio.getMensalidade(matricula);
 
-		FluxoCaixa pagamento = pagamentoRepositorio.getPagamentoAulaParticular(matricula.getAluno().getNome(),
+		FluxoCaixaDO pagamento = pagamentoRepositorio.getPagamentoAulaParticular(matricula.getAluno().getNome(),
 				cadastro.getQtdAulas(), cadastro.getValorPago());
 
 		pagamento.cadastrar();
 
-		mensalidade.pagar(pagamento);
+		mensalidade.cadastrar();
+		mensalidade.cadastrarPagamento(pagamento);
+		
+		turma.getProfessor1().criarComissaoProfessor(mensalidade);
 
 	}
 

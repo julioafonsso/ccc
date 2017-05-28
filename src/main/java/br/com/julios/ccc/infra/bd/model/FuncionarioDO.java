@@ -12,11 +12,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import br.com.julios.ccc.componentes.CPF;
+import br.com.julios.ccc.componentes.Telefone;
+import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.negocio.funcionario.FuncionarioRepositorio;
 
 @Entity
 @Table(name = "funcionario")
 public class FuncionarioDO {
 
+	@Transient
+	private FuncionarioRepositorio repositorio;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -78,33 +87,25 @@ public class FuncionarioDO {
 	}
 
 	public void setCpf(String cpf) throws Exception {
-		if(cpf != null && cpf.length() > 0){
-			this.cpf = cpf.replaceAll("[^0-9]", "");
-		} else{
-			this.cpf = cpf;
-		}
+		this.cpf = CPF.getSemFormatacao(cpf);
 	}
 
 	public String getTelefone() {
-		if(telefone != null )
-		{
-			if(telefone.length() == 11)
-			{
-				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 7) + "-"  + telefone.substring(7);
-			}
-			else{
-				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 6) + "-"  + telefone.substring(6);
-			}
-		}
+//		if(telefone != null )
+//		{
+//			if(telefone.length() == 11)
+//			{
+//				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 7) + "-"  + telefone.substring(7);
+//			}
+//			else{
+//				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 6) + "-"  + telefone.substring(6);
+//			}
+//		}
 		return telefone;
 	}
 
 	public void setTelefone(String telefone) {
-		if(telefone != null && telefone.length() > 0){
-			this.telefone = telefone.replaceAll("[^0-9]", "");
-		} else{
-			this.telefone = telefone;
-		}
+			this.telefone = Telefone.getSemFormato(telefone);
 	}
 
 	public Long getId() {
@@ -218,6 +219,29 @@ public class FuncionarioDO {
 	public void setValeTransporte(Double valeTransporte) {
 		this.valeTransporte = valeTransporte;
 	}
+
+	public FuncionarioRepositorio getRepositorio() {
+		if(this.repositorio == null)
+			this.repositorio = Contexto.bean(FuncionarioRepositorio.class);
+		return repositorio;
+	}
+
+	public void cadastrar() throws Exception {
+		this.getRepositorio().cadastrar(this);
+		
+	}
+
+	public void criarComissaoProfessor(MensalidadeDO mensalidade) throws Exception {
+		if(!this.getTipoFuncionario().ehProfessor())
+			throw new Exception("Funcionario não é professor!");
+		
+		ComissaoProfessorDO comissao = this.getRepositorio().getComissao(mensalidade, this);
+		this.getRepositorio().cadastrar(comissao);
+		
+	}
+
+	
+	
 		
 
 	

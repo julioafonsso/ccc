@@ -62,6 +62,7 @@ public class ProfessorController {
 	
 	@RequestMapping(value = "{id}/salario-pendente/{mes}", method = RequestMethod.GET)
 	public List<ConsultaComissaoDTO> getSalarioProfessorPendente(@PathVariable("id") Long idProfessor, @PathVariable("mes") String mes) throws Exception{
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
 		SimpleDateFormat sdfMes = new SimpleDateFormat("MM");
 		SimpleDateFormat sdfAno = new SimpleDateFormat("yyyy");
@@ -69,6 +70,12 @@ public class ProfessorController {
 		
 		return comissaoDAO.getComissoesPendentes(idProfessor, new Long(sdfMes.format(sdf.parse(mes))), new Long(sdfAno.format(sdf.parse(mes))));		
 	}
+	
+	@RequestMapping(value = "{id}/salario/{idSalario}", method = RequestMethod.POST)
+	public void cadastrarRecebimento(@PathVariable("id") Long idProfessor, @PathVariable("idSalario") Long idSalario) throws Exception{
+		
+	}
+
 
 	
 //	@RequestMapping(method = RequestMethod.PUT)
@@ -105,9 +112,6 @@ public class ProfessorController {
 //	public void cadastrarRecebimento(@PathVariable("id") Long idProfessor, @PathVariable("mes") String mes) throws Exception{
 //	}
 //	
-//	@RequestMapping(value = "{id}/salario/{idSalario}", method = RequestMethod.POST)
-//	public void cadastrarRecebimento(@PathVariable("id") Long idProfessor, @PathVariable("idSalario") Long idSalario) throws Exception{
-//	}
 //	
 //	@RequestMapping(value = "{id}/salario-pendente/{mes}", method = RequestMethod.GET)
 //	public List<PagamentoProfessorDO> getSalarioProfessorPendente(@PathVariable("id") Long idProfessor, @PathVariable("mes") String mes) throws Exception{

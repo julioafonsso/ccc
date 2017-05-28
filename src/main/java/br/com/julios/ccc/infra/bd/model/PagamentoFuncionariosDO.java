@@ -18,6 +18,8 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class PagamentoFuncionariosDO {
 
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -44,7 +46,7 @@ public class PagamentoFuncionariosDO {
 		return id;
 	}
 
-	public void setId(Long id) {
+	private void setId(Long id) {
 		this.id = id;
 	}
 
@@ -60,14 +62,13 @@ public class PagamentoFuncionariosDO {
 		return valor;
 	}
 
-	public void setValor(Double valor) {
+	protected void setValor(Double valor) {
 		this.valor = valor;
 	}
 
 	public MesReferenciaDO getMesReferencia() {
 		return mesReferencia;
 	}
-
 	
 	public void setMesReferencia(MesReferenciaDO mesReferencia) {
 		this.mesReferencia = mesReferencia;

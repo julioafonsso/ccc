@@ -1,6 +1,5 @@
 package br.com.julios.ccc.negocio.matricula;
 
-import java.text.ParseException;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,39 +8,19 @@ import org.springframework.stereotype.Service;
 import br.com.julios.ccc.infra.bd.daos.AlunoDAO;
 import br.com.julios.ccc.infra.bd.daos.DescontoDAO;
 import br.com.julios.ccc.infra.bd.daos.MatriculaDAO;
+import br.com.julios.ccc.infra.bd.daos.TurmaColetivaDAO;
 import br.com.julios.ccc.infra.bd.daos.TurmaDAO;
+import br.com.julios.ccc.infra.bd.model.AlunoDO;
+import br.com.julios.ccc.infra.bd.model.AulaParticularDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
-import br.com.julios.ccc.infra.dto.CadastroFluxoCaixaDTO;
+import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
+import br.com.julios.ccc.infra.bd.model.TurmaDO;
 import br.com.julios.ccc.infra.dto.matricula.CadastroMatriculaDTO;
-import br.com.julios.ccc.negocio.aluno.Aluno;
-import br.com.julios.ccc.negocio.aluno.AlunoRepositorio;
-import br.com.julios.ccc.negocio.desconto.Desconto;
-import br.com.julios.ccc.negocio.desconto.DescontoRepositorio;
-import br.com.julios.ccc.negocio.fluxos.FluxoCaixa;
-import br.com.julios.ccc.negocio.fluxos.FluxoCaixaRepositorio;
-import br.com.julios.ccc.negocio.mensalidade.Mensalidade;
-import br.com.julios.ccc.negocio.mensalidade.MensalidadeRepositorio;
-import br.com.julios.ccc.negocio.turma.coletiva.TurmaColetiva;
-import br.com.julios.ccc.negocio.turma.coletiva.TurmaColetivaRepositorio;
 
 @Service
 public class MatriculaRepositorio {
 
-	@Autowired
-	FluxoCaixaRepositorio fluxoRepositorio;
-	
-	@Autowired
-	MensalidadeRepositorio mensalidadeRepositorio;
-	
-	@Autowired
-	private TurmaColetivaRepositorio turmaRepositorio;
-	
-	@Autowired
-	private DescontoRepositorio descontoRepositorio;
-	
-	@Autowired
-	private AlunoRepositorio alunoRepositorio;
-	
+		
 	@Autowired
 	private MatriculaDAO mDAO;
 	
@@ -54,66 +33,50 @@ public class MatriculaRepositorio {
 	@Autowired
 	private DescontoDAO descontoDAO;
 	
+	@Autowired
+	private TurmaColetivaDAO turmaColetivaDAO;
 	
-	public Matricula getMatricula(CadastroMatriculaDTO cadastro)
+	
+	public MatriculaDO getMatricula(CadastroMatriculaDTO cadastro)
 	{
-		return new Matricula(cadastro, this);
+		
+		MatriculaDO matricula = new MatriculaDO();
+		matricula.setTurma(this.turmaDAO.findOne(cadastro.getIdTurma()));
+		
+		matricula.setAluno(this.alunoDAO.findOne((cadastro.getIdAluno())));
+		
+		if(cadastro.getIdDesconto() != null )
+			matricula.setDesconto(this.descontoDAO.findOne(cadastro.getIdDesconto()));
+		
+		matricula.setDiaVencimento(cadastro.getDiaVencimento());
+		matricula.setDataMatricula(new Date());
+		
+		return matricula;
 	}
 	
-	public Matricula getMatricula(Long idMatricula) {
-		MatriculaDO matricula = this.mDAO.findOne(idMatricula);
-		CadastroMatriculaDTO cadastro = new CadastroMatriculaDTO();
-		cadastro.setDiaVencimento(matricula.getDiaVencimento());
-		cadastro.setId(matricula.getId());
-		cadastro.setIdAluno(matricula.getAluno().getId());
-		cadastro.setDataMatricula(matricula.getDataMatricula());
-		if(matricula.getDesconto() != null)
-			cadastro.setIdDesconto(matricula.getDesconto().getId());
-		
-		cadastro.setIdTurma(matricula.getTurma().getId());
-		return getMatricula(cadastro);
+	public MatriculaDO getMatricula(Long idMatricula) {
+		MatriculaDO matricula = mDAO.findOne(idMatricula);
+		return matricula;
 	}
 
-	protected void cadastrar(Matricula matricula) {
-		
-		MatriculaDO mDO = new MatriculaDO();
-		mDO.setAluno(alunoDAO.findOne(matricula.getIdAluno()));
+	public void cadastrar(MatriculaDO matricula) {
 		
 		if(matricula.getDataMatricula() == null){
 			matricula.setDataMatricula(new Date());
 		}
-			mDO.setDataMatricula(matricula.getDataMatricula());
+		mDAO.save(matricula);
+	}
+
+	public MatriculaDO getMatricula(AlunoDO aluno, AulaParticularDO turma) {
+		MatriculaDO matricula = new MatriculaDO();
+		matricula.setAluno(aluno);
+		matricula.setTurma(turma);
 		
-		if(matricula.getIdDesconto() != null)
-			mDO.setDesconto(descontoDAO.findOne(matricula.getIdDesconto()));
-		
-		mDO.setDiaVencimento(matricula.getDiaVencimento());
-		mDO.setTurma(turmaDAO.findOne(matricula.getIdTurma()));
-		
-		mDAO.save(mDO);
-		matricula.setId(mDO.getId());
+		return matricula;
 	}
 
-	protected Mensalidade getMensalidade(Matricula matricula) throws ParseException {
-		return this.mensalidadeRepositorio.getMensalidade(matricula);
+	public TurmaColetivaDO getTurmaColetiva(TurmaDO turma) {
+		return this.turmaColetivaDAO.findOne(turma.getId());
 	}
-
-	protected FluxoCaixa getFluxoPagamentoMatricula(CadastroFluxoCaixaDTO cadastro) {
-		return this.fluxoRepositorio.getFluxoPagamentoMatricula(cadastro);
-	}
-	
-	protected TurmaColetiva getTurmaColetiva(Long idTurma) throws ParseException {
-		return this.turmaRepositorio.getTurma(idTurma);
-	}
-
-	protected Desconto getDesconto(Long idDesconto) {
-		return this.descontoRepositorio.getDesconto(idDesconto);
-	}
-
-	protected Aluno getAluno(Long idAluno) throws Exception
-	{
-		return this.alunoRepositorio.getAluno(idAluno);
-	}
-	
 	
 }

@@ -8,5 +8,5 @@ import javax.persistence.Table;
 @Table(name="vale_transporte")
 @PrimaryKeyJoinColumn(name="id")
 public class ValeTransporteDO extends PagamentoFuncionariosDO {
-
+	
 }

@@ -16,8 +16,9 @@ import org.hibernate.annotations.Formula;
 @Table(name = "turma")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
-public class TurmaDO {
-
+public abstract class TurmaDO {
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -51,8 +52,10 @@ public class TurmaDO {
 	}
 
 	public String getCodigo() {
-		return codigo;
+		return this.codigo;
 	}
+	
+	protected abstract void montaCodigo();
 
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
@@ -90,5 +93,19 @@ public class TurmaDO {
 	public Integer getQtdAlunas() {
 		return qtdAlunas;
 	}
+
+	public Double getPercentual(FuncionarioDO professor) {
+		if(this.getProfessor1().getId().equals(professor.getId()))
+			return this.getPercentualProfessor1();
+		return null;
+	}
+	
+	public void cadastrar(){
+		if(this.getCodigo() == null || this.getCodigo().length() ==0)
+			this.montaCodigo();
+		this.salvar();
+	}
+	
+	protected abstract void salvar();
 
 }

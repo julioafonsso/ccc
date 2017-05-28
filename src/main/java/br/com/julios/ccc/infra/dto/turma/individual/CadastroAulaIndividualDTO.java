@@ -1,6 +1,7 @@
 package br.com.julios.ccc.infra.dto.turma.individual;
 
 import br.com.julios.ccc.infra.dto.turma.CadastroTurmaDTO;
+import br.com.julios.ccc.util.Util;
 
 public class CadastroAulaIndividualDTO extends CadastroTurmaDTO {
 
@@ -11,7 +12,7 @@ public class CadastroAulaIndividualDTO extends CadastroTurmaDTO {
 		return valorPago;
 	}
 	public void setValorPago(String valorPago) {
-		this.valorPago = new Double(valorPago.replaceAll(",", ""));
+		this.valorPago = Util.convertToDouble(valorPago);
 	}
 	public Long getQtdAulas() {
 		return qtdAulas;

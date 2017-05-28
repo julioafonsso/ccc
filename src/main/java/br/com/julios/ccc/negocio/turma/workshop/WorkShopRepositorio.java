@@ -14,38 +14,36 @@ import br.com.julios.ccc.negocio.turma.TurmaRepositorio;
 public class WorkShopRepositorio extends TurmaRepositorio {
 
 	@Autowired
-	WorkShopDAO workDAO;
+	private WorkShopDAO workDAO;
 	
 	@Autowired
-	ModalidadeTurmaDAO modalidadeDAO;
+	private 	ModalidadeTurmaDAO modalidadeDAO;
 	
 	@Autowired
-	FuncionarioDAO funcionarioDAO;
+	private FuncionarioDAO funcionarioDAO;
 	
-	public WorkShop get(CadastroWorkShopDTO turma) {
-		return new WorkShop(turma, this);
+	public WorkShopDO get(CadastroWorkShopDTO cadastro) {
+		WorkShopDO work = new WorkShopDO();
+		work.setProfessor1(funcionarioDAO.findOne(cadastro.getIdProfessor1()));
+		work.setPercentualProfessor1(cadastro.getPercentualProfessor1());
+		work.setModalidade(modalidadeDAO.findOne(cadastro.getIdModalidade()));
+
+		work.setHorarioInicial(cadastro.getHorarioInicial());
+		work.setHorarioFinal(cadastro.getHorarioInicial());
+		work.setVagas(cadastro.getQtdVagas());
+		work.setDataInicio(cadastro.getDataInicio());
+		work.setDataTermino(cadastro.getDataFim());
+		work.setProfessor2(funcionarioDAO.findOne(cadastro.getIdProfessor2()));
+		work.setPercentualProfessor2(cadastro.getPercentualProfessor2());
+		work.setMensalidade(cadastro.getValorMensalidade());
+		
+		
+		return work;
+		
 	}
 
-	protected void cadastrar(WorkShop workshop) {
-		WorkShopDO turma = new WorkShopDO();
-		turma.setCodigo(workshop.getCodigo());
-		
-		turma.setId(workshop.getId());
-		turma.setProfessor1(funcionarioDAO.findOne(workshop.getIdProfessor1()));
-		turma.setPercentualProfessor1(workshop.getPercentualProfessor1());
-		turma.setModalidade(modalidadeDAO.findOne(workshop.getIdModalidade()));
-		
-		turma.setHorarioInicial(workshop.getHorarioInicial());
-		turma.setHorarioFinal(workshop.getHorarioInicial());
-		turma.setVagas(workshop.getQtdVagas());
-		turma.setDataInicio(workshop.getDataInicio());
-		turma.setDataTermino(workshop.getDataFim());
-		turma.setProfessor2(funcionarioDAO.findOne(workshop.getIdProfessor2()));
-		turma.setPercentualProfessor2(workshop.getPercentualProfessor2());
-		turma.setMensalidade(workshop.getValorMensalidade());
-		
-		workDAO.save(turma);
-		
+	public void cadastrar(WorkShopDO workshop) {
+		workDAO.save(workshop);
 	}
 
 }

@@ -13,17 +13,21 @@ public class BairroRepositorio {
 	@Autowired
 	BairroDAO bairroDAO;
 	
-	public Bairro getBairro(CadastroBairroDTO cadastro)
+	public BairroDO getBairro(CadastroBairroDTO cadastro) throws Exception
 	{
-		return new Bairro(cadastro, this);
+		
+		BairroDO bairro = new BairroDO();
+		bairro.setNome(cadastro.getNome());
+		bairro.setZona(cadastro.getZona());
+		return bairro;
 	}
 
-	protected void cadastrar(Bairro bairro) {
-		BairroDO b = new BairroDO();
-		b.setNome(bairro.getNome());
-		b.setZona(bairro.getZona());
+	public void cadastrar(BairroDO bairro) {
+		bairroDAO.save(bairro);
 		
-		bairroDAO.save(b);
-		
+	}
+
+	public BairroDO getBairro(String nome) {
+		return this.bairroDAO.getBairroPorNome(nome);
 	}
 }

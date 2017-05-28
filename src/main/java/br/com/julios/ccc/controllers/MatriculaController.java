@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
+import br.com.julios.ccc.infra.bd.model.MatriculaDO;
+import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.dto.matricula.CadastroMatriculaDTO;
-import br.com.julios.ccc.negocio.matricula.Matricula;
+import br.com.julios.ccc.negocio.fluxos.FluxoCaixaRepositorio;
 import br.com.julios.ccc.negocio.matricula.MatriculaRepositorio;
-import br.com.julios.ccc.negocio.mensalidade.Mensalidade;
 import br.com.julios.ccc.negocio.mensalidade.MensalidadeRepositorio;
 
 @Controller
@@ -27,13 +29,23 @@ public class MatriculaController {
 	@Autowired
 	MensalidadeRepositorio mensalidadeRepositorio;
 	
+	@Autowired
+	FluxoCaixaRepositorio fluxoRepositorio;
+	
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public void matricular(@RequestBody CadastroMatriculaDTO cadastro) throws Exception{
-		Matricula matricula =  matriculaRepositorio.getMatricula(cadastro);
+		MatriculaDO matricula =  matriculaRepositorio.getMatricula(cadastro);
+
+		FluxoCaixaDO pagamento = fluxoRepositorio.getFluxoPagamentoMatricula(matricula, cadastro.getValor());
+		
+		matricula.setPagamentroMatricula(pagamento);
+		
+		pagamento.cadastrar();
 		matricula.cadastrar();
 		
-		Mensalidade mensalidade = mensalidadeRepositorio.getMensalidade(matricula);
-		mensalidade.criarMensalidade();
+		MensalidadeDO mensalidade = mensalidadeRepositorio.getMensalidade(matricula);
+		mensalidade.cadastrar();
 	}
 
 }

@@ -2,9 +2,6 @@ package br.com.julios.ccc.infra.bd.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -14,32 +11,14 @@ import javax.persistence.Table;
 @Table(name = "pagamento_professor")
 @PrimaryKeyJoinColumn(name="id")
 public class ComissaoProfessorDO extends PagamentoFuncionariosDO{
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-
+	
 	@ManyToOne
 	@JoinColumn(name="id_mensalidade")
 	private MensalidadeDO mensalidade;
 
 	@Column
 	private Double percentual;
-	
-	@Column
-	private Double percentualDesconto;
-	
-	@ManyToOne
-	@JoinColumn(name="id_desconto")
-	private DescontosDO desconto;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public MensalidadeDO getMensalidade() {
 		return mensalidade;
@@ -47,29 +26,17 @@ public class ComissaoProfessorDO extends PagamentoFuncionariosDO{
 
 	public void setMensalidade(MensalidadeDO mensalidade) {
 		this.mensalidade = mensalidade;
+		this.setPercentual(mensalidade.getPercentualFuncionario(this.getFuncionario()));
 	}
 
 	public Double getPercentual() {
 		return percentual;
 	}
 
-	public void setPercentual(Double percentual) {
+	private void setPercentual(Double percentual) {
 		this.percentual = percentual;
 	}
 
-	public Double getPercentualDesconto() {
-		return percentualDesconto;
-	}
-
-	public void setPercentualDesconto(Double percentualDesconto) {
-		this.percentualDesconto = percentualDesconto;
-	}
-
-
-	public DescontosDO getDesconto() {
-		return desconto;
-	}
-	
 	
 	
 	

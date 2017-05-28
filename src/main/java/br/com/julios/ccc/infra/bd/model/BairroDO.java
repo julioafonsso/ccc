@@ -6,6 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.negocio.bairro.BairroRepositorio;
 
 @Entity
 @Table(name = "bairro")
@@ -41,8 +45,30 @@ public class BairroDO {
 		return nome;
 	}
 
-	public void setNome(String nome) {
+	public void setNome(String nome) throws Exception {
+		BairroDO bairro = this.getRepositorio().getBairro(nome);
+		if(bairro != null)
+		{
+			if(!bairro.getId().equals(this.getId()))
+			{
+				throw new Exception("Bairro já cadastrado !");
+			}
+		}
 		this.nome = nome;
+	}
+
+	@Transient
+	private BairroRepositorio repositorio;
+	
+	
+	private BairroRepositorio getRepositorio() {
+		if(this.repositorio == null)
+			this.repositorio = Contexto.bean(BairroRepositorio.class);
+		return repositorio;
+	}
+
+	public void cadastrar(){
+		this.getRepositorio().cadastrar(this);
 	}
 	
 	

@@ -8,17 +8,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import org.hibernate.annotations.Where;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.negocio.turma.modalidade.ModalidadeTurmaRepositorio;
+import br.com.julios.ccc.negocio.turma.workshop.WorkShopRepositorio;
 
 @Entity
 @Table(name = "modalidade_turma")
 public class ModalidadeTurmaDO {
 
+	@Transient
+	private ModalidadeTurmaRepositorio repositorio;
 	
 	
 	@Id
@@ -31,18 +33,9 @@ public class ModalidadeTurmaDO {
 	@Column
 	private Date dataExclusao;
 	
-	@OneToMany(mappedBy = "modalidade")
-	@Where(clause = "data_termino is null or data_termino > CURRENT_DATE")
-	private List<TurmaDO> turmas;
-	
-	public List<TurmaDO> getTurmas() {
-		return turmas;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	
 	public Long getId() {
 		return id;
@@ -52,7 +45,15 @@ public class ModalidadeTurmaDO {
 		return nome;
 	}
 
-	public void setNome(String nome) {
+	public void setNome(String nome) throws Exception {
+		ModalidadeTurmaDO modalidade = this.getRepositorio().getModalidadePorNome(nome);
+		if(modalidade != null)
+		{
+			if(!modalidade.getId().equals(id))
+			{
+				throw new Exception("Modalidade já cadastrada !");
+			}
+		}
 		this.nome = nome;
 	}
 
@@ -63,6 +64,20 @@ public class ModalidadeTurmaDO {
 	public void setDataExclusao(Date dataExclusao) {
 		this.dataExclusao = dataExclusao;
 	}
+
+	
+
+	private ModalidadeTurmaRepositorio getRepositorio() {
+		if(this.repositorio == null)
+			this.repositorio = Contexto.bean(ModalidadeTurmaRepositorio.class);
+		return repositorio;
+	}
+
+	public void cadastrar() {
+		this.getRepositorio().cadastrar(this);
+	}
+	
+	
 	
 	 
 }

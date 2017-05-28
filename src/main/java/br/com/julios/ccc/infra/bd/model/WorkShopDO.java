@@ -8,6 +8,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.negocio.turma.workshop.WorkShopRepositorio;
 
 @Entity
 @Table(name="workshop")
@@ -103,6 +107,27 @@ public class WorkShopDO extends TurmaDO{
 	public void setVagas(Integer vagas) {
 		this.vagas = vagas;
 	}
+
+	@Transient
+	private WorkShopRepositorio repositorio;
+	
+	private WorkShopRepositorio getRepositorio() {
+		if(this.repositorio == null)
+			this.repositorio = Contexto.bean(WorkShopRepositorio.class);
+		return repositorio;
+	}
+
+	@Override
+	protected void montaCodigo() {
+		this.setCodigo("WorkShop");
+	}
+
+	@Override
+	protected void salvar() {
+		this.getRepositorio().cadastrar(this);
+	}
+	
+	
 
 	
 	

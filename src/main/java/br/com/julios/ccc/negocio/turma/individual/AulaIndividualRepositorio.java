@@ -1,5 +1,7 @@
 package br.com.julios.ccc.negocio.turma.individual;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,32 +16,29 @@ import br.com.julios.ccc.negocio.turma.TurmaRepositorio;
 public class AulaIndividualRepositorio extends TurmaRepositorio {
 
 	@Autowired
-	ModalidadeTurmaDAO modalidadeDAO;
+	private ModalidadeTurmaDAO modalidadeDAO;
 
 	@Autowired
-	AulaParticularDAO aulaDAO;
+	private AulaParticularDAO aulaDAO;
 
 	@Autowired
-	FuncionarioDAO profDAO;
+	private FuncionarioDAO profDAO;
 
-	public AulaIndividual getAula(CadastroAulaIndividualDTO aula) {
-		return new AulaIndividual(aula, this);
+	public AulaParticularDO getAula(CadastroAulaIndividualDTO aula) {
+		AulaParticularDO aulaDO = new AulaParticularDO();
+		aulaDO.setDataContratacao(new Date());
+		aulaDO.setModalidade(modalidadeDAO.findOne(aula.getIdModalidade()));
+		aulaDO.setProfessor1(profDAO.findOne(aula.getIdProfessor1()));
+		aulaDO.setPercentualProfessor1(aula.getPercentualProfessor1());
+		aulaDO.setQtdAulasContratadas(aula.getQtdAulas());
+		aulaDO.setQtdAulasRestantes(aula.getQtdAulas());
+
+		return aulaDO;
 	}
 
-	public void cadastrar(AulaIndividual aulaIndividual) {
-		
-		AulaParticularDO aulaDO = new AulaParticularDO();
-		aulaDO.setCodigo(aulaIndividual.getCodigo());
-		aulaDO.setDataContratacao(aulaIndividual.getDataContratacao());
-		aulaDO.setDataUltimaAula(aulaIndividual.getDataContratacao());
-		aulaDO.setModalidade(modalidadeDAO.findOne(aulaIndividual.getIdModalidade()));
-		aulaDO.setPercentualProfessor1(aulaIndividual.getPercentualProfessor1());
-		aulaDO.setProfessor1(profDAO.findOne(aulaIndividual.getIdProfessor1()));
-		aulaDO.setQtdAulasContratadas(aulaIndividual.getQtdAulasContratadas());
-		aulaDO.setQtdAulasRestantes(aulaIndividual.getQtdAulasRestantes());
-		aulaDAO.save(aulaDO);
-		
-		aulaIndividual.setId(aulaDO.getId());
+	public void cadastrar(AulaParticularDO aula) {
+		aulaDAO.save(aula);
+
 	}
 
 }

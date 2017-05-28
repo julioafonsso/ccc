@@ -1,14 +1,12 @@
 package br.com.julios.ccc.infra.bd.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -44,9 +42,6 @@ public class TipoFluxoCaixaDO {
 		this.dataExclusao = dataExclusao;
 	}
 
-	@OneToMany(mappedBy = "tipoFluxo")
-	private List<FluxoCaixaDO> fluxos;
-	
 	//Getters and Setters
 
 	public long getId() {
@@ -69,13 +64,6 @@ public class TipoFluxoCaixaDO {
 		this.indEntrada = indEntrada;
 	}
 
-	public List<FluxoCaixaDO> getFluxos() {
-		return fluxos;
-	}
-
-	public void setFluxos(List<FluxoCaixaDO> fluxos) {
-		this.fluxos = fluxos;
-	}
 
 }
 

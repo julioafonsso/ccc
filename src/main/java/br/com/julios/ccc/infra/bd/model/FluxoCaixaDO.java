@@ -1,3 +1,4 @@
+
 package br.com.julios.ccc.infra.bd.model;
 
 import java.util.Date;
@@ -10,13 +11,25 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.negocio.fluxos.FluxoCaixaRepositorio;
 import br.com.julios.ccc.util.Util;
 
 @Entity
 @Table(name = "fluxo_caixa")
 public class FluxoCaixaDO {
 	
+	@Transient
+	private FluxoCaixaRepositorio repositorio;
+	
+	public FluxoCaixaRepositorio getRepositorio() {
+		if(this.repositorio == null)
+			this.repositorio = Contexto.bean(FluxoCaixaRepositorio.class);
+		return repositorio;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -117,6 +130,9 @@ public class FluxoCaixaDO {
 		return data;
 	}
 
-	
+	public void cadastrar() {
+		this.getRepositorio().cadastrar(this);
+		
+	}
 
 }

@@ -10,23 +10,37 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.julios.ccc.componentes.cpf.CPF;
+import br.com.julios.ccc.componentes.CPF;
+import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.negocio.aluno.AlunoRepositorio;
 
 @Entity
 @Table(name = "aluno")
 public class AlunoDO {
+
+	@Transient
+	AlunoRepositorio repositorio;
+	
+	
+	
+	private AlunoRepositorio getRepositorio() {
+		if(this.repositorio == null)
+			this.repositorio = Contexto.bean(AlunoRepositorio.class);
+		return repositorio;
+	}
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@Column(nullable = false)
-	@CPF
 	private String cpf;
 
 	@Column(nullable = false)
@@ -89,32 +103,29 @@ public class AlunoDO {
 
 
 	public String getCpf() throws Exception {
-		if(cpf != null && cpf.length() > 0){
-			return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9);
-		}
-		return null;
+//		if(cpf != null && cpf.length() > 0){
+//			return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9);
+//		}
+//		return null;
+		return this.cpf;
 
 	}
 
 	public void setCpf(String cpf) throws Exception {
-		if(cpf != null && cpf.length() > 0){
-			this.cpf = cpf.replaceAll("[^0-9]", "");
-		} else{
-			this.cpf = cpf;
-		}
+		this.cpf = CPF.getSemFormatacao(cpf);
 	}
 
 	public String getTelefone() {
-		if(telefone != null )
-		{
-			if(telefone.length() == 11)
-			{
-				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 7) + "-"  + telefone.substring(7);
-			}
-			else{
-				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 6) + "-"  + telefone.substring(6);
-			}
-		}
+//		if(telefone != null )
+//		{
+//			if(telefone.length() == 11)
+//			{
+//				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 7) + "-"  + telefone.substring(7);
+//			}
+//			else{
+//				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 6) + "-"  + telefone.substring(6);
+//			}
+//		}
 		return telefone;
 	}
 
@@ -146,7 +157,9 @@ public class AlunoDO {
 		return rg;
 	}
 
-	public void setRg(String rg) {
+	public void setRg(String rg) throws Exception {
+		if(this.getRepositorio().qtdAlunoComRG(rg).longValue() > 0)
+			throw new Exception("RG já cadastrado");
 		this.rg = rg;
 	}
 
@@ -256,6 +269,13 @@ public class AlunoDO {
 		this.foto = foto;
 	}
 
+	
+	public void cadastrar() throws Exception{
+		this.getRepositorio().cadastrar(this);
+	}
+	
+	
+	
 	
 	
 }

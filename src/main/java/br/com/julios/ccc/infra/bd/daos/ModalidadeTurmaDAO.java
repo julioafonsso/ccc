@@ -12,11 +12,10 @@ import br.com.julios.ccc.infra.dto.turma.ModalidadeDTO;
 @Repository
 public interface ModalidadeTurmaDAO extends JpaRepository<ModalidadeTurmaDO, Long>{
 
-	
-	@Query("select count(*) from ModalidadeTurmaDO m where upper(m.nome) = upper(?1) and m.dataExclusao is null ")
-	public Integer countModalidadePorNome(String nome);
-
 	@Query("select new br.com.julios.ccc.infra.dto.turma.ModalidadeDTO(m.id, m.nome) from ModalidadeTurmaDO m where m.dataExclusao is null ")
 	public List<ModalidadeDTO> getModalidades();
+
+	@Query("select m from ModalidadeTurmaDO m where upper(m.nome) = upper(?1)")
+	public ModalidadeTurmaDO getModalidadePorNome(String nome);
 
 }

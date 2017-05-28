@@ -13,22 +13,21 @@ import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
 public class MesRerefenciaRepositorio {
 
 	@Autowired
-	MesReferenciaDAO mDAO;
+	private MesReferenciaDAO mDAO;
 	
-	public MesReferencia getMes(Long id)
+	public  MesReferenciaDO getMes(Long id)
 	{
-		if(id == null)
-			return getMes((MesReferenciaDO)null);
+			
 		MesReferenciaDO mesDO = mDAO.findOne(id);
-		return getMes(mesDO);
+		return mesDO;
 	}
 
-	public MesReferencia getMes(Long mes, Long ano) {
+	public   MesReferenciaDO getMes(Long mes, Long ano) {
 		MesReferenciaDO mesDO = mDAO.findByMesAndAno(mes,ano);
-		return getMes(mesDO);
+		return mesDO;
 	}
-	
-	public MesReferencia getMesAtual(){
+
+	public MesReferenciaDO getMesAtual() {
 		SimpleDateFormat sdfMes = new SimpleDateFormat("MM");
 		SimpleDateFormat sdfAno = new SimpleDateFormat("YYYY");
 		Long mes = new Long(sdfMes.format(new Date()));
@@ -37,17 +36,7 @@ public class MesRerefenciaRepositorio {
 		return getMes(mes, ano);
 	}
 	
-	private MesReferencia getMes(MesReferenciaDO mesDO) {
-		MesReferencia mesReferencia = new MesReferencia(this);
-		if(mesDO != null)
-		{
-			mesReferencia.setAno(mesDO.getAno());
-			mesReferencia.setMes(mesDO.getMes());
-			mesReferencia.setId(mesDO.getId());
-		}
-			
-		return mesReferencia;
-	}
+	
 
 	
 	

@@ -7,6 +7,7 @@ public class ConsultaPagamentoFuncionarioDTO {
 	private String nomeFuncionario;
 	private String mesReferencia;
 	private Double valor;
+	
 	public Long getId() {
 		return id;
 	}
