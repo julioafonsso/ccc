@@ -2,6 +2,7 @@ package br.com.julios.ccc.infra.bd.model;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -126,17 +127,26 @@ public class MatriculaDO {
 	}
 
 	public Double getValorMensalidade() {
-		return this.getRepositorio().getTurmaColetiva(this.getTurma()).getMensalidade();
+		return this.getTurma().getMensalidade();
 	}
 
 	public Double getPercentualDeAulasMes(MesReferenciaDO mesReferenciaDO, Date primeiroDia) throws ParseException {
 		
-		return this.getRepositorio().getTurmaColetiva(this.getTurma()).getPercentualMes(mesReferenciaDO, primeiroDia);
+		return this.getTurma().getPercentualDeAulasMes(mesReferenciaDO, primeiroDia);
 		
 	}
 	
 	public Double getPercentualProfessor(FuncionarioDO professor) {
 		return this.getTurma().getPercentual(professor);
+	}
+
+
+	public List<FuncionarioDO> getProfessores() {
+		return this.getTurma().getProfessores();
+	}
+
+	public boolean turmaEhWorkShop() {
+		return this.getTurma().turmaEhWorkShop();
 	}
 
 }

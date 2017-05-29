@@ -6,17 +6,10 @@ public class CadastroTurmaDTO {
 
 	protected SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
-	private Long id;
 	private Long idProfessor1;
 	private Double percentualProfessor1;
 	private Long idModalidade;
 	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public Long getIdProfessor1() {
 		return idProfessor1;
 	}

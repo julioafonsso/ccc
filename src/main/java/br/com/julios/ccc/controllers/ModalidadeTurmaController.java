@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.julios.ccc.infra.bd.daos.ModalidadeTurmaDAO;
-import br.com.julios.ccc.infra.bd.model.ModalidadeTurmaDO;
 import br.com.julios.ccc.infra.dto.turma.ModalidadeDTO;
 import br.com.julios.ccc.negocio.turma.modalidade.ModalidadeTurmaRepositorio;
 
@@ -33,26 +32,27 @@ public class ModalidadeTurmaController {
 	}
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public ModalidadeTurmaDO getdesconto(@PathVariable("id") Long id){
-		return null;
+	public ModalidadeDTO getdesconto(@PathVariable("id") Long id){
+		return this.modalidadeDAO.get(id);
 	}
 	
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public void cadastrarModalidade(@RequestBody ModalidadeDTO modalidade) throws Exception
 	{
-		modalidadeRepositorio.getModalidade(modalidade).cadastrar();
+		this.modalidadeRepositorio.get(modalidade).cadastrar();
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarModalidade(@RequestBody ModalidadeTurmaDO modalidadeTurma)
+	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+	public void atualizarModalidade(@PathVariable("id") Long id, @RequestBody ModalidadeDTO modalidadeTurma) throws Exception
 	{
-		
+		this.modalidadeRepositorio.get(id).atualizar(modalidadeTurma);
 	}
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public void apagarModalidade(@PathVariable("id") Long id) throws Exception
 	{
+		this.modalidadeRepositorio.get(id).deletar();
 	}
 	
 

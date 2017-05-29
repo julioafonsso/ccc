@@ -12,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
 import br.com.julios.ccc.negocio.turma.coletiva.TurmaColetivaRepositorio;
@@ -22,15 +21,12 @@ import br.com.julios.ccc.negocio.turma.coletiva.TurmaColetivaRepositorio;
 @PrimaryKeyJoinColumn(name = "id")
 public class TurmaColetivaDO extends TurmaDO {
 
-	@Transient
-	private TurmaColetivaRepositorio repositorio;
 	
 	
-	
-	private TurmaColetivaRepositorio getRepositorio() {
+	protected TurmaColetivaRepositorio getRepositorio() {
 		if(this.repositorio == null)
 			this.repositorio = Contexto.bean(TurmaColetivaRepositorio.class);
-		return repositorio;
+		return (TurmaColetivaRepositorio) repositorio;
 	}
 
 	@Column(name = "data_inicio")
@@ -44,9 +40,6 @@ public class TurmaColetivaDO extends TurmaDO {
 
 	@Column(name = "horario_final")
 	private String horarioFinal;
-
-	@Column
-	private Double mensalidade;
 
 	@Column
 	private Integer vagas;
@@ -117,14 +110,6 @@ public class TurmaColetivaDO extends TurmaDO {
 
 	public void setHorarioFinal(String horarioFinal) {
 		this.horarioFinal = horarioFinal;
-	}
-
-	public Double getMensalidade() {
-		return mensalidade;
-	}
-
-	public void setMensalidade(Double mensalidade) {
-		this.mensalidade = mensalidade;
 	}
 
 	public Integer getVagas() {
@@ -223,7 +208,7 @@ public class TurmaColetivaDO extends TurmaDO {
 		this.sabado = sabado;
 	}
 
-	public Double getPercentualMes(MesReferenciaDO mes, Date dataInicial) throws ParseException {
+	public Double getPercentualDeAulasMes(MesReferenciaDO mes, Date dataInicial) throws ParseException {
 
 		double aulasTotais = 0;
 		double aulasMatriculado = 0;
@@ -314,10 +299,7 @@ public class TurmaColetivaDO extends TurmaDO {
 		this.getRepositorio().cadastrar(this);
 		
 	}
-	
-	
-	
-	
+
 	
 
 }

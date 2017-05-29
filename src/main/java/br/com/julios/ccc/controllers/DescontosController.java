@@ -39,16 +39,18 @@ public class DescontosController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarDesconto(@RequestBody DescontoDTO desconto){
+	public void cadastrarDesconto(@RequestBody DescontoDTO desconto) throws Exception{
 		descontoRepositorio.getDesconto(desconto).cadastrar();
 	}
 	
 	
-	@RequestMapping(method = RequestMethod.PUT)
-	public void altearrDesconto(@RequestBody DescontosDO desconto){
+	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+	public void altearrDesconto(@PathVariable("id") Long id, @RequestBody DescontoDTO desconto) throws Exception{
+		this.descontoRepositorio.getDesconto(id).alterar(desconto);
 	}
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public void deletar(@PathVariable("id") Long id) throws Exception{
+		this.descontoRepositorio.getDesconto(id).deletar();
 	}
 }

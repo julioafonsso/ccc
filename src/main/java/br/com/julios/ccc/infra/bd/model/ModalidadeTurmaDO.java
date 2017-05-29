@@ -1,7 +1,6 @@
 package br.com.julios.ccc.infra.bd.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,8 +11,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.infra.dto.turma.ModalidadeDTO;
 import br.com.julios.ccc.negocio.turma.modalidade.ModalidadeTurmaRepositorio;
-import br.com.julios.ccc.negocio.turma.workshop.WorkShopRepositorio;
 
 @Entity
 @Table(name = "modalidade_turma")
@@ -32,10 +31,6 @@ public class ModalidadeTurmaDO {
 	
 	@Column
 	private Date dataExclusao;
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
 	
 	public Long getId() {
 		return id;
@@ -75,6 +70,19 @@ public class ModalidadeTurmaDO {
 
 	public void cadastrar() {
 		this.getRepositorio().cadastrar(this);
+	}
+
+	public void atualizar(ModalidadeDTO cadastro) throws Exception {
+		this.setNome(cadastro.getNome());
+		this.cadastrar();
+	}
+
+	public void deletar() throws Exception {
+		if(this.getRepositorio().getQtdTurmasAtivas(this).longValue() >0 )
+			throw new Exception("Existe turma com essa modalidade !");
+		
+		this.setDataExclusao(new Date());
+		this.cadastrar();
 	}
 	
 	

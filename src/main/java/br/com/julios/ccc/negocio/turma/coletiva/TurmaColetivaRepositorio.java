@@ -3,14 +3,8 @@ package br.com.julios.ccc.negocio.turma.coletiva;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.julios.ccc.infra.bd.daos.FuncionarioDAO;
-import br.com.julios.ccc.infra.bd.daos.ModalidadeTurmaDAO;
-import br.com.julios.ccc.infra.bd.daos.NivelTurmaDAO;
-import br.com.julios.ccc.infra.bd.daos.SalaDAO;
-import br.com.julios.ccc.infra.bd.daos.TurmaColetivaDAO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.CadastroTurmaColetivaDTO;
 import br.com.julios.ccc.negocio.turma.TurmaRepositorio;
@@ -20,24 +14,10 @@ public class TurmaColetivaRepositorio extends TurmaRepositorio{
 
 	protected SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
-	@Autowired
-	TurmaColetivaDAO turmaDAO;
 	
-	@Autowired
-	ModalidadeTurmaDAO modalidadeDAO;
-	
-	@Autowired
-	NivelTurmaDAO nivelDAO;
-	
-	@Autowired
-	FuncionarioDAO funcionarioDAO;
-	
-	@Autowired
-	SalaDAO salaDAO;
 	
 	public TurmaColetivaDO getTurma(CadastroTurmaColetivaDTO cadastro) {
 		TurmaColetivaDO turma = new TurmaColetivaDO();
-		turma.setId(cadastro.getId());
 		turma.setProfessor1(funcionarioDAO.findOne(cadastro.getIdProfessor1()));
 		turma.setPercentualProfessor1(cadastro.getPercentualProfessor1());
 		turma.setModalidade(modalidadeDAO.findOne(cadastro.getIdModalidade()));
@@ -72,6 +52,8 @@ public class TurmaColetivaRepositorio extends TurmaRepositorio{
 		TurmaColetivaDO turma = turmaDAO.findOne(idTurma);
 		return turma;
 	}
+	
+	
 
 	
 	

@@ -28,7 +28,6 @@ public class AlunoRepositorio {
 	public AlunoDO getAluno(CadastroAlunoDTO cadastro) throws Exception {
 
 		AlunoDO aluno = new AlunoDO();
-		aluno.setId(cadastro.getId());
 		aluno.setCpf(cadastro.getCpf());
 		aluno.setNome(cadastro.getNome());
 		aluno.setRg(cadastro.getRg());

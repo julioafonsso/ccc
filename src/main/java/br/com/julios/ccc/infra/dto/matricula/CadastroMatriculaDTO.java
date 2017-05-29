@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class CadastroMatriculaDTO {
 
-	private Long id ;
 	private Long idTurma ;
 	private Long idAluno;
 	private Long diaVencimento ;
@@ -17,12 +16,6 @@ public class CadastroMatriculaDTO {
 	}
 	public void setDataMatricula(Date dataMatricula) {
 		this.dataMatricula = dataMatricula;
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
 	}
 	public Long getIdTurma() {
 		return idTurma;

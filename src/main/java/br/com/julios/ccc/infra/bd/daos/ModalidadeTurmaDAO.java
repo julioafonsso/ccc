@@ -18,4 +18,7 @@ public interface ModalidadeTurmaDAO extends JpaRepository<ModalidadeTurmaDO, Lon
 	@Query("select m from ModalidadeTurmaDO m where upper(m.nome) = upper(?1)")
 	public ModalidadeTurmaDO getModalidadePorNome(String nome);
 
+	@Query("select new br.com.julios.ccc.infra.dto.turma.ModalidadeDTO(m.id, m.nome) from ModalidadeTurmaDO m where m.id = ?1 ")
+	public ModalidadeDTO get(Long id);
+
 }

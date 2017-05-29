@@ -46,10 +46,6 @@ public class PagamentoFuncionariosDO {
 		return id;
 	}
 
-	private void setId(Long id) {
-		this.id = id;
-	}
-
 	public FuncionarioDO getFuncionario() {
 		return funcionario;
 	}

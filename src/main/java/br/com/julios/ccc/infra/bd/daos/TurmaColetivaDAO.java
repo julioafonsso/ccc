@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import br.com.julios.ccc.infra.bd.model.ModalidadeTurmaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaDTO;
 
@@ -112,5 +113,10 @@ public interface TurmaColetivaDAO extends JpaRepository<TurmaColetivaDO, Long> {
 			+ " ) from TurmaColetivaDO t "
 			+ "where (t.dataTermino is null or t.dataTermino > CURRENT_DATE)")
 	public List<ConsultaTurmaColetivaDTO> getTurmas();
+
+
+	
+	@Query("select count(*) from TurmaColetivaDO t where t.modalidade = ?1 and (t.dataTermino is null or t.dataTermino > CURRENT_DATE) ")
+	public Long getQtdTurmaAtivas(ModalidadeTurmaDO modalidadeTurmaDO);
 
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.infra.bd.daos.DescontoDAO;
+import br.com.julios.ccc.infra.bd.daos.MatriculaDAO;
 import br.com.julios.ccc.infra.bd.model.DescontosDO;
 import br.com.julios.ccc.infra.dto.DescontoDTO;
 
@@ -11,9 +12,12 @@ import br.com.julios.ccc.infra.dto.DescontoDTO;
 public class DescontoRepositorio {
 
 	@Autowired
-	DescontoDAO descontoDAO;
+	private DescontoDAO descontoDAO;
 	
-	public DescontosDO getDesconto(DescontoDTO cadastro){
+	@Autowired
+	private  MatriculaDAO matriculaDAO;
+	
+	public DescontosDO getDesconto(DescontoDTO cadastro) throws Exception{
 		DescontosDO desconto = new DescontosDO();
 		desconto.setNome(cadastro.getNome());
 		desconto.setValor(cadastro.getValor());
@@ -22,13 +26,21 @@ public class DescontoRepositorio {
 
 	public void cadastrar(DescontosDO desconto) {
 		
-		descontoDAO.save(desconto);
+		this.descontoDAO.save(desconto);
 		
 	}
 
 	public DescontosDO getDesconto(Long idDesconto) {
 		
-		return descontoDAO.findOne(idDesconto);
+		return this.descontoDAO.findOne(idDesconto);
+	}
+
+	public DescontosDO getDesconto(String nome) {
+		return this.descontoDAO.getDesconto(nome);
+	}
+
+	public Long getQtdMatriculas(DescontosDO descontosDO) {
+		return this.matriculaDAO.getQtdMatriculas(descontosDO);
 	}
 	
 }

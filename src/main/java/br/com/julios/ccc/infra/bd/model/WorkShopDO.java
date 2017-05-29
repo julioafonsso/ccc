@@ -1,6 +1,9 @@
 package br.com.julios.ccc.infra.bd.model;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
 import br.com.julios.ccc.negocio.turma.workshop.WorkShopRepositorio;
@@ -37,9 +39,6 @@ public class WorkShopDO extends TurmaDO{
 	
 	@Column(name = "horario_final")
 	private String horarioFinal;
-	
-	@Column
-	private Double mensalidade;
 	
 	@Column
 	private Integer vagas;
@@ -92,13 +91,6 @@ public class WorkShopDO extends TurmaDO{
 		this.horarioFinal = horarioFinal;
 	}
 
-	public Double getMensalidade() {
-		return mensalidade;
-	}
-
-	public void setMensalidade(Double mensalidade) {
-		this.mensalidade = mensalidade;
-	}
 
 	public Integer getVagas() {
 		return vagas;
@@ -108,13 +100,11 @@ public class WorkShopDO extends TurmaDO{
 		this.vagas = vagas;
 	}
 
-	@Transient
-	private WorkShopRepositorio repositorio;
 	
-	private WorkShopRepositorio getRepositorio() {
+	protected WorkShopRepositorio getRepositorio() {
 		if(this.repositorio == null)
 			this.repositorio = Contexto.bean(WorkShopRepositorio.class);
-		return repositorio;
+		return (WorkShopRepositorio) repositorio;
 	}
 
 	@Override
@@ -127,7 +117,26 @@ public class WorkShopDO extends TurmaDO{
 		this.getRepositorio().cadastrar(this);
 	}
 	
+	@Override
+	public List<FuncionarioDO> getProfessores() {
+		List<FuncionarioDO> professores = new ArrayList<FuncionarioDO>();
+		if(this.getProfessor1() !=  null)
+			professores.add(this.getProfessor1());
+		if(this.getProfessor2() != null)
+			professores.add(this.getProfessor2());
+		
+		return professores;
+	}
+
+	@Override
+	public Double getPercentualDeAulasMes(MesReferenciaDO mesReferenciaDO, Date primeiroDia) throws ParseException {
+		return new Double(1);
+	}
 	
+	public boolean turmaEhWorkShop() {
+		return true;
+	}
+
 
 	
 	

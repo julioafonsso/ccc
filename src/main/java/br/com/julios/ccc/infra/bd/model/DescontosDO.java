@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.infra.dto.DescontoDTO;
 import br.com.julios.ccc.negocio.desconto.DescontoRepositorio;
 
 @Entity
@@ -47,7 +48,16 @@ public class DescontosDO {
 		return nome;
 	}
 
-	public void setNome(String nome) {
+	public void setNome(String nome) throws Exception {
+		DescontosDO desconto = this.getRepositorio().getDesconto(nome);
+		if(desconto != null)
+		{
+			if(!desconto.getId().equals(this.getId()))
+			{
+				throw new Exception("Desconto já cadastrado!");
+			}
+				
+		}
 		this.nome = nome;
 	}
 
@@ -73,6 +83,20 @@ public class DescontosDO {
 	public void cadastrar() {
 		this.getRepositorio().cadastrar(this);
 		
+	}
+
+	public void alterar(DescontoDTO desconto) throws Exception {
+		this.setNome(desconto.getNome());
+		this.setValor(desconto.getValor());
+		this.cadastrar();
+	}
+
+	public void deletar() throws Exception {
+		if(this.getRepositorio().getQtdMatriculas(this).longValue() <0 )
+			throw new Exception("Existe Alunos matriculados com esse desconto!");
+		
+		this.setDataExclusao(new Date());
+		this.cadastrar();
 	}
 	
 	

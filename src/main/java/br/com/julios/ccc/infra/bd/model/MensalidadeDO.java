@@ -26,7 +26,7 @@ public class MensalidadeDO {
 	private MensalidadeRepositorio repositorio;
 
 	public MensalidadeRepositorio getRepositorio() {
-		if(this.repositorio == null)
+		if (this.repositorio == null)
 			this.repositorio = Contexto.bean(MensalidadeRepositorio.class);
 		return repositorio;
 	}
@@ -70,10 +70,6 @@ public class MensalidadeDO {
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public MesReferenciaDO getMesReferencia() {
@@ -150,14 +146,18 @@ public class MensalidadeDO {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-		Date d1 = sdf.parse(sdf.format(this.getMatricula().getDataMatricula()));
-		this.setDataVencimento(sdf.parse(
-				this.getMatricula().getDiaVencimento().toString() + "/" + this.getMesReferencia().getMesFormatado()));
+		if (this.getMatricula().getDiaVencimento() == null) {
+			this.setDataVencimento(new Date());
+		} else {
+			Date d1 = sdf.parse(sdf.format(this.getMatricula().getDataMatricula()));
+			this.setDataVencimento(sdf.parse(this.getMatricula().getDiaVencimento().toString() + "/"
+					+ this.getMesReferencia().getMesFormatado()));
 
-		if (this.getDataVencimento().before(d1)) {
+			if (this.getDataVencimento().before(d1)) {
 
-			this.setDataVencimento(this.dataVencimento = sdf.parse(this.getMatricula().getDiaVencimento().toString()
-					+ "/" + this.getMesReferencia().getProximoMesFormatado()));
+				this.setDataVencimento(this.dataVencimento = sdf.parse(this.getMatricula().getDiaVencimento().toString()
+						+ "/" + this.getMesReferencia().getProximoMesFormatado()));
+			}
 		}
 	}
 
@@ -180,12 +180,11 @@ public class MensalidadeDO {
 		return this.getMatricula().getPercentualProfessor(professor);
 	}
 
-//	public void criarMensalidadeAulaIndividual(FluxoCaixaDO pagamento) {
-//		this.setValorMensalidade(pagamento.getValor());
-//		this.setDataVencimento(pagamento.getData());
-//		this.setPagamentoMensalidade(pagamento);
-//		this.getRepositorio().cadastrar(this);
-//	}
-
+	// public void criarMensalidadeAulaIndividual(FluxoCaixaDO pagamento) {
+	// this.setValorMensalidade(pagamento.getValor());
+	// this.setDataVencimento(pagamento.getData());
+	// this.setPagamentoMensalidade(pagamento);
+	// this.getRepositorio().cadastrar(this);
+	// }
 
 }

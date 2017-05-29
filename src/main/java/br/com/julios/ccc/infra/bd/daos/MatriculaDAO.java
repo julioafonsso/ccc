@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import br.com.julios.ccc.infra.bd.model.DescontosDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.dto.matricula.ConsultaMatriculaDTO;
 import br.com.julios.ccc.infra.dto.turma.individual.ConsultaAulaIndividualDTO;
@@ -25,9 +26,13 @@ public interface MatriculaDAO extends JpaRepository<MatriculaDO, Long>{
 			" t.nivel.nome ,"+
 			" t.sala.id ,"+
 			" t.sala.nome ,"+
-			" m.diaVencimento ) "+
+			" m.diaVencimento,  "+
+			" d.id,  "+
+			" d.nome,  "+
+			" d.valor ) "+
 			" from MatriculaDO m, "
-			+ "    TurmaColetivaDO t "
+			+ "    TurmaColetivaDO t"
+			+ " LEFT OUTER JOIN m.desconto AS d "
 			+ " where m.aluno.id = ?1 "
 			+ " and m.dataExclusao is null "
 			+ " and m.turma.id = t.id "
@@ -45,7 +50,7 @@ public interface MatriculaDAO extends JpaRepository<MatriculaDO, Long>{
 			" a.modalidade.id ,"+
 			" a.modalidade.nome ,"
 			+ "a.qtdAulasContratadas, "
-			+ "a. dataContratacao , "
+			+ "m.dataMatricula , "
 			+ " men.pagamentoMensalidade.valor "+
 			" ) "+
 			" from MatriculaDO m, "
@@ -55,8 +60,32 @@ public interface MatriculaDAO extends JpaRepository<MatriculaDO, Long>{
 			+ " and men.matricula.id = m.id"
 			+ " and m.dataExclusao is null "
 			+ " and m.turma.id = a.id "
-			+ " and a.dataContratacao between ?2 and ?3 "
+			+ " and m.dataMatricula between ?2 and ?3 "
 			+ " ")
 	public List<ConsultaAulaIndividualDTO> getAulasParticulares(Long idAluno, Date diaInicio, Date diaFim);
+	
+	
+	
+	@Query("select new br.com.julios.ccc.infra.dto.matricula.ConsultaMatriculaDTO (" +
+			" m.id ,"+
+			" t.id ,"+
+			" t.codigo ,"+
+			" t.modalidade.id ,"+
+			" t.modalidade.nome ,"+
+			" t.dataInicio, "+
+			" t.dataTermino, "+
+			" m.dataMatricula ) "+
+			" from MatriculaDO m ,"
+			+ " WorkShopDO t "
+			+ " where m.aluno.id = ?1 "
+			+ " and t.id = m.turma.id "
+			+ " and m.dataExclusao is null "
+			+ " and m.dataMatricula between ?2 and ?3"
+			
+			+ " ")
+	public List<ConsultaMatriculaDTO> getWorkShop(Long idAluno,  Date diaInicio, Date diaFim);
+
+	@Query("select count(*) from MatriculaDO m where m.dataExclusao is null and m.desconto = ?1")
+	public Long getQtdMatriculas(DescontosDO descontosDO);
 	
 }

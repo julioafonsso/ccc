@@ -11,7 +11,7 @@ import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.bd.model.TipoFluxoCaixaDO;
-import br.com.julios.ccc.infra.dto.CadastroFluxoCaixaDTO;
+import br.com.julios.ccc.infra.dto.fluxo_caixa.CadastroFluxoCaixaDTO;
 
 @Service
 public class FluxoCaixaRepositorio {
@@ -23,13 +23,16 @@ public class FluxoCaixaRepositorio {
 	TipoFluxoCaixaDAO tipoFluxoDAO;
 
 	public FluxoCaixaDO getFluxoPagamentoMatricula(MatriculaDO matricula, Double valor) {
-		
-		FluxoCaixaDO pagamento = new FluxoCaixaDO();
-		pagamento.setData(matricula.getDataMatricula());
-		pagamento.setDescricao(("Aluno : " + matricula.getNomeAluno()));
-		pagamento.setValor(valor);
-		pagamento.setTipoFluxo(tipoFluxoDAO.findOne(TipoFluxoCaixaDO.MATRICULA));
-		return pagamento;
+		if(valor != null && valor.longValue() > 0)
+		{
+			FluxoCaixaDO pagamento = new FluxoCaixaDO();
+			pagamento.setData(matricula.getDataMatricula());
+			pagamento.setDescricao(("Aluno : " + matricula.getNomeAluno()));
+			pagamento.setValor(valor);
+			pagamento.setTipoFluxo(tipoFluxoDAO.findOne(TipoFluxoCaixaDO.MATRICULA));
+			return pagamento;
+		}
+		return null;
 	}
 
 	public FluxoCaixaDO getFluxo(CadastroFluxoCaixaDTO cadastro) {
@@ -59,6 +62,16 @@ public class FluxoCaixaRepositorio {
 		return this.getFluxo(cadastro);
 	}
 
+	public FluxoCaixaDO getPagamentoWorkShop(MensalidadeDO mensalidade) throws Exception {
+		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
+		cadastro.setIdTipo(TipoFluxoCaixaDO.WORKSHOP);
+		cadastro.setData(new Date());
+		cadastro.setQtd(new Long(1));
+		cadastro.setValor(mensalidade.getValorMensalidade());
+		cadastro.setDescricao("Aluno - " + mensalidade.getNomeAluno());
+		return this.getFluxo(cadastro);
+	}
+	
 	public FluxoCaixaDO getPagamentoAulaParticular(String aluno, Long qtdAulas, Double valor) throws Exception {
 		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
 		cadastro.setIdTipo(TipoFluxoCaixaDO.AULA_PARTICULAR);

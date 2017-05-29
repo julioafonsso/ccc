@@ -21,4 +21,8 @@ public interface DescontoDAO extends JpaRepository<DescontosDO, Long> {
 			+ "from DescontosDO d where d.id = ?1")
 	public DescontoDTO getDescontos(Long id);
 
+
+	@Query("select d from DescontosDO d where upper(d.nome) = upper(?1) and d.dataExclusao is null")
+	public DescontosDO getDesconto(String nome);
+
 }

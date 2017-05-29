@@ -1,10 +1,9 @@
-package br.com.julios.ccc.infra.dto;
+package br.com.julios.ccc.infra.dto.fluxo_caixa;
 
 import java.util.Date;
 
 public class CadastroFluxoCaixaDTO {
 
-	private Long id;
 	private Long idTipo;
 	private Double valor;
 	private String observacao;
@@ -17,12 +16,6 @@ public class CadastroFluxoCaixaDTO {
 	}
 	public void setQtd(Long qtd) {
 		this.qtd = qtd;
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
 	}
 	public Long getIdTipo() {
 		return idTipo;

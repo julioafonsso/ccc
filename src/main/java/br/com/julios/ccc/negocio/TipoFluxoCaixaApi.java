@@ -33,8 +33,6 @@ public class TipoFluxoCaixaApi {
 
 	public void apagarTipoFluxoCaixa(TipoFluxoCaixaDO tipoFluxoCaixa) 
 	{
-		tipoFluxoCaixa.setDataExclusao(new Date());
-		tipoFluxoCaixaDAO.save(tipoFluxoCaixa);
 		
 	}
 

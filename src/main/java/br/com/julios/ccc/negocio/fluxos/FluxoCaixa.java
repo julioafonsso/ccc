@@ -1,9 +1,5 @@
 package br.com.julios.ccc.negocio.fluxos;
 
-import java.util.Date;
-
-import br.com.julios.ccc.infra.dto.CadastroFluxoCaixaDTO;
-
 public class FluxoCaixa {
 
 //	protected FluxoCaixa(CadastroFluxoCaixaDTO cadastro, FluxoCaixaRepositorio fluxoPagamentoRepositorio) {

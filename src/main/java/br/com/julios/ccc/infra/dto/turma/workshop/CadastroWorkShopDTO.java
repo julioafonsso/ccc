@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.Date;
 
 import br.com.julios.ccc.infra.dto.turma.CadastroTurmaDTO;
+import br.com.julios.ccc.util.Util;
 
 public class CadastroWorkShopDTO extends CadastroTurmaDTO{
 
@@ -46,7 +47,7 @@ public class CadastroWorkShopDTO extends CadastroTurmaDTO{
 
 	public void setValorMensalidade(String valorMensalidade) {
 		
-		this.valorMensalidade = new Double(valorMensalidade.replaceAll(",", ""));
+		this.valorMensalidade = Util.convertToDouble(valorMensalidade);
 	}
 
 	public String getHorarioInicial() {

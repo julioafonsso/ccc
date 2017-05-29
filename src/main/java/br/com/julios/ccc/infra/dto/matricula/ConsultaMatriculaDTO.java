@@ -1,5 +1,7 @@
 package br.com.julios.ccc.infra.dto.matricula;
 
+import java.util.Date;
+
 public class ConsultaMatriculaDTO {
 
 	private Long id ;
@@ -12,7 +14,32 @@ public class ConsultaMatriculaDTO {
 	private Long idSala ;
 	private String nomeSala ;
 	private Long diaVencimento ;
-	
+	public Long idDesconto;
+    public String nomeDesconto;
+    public Long valorDesconto;
+	public Date dataInicio;
+	public Date dataFim;
+	public Date dataMatricula;
+    
+    public ConsultaMatriculaDTO(Long id ,
+			Long idTurma ,
+			String codigo ,
+			Long idModalidade ,
+			String nomeModalidade,
+			Date dataInicio,
+			Date dataFim,
+			Date dataMatricula
+    		) {
+    	this.setId(id) ;
+		this.setIdTurma(idTurma) ;
+		this.setCodigo(codigo) ;
+		this.setIdModalidade(idModalidade) ;
+		this.setNomeModalidade(nomeModalidade) ;
+		this.setDataFim(dataFim);
+		this.setDataInicio(dataInicio);
+		this.setDataMatricula(dataMatricula);
+	}
+    
 	public ConsultaMatriculaDTO(	
 			Long id ,
 			Long idTurma ,
@@ -23,7 +50,10 @@ public class ConsultaMatriculaDTO {
 			String nomeNivel ,
 			Long idSala ,
 			String nomeSala ,
-			Long diaVencimento ){
+			Long diaVencimento,
+			Long idDesconto,
+		    String nomeDesconto,
+		    Long valorDesconto){
 
 		this.setId(id) ;
 		this.setIdTurma(idTurma) ;
@@ -35,6 +65,9 @@ public class ConsultaMatriculaDTO {
 		this.setIdSala(idSala) ;
 		this.setNomeSala(nomeSala) ;
 		this.setDiaVencimento(diaVencimento) ;
+		this.setIdDesconto(idDesconto);
+		this.setNomeDesconto(nomeDesconto);
+		this.setValorDesconto(valorDesconto);
 	}
 
 	public Long getId() {
@@ -97,6 +130,30 @@ public class ConsultaMatriculaDTO {
 		return idSala;
 	}
 
+	public Long getIdDesconto() {
+		return idDesconto;
+	}
+
+	public void setIdDesconto(Long idDesconto) {
+		this.idDesconto = idDesconto;
+	}
+
+	public String getNomeDesconto() {
+		return nomeDesconto;
+	}
+
+	public void setNomeDesconto(String nomeDesconto) {
+		this.nomeDesconto = nomeDesconto;
+	}
+
+	public Long getValorDesconto() {
+		return valorDesconto;
+	}
+
+	public void setValorDesconto(Long valorDesconto) {
+		this.valorDesconto = valorDesconto;
+	}
+
 	public void setIdSala(Long idSala) {
 		this.idSala = idSala;
 	}
@@ -115,6 +172,30 @@ public class ConsultaMatriculaDTO {
 
 	public void setDiaVencimento(Long diaVencimento) {
 		this.diaVencimento = diaVencimento;
+	}
+
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+
+	public Date getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
+	}
+
+	public Date getDataMatricula() {
+		return dataMatricula;
+	}
+
+	public void setDataMatricula(Date dataMatricula) {
+		this.dataMatricula = dataMatricula;
 	}
 	
 	

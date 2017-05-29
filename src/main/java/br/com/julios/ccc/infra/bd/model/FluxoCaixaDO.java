@@ -74,10 +74,6 @@ public class FluxoCaixaDO {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public Double getValor() {
 		return valor;
 	}

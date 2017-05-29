@@ -1,5 +1,9 @@
 package br.com.julios.ccc.infra.bd.model;
 
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,19 +14,28 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Formula;
+
+import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.negocio.turma.TurmaRepositorio;
 
 @Table(name = "turma")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 public abstract class TurmaDO {
 	
+	@Transient
+	protected TurmaRepositorio repositorio;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Column
+	private Double mensalidade;
+	
 	@Column
 	private String codigo;
 
@@ -45,10 +58,6 @@ public abstract class TurmaDO {
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getCodigo() {
@@ -108,4 +117,30 @@ public abstract class TurmaDO {
 	
 	protected abstract void salvar();
 
+	protected TurmaRepositorio getRepositorio() {
+		if(this.repositorio == null)
+			this.repositorio = Contexto.bean(TurmaRepositorio.class);
+		return repositorio;
+	}
+
+	
+	
+	public abstract List<FuncionarioDO> getProfessores();
+		
+	public Double getMensalidade() {
+		return this.mensalidade;
+	}
+
+	public void setMensalidade(Double mensalidade) {
+		this.mensalidade = mensalidade;
+	}
+
+	public abstract Double getPercentualDeAulasMes(MesReferenciaDO mesReferenciaDO, Date primeiroDia) throws ParseException ;
+
+	public boolean turmaEhWorkShop() {
+		return false;
+	}
+		
+	
+	
 }

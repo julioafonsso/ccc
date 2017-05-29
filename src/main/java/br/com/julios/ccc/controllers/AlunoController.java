@@ -183,4 +183,21 @@ public class AlunoController {
 		return matriculaDAO.getAulasParticulares(idAluno, diaInicio, diaFim);
 	}
 
+	@RequestMapping(value = "{id}/workshop/{dataInicio}/{dataFim}", method = RequestMethod.GET)
+	public List<ConsultaMatriculaDTO> consultarWorkShops(@PathVariable("id") Long idAluno,
+			@PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws Exception {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+
+		Date diaInicio = sdf.parse(dataInicio);
+		Date diaFim = sdf.parse(dataFim);
+
+		Calendar c = Calendar.getInstance();
+		c.setTime(diaFim);
+		c.add(Calendar.DATE, c.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
+		diaFim = c.getTime();
+
+		return matriculaDAO.getWorkShop(idAluno, diaInicio, diaFim);
+	}
+	
 }

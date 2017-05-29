@@ -5,7 +5,6 @@ import java.util.Date;
 public class CadastroMensalidadeDTO {
 
 
-	private Long id;
 	private Long idMatricula;;
 	private Long idMesReferecia;
 	private Date dataVencimento;
@@ -16,12 +15,6 @@ public class CadastroMensalidadeDTO {
 	}
 	public void setDataVencimento(Date dataVencimento) {
 		this.dataVencimento = dataVencimento;
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
 	}
 	public Long getIdMatricula() {
 		return idMatricula;

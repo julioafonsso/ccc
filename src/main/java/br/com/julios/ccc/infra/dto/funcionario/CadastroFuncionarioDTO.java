@@ -10,7 +10,6 @@ public class CadastroFuncionarioDTO {
 
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
-	private Long id;
 	private String cpf;
 	private String telefone;
 	private String email;
@@ -38,12 +37,6 @@ public class CadastroFuncionarioDTO {
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
 	}
 	public String getCpf() {
 		return cpf;
