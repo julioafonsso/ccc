@@ -10,7 +10,7 @@ import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
 import br.com.julios.ccc.infra.dto.fluxo_caixa.CadastroTipoFluxoDTO;
-import br.com.julios.ccc.negocio.fluxos.TipoFluxoRepositorio;
+import br.com.julios.ccc.repositorios.TipoFluxoRepositorio;
 
 @Entity
 @Table(name = "TIPO_FLUXO_CAIXA")

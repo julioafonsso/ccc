@@ -12,7 +12,7 @@ import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
 import br.com.julios.ccc.infra.dto.turma.ModalidadeDTO;
-import br.com.julios.ccc.negocio.turma.modalidade.ModalidadeTurmaRepositorio;
+import br.com.julios.ccc.repositorios.ModalidadeTurmaRepositorio;
 
 @Entity
 @Table(name = "modalidade_turma")

@@ -1,15 +1,18 @@
-package br.com.julios.ccc.negocio.fluxos;
+package br.com.julios.ccc.repositorios;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.infra.bd.daos.FluxoCaixaDAO;
 import br.com.julios.ccc.infra.bd.daos.TipoFluxoCaixaDAO;
+import br.com.julios.ccc.infra.bd.model.ComissaoProfessorDO;
 import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
+import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
 import br.com.julios.ccc.infra.bd.model.TipoFluxoCaixaDO;
 import br.com.julios.ccc.infra.dto.fluxo_caixa.CadastroFluxoCaixaDTO;
 
@@ -80,6 +83,37 @@ public class FluxoCaixaRepositorio {
 		cadastro.setValor(valor);
 		cadastro.setDescricao("Aluno - " + aluno);
 		return this.getFluxo(cadastro);
+	}
+
+	public FluxoCaixaDO getPagamentoComissao(ComissaoProfessorDO comissao) {
+		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
+		cadastro.setIdTipo(TipoFluxoCaixaDO.PAGAMENTO_PROFESSOR);
+		cadastro.setData(new Date());
+		cadastro.setQtd(new Long(1));
+		cadastro.setValor(comissao.getValor());
+		cadastro.setDescricao("Pagamento Professor - " + comissao.getNomeFuncionario());
+		cadastro.setObservacao("Mes Referencia: " + comissao.getNomeMes());
+		
+		return getFluxo(cadastro);
+	}
+
+	public FluxoCaixaDO getPagamentoComissao(List<ComissaoProfessorDO> comissoes, MesReferenciaDO mes, String nomeProfessor) {
+
+		Double valor = new Double(0);
+		
+		for (ComissaoProfessorDO comissaoProfessorDO : comissoes) {
+			valor += comissaoProfessorDO.getValor();
+		}
+		
+		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
+		cadastro.setIdTipo(TipoFluxoCaixaDO.PAGAMENTO_PROFESSOR);
+		cadastro.setData(new Date());
+		cadastro.setQtd(new Long(1));
+		cadastro.setValor(valor);
+		cadastro.setDescricao("Pagamento Professor - " + nomeProfessor);
+		cadastro.setObservacao("Mes Referencia: " + mes.getNomeMes());
+		
+		return getFluxo(cadastro);
 	}
 
 }

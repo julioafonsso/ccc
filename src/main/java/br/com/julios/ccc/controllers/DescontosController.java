@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import br.com.julios.ccc.infra.bd.daos.DescontoDAO;
 import br.com.julios.ccc.infra.bd.model.DescontosDO;
 import br.com.julios.ccc.infra.dto.DescontoDTO;
-import br.com.julios.ccc.negocio.desconto.DescontoRepositorio;
+import br.com.julios.ccc.repositorios.DescontoRepositorio;
 
 @Controller
 @ResponseBody

@@ -15,7 +15,7 @@ import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaDO;
 import br.com.julios.ccc.infra.bd.model.WorkShopDO;
-import br.com.julios.ccc.negocio.funcionario.FuncionarioRepositorio;
+import br.com.julios.ccc.repositorios.FuncionarioRepositorio;
 
 @Service
 public class TurmaRepositorio {

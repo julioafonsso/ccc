@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import br.com.julios.ccc.infra.bd.daos.TipoFluxoCaixaDAO;
 import br.com.julios.ccc.infra.dto.fluxo_caixa.CadastroTipoFluxoDTO;
 import br.com.julios.ccc.infra.dto.fluxo_caixa.ConsultaTipoFluxoDTO;
-import br.com.julios.ccc.negocio.fluxos.TipoFluxoRepositorio;
+import br.com.julios.ccc.repositorios.TipoFluxoRepositorio;
 
 @Controller
 @ResponseBody

@@ -12,7 +12,7 @@ import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
 import br.com.julios.ccc.infra.dto.DescontoDTO;
-import br.com.julios.ccc.negocio.desconto.DescontoRepositorio;
+import br.com.julios.ccc.repositorios.DescontoRepositorio;
 
 @Entity
 @Table(name = "tipo_desconto")

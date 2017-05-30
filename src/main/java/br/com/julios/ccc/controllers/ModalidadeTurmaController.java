@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.julios.ccc.infra.bd.daos.ModalidadeTurmaDAO;
 import br.com.julios.ccc.infra.dto.turma.ModalidadeDTO;
-import br.com.julios.ccc.negocio.turma.modalidade.ModalidadeTurmaRepositorio;
+import br.com.julios.ccc.repositorios.ModalidadeTurmaRepositorio;
 
 @Controller
 @ResponseBody

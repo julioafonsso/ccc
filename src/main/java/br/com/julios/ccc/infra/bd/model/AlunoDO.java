@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.julios.ccc.componentes.CPF;
 import br.com.julios.ccc.infra.Contexto;
-import br.com.julios.ccc.negocio.aluno.AlunoRepositorio;
+import br.com.julios.ccc.repositorios.AlunoRepositorio;
 
 @Entity
 @Table(name = "aluno")

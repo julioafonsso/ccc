@@ -1,6 +1,7 @@
 package br.com.julios.ccc.infra.bd.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +18,7 @@ import javax.persistence.Transient;
 import br.com.julios.ccc.componentes.CPF;
 import br.com.julios.ccc.componentes.Telefone;
 import br.com.julios.ccc.infra.Contexto;
-import br.com.julios.ccc.negocio.funcionario.FuncionarioRepositorio;
+import br.com.julios.ccc.repositorios.FuncionarioRepositorio;
 
 @Entity
 @Table(name = "funcionario")
@@ -91,16 +92,6 @@ public class FuncionarioDO {
 	}
 
 	public String getTelefone() {
-//		if(telefone != null )
-//		{
-//			if(telefone.length() == 11)
-//			{
-//				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 7) + "-"  + telefone.substring(7);
-//			}
-//			else{
-//				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 6) + "-"  + telefone.substring(6);
-//			}
-//		}
 		return telefone;
 	}
 
@@ -227,18 +218,9 @@ public class FuncionarioDO {
 		
 	}
 
-	public void criarComissaoProfessor(MensalidadeDO mensalidade) throws Exception {
-		if(!this.getTipoFuncionario().ehProfessor())
-			throw new Exception("Funcionario não é professor!");
-		
-		ComissaoProfessorDO comissao = this.getRepositorio().getComissao(mensalidade, this);
-		this.getRepositorio().cadastrar(comissao);
-		
+	public List<ComissaoProfessorDO> getComissoesPendentes(MesReferenciaDO mes) {
+		return this.getRepositorio().getComissoesPendentes(this,mes );
 	}
-
-	
-	
-		
 
 	
 }

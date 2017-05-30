@@ -13,7 +13,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import br.com.julios.ccc.infra.Contexto;
-import br.com.julios.ccc.negocio.turma.workshop.WorkShopRepositorio;
+import br.com.julios.ccc.repositorios.WorkShopRepositorio;
 
 @Entity
 @Table(name="workshop")

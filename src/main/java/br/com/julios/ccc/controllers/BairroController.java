@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import br.com.julios.ccc.infra.bd.daos.BairroDAO;
 import br.com.julios.ccc.infra.dto.bairro.CadastroBairroDTO;
 import br.com.julios.ccc.infra.dto.bairro.ConsultaBairroDTO;
-import br.com.julios.ccc.negocio.bairro.BairroRepositorio;
+import br.com.julios.ccc.repositorios.BairroRepositorio;
 
 @Controller
 @ResponseBody

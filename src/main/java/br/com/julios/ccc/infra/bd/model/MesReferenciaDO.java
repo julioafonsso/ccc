@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
-import br.com.julios.ccc.negocio.mes.MesRerefenciaRepositorio;
+import br.com.julios.ccc.repositorios.MesRerefenciaRepositorio;
 
 @Entity
 @Table(name = "mes_referencia")
@@ -54,31 +54,34 @@ public class MesReferenciaDO {
 	}
 	
 	public String getNomeMes(){
+		String retorno = "";
 		if(mes == 1)
-			return "Janeiro";
+			retorno =  "Janeiro";
 		if(mes == 2)
-			return "Fevereiro";
+			retorno =  "Fevereiro";
 		if(mes == 3)
-			return "Março";
+			retorno =  "Março";
 		if(mes == 4)
-			return "Abril";
+			retorno =  "Abril";
 		if(mes == 5)
-			return "Maio";
+			retorno =  "Maio";
 		if(mes == 6)
-			return "Junho";
+			retorno =  "Junho";
 		if(mes == 7)
-			return "Julho";
+			retorno =  "Julho";
 		if(mes == 8)
-			return "Agosto";
+			retorno =  "Agosto";
 		if(mes == 9)
-			return "Setembro";
+			retorno =  "Setembro";
 		if(mes == 10)
-			return "Outubro";
+			retorno =  "Outubro";
 		if(mes == 11)
-			return "Novembro";
+			retorno =  "Novembro";
 		if(mes == 12)
-			return "Dezembro";
-		return "";
+			retorno =  "Dezembro";
+		
+		retorno += " de " + this.getAno();
+		return retorno;
 	}
 	
 	public Date getPrimeiroDia() throws ParseException {

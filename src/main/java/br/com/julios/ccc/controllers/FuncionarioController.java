@@ -16,7 +16,7 @@ import br.com.julios.ccc.infra.bd.daos.FuncionarioDAO;
 import br.com.julios.ccc.infra.bd.daos.TurmaColetivaDAO;
 import br.com.julios.ccc.infra.dto.funcionario.CadastroFuncionarioDTO;
 import br.com.julios.ccc.infra.dto.funcionario.ConsultaFuncionarioDTO;
-import br.com.julios.ccc.negocio.funcionario.FuncionarioRepositorio;
+import br.com.julios.ccc.repositorios.FuncionarioRepositorio;
 
 @Controller
 @ResponseBody

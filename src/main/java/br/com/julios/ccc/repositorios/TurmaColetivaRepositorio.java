@@ -1,4 +1,4 @@
-package br.com.julios.ccc.negocio.turma.coletiva;
+package br.com.julios.ccc.repositorios;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.infra.Contexto;
-import br.com.julios.ccc.negocio.turma.individual.AulaIndividualRepositorio;
+import br.com.julios.ccc.repositorios.AulaIndividualRepositorio;
 
 @Entity
 @Table(name = "aula_particular")

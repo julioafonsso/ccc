@@ -14,7 +14,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import br.com.julios.ccc.infra.Contexto;
-import br.com.julios.ccc.negocio.turma.coletiva.TurmaColetivaRepositorio;
+import br.com.julios.ccc.repositorios.TurmaColetivaRepositorio;
 
 @Entity
 @Table(name = "turma_coletiva")

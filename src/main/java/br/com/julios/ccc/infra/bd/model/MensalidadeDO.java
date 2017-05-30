@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
-import br.com.julios.ccc.negocio.mensalidade.MensalidadeRepositorio;
+import br.com.julios.ccc.repositorios.MensalidadeRepositorio;
 
 @Entity
 @Table(name = "mensalidade")
@@ -180,11 +180,7 @@ public class MensalidadeDO {
 		return this.getMatricula().getPercentualProfessor(professor);
 	}
 
-	// public void criarMensalidadeAulaIndividual(FluxoCaixaDO pagamento) {
-	// this.setValorMensalidade(pagamento.getValor());
-	// this.setDataVencimento(pagamento.getData());
-	// this.setPagamentoMensalidade(pagamento);
-	// this.getRepositorio().cadastrar(this);
-	// }
-
+	public Double getValorPago() {
+		return this.getPagamentoMensalidade().getValor();
+	}
 }

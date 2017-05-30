@@ -1,4 +1,4 @@
-package br.com.julios.ccc.negocio.turma.workshop;
+package br.com.julios.ccc.repositorios;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

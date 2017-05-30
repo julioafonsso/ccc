@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import br.com.julios.ccc.infra.bd.daos.TurmaColetivaDAO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.CadastroTurmaColetivaDTO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaDTO;
-import br.com.julios.ccc.negocio.turma.coletiva.TurmaColetivaRepositorio;
+import br.com.julios.ccc.repositorios.TurmaColetivaRepositorio;
 
 @Controller
 @ResponseBody

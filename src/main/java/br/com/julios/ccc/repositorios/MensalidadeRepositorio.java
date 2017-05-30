@@ -1,4 +1,4 @@
-package br.com.julios.ccc.negocio.mensalidade;
+package br.com.julios.ccc.repositorios;
 
 import java.text.ParseException;
 
@@ -9,7 +9,6 @@ import br.com.julios.ccc.infra.bd.daos.MensalidadeDAO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
-import br.com.julios.ccc.negocio.mes.MesRerefenciaRepositorio;
 
 @Service
 public class MensalidadeRepositorio {

@@ -1,4 +1,6 @@
-package br.com.julios.ccc.negocio.funcionario;
+package br.com.julios.ccc.repositorios;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +15,9 @@ import br.com.julios.ccc.infra.bd.daos.ValeTransporteDAO;
 import br.com.julios.ccc.infra.bd.model.ComissaoProfessorDO;
 import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
+import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
 import br.com.julios.ccc.infra.bd.model.TipoFuncionarioDO;
 import br.com.julios.ccc.infra.dto.funcionario.CadastroFuncionarioDTO;
-import br.com.julios.ccc.negocio.mes.MesRerefenciaRepositorio;
 
 @Service
 public class FuncionarioRepositorio {
@@ -98,12 +100,16 @@ public class FuncionarioRepositorio {
 		ComissaoProfessorDO comissao = new ComissaoProfessorDO();
 		comissao.setFuncionario(funcionarioDO);
 		comissao.setMensalidade(mensalidade);
-		comissao.setMesReferencia(mensalidade.getMesReferencia());
+		comissao.setMesReferencia(this.mesRepositorio.getMesAtual());
 		return comissao;
 	}
 
 	public void cadastrar(ComissaoProfessorDO comissao) {
 		this.comissaoDAO.save(comissao);
+	}
+
+	public List<ComissaoProfessorDO> getComissoesPendentes(FuncionarioDO funcionarioDO, MesReferenciaDO mes) {
+		return this.comissaoDAO.getComissoesPendentes(funcionarioDO, mes);
 	}
 
 //
@@ -147,3 +153,5 @@ public class FuncionarioRepositorio {
 
 	
 }
+
+

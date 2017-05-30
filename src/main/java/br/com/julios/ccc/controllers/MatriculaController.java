@@ -11,14 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.julios.ccc.infra.bd.model.ComissaoProfessorDO;
 import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
 import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.dto.matricula.CadastroMatriculaDTO;
-import br.com.julios.ccc.negocio.fluxos.FluxoCaixaRepositorio;
-import br.com.julios.ccc.negocio.matricula.MatriculaRepositorio;
-import br.com.julios.ccc.negocio.mensalidade.MensalidadeRepositorio;
+import br.com.julios.ccc.negocio.ComissaoRepositorio;
+import br.com.julios.ccc.repositorios.FluxoCaixaRepositorio;
+import br.com.julios.ccc.repositorios.MatriculaRepositorio;
+import br.com.julios.ccc.repositorios.MensalidadeRepositorio;
+import br.com.julios.ccc.repositorios.MesRerefenciaRepositorio;
 
 @Controller
 @ResponseBody
@@ -37,6 +40,12 @@ public class MatriculaController {
 	
 	@Autowired
 	FluxoCaixaRepositorio pagamentoRepositorio;
+	
+	@Autowired
+	ComissaoRepositorio comissaoRepositorio;
+	
+	@Autowired
+	MesRerefenciaRepositorio mesRepositorio;
 	
 	
 	@RequestMapping(method = RequestMethod.POST)
@@ -66,7 +75,8 @@ public class MatriculaController {
 			List<FuncionarioDO> professores = matricula.getProfessores();;
 
 			for (FuncionarioDO func : professores) {
-				func.criarComissaoProfessor(mensalidade);
+				ComissaoProfessorDO comissao = comissaoRepositorio.getComissao(mensalidade, this.mesRepositorio.getMesAtual(), func);
+				comissao.cadastrar();
 			}
 
 		}

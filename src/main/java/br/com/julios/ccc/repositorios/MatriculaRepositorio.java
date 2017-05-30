@@ -1,4 +1,4 @@
-package br.com.julios.ccc.negocio.matricula;
+package br.com.julios.ccc.repositorios;
 
 import java.util.Date;
 
@@ -71,6 +71,7 @@ public class MatriculaRepositorio {
 		MatriculaDO matricula = new MatriculaDO();
 		matricula.setAluno(aluno);
 		matricula.setTurma(turma);
+		matricula.setDataMatricula(new Date());
 		
 		return matricula;
 	}

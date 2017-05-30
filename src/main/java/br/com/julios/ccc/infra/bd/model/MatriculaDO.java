@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
-import br.com.julios.ccc.negocio.matricula.MatriculaRepositorio;
+import br.com.julios.ccc.repositorios.MatriculaRepositorio;
 
 @Entity
 @Table(name = "matricula")

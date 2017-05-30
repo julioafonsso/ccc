@@ -2,6 +2,24 @@ package br.com.julios.ccc.infra.dto.funcionario.pagamentos;
 
 public class ConsultaComissaoDTO extends ConsultaPagamentoFuncionarioDTO {
 
+	
+	public ConsultaComissaoDTO(Long id, Long idFuncionario, String nomeFuncionario, Long mes, Long ano, Double valor,
+			Long idAluno, String nomeAluno, Double percentual, Double valorPago, String codigo, String nomeModalidade,
+			Double valorMensalidade) {
+		this.setId(id);
+		this.setIdFuncionario(idFuncionario);
+		this.setNomeAluno(nomeFuncionario);
+		this.setMesReferencia(mes + "/" + ano);
+		this.setValor(valor);
+		this.setIdAluno(idAluno);
+		this.setPercentual(percentual);
+		this.setValorPago(valorPago);
+		this.setCodigo(codigo);
+		this.setNomeModalidade(nomeModalidade);
+		this.setValorMensalidade(valorMensalidade);
+
+	}
+
 	private Long idAluno;
 	private String nomeAluno;
 	private Double percentual;
@@ -9,7 +27,7 @@ public class ConsultaComissaoDTO extends ConsultaPagamentoFuncionarioDTO {
 	private String nomeModalidade;
 	private String codigo;
 	private Double valorMensalidade;
-	 
+
 	public Double getValorMensalidade() {
 		return valorMensalidade;
 	}
@@ -32,33 +50,6 @@ public class ConsultaComissaoDTO extends ConsultaPagamentoFuncionarioDTO {
 
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
-	}
-
-	public ConsultaComissaoDTO(Long id, 
-							   Long idFuncionario, 
-							   String nomeFuncionario, 
-							   Long mes, 
-							   Long ano, 
-							   Double valor,
-							   Long idAluno, 
-							   String nomeAluno, 
-							   Double percentual, 
-							   Double valorPago,  
-							   String codigo, 
-							   String nomeModalidade, 
-							   Double valorMensalidade) {
-		this.setId(id);
-		this.setIdFuncionario(idFuncionario);
-		this.setNomeAluno(nomeFuncionario);
-		this.setMesReferencia(mes + "/" + ano);
-		this.setValor(valor);
-		this.setIdAluno(idAluno);
-		this.setPercentual(percentual);
-		this.setValorPago(valorPago);
-		this.setCodigo(codigo);
-		this.setNomeModalidade(nomeModalidade);
-		this.setValorMensalidade(valorMensalidade);
-
 	}
 
 	public Long getIdAluno() {

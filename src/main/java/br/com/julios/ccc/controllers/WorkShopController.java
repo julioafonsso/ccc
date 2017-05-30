@@ -14,7 +14,7 @@ import br.com.julios.ccc.infra.bd.daos.WorkShopDAO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaDTO;
 import br.com.julios.ccc.infra.dto.turma.workshop.CadastroWorkShopDTO;
 import br.com.julios.ccc.infra.dto.turma.workshop.ConsultaWorkShopDTO;
-import br.com.julios.ccc.negocio.turma.workshop.WorkShopRepositorio;
+import br.com.julios.ccc.repositorios.WorkShopRepositorio;
 
 @Controller
 @ResponseBody

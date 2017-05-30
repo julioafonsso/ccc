@@ -1,4 +1,4 @@
-package br.com.julios.ccc.negocio.turma.individual;
+package br.com.julios.ccc.repositorios;
 
 import java.util.Date;
 
@@ -26,13 +26,12 @@ public class AulaIndividualRepositorio extends TurmaRepositorio {
 
 	public AulaParticularDO getAula(CadastroAulaIndividualDTO aula) {
 		AulaParticularDO aulaDO = new AulaParticularDO();
-		aulaDO.setDataContratacao(new Date());
 		aulaDO.setModalidade(modalidadeDAO.findOne(aula.getIdModalidade()));
 		aulaDO.setProfessor1(profDAO.findOne(aula.getIdProfessor1()));
 		aulaDO.setPercentualProfessor1(aula.getPercentualProfessor1());
 		aulaDO.setQtdAulasContratadas(aula.getQtdAulas());
 		aulaDO.setQtdAulasRestantes(aula.getQtdAulas());
-
+		aulaDO.setMensalidade(aula.getValorPago());
 		return aulaDO;
 	}
 

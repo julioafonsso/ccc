@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
-import br.com.julios.ccc.negocio.bairro.BairroRepositorio;
+import br.com.julios.ccc.repositorios.BairroRepositorio;
 
 @Entity
 @Table(name = "bairro")
