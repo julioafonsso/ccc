@@ -122,8 +122,7 @@ public class MatriculaDO {
 	}
 
 	public String getNomeAluno() {
-		this.getAluno().getNome();
-		return null;
+		return this.getAluno().getNome();
 	}
 
 	public Double getValorMensalidade() {

@@ -52,7 +52,7 @@ public class ComissaoProfessorDO extends PagamentoFuncionariosDO{
 		
 	}
 
-	private ComissaoRepositorio getRepositorio(){
+	public ComissaoRepositorio getComissaoRepositorio(){
 		if(this.repositorio == null)
 			this.repositorio = Contexto.bean(ComissaoRepositorio.class);
 		return this.repositorio;
@@ -60,7 +60,7 @@ public class ComissaoProfessorDO extends PagamentoFuncionariosDO{
 	
 	public void cadastrar() {
 		this.calcular();
-		this.getRepositorio().cadastrar(this);
+		this.getComissaoRepositorio().cadastrar(this);
 	}
 
 	public String getNomeFuncionario() {
@@ -73,7 +73,7 @@ public class ComissaoProfessorDO extends PagamentoFuncionariosDO{
 
 	public void efetuarPagamento(FluxoCaixaDO pagamento) {
 		this.setFluxoCaixa(pagamento);
-		this.getRepositorio().cadastrar(this);
+		this.getComissaoRepositorio().cadastrar(this);
 	}
 
 	

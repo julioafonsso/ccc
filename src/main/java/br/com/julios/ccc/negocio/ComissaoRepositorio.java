@@ -8,19 +8,19 @@ import br.com.julios.ccc.infra.bd.model.ComissaoProfessorDO;
 import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
+import br.com.julios.ccc.repositorios.PagamentoFuncionarioRepositorio;
 
 @Service
-public class ComissaoRepositorio {
+public class ComissaoRepositorio  {
 
 	@Autowired
 	ComissaoProfessorDAO comissaoDAO;
 	
 	public ComissaoProfessorDO getComissao(MensalidadeDO mensalidade, MesReferenciaDO mesReferencia, FuncionarioDO funcionario){
 		ComissaoProfessorDO comissao = new ComissaoProfessorDO();
+		comissao.setFuncionario(funcionario);
 		comissao.setMensalidade(mensalidade);
 		comissao.setMesReferencia(mesReferencia);
-		comissao.setFuncionario(funcionario);
-		
 		
 		return comissao;
 	}

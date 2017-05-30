@@ -1,5 +1,7 @@
 package br.com.julios.ccc.controllers;
 
+import java.text.ParseException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +27,7 @@ public class FluxoCaixaController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarFluxoCaixa(@RequestBody CadastroFluxoCaixaDTO fluxoCaixa){
+	public void cadastrarFluxoCaixa(@RequestBody CadastroFluxoCaixaDTO fluxoCaixa) throws ParseException{
 		fluxoRepositorio.getFluxo(fluxoCaixa).cadastrar();
 	}
 	

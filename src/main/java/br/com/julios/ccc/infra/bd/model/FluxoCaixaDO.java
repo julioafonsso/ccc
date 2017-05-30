@@ -1,6 +1,8 @@
 
 package br.com.julios.ccc.infra.bd.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -62,12 +64,10 @@ public class FluxoCaixaDO {
 	
 	//Getters and Setters
 
-	public void setData(String data) throws Exception {
-		this.data = Util.parseDate(data);
-	}
-
-	public void setData(Date data) {
-		this.data = data;
+	public void setData(Date data) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		
+		this.data = sdf.parse(sdf.format(data));
 	}
 
 	public Long getId() {

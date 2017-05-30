@@ -1,5 +1,6 @@
 package br.com.julios.ccc.repositorios;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class FluxoCaixaRepositorio {
 	@Autowired
 	TipoFluxoCaixaDAO tipoFluxoDAO;
 
-	public FluxoCaixaDO getFluxoPagamentoMatricula(MatriculaDO matricula, Double valor) {
+	public FluxoCaixaDO getFluxoPagamentoMatricula(MatriculaDO matricula, Double valor) throws ParseException {
 		if(valor != null && valor.longValue() > 0)
 		{
 			FluxoCaixaDO pagamento = new FluxoCaixaDO();
@@ -38,13 +39,14 @@ public class FluxoCaixaRepositorio {
 		return null;
 	}
 
-	public FluxoCaixaDO getFluxo(CadastroFluxoCaixaDTO cadastro) {
+	public FluxoCaixaDO getFluxo(CadastroFluxoCaixaDTO cadastro) throws ParseException {
 		FluxoCaixaDO pagamento = new FluxoCaixaDO();
 		pagamento.setData(cadastro.getData());
 		pagamento.setDescricao(cadastro.getDescricao());
 		pagamento.setObservacao(cadastro.getObservacao());
 		pagamento.setValor(cadastro.getValor());
 		pagamento.setTipoFluxo(tipoFluxoDAO.findOne(cadastro.getIdTipo()));
+		pagamento.setQuantidade(cadastro.getQtd());
 		return pagamento;
 
 	}
@@ -85,7 +87,7 @@ public class FluxoCaixaRepositorio {
 		return this.getFluxo(cadastro);
 	}
 
-	public FluxoCaixaDO getPagamentoComissao(ComissaoProfessorDO comissao) {
+	public FluxoCaixaDO getPagamentoComissao(ComissaoProfessorDO comissao) throws ParseException {
 		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
 		cadastro.setIdTipo(TipoFluxoCaixaDO.PAGAMENTO_PROFESSOR);
 		cadastro.setData(new Date());
@@ -97,7 +99,7 @@ public class FluxoCaixaRepositorio {
 		return getFluxo(cadastro);
 	}
 
-	public FluxoCaixaDO getPagamentoComissao(List<ComissaoProfessorDO> comissoes, MesReferenciaDO mes, String nomeProfessor) {
+	public FluxoCaixaDO getPagamentoComissao(List<ComissaoProfessorDO> comissoes, MesReferenciaDO mes, String nomeProfessor) throws ParseException {
 
 		Double valor = new Double(0);
 		

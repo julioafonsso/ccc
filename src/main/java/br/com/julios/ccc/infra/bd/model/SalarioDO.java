@@ -9,5 +9,15 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name="id")
 public class SalarioDO extends PagamentoFuncionariosDO{
 
+	public void setFuncionario(FuncionarioDO funcionario) {
+		super.setFuncionario(funcionario);
+		super.setValor(funcionario.getSalario());
+	}
+
+	public void cadastrar() {
+		this.getRepositorio().cadastrar(this);
+		
+	}
+
 	
 }

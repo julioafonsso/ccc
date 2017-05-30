@@ -12,14 +12,32 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.repositorios.PagamentoFuncionarioRepositorio;
 
 @Entity
 @Table(name = "pagamento_funcionarios")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class PagamentoFuncionariosDO {
 
+	@Autowired
+	@Transient
+	PagamentoFuncionarioRepositorio repositorio;
 	
 	
+	
+	public PagamentoFuncionarioRepositorio getRepositorio() {
+		if(this.repositorio == null)
+		{
+			this.repositorio = Contexto.bean(PagamentoFuncionarioRepositorio.class);
+		}
+		return repositorio;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
