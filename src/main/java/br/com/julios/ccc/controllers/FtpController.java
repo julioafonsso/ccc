@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.julios.ccc.facade.FtpFacade;
+import br.com.julios.ccc.componentes.FtpApi;
 
 
 @Controller
@@ -17,11 +17,11 @@ import br.com.julios.ccc.facade.FtpFacade;
 public class FtpController {
 
 	@Autowired
-	FtpFacade fileFacade;
+	FtpApi fileApi;
 	
 	@RequestMapping(value = "foto/", method = RequestMethod.POST)
 	public String cadastrarFoto(@RequestBody MultipartFile file) throws Exception {
-		return fileFacade.salvarFoto(file.getBytes());
+		return fileApi.salvarFoto(file.getBytes());
 	}
 	
 }

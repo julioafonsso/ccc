@@ -1,7 +1,5 @@
 package br.com.julios.ccc.repositorios;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +8,6 @@ import br.com.julios.ccc.infra.bd.daos.FuncionarioDAO;
 import br.com.julios.ccc.infra.bd.daos.ModalidadeTurmaDAO;
 import br.com.julios.ccc.infra.bd.model.AulaParticularDO;
 import br.com.julios.ccc.infra.dto.turma.individual.CadastroAulaIndividualDTO;
-import br.com.julios.ccc.negocio.turma.TurmaRepositorio;
 
 @Service
 public class AulaIndividualRepositorio extends TurmaRepositorio {

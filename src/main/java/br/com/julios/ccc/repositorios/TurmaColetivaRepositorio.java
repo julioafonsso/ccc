@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.CadastroTurmaColetivaDTO;
-import br.com.julios.ccc.negocio.turma.TurmaRepositorio;
 
 @Service
 public class TurmaColetivaRepositorio extends TurmaRepositorio{

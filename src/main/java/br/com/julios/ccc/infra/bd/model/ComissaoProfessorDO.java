@@ -11,7 +11,7 @@ import javax.persistence.Transient;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.julios.ccc.infra.Contexto;
-import br.com.julios.ccc.negocio.ComissaoRepositorio;
+import br.com.julios.ccc.repositorios.ComissaoRepositorio;
 
 @Entity
 @Table(name = "pagamento_professor")

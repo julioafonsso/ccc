@@ -67,4 +67,9 @@ public class FuncionarioController {
 		
 	}
 	
+	@RequestMapping(value = "{id}/salario", method = RequestMethod.GET)
+	public ConsultaFuncionarioDTO getSalario(@PathVariable("id") Long idProfessor){
+		return funcDAO.getFuncionario(idProfessor);
+	}
+	
 }

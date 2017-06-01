@@ -1,4 +1,4 @@
-package br.com.julios.ccc.negocio;
+package br.com.julios.ccc.componentes;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -8,8 +8,6 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import br.com.julios.ccc.componentes.FtpProperties;
 
 @Service
 public class FtpApi {

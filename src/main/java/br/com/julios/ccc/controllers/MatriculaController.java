@@ -17,7 +17,7 @@ import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.dto.matricula.CadastroMatriculaDTO;
-import br.com.julios.ccc.negocio.ComissaoRepositorio;
+import br.com.julios.ccc.repositorios.ComissaoRepositorio;
 import br.com.julios.ccc.repositorios.FluxoCaixaRepositorio;
 import br.com.julios.ccc.repositorios.MatriculaRepositorio;
 import br.com.julios.ccc.repositorios.MensalidadeRepositorio;

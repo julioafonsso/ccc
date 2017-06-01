@@ -19,7 +19,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Formula;
 
 import br.com.julios.ccc.infra.Contexto;
-import br.com.julios.ccc.negocio.turma.TurmaRepositorio;
+import br.com.julios.ccc.repositorios.TurmaRepositorio;
 
 @Table(name = "turma")
 @Inheritance(strategy = InheritanceType.JOINED)

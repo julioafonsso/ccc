@@ -1,4 +1,4 @@
-package br.com.julios.ccc.negocio.turma;
+package br.com.julios.ccc.repositorios;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,6 @@ import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaDO;
 import br.com.julios.ccc.infra.bd.model.WorkShopDO;
-import br.com.julios.ccc.repositorios.FuncionarioRepositorio;
 
 @Service
 public class TurmaRepositorio {

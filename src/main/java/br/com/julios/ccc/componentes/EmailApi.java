@@ -1,4 +1,4 @@
-package br.com.julios.ccc.negocio;
+package br.com.julios.ccc.componentes;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -11,13 +11,12 @@ import org.apache.commons.mail.SimpleEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.julios.ccc.componentes.EmailProperties;
+import br.com.julios.ccc.infra.bd.model.ComissaoProfessorDO;
 import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
 import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensagemEmailDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
-import br.com.julios.ccc.infra.bd.model.ComissaoProfessorDO;
 import br.com.julios.ccc.infra.bd.model.TurmaDO;
 
 @Service

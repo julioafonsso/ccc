@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.julios.ccc.facade.LoginFacade;
 import br.com.julios.ccc.infra.bd.model.UsuarioDO;
+import br.com.julios.ccc.repositorios.UsuarioRepositorio;
 
 @Controller
 @ResponseBody
@@ -16,11 +16,11 @@ import br.com.julios.ccc.infra.bd.model.UsuarioDO;
 public class LoginController {
 
 	@Autowired
-	LoginFacade login;
+	UsuarioRepositorio usuarioRepositorio;
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public UsuarioDO login(@RequestBody UsuarioDO usuario) throws Exception{
-		return login.login(usuario);
+		return usuarioRepositorio.get(usuario.getLogin(), usuario.getSenha());
 	}
 	
 }

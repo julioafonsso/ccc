@@ -8,7 +8,6 @@ import br.com.julios.ccc.infra.bd.daos.ModalidadeTurmaDAO;
 import br.com.julios.ccc.infra.bd.daos.WorkShopDAO;
 import br.com.julios.ccc.infra.bd.model.WorkShopDO;
 import br.com.julios.ccc.infra.dto.turma.workshop.CadastroWorkShopDTO;
-import br.com.julios.ccc.negocio.turma.TurmaRepositorio;
 
 @Service
 public class WorkShopRepositorio extends TurmaRepositorio {

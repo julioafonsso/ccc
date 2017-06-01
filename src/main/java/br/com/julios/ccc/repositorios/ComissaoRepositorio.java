@@ -1,4 +1,4 @@
-package br.com.julios.ccc.negocio;
+package br.com.julios.ccc.repositorios;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,6 @@ import br.com.julios.ccc.infra.bd.model.ComissaoProfessorDO;
 import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
-import br.com.julios.ccc.repositorios.PagamentoFuncionarioRepositorio;
 
 @Service
 public class ComissaoRepositorio  {
