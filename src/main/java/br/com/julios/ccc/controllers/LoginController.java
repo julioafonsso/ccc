@@ -20,7 +20,10 @@ public class LoginController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public UsuarioDO login(@RequestBody UsuarioDO usuario) throws Exception{
-		return usuarioRepositorio.get(usuario.getLogin(), usuario.getSenha());
+		UsuarioDO retorno =  usuarioRepositorio.get(usuario.getLogin(), usuario.getSenha());
+		if(retorno == null)
+			throw new Exception("Login ou Senha invalidos");
+		return retorno;
 	}
 	
 }

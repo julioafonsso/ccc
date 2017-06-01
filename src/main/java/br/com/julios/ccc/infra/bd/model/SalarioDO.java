@@ -19,5 +19,18 @@ public class SalarioDO extends PagamentoFuncionariosDO{
 		
 	}
 
+	public Double getValorPendente() {
+		return this.getValor() - this.getFluxoCaixa().getValor();
+		
+	}
+
+	public void setValorRestante(Double valorRestante) throws Exception {
+		if(this.getId() != null )
+			throw new Exception("Não pode alterar o valor do Salario! ");
+		this.setValor(valorRestante);
+		
+	}
+
+	
 	
 }

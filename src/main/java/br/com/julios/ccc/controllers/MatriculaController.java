@@ -17,11 +17,11 @@ import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.dto.matricula.CadastroMatriculaDTO;
-import br.com.julios.ccc.repositorios.ComissaoRepositorio;
 import br.com.julios.ccc.repositorios.FluxoCaixaRepositorio;
 import br.com.julios.ccc.repositorios.MatriculaRepositorio;
 import br.com.julios.ccc.repositorios.MensalidadeRepositorio;
 import br.com.julios.ccc.repositorios.MesRerefenciaRepositorio;
+import br.com.julios.ccc.repositorios.PagamentoFuncionarioRepositorio;
 
 @Controller
 @ResponseBody
@@ -42,7 +42,7 @@ public class MatriculaController {
 	FluxoCaixaRepositorio pagamentoRepositorio;
 	
 	@Autowired
-	ComissaoRepositorio comissaoRepositorio;
+	PagamentoFuncionarioRepositorio comissaoRepositorio;
 	
 	@Autowired
 	MesRerefenciaRepositorio mesRepositorio;

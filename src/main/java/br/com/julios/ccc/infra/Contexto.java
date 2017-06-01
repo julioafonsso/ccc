@@ -24,6 +24,7 @@ public class Contexto implements ApplicationContextAware {
 		return context.getBean(clazz);
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <T> T bean(String name) {
 		if (context == null) {
 			throw new IllegalStateException(ERR_MSG);

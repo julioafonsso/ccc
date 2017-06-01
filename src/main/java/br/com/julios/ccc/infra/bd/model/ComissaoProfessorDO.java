@@ -6,22 +6,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import br.com.julios.ccc.infra.Contexto;
-import br.com.julios.ccc.repositorios.ComissaoRepositorio;
 
 @Entity
 @Table(name = "pagamento_professor")
 @PrimaryKeyJoinColumn(name="id")
 public class ComissaoProfessorDO extends PagamentoFuncionariosDO{
 
-	@Autowired
-	@Transient
-	ComissaoRepositorio repositorio;
-	
 	@ManyToOne
 	@JoinColumn(name="id_mensalidade")
 	private MensalidadeDO mensalidade;
@@ -52,15 +42,9 @@ public class ComissaoProfessorDO extends PagamentoFuncionariosDO{
 		
 	}
 
-	public ComissaoRepositorio getComissaoRepositorio(){
-		if(this.repositorio == null)
-			this.repositorio = Contexto.bean(ComissaoRepositorio.class);
-		return this.repositorio;
-	}
-	
 	public void cadastrar() {
 		this.calcular();
-		this.getComissaoRepositorio().cadastrar(this);
+		this.getRepositorio().cadastrar(this);
 	}
 
 	public String getNomeFuncionario() {
@@ -71,11 +55,7 @@ public class ComissaoProfessorDO extends PagamentoFuncionariosDO{
 		return this.getMesReferencia().getNomeMes();
 	}
 
-	public void efetuarPagamento(FluxoCaixaDO pagamento) {
-		this.setFluxoCaixa(pagamento);
-		this.getComissaoRepositorio().cadastrar(this);
-	}
-
+	
 	
 	
 	

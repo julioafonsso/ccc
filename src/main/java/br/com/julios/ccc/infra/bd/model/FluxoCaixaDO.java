@@ -17,7 +17,6 @@ import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
 import br.com.julios.ccc.repositorios.FluxoCaixaRepositorio;
-import br.com.julios.ccc.util.Util;
 
 @Entity
 @Table(name = "fluxo_caixa")

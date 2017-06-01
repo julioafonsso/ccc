@@ -103,5 +103,26 @@ public class PagamentoFuncionariosDO {
 	public void setDataExclusao(Date dataExclusao) {
 		this.dataExclusao = dataExclusao;
 	}
+	
+	public String getNomeFuncionario() {
+		return this.getFuncionario().getNome();
+	}
+
+	public String getMes() {
+		return this.getMesReferencia().getNomeMes();
+	}
+
+	
+	public void efetuarPagamento(FluxoCaixaDO pagamento) throws Exception {
+		if(this.getFluxoCaixa() != null )
+		{
+			throw new Exception("Salario já esta pago!");
+		}
+				
+		if(pagamento.getValor() > this.getValor())
+			throw new Exception ("Valor maior que o esperado !");
+		this.setFluxoCaixa(pagamento);
+		this.getRepositorio().cadastrar(this);
+	}
 
 }

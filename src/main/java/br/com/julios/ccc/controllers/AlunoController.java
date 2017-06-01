@@ -34,11 +34,11 @@ import br.com.julios.ccc.infra.dto.turma.individual.CadastroAulaIndividualDTO;
 import br.com.julios.ccc.infra.dto.turma.individual.ConsultaAulaIndividualDTO;
 import br.com.julios.ccc.repositorios.AlunoRepositorio;
 import br.com.julios.ccc.repositorios.AulaIndividualRepositorio;
-import br.com.julios.ccc.repositorios.ComissaoRepositorio;
 import br.com.julios.ccc.repositorios.FluxoCaixaRepositorio;
 import br.com.julios.ccc.repositorios.MatriculaRepositorio;
 import br.com.julios.ccc.repositorios.MensalidadeRepositorio;
 import br.com.julios.ccc.repositorios.MesRerefenciaRepositorio;
+import br.com.julios.ccc.repositorios.PagamentoFuncionarioRepositorio;
 
 @Controller
 @ResponseBody
@@ -71,7 +71,7 @@ public class AlunoController {
 	private MensalidadeDAO mensalidadeDAO;
 	
 	@Autowired
-	private ComissaoRepositorio comissaoRepositorio;
+	private PagamentoFuncionarioRepositorio comissaoRepositorio;
 	
 	@Autowired
 	private MesRerefenciaRepositorio mesRepositorio;

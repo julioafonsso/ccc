@@ -28,10 +28,10 @@ import br.com.julios.ccc.infra.dto.funcionario.ConsultaFuncionarioDTO;
 import br.com.julios.ccc.infra.dto.funcionario.pagamentos.ConsultaComissaoConsolidadaDTO;
 import br.com.julios.ccc.infra.dto.funcionario.pagamentos.ConsultaComissaoDTO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaDTO;
-import br.com.julios.ccc.repositorios.ComissaoRepositorio;
 import br.com.julios.ccc.repositorios.FluxoCaixaRepositorio;
 import br.com.julios.ccc.repositorios.FuncionarioRepositorio;
 import br.com.julios.ccc.repositorios.MesRerefenciaRepositorio;
+import br.com.julios.ccc.repositorios.PagamentoFuncionarioRepositorio;
 
 @Controller
 @ResponseBody
@@ -52,7 +52,7 @@ public class ProfessorController {
 	ComissaoProfessorDAO comissaoDAO;
 
 	@Autowired
-	ComissaoRepositorio comissaoRepositorio;
+	PagamentoFuncionarioRepositorio comissaoRepositorio;
 
 	@Autowired
 	FluxoCaixaRepositorio pagamentoRepositorio;
