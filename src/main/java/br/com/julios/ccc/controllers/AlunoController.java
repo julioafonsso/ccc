@@ -96,9 +96,8 @@ public class AlunoController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarAluno(@RequestBody CadastroAlunoDTO aluno) throws Exception {
-		alunoRepositorio.getAluno(aluno).cadastrar();
-		;
+	public ConsultaAlunoDTO cadastrarAluno(@RequestBody CadastroAlunoDTO aluno) throws Exception {
+		return alunoRepositorio.getAluno(aluno).cadastrar();
 	}
 
 	@RequestMapping(value = "{id}/debitos", method = RequestMethod.GET)

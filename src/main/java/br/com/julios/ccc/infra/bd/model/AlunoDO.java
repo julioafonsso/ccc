@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.julios.ccc.componentes.CPF;
 import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.infra.dto.aluno.ConsultaAlunoDTO;
 import br.com.julios.ccc.repositorios.AlunoRepositorio;
 
 @Entity
@@ -26,15 +27,12 @@ public class AlunoDO {
 
 	@Transient
 	AlunoRepositorio repositorio;
-	
-	
-	
+
 	private AlunoRepositorio getRepositorio() {
-		if(this.repositorio == null)
+		if (this.repositorio == null)
 			this.repositorio = Contexto.bean(AlunoRepositorio.class);
 		return repositorio;
 	}
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -55,25 +53,24 @@ public class AlunoDO {
 
 	@Column
 	private String endereco;
-	
+
 	@Column
 	private Long numero;
-	
+
 	@Column
 	private String complemento;
 
 	@ManyToOne
-	@JoinColumn(name="id_bairro")
+	@JoinColumn(name = "id_bairro")
 	private BairroDO bairro;
-	
+
 	@Column
 	private String cidade;
 
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "data_nascimento")
 	private Date dataNascimento;
 
-	
 	@ManyToOne
 	@JoinColumn(name = "id_estado_civil")
 	private EstadoCivilDO estadoCivil;
@@ -81,7 +78,6 @@ public class AlunoDO {
 	@Column
 	private String profissao;
 
-	
 	@ManyToOne
 	@JoinColumn(name = "id_conhece_escola")
 	private ConheceEscolaDO conheceEscola;
@@ -98,15 +94,14 @@ public class AlunoDO {
 	@Column
 	private String foto;
 
-
 	// Getters and Setters
 
-
 	public String getCpf() throws Exception {
-//		if(cpf != null && cpf.length() > 0){
-//			return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9);
-//		}
-//		return null;
+		// if(cpf != null && cpf.length() > 0){
+		// return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." +
+		// cpf.substring(6, 9) + "-" + cpf.substring(9);
+		// }
+		// return null;
 		return this.cpf;
 
 	}
@@ -116,23 +111,25 @@ public class AlunoDO {
 	}
 
 	public String getTelefone() {
-//		if(telefone != null )
-//		{
-//			if(telefone.length() == 11)
-//			{
-//				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 7) + "-"  + telefone.substring(7);
-//			}
-//			else{
-//				return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2, 6) + "-"  + telefone.substring(6);
-//			}
-//		}
+		// if(telefone != null )
+		// {
+		// if(telefone.length() == 11)
+		// {
+		// return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2,
+		// 7) + "-" + telefone.substring(7);
+		// }
+		// else{
+		// return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2,
+		// 6) + "-" + telefone.substring(6);
+		// }
+		// }
 		return telefone;
 	}
 
 	public void setTelefone(String telefone) {
-		if(telefone != null && telefone.length() > 0){
+		if (telefone != null && telefone.length() > 0) {
 			this.telefone = telefone.replaceAll("[^0-9]", "");
-		} else{
+		} else {
 			this.telefone = telefone;
 		}
 	}
@@ -154,7 +151,7 @@ public class AlunoDO {
 	}
 
 	public void setRg(String rg) throws Exception {
-		if(this.getRepositorio().qtdAlunoComRG(rg).longValue() > 0)
+		if (this.getRepositorio().qtdAlunoComRG(rg).longValue() > 0)
 			throw new Exception("RG já cadastrado");
 		this.rg = rg;
 	}
@@ -190,7 +187,6 @@ public class AlunoDO {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
-
 
 	public BairroDO getBairro() {
 		return bairro;
@@ -232,7 +228,6 @@ public class AlunoDO {
 		this.profissao = profissao;
 	}
 
-
 	public ConheceEscolaDO getConheceEscola() {
 		return conheceEscola;
 	}
@@ -265,13 +260,18 @@ public class AlunoDO {
 		this.foto = foto;
 	}
 
-	
-	public void cadastrar() throws Exception{
+	public ConsultaAlunoDTO cadastrar() throws Exception {
 		this.getRepositorio().cadastrar(this);
+		return getConsulta();
 	}
-	
-	
-	
-	
-	
+
+	public ConsultaAlunoDTO getConsulta() throws Exception {
+		return new ConsultaAlunoDTO(this.getId(), this.getCpf(), this.getNome(), this.getRg(), this.getEmail(),
+				this.getEndereco(), this.getNumero(), this.getComplemento(), this.getBairro().getId(),
+				this.getBairro().getNome(), this.getCidade(), this.getDataNascimento(), this.getEstadoCivil().getId(),
+				this.getEstadoCivil().getNome(), this.getProfissao(), this.getConheceEscola().getId(),
+				this.getConheceEscola().getNome(), this.getSexo(), this.getTelefone(), this.getObservacao(),
+				this.getFoto());
+	}
+
 }
