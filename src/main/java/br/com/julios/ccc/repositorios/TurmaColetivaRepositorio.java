@@ -9,15 +9,15 @@ import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.CadastroTurmaColetivaDTO;
 
 @Service
-public class TurmaColetivaRepositorio extends TurmaRepositorio{
+public class TurmaColetivaRepositorio extends TurmaRepositorio {
 
 	protected SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	
-	
-	
+
 	public TurmaColetivaDO getTurma(CadastroTurmaColetivaDTO cadastro) {
 		TurmaColetivaDO turma = new TurmaColetivaDO();
-		turma.setProfessor1(funcionarioDAO.findOne(cadastro.getIdProfessor1()));
+		if (cadastro.getIdProfessor1() != null)
+			turma.setProfessor1(funcionarioDAO.findOne(cadastro.getIdProfessor1()));
+
 		turma.setPercentualProfessor1(cadastro.getPercentualProfessor1());
 		turma.setModalidade(modalidadeDAO.findOne(cadastro.getIdModalidade()));
 
@@ -33,14 +33,15 @@ public class TurmaColetivaRepositorio extends TurmaRepositorio{
 		turma.setVagas(cadastro.getQtdVagas());
 		turma.setDataInicio(cadastro.getDataInicio());
 		turma.setDataTermino(cadastro.getDataFim());
-		turma.setProfessor2(funcionarioDAO.findOne(cadastro.getIdProfessor2()));
+		if (cadastro.getIdProfessor2() != null)
+			turma.setProfessor2(funcionarioDAO.findOne(cadastro.getIdProfessor2()));
 		turma.setPercentualProfessor2(cadastro.getPercentualProfessor2());
 		turma.setNivel(nivelDAO.findOne(cadastro.getIdNivel()));
 		turma.setSala(salaDAO.findOne(cadastro.getIdSala()));
 		turma.setMensalidade(cadastro.getValorMensalidade());
-		
+
 		return turma;
-		
+
 	}
 
 	public void cadastrar(TurmaColetivaDO tc) {
@@ -51,9 +52,5 @@ public class TurmaColetivaRepositorio extends TurmaRepositorio{
 		TurmaColetivaDO turma = turmaDAO.findOne(idTurma);
 		return turma;
 	}
-	
-	
 
-	
-	
 }
