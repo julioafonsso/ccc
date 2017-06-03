@@ -14,16 +14,17 @@ public class WorkShopRepositorio extends TurmaRepositorio {
 
 	@Autowired
 	private WorkShopDAO workDAO;
-	
+
 	@Autowired
-	private 	ModalidadeTurmaDAO modalidadeDAO;
-	
+	private ModalidadeTurmaDAO modalidadeDAO;
+
 	@Autowired
 	private FuncionarioDAO funcionarioDAO;
-	
+
 	public WorkShopDO get(CadastroWorkShopDTO cadastro) {
 		WorkShopDO work = new WorkShopDO();
-		work.setProfessor1(funcionarioDAO.findOne(cadastro.getIdProfessor1()));
+		if (cadastro.getIdProfessor1() != null)
+			work.setProfessor1(funcionarioDAO.findOne(cadastro.getIdProfessor1()));
 		work.setPercentualProfessor1(cadastro.getPercentualProfessor1());
 		work.setModalidade(modalidadeDAO.findOne(cadastro.getIdModalidade()));
 
@@ -32,13 +33,13 @@ public class WorkShopRepositorio extends TurmaRepositorio {
 		work.setVagas(cadastro.getQtdVagas());
 		work.setDataInicio(cadastro.getDataInicio());
 		work.setDataTermino(cadastro.getDataFim());
-		work.setProfessor2(funcionarioDAO.findOne(cadastro.getIdProfessor2()));
+		if (cadastro.getIdProfessor2() != null)
+			work.setProfessor2(funcionarioDAO.findOne(cadastro.getIdProfessor2()));
 		work.setPercentualProfessor2(cadastro.getPercentualProfessor2());
 		work.setMensalidade(cadastro.getValorMensalidade());
-		
-		
+
 		return work;
-		
+
 	}
 
 	public void cadastrar(WorkShopDO workshop) {

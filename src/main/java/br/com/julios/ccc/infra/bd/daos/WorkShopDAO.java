@@ -12,11 +12,11 @@ public interface WorkShopDAO extends CrudRepository<WorkShopDO, Long> {
 
 	@Query("select new br.com.julios.ccc.infra.dto.turma.workshop.ConsultaWorkShopDTO( t.id, "
 			+ "t.codigo, "
-			+ "t.professor1.id, " 
-			+ "t.professor1.nome, " 
+			+ "p1.id, " 
+			+ "p1.nome, " 
 			+ "t.percentualProfessor1, " 
-			+ "t.professor2.id, " 
-			+ "t.professor2.nome, " 
+			+ "p2.id, " 
+			+ "p2.nome, " 
 			+ "t.percentualProfessor2, "
 			+ "t.modalidade.id, "
 			+ "t.modalidade.nome, " 
@@ -27,6 +27,8 @@ public interface WorkShopDAO extends CrudRepository<WorkShopDO, Long> {
 			+ "t.dataInicio,"
 			+ "t.dataTermino  "
 			+ " ) from WorkShopDO t "
+			+ " LEFT OUTER JOIN t.professor1 AS p1 "
+			+ " LEFT OUTER JOIN t.professor2 AS p2 "
 			+ "where (t.dataTermino is null or t.dataTermino > CURRENT_DATE)")
 	public List<ConsultaWorkShopDTO> getTurmas();
 
