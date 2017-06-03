@@ -40,14 +40,14 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			 ") from AlunoDO a ")
 	public List<ConsultaAlunoDTO> getAlunos();
 	
-	@Query("select count(*) from AlunoDO f where f.cpf = ?1")
-	public Long countByCpf(String cpf);
+	@Query("select f from AlunoDO f where f.cpf = ?1")
+	public AlunoDO getPorCPF(String cpf);
 
-	@Query("select count(*) from AlunoDO f where f.rg = ?1")
-	public Long countByRg(String rg);
+	@Query("select f from AlunoDO f where f.rg = ?1")
+	public AlunoDO getPorRG(String rg);
 
-	@Query("select count(*) from AlunoDO f where f.email = ?1")
-	public Long countByEmail(String email);
+	@Query("select f from AlunoDO f where f.email = ?1")
+	public AlunoDO getPorEmail(String email);
 
 
 	@Query("select new br.com.julios.ccc.infra.dto.aluno.ConsultaAlunoDTO(" +
@@ -75,5 +75,6 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			") from AlunoDO a "
 			+ " where a.id = ?1 ")
 	public ConsultaAlunoDTO getAlunos(Long idAluno);
+
 
 }

@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.julios.ccc.componentes.CPF;
 import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.infra.dto.aluno.CadastroAlunoDTO;
 import br.com.julios.ccc.infra.dto.aluno.ConsultaAlunoDTO;
 import br.com.julios.ccc.repositorios.AlunoRepositorio;
 
@@ -151,7 +152,9 @@ public class AlunoDO {
 	}
 
 	public void setRg(String rg) throws Exception {
-		if (this.getRepositorio().qtdAlunoComRG(rg).longValue() > 0)
+		AlunoDO aluno = this.getRepositorio().getAlunoPorRG(rg);
+		
+		if(aluno != null && !aluno.getId().equals(this.getId()))
 			throw new Exception("RG já cadastrado");
 		this.rg = rg;
 	}
@@ -272,6 +275,27 @@ public class AlunoDO {
 				this.getEstadoCivil().getNome(), this.getProfissao(), this.getConheceEscola().getId(),
 				this.getConheceEscola().getNome(), this.getSexo(), this.getTelefone(), this.getObservacao(),
 				this.getFoto());
+	}
+
+	public ConsultaAlunoDTO atualizar(CadastroAlunoDTO aluno) throws Exception {
+		this.setBairro(this.getRepositorio().getBairro(aluno.getIdBairro()));
+		this.setCidade(aluno.getCidade());
+		this.setComplemento(aluno.getComplemento());
+		this.setConheceEscola(this.getRepositorio().getConheceEscola(aluno.getIdConheceEscola()));
+		this.setCpf(aluno.getCpf());
+		this.setDataNascimento(aluno.getDataNascimento());
+		this.setEmail(aluno.getEmail());
+		this.setEndereco(aluno.getEndereco());
+		this.setEstadoCivil(this.getRepositorio().getEstadoCivil(aluno.getIdEstadoCivil()));
+		this.setFoto(aluno.getFoto());
+		this.setNome(aluno.getNome());
+		this.setNumero(aluno.getNumero());
+		this.setObservacao(aluno.getObservacao());
+		this.setProfissao(aluno.getProfissao());
+		this.setRg(aluno.getRg());
+		this.setSexo(aluno.getSexo());
+		this.setTelefone(aluno.getTelefone());
+		return this.cadastrar();
 	}
 
 }

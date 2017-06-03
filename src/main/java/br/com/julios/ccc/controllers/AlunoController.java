@@ -100,6 +100,12 @@ public class AlunoController {
 		return alunoRepositorio.getAluno(aluno).cadastrar();
 	}
 
+	@RequestMapping(method = RequestMethod.PUT)
+	public ConsultaAlunoDTO atualizarAluno(@RequestBody CadastroAlunoDTO aluno) throws Exception {
+		return alunoRepositorio.getAluno(aluno.getId()).atualizar(aluno);
+	}
+
+	
 	@RequestMapping(value = "{id}/debitos", method = RequestMethod.GET)
 	public List<ConsultaMensalidadeDTO> getDebitos(@PathVariable("id") Long idAluno) throws Exception {
 		return mensalidadeDAO.getMensalidadesAluno(idAluno);
