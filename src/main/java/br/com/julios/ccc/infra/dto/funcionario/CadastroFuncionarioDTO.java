@@ -10,6 +10,14 @@ public class CadastroFuncionarioDTO {
 
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
+	private Long id;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	private String cpf;
 	private String telefone;
 	private String email;

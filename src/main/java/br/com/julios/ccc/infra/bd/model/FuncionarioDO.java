@@ -18,6 +18,7 @@ import javax.persistence.Transient;
 import br.com.julios.ccc.componentes.CPF;
 import br.com.julios.ccc.componentes.Telefone;
 import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.infra.dto.funcionario.CadastroFuncionarioDTO;
 import br.com.julios.ccc.repositorios.FuncionarioRepositorio;
 
 @Entity
@@ -220,6 +221,21 @@ public class FuncionarioDO {
 
 	public List<ComissaoProfessorDO> getComissoesPendentes(MesReferenciaDO mes) {
 		return this.getRepositorio().getComissoesPendentes(this,mes );
+	}
+
+	public void alterar(CadastroFuncionarioDTO cadastro) throws Exception {
+		this.setCpf(cadastro.getCpf());
+		this.setDataAdmissao(cadastro.getDataAdmissao());
+		this.setDataNascimento(cadastro.getDataNascimento());
+		this.setEmail(cadastro.getEmail());
+		this.setFoto(cadastro.getFoto());
+		this.setNome(cadastro.getNome());
+		this.setObservacao(cadastro.getObservacao());
+		this.setRg(cadastro.getRg());
+		this.setSalario(cadastro.getSalario());
+		this.setTelefone(cadastro.getTelefone());
+		this.setValeTransporte(cadastro.getValeTransporte());
+		this.cadastrar();
 	}
 
 	

@@ -71,6 +71,12 @@ public class ProfessorController {
 		;
 	}
 
+	@RequestMapping(method = RequestMethod.PUT)
+	public void atualizarProfessor(@RequestBody CadastroFuncionarioDTO professor) throws Exception {
+		funcRep.getFuncionario(professor.getId()).alterar(professor);
+		;
+	}
+	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ConsultaFuncionarioDTO getProfessor(@PathVariable("id") Long idProfessor) {
 		return funcDAO.getFuncionario(idProfessor);
