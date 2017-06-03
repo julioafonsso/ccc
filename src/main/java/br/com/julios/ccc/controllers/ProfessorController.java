@@ -2,6 +2,7 @@ package br.com.julios.ccc.controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.julios.ccc.componentes.EmailApi;
 import br.com.julios.ccc.infra.bd.daos.ComissaoProfessorDAO;
 import br.com.julios.ccc.infra.bd.daos.FuncionarioDAO;
 import br.com.julios.ccc.infra.bd.daos.TurmaColetivaDAO;
@@ -40,25 +42,28 @@ import br.com.julios.ccc.repositorios.PagamentoFuncionarioRepositorio;
 public class ProfessorController {
 
 	@Autowired
-	FuncionarioDAO funcDAO;
+	private FuncionarioDAO funcDAO;
 
 	@Autowired
-	TurmaColetivaDAO turmaColetivaDAO;
+	private TurmaColetivaDAO turmaColetivaDAO;
 
 	@Autowired
-	FuncionarioRepositorio funcRep;
+	private FuncionarioRepositorio funcRep;
 
 	@Autowired
-	ComissaoProfessorDAO comissaoDAO;
+	private ComissaoProfessorDAO comissaoDAO;
 
 	@Autowired
-	PagamentoFuncionarioRepositorio comissaoRepositorio;
+	private PagamentoFuncionarioRepositorio comissaoRepositorio;
 
 	@Autowired
-	FluxoCaixaRepositorio pagamentoRepositorio;
+	private FluxoCaixaRepositorio pagamentoRepositorio;
 
 	@Autowired
-	MesRerefenciaRepositorio mesRepositorio;
+	private MesRerefenciaRepositorio mesRepositorio;
+	
+	@Autowired
+	private EmailApi email;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public List<ConsultaFuncionarioDTO> getProfessores() {
@@ -102,12 +107,21 @@ public class ProfessorController {
 	@RequestMapping(value = "{id}/salario/{idSalario}", method = RequestMethod.POST)
 	public void cadastrarRecebimento(@PathVariable("id") Long idProfessor, @PathVariable("idSalario") Long idSalario)
 			throws Exception {
+		
+		FuncionarioDO professor = this.funcRep.getFuncionario(idProfessor);
+		
+		List<ComissaoProfessorDO> comissoes = new ArrayList<ComissaoProfessorDO>();
+		
 		ComissaoProfessorDO comissao = this.comissaoRepositorio.getComissao(idSalario);
 
 		FluxoCaixaDO pagamento = this.pagamentoRepositorio.getPagamentoComissao(comissao);
 		pagamento.cadastrar();
 
 		comissao.efetuarPagamento(pagamento);
+		
+		comissoes.add(comissao);
+		
+		email.enviarEmailPagametoProfessor(comissoes, pagamento, professor);
 
 	}
 
@@ -129,6 +143,8 @@ public class ProfessorController {
 		for (ComissaoProfessorDO comissaoProfessorDO : comissoes) {
 			comissaoProfessorDO.efetuarPagamento(pagamento);
 		}
+		
+		email.enviarEmailPagametoProfessor(comissoes, pagamento, professor);
 	}
 
 	@RequestMapping(value = "{id}/recibos/{dataInicio}/{dataFim}", method = RequestMethod.GET)

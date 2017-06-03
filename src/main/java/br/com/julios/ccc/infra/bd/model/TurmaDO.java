@@ -104,9 +104,10 @@ public abstract class TurmaDO {
 	}
 
 	public Double getPercentual(FuncionarioDO professor) {
-		if(this.getProfessor1().getId().equals(professor.getId()))
+		
+		if(this.getProfessor1() != null && this.getProfessor1().getId().equals(professor.getId()))
 			return this.getPercentualProfessor1();
-		return null;
+		return new Double(0);
 	}
 	
 	public void cadastrar(){
@@ -122,8 +123,6 @@ public abstract class TurmaDO {
 			this.repositorio = Contexto.bean(TurmaRepositorio.class);
 		return repositorio;
 	}
-
-	
 	
 	public abstract List<FuncionarioDO> getProfessores();
 		
@@ -139,6 +138,22 @@ public abstract class TurmaDO {
 
 	public boolean turmaEhWorkShop() {
 		return false;
+	}
+
+	public String getNomeNivel() {
+		return "";	
+	}
+
+	public String getHorarioTurma() {
+		return "";
+	}
+	
+	public String getDias(){
+		return "";
+	}
+
+	public String getNomeModalidade() {
+		return this.getModalidade().getNome();
 	}
 		
 	

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.julios.ccc.componentes.EmailApi;
 import br.com.julios.ccc.infra.bd.model.ComissaoProfessorDO;
 import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
 import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
@@ -47,6 +48,9 @@ public class MatriculaController {
 	@Autowired
 	MesRerefenciaRepositorio mesRepositorio;
 	
+	@Autowired
+	EmailApi email;
+	
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public void matricular(@RequestBody CadastroMatriculaDTO cadastro) throws Exception{
@@ -78,8 +82,13 @@ public class MatriculaController {
 				ComissaoProfessorDO comissao = comissaoRepositorio.getComissao(mensalidade, this.mesRepositorio.getMesAtual(), func);
 				comissao.cadastrar();
 			}
-
+			email.enviarEmailReciboMensalidade(mensalidade);
 		}
+		else{
+			email.enviarEmailReciboMatricula(matricula, pagamento);
+		}
+		
+		
 	}
 
 }

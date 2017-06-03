@@ -83,7 +83,7 @@ public class MatriculaDO {
 		this.dataMatricula = dataMatricula;
 	}
 
-	public TurmaDO getTurma() {
+	TurmaDO getTurma() {
 		return turma;
 	}
 
@@ -91,7 +91,7 @@ public class MatriculaDO {
 		this.turma = turma;
 	}
 
-	public AlunoDO getAluno() {
+	private AlunoDO getAluno() {
 		return aluno;
 	}
 
@@ -147,5 +147,29 @@ public class MatriculaDO {
 	public boolean turmaEhWorkShop() {
 		return this.getTurma().turmaEhWorkShop();
 	}
+	
+	public String getNomeNivel(){
+		return this.getTurma().getNomeNivel();
+	}
 
+	
+	public String getHorarioTurma(){
+		return this.getTurma().getHorarioTurma();
+	}
+
+	public String getDiasTurmas() {
+		return this.getTurma().getDias();
+	}
+
+	public String getEmailAluno() {
+		return this.getAluno().getEmail();
+	}
+
+	public String getNomeModalidade() {
+		return this.getTurma().getNomeModalidade();
+	}
+
+	public String getCodigoTurma() {
+		return this.getTurma().getCodigo();
+	}
 }

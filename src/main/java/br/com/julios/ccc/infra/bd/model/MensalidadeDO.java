@@ -183,4 +183,8 @@ public class MensalidadeDO {
 	public Double getValorPago() {
 		return this.getPagamentoMensalidade().getValor();
 	}
+
+	public String getNomeMes() {
+		return this.getMesReferencia().getNomeMes();
+	}
 }

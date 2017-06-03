@@ -16,30 +16,29 @@ import br.com.julios.ccc.infra.Contexto;
 import br.com.julios.ccc.repositorios.WorkShopRepositorio;
 
 @Entity
-@Table(name="workshop")
-@PrimaryKeyJoinColumn(name="id")
-public class WorkShopDO extends TurmaDO{
-	
+@Table(name = "workshop")
+@PrimaryKeyJoinColumn(name = "id")
+public class WorkShopDO extends TurmaDO {
+
 	@ManyToOne
-	@JoinColumn(name="id_funcionario_2")
+	@JoinColumn(name = "id_funcionario_2")
 	private FuncionarioDO professor2;
-	
+
 	@Column
 	private Double percentualProfessor2;
-	
 
 	@Column(name = "data_inicio")
 	private Date dataInicio;
-	
+
 	@Column(name = "data_termino")
 	private Date dataTermino;
-	
+
 	@Column(name = "horario_inicial")
 	private String horarioInicial;
-	
+
 	@Column(name = "horario_final")
 	private String horarioFinal;
-	
+
 	@Column
 	private Integer vagas;
 
@@ -91,7 +90,6 @@ public class WorkShopDO extends TurmaDO{
 		this.horarioFinal = horarioFinal;
 	}
 
-
 	public Integer getVagas() {
 		return vagas;
 	}
@@ -100,9 +98,8 @@ public class WorkShopDO extends TurmaDO{
 		this.vagas = vagas;
 	}
 
-	
 	protected WorkShopRepositorio getRepositorio() {
-		if(this.repositorio == null)
+		if (this.repositorio == null)
 			this.repositorio = Contexto.bean(WorkShopRepositorio.class);
 		return (WorkShopRepositorio) repositorio;
 	}
@@ -116,15 +113,15 @@ public class WorkShopDO extends TurmaDO{
 	protected void salvar() {
 		this.getRepositorio().cadastrar(this);
 	}
-	
+
 	@Override
 	public List<FuncionarioDO> getProfessores() {
 		List<FuncionarioDO> professores = new ArrayList<FuncionarioDO>();
-		if(this.getProfessor1() !=  null)
+		if (this.getProfessor1() != null)
 			professores.add(this.getProfessor1());
-		if(this.getProfessor2() != null)
+		if (this.getProfessor2() != null)
 			professores.add(this.getProfessor2());
-		
+
 		return professores;
 	}
 
@@ -132,13 +129,18 @@ public class WorkShopDO extends TurmaDO{
 	public Double getPercentualDeAulasMes(MesReferenciaDO mesReferenciaDO, Date primeiroDia) throws ParseException {
 		return new Double(1);
 	}
-	
+
 	public boolean turmaEhWorkShop() {
 		return true;
 	}
 
+	@Override
+	public Double getPercentual(FuncionarioDO professor) {
+		if (this.getProfessor1() != null && this.getProfessor1().getId().equals(professor.getId()))
+			return this.getPercentualProfessor1();
+		if (this.getProfessor2() != null && this.getProfessor2().getId().equals(professor.getId()))
+			return this.getPercentualProfessor2();
+		return new Double(0);
+	}
 
-	
-	
-	
 }

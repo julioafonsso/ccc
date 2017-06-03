@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.julios.ccc.componentes.EmailApi;
 import br.com.julios.ccc.infra.bd.daos.AlunoDAO;
 import br.com.julios.ccc.infra.bd.daos.MatriculaDAO;
 import br.com.julios.ccc.infra.bd.daos.MensalidadeDAO;
@@ -76,6 +77,9 @@ public class AlunoController {
 	@Autowired
 	private MesRerefenciaRepositorio mesRepositorio;
 
+	@Autowired
+	private EmailApi email;
+	
 	//
 	// @Autowired
 	// private HttpServletRequest http;
@@ -133,7 +137,7 @@ public class AlunoController {
 
 		MensalidadeDO mensalidadeNova = mensalidadeRepositorio.getMensalidade(mensalidade.getMatricula(), mensalidade.getMesReferencia().getProximoMes());
 		mensalidadeNova.cadastrar();
-
+		email.enviarEmailReciboMensalidade(mensalidade);
 	}
 
 	@RequestMapping(value = "{id}/pagamentos/{dataInicio}/{dataFim}", method = RequestMethod.GET)
@@ -168,7 +172,7 @@ public class AlunoController {
 
 		MensalidadeDO mensalidade = mensalidadeRepositorio.getMensalidade(matricula);
 
-		FluxoCaixaDO pagamento = pagamentoRepositorio.getPagamentoAulaParticular(matricula.getAluno().getNome(),
+		FluxoCaixaDO pagamento = pagamentoRepositorio.getPagamentoAulaParticular(matricula.getNomeAluno(),
 				cadastro.getQtdAulas(), cadastro.getValorPago());
 
 		pagamento.cadastrar();
@@ -179,6 +183,8 @@ public class AlunoController {
 
 		ComissaoProfessorDO comissao = this.comissaoRepositorio.getComissao(mensalidade, this.mesRepositorio.getMesAtual(), turma.getProfessor1());
 		comissao.cadastrar();
+		
+		email.enviarEmailAulaParticular(matricula, turma, pagamento);
 	}
 
 	//

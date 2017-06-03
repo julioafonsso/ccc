@@ -85,4 +85,8 @@ public class AulaParticularDO extends TurmaDO {
 	public Double getPercentualDeAulasMes(MesReferenciaDO mesReferenciaDO, Date primeiroDia) throws ParseException {
 		return new Double(1);
 	}
+
+	public String getNomeProfessor() {
+		return this.getProfessor1().getNome();
+	}
 }

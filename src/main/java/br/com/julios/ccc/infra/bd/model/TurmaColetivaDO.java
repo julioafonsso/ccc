@@ -300,6 +300,65 @@ public class TurmaColetivaDO extends TurmaDO {
 		
 	}
 
-	
+	@Override
+	public String getNomeNivel() {
+		return this.getNivel().getNome();
+	}
 
+	@Override
+	public String getHorarioTurma() {
+		return this.getHorarioInicial() + " - " + this.getHorarioFinal();
+	}
+	
+	@Override
+	public String getDias() {
+		StringBuilder sb = new StringBuilder();
+		String separador = "";
+		if (this.isDomingo()) {
+			sb.append(separador).append("Domingo");
+			separador = " - ";
+		}
+
+		if (this.isSegunda()) {
+			sb.append(separador).append("Segunda");
+			separador = " - ";
+		}
+
+		if (this.isTerca()) {
+			sb.append(separador).append("Terça");
+			separador = " - ";
+		}
+
+		if (this.isQuarta()) {
+			sb.append(separador).append("Quarta");
+			separador = " - ";
+		}
+
+		if (this.isQuinta()) {
+			sb.append(separador).append("Quinta");
+			separador = " - ";
+		}
+
+		if (this.isSexta()) {
+			sb.append(separador).append("Sexta");
+			separador = " - ";
+		}
+
+		if (this.isSabado()) {
+			sb.append(separador).append("Sabado");
+			separador = " - ";
+		}
+
+		return sb.toString();
+	}
+
+	@Override
+	public Double getPercentual(FuncionarioDO professor) {
+		if (this.getProfessor1() != null && this.getProfessor1().getId().equals(professor.getId()))
+			return this.getPercentualProfessor1();
+		if (this.getProfessor2() != null && this.getProfessor2().getId().equals(professor.getId()))
+			return this.getPercentualProfessor2();
+		return new Double(0);
+	}
+	
 }
