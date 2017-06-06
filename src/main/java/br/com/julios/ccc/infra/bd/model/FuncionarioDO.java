@@ -19,6 +19,7 @@ import br.com.julios.ccc.componentes.CPF;
 import br.com.julios.ccc.componentes.Telefone;
 import br.com.julios.ccc.infra.Contexto;
 import br.com.julios.ccc.infra.dto.funcionario.CadastroFuncionarioDTO;
+import br.com.julios.ccc.infra.dto.funcionario.ConsultaFuncionarioDTO;
 import br.com.julios.ccc.repositorios.FuncionarioRepositorio;
 
 @Entity
@@ -214,16 +215,21 @@ public class FuncionarioDO {
 		return repositorio;
 	}
 
-	public void cadastrar() throws Exception {
+	public ConsultaFuncionarioDTO cadastrar() throws Exception {
 		this.getRepositorio().cadastrar(this);
+		return obterConsultaFuncionarioDTO();
 		
+	}
+
+	private ConsultaFuncionarioDTO obterConsultaFuncionarioDTO() throws Exception {
+		return new ConsultaFuncionarioDTO(this.id, this.getNome(), this.getCpf(), this.getTelefone(), this.getEmail(), this.getRg(), this.getFoto(), this.getObservacao(), this.getDataNascimento(), this.getDataAdmissao(), this.getTipoFuncionario().getId(), this.getTipoFuncionario().getNome(), this.getSalario(), this.getValeTransporte());
 	}
 
 	public List<ComissaoProfessorDO> getComissoesPendentes(MesReferenciaDO mes) {
 		return this.getRepositorio().getComissoesPendentes(this,mes );
 	}
 
-	public void alterar(CadastroFuncionarioDTO cadastro) throws Exception {
+	public ConsultaFuncionarioDTO alterar(CadastroFuncionarioDTO cadastro) throws Exception {
 		this.setCpf(cadastro.getCpf());
 		this.setDataAdmissao(cadastro.getDataAdmissao());
 		this.setDataNascimento(cadastro.getDataNascimento());
@@ -235,7 +241,7 @@ public class FuncionarioDO {
 		this.setSalario(cadastro.getSalario());
 		this.setTelefone(cadastro.getTelefone());
 		this.setValeTransporte(cadastro.getValeTransporte());
-		this.cadastrar();
+		return this.cadastrar();
 	}
 
 	

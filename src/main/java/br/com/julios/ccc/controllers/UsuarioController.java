@@ -24,7 +24,7 @@ public class UsuarioController {
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT)
+	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
 	public void atualizarUsuario(UsuarioDO usuario)
 	{
 	}

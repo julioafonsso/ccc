@@ -39,7 +39,7 @@ public class CadastroTurmaColetivaDTO extends CadastroTurmaDTO {
 	}
 
 	public void setPercentualProfessor2(String percentualProfessor2) {
-		this.percentualProfessor2 = new Double(percentualProfessor2.replaceAll(",", ""));
+		this.percentualProfessor2 = Util.convertToDouble(percentualProfessor2);
 	}
 
 	public void setPercentualProfessor2(Double percentualProfessor2) {

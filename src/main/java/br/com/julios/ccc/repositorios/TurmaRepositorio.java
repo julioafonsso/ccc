@@ -12,6 +12,7 @@ import br.com.julios.ccc.infra.bd.daos.TurmaColetivaDAO;
 import br.com.julios.ccc.infra.bd.daos.WorkShopDAO;
 import br.com.julios.ccc.infra.bd.model.AulaParticularDO;
 import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
+import br.com.julios.ccc.infra.bd.model.ModalidadeTurmaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaDO;
 import br.com.julios.ccc.infra.bd.model.WorkShopDO;
@@ -60,4 +61,7 @@ public class TurmaRepositorio {
 		return this.aulaParticularDAO.findOne(turmaDO.getId());
 	}
 	
+	public ModalidadeTurmaDO getModalidade(Long idModalidade) {
+		return this.modalidadeDAO.findOne(idModalidade);
+	}
 }

@@ -2,6 +2,8 @@ package br.com.julios.ccc.infra.dto.matricula;
 
 import java.util.Date;
 
+import br.com.julios.ccc.util.Util;
+
 public class CadastroMatriculaDTO {
 
 	private Long idTurma ;
@@ -45,7 +47,7 @@ public class CadastroMatriculaDTO {
 		return valor;
 	}
 	public void setValor(String valor) {
-		this.valor = new Double(valor.replaceAll(",", ""));
+		this.valor = Util.convertToDouble(valor);
 	}
 	
 	public void setValor(Double valor) {

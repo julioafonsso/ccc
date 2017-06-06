@@ -9,8 +9,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.infra.Contexto;
@@ -20,7 +21,6 @@ import br.com.julios.ccc.repositorios.AulaIndividualRepositorio;
 @Table(name = "aula_particular")
 @PrimaryKeyJoinColumn(name = "id")
 @Service
-@Configurable(preConstruction = true)
 public class AulaParticularDO extends TurmaDO {
 
 	@Column
@@ -30,6 +30,7 @@ public class AulaParticularDO extends TurmaDO {
 	private Long qtdAulasRestantes;
 
 	@Column
+	@Temporal(TemporalType.DATE)
 	private Date dataUltimaAula;
 
 	public Long getQtdAulasContratadas() {

@@ -39,13 +39,13 @@ public class CadastroFluxoCaixaDTO {
 		return observacao;
 	}
 	public void setObservacao(String observacao) {
-		this.observacao = observacao;
+		this.observacao = observacao.toUpperCase();
 	}
 	public String getDescricao() {
 		return descricao;
 	}
 	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+		this.descricao = descricao.toUpperCase();
 	}
 	public Date getData() {
 		return data;

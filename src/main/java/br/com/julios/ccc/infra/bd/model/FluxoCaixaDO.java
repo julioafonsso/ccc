@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
@@ -49,6 +51,7 @@ public class FluxoCaixaDO {
 	
 	
 	@Column(name = "data_fluxo")
+	@Temporal(TemporalType.DATE)
 	private Date data;
 	
 	@ManyToOne

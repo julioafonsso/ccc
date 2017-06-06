@@ -33,24 +33,6 @@ public interface MensalidadeDAO extends JpaRepository<MensalidadeDO, Long>{
 			+ " and m.matricula.aluno.id = ?1 ")
 	public List<ConsultaMensalidadeDTO> getMensalidadesAluno(Long idAluno);
 
-	@Query("select new br.com.julios.ccc.infra.dto.menslidade.ConsultaMensalidadeDTO(" +
-			" m.id, "
-			+ " m.matricula.turma.codigo, " + 
-			" m.matricula.turma.modalidade.nome, " + 
-			" m.dataVencimento, " +
-			" m.mesReferencia.mes, " +
-			" m.mesReferencia.ano, " + 
-			" m.pagamentoMensalidade.valor, " + 
-			" m.pagamentoMensalidade.data " +
-			") from MensalidadeDO m, "
-			+ " TurmaColetivaDO tc "
-			+ " where m.dataExclusao is null "
-			+ " and m.pagamentoMensalidade is not null "
-			+ " and m.matricula.turma.id = tc.id"
-			+ " and m.matricula.aluno.id = ?1 "
-			+ " and m.pagamentoMensalidade.data between ?2 and ?3")
-	public List<ConsultaMensalidadeDTO> getMensalidadesPagasAluno(Long idAluno, Date diaInicio, Date diaFim);
-	
 	@Query("select count (*) from MensalidadeDO m where m.matricula.aluno.id = ?1"
 			+ " and m.dataExclusao is null")
 	public Long getQtdMensalidades(Long idMatricula);

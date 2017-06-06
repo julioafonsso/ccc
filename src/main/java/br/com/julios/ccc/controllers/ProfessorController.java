@@ -71,15 +71,13 @@ public class ProfessorController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarProfessor(@RequestBody CadastroFuncionarioDTO professor) throws Exception {
-		funcRep.getProfessor(professor).cadastrar();
-		;
+	public ConsultaFuncionarioDTO cadastrarProfessor(@RequestBody CadastroFuncionarioDTO professor) throws Exception {
+		return funcRep.getProfessor(professor).cadastrar();
 	}
 
-	@RequestMapping(method = RequestMethod.PUT)
-	public void atualizarProfessor(@RequestBody CadastroFuncionarioDTO professor) throws Exception {
-		funcRep.getFuncionario(professor.getId()).alterar(professor);
-		;
+	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+	public ConsultaFuncionarioDTO atualizarProfessor(@RequestBody CadastroFuncionarioDTO professor, @PathVariable("id") Long id) throws Exception {
+		return funcRep.getFuncionario(id).alterar(professor);
 	}
 	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)

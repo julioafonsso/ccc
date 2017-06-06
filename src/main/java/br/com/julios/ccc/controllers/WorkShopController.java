@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.julios.ccc.infra.bd.daos.WorkShopDAO;
-import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaDTO;
 import br.com.julios.ccc.infra.dto.turma.workshop.CadastroWorkShopDTO;
 import br.com.julios.ccc.infra.dto.turma.workshop.ConsultaWorkShopDTO;
 import br.com.julios.ccc.repositorios.WorkShopRepositorio;
@@ -38,11 +37,15 @@ public class WorkShopController {
 	}
 	
 	@RequestMapping(value = "{id}", method= RequestMethod.GET)
-	public ConsultaTurmaColetivaDTO getTurma(@PathVariable("id") Long id)
+	public ConsultaWorkShopDTO getTurma(@PathVariable("id") Long id)
 	{
-		return null;
+		return this.workDAO.get(id);
 	}
 	
+	@RequestMapping(value = "{id}", method= RequestMethod.PUT)
+	public void alterar(@RequestBody CadastroWorkShopDTO turma, @PathVariable("id") Long id) throws Exception{
+		workShopRepositorio.get(id).alterar(turma);
+	}
 	
 //	@Autowired
 //	TurmaFacade turmaFacade;

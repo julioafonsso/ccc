@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 
 import org.springframework.stereotype.Service;
 
+import br.com.julios.ccc.infra.bd.model.NivelTurmaDO;
+import br.com.julios.ccc.infra.bd.model.SalaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.CadastroTurmaColetivaDTO;
 
@@ -13,13 +15,13 @@ public class TurmaColetivaRepositorio extends TurmaRepositorio {
 
 	protected SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-	public TurmaColetivaDO getTurma(CadastroTurmaColetivaDTO cadastro) {
+	public TurmaColetivaDO getTurma(CadastroTurmaColetivaDTO cadastro) throws Exception {
 		TurmaColetivaDO turma = new TurmaColetivaDO();
 		if (cadastro.getIdProfessor1() != null)
-			turma.setProfessor1(funcionarioDAO.findOne(cadastro.getIdProfessor1()));
+			turma.setProfessor1(this.getProfessor(cadastro.getIdProfessor1()));
 
 		turma.setPercentualProfessor1(cadastro.getPercentualProfessor1());
-		turma.setModalidade(modalidadeDAO.findOne(cadastro.getIdModalidade()));
+		turma.setModalidade(this.getModalidade(cadastro.getIdModalidade()));
 
 		turma.setDomingo(cadastro.isDomingo());
 		turma.setSegunda(cadastro.isSegunda());
@@ -34,14 +36,22 @@ public class TurmaColetivaRepositorio extends TurmaRepositorio {
 		turma.setDataInicio(cadastro.getDataInicio());
 		turma.setDataTermino(cadastro.getDataFim());
 		if (cadastro.getIdProfessor2() != null)
-			turma.setProfessor2(funcionarioDAO.findOne(cadastro.getIdProfessor2()));
+			turma.setProfessor2(this.getProfessor(cadastro.getIdProfessor2()));
 		turma.setPercentualProfessor2(cadastro.getPercentualProfessor2());
-		turma.setNivel(nivelDAO.findOne(cadastro.getIdNivel()));
-		turma.setSala(salaDAO.findOne(cadastro.getIdSala()));
+		turma.setNivel(this.getNivel(cadastro.getIdNivel()));
+		turma.setSala(this.getSala(cadastro.getIdSala()));
 		turma.setMensalidade(cadastro.getValorMensalidade());
 
 		return turma;
 
+	}
+
+	public SalaDO getSala(Long idSala) {
+		return this.salaDAO.findOne(idSala);
+	}
+
+	public NivelTurmaDO getNivel(Long idNivel) {
+		return this.nivelDAO.findOne(idNivel);
 	}
 
 	public void cadastrar(TurmaColetivaDO tc) {
@@ -52,5 +62,7 @@ public class TurmaColetivaRepositorio extends TurmaRepositorio {
 		TurmaColetivaDO turma = turmaDAO.findOne(idTurma);
 		return turma;
 	}
+
+	
 
 }

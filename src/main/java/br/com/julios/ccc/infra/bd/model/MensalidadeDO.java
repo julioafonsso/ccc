@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
@@ -51,6 +53,7 @@ public class MensalidadeDO {
 	private Double valorMensalidade;
 
 	@Column
+	@Temporal(TemporalType.DATE)
 	private Date dataVencimento;
 
 	@Column

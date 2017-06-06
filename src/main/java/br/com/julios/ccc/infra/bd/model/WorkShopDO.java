@@ -11,8 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.infra.dto.turma.workshop.CadastroWorkShopDTO;
 import br.com.julios.ccc.repositorios.WorkShopRepositorio;
 
 @Entity
@@ -28,9 +31,11 @@ public class WorkShopDO extends TurmaDO {
 	private Double percentualProfessor2;
 
 	@Column(name = "data_inicio")
+	@Temporal(TemporalType.DATE)
 	private Date dataInicio;
 
 	@Column(name = "data_termino")
+	@Temporal(TemporalType.DATE)
 	private Date dataTermino;
 
 	@Column(name = "horario_inicial")
@@ -141,6 +146,30 @@ public class WorkShopDO extends TurmaDO {
 		if (this.getProfessor2() != null && this.getProfessor2().getId().equals(professor.getId()))
 			return this.getPercentualProfessor2();
 		return new Double(0);
+	}
+
+	public void alterar(CadastroWorkShopDTO cadastro) throws Exception {
+		if (cadastro.getIdProfessor1() != null)
+			this.setProfessor1(this.getRepositorio().getProfessor(cadastro.getIdProfessor1()));
+		else
+			this.setProfessor1(null);
+		
+		this.setPercentualProfessor1(cadastro.getPercentualProfessor1());
+		this.setModalidade(this.getRepositorio().getModalidade(cadastro.getIdModalidade()));
+
+		this.setHorarioInicial(cadastro.getHorarioInicial());
+		this.setHorarioFinal(cadastro.getHorarioInicial());
+		this.setVagas(cadastro.getQtdVagas());
+		this.setDataInicio(cadastro.getDataInicio());
+		this.setDataTermino(cadastro.getDataFim());
+		if (cadastro.getIdProfessor2() != null)
+			this.setProfessor2(this.getRepositorio().getProfessor(cadastro.getIdProfessor2()));
+		else
+			this.setProfessor2(null);
+		this.setPercentualProfessor2(cadastro.getPercentualProfessor2());
+		this.setMensalidade(cadastro.getValorMensalidade());
+		this.cadastrar();
+		
 	}
 
 }

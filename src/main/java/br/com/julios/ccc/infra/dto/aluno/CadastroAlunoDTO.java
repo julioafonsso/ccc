@@ -43,7 +43,7 @@ public class CadastroAlunoDTO {
 		return nome;
 	}
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = nome.toUpperCase();
 	}
 	public String getRg() {
 		return rg;
@@ -61,7 +61,7 @@ public class CadastroAlunoDTO {
 		return endereco;
 	}
 	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+		this.endereco = endereco.toUpperCase();
 	}
 	public Long getNumero() {
 		return numero;
@@ -73,7 +73,7 @@ public class CadastroAlunoDTO {
 		return complemento;
 	}
 	public void setComplemento(String complemento) {
-		this.complemento = complemento;
+		this.complemento = complemento.toUpperCase();
 	}
 	public Long getIdBairro() {
 		return idBairro;
@@ -85,7 +85,7 @@ public class CadastroAlunoDTO {
 		return cidade;
 	}
 	public void setCidade(String cidade) {
-		this.cidade = cidade;
+		this.cidade = cidade.toUpperCase();
 	}
 	public Date getDataNascimento() {
 		return dataNascimento;
@@ -106,7 +106,7 @@ public class CadastroAlunoDTO {
 		return profissao;
 	}
 	public void setProfissao(String profissao) {
-		this.profissao = profissao;
+		this.profissao = profissao.toUpperCase();
 	}
 	public Long getIdConheceEscola() {
 		return idConheceEscola;
@@ -130,7 +130,7 @@ public class CadastroAlunoDTO {
 		return observacao;
 	}
 	public void setObservacao(String observacao) {
-		this.observacao = observacao;
+		this.observacao = observacao.toUpperCase();
 	}
 	public String getFoto() {
 		return foto;

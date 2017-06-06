@@ -2,8 +2,6 @@ package br.com.julios.ccc.infra.dto.aluno;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class ConsultaAlunoDTO {
 
 	private Long id;

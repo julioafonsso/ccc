@@ -31,6 +31,11 @@ public class TurmaController {
 		turmaRepositorio.getTurma(turma).cadastrar();
 	}
 	
+	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+	public void alterarTurma(@RequestBody CadastroTurmaColetivaDTO turma, @PathVariable("id") Long id) throws Exception{
+		turmaRepositorio.getTurma(id).alterar(turma);
+	}
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public List<ConsultaTurmaColetivaDTO> getTurmas(){
 		return turmaDAO.getTurmas();

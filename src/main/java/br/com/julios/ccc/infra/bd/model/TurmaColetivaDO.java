@@ -12,8 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.infra.dto.turma.coletiva.CadastroTurmaColetivaDTO;
 import br.com.julios.ccc.repositorios.TurmaColetivaRepositorio;
 
 @Entity
@@ -30,9 +33,11 @@ public class TurmaColetivaDO extends TurmaDO {
 	}
 
 	@Column(name = "data_inicio")
+	@Temporal(TemporalType.DATE)
 	private Date dataInicio;
 
 	@Column(name = "data_termino")
+	@Temporal(TemporalType.DATE)
 	private Date dataTermino;
 
 	@Column(name = "horario_inicial")
@@ -84,7 +89,12 @@ public class TurmaColetivaDO extends TurmaDO {
 		return dataInicio;
 	}
 
-	public void setDataInicio(Date dataInicio) {
+	public void setDataInicio(Date dataInicio) throws Exception {
+		Calendar c = Calendar.getInstance();
+		c.setTime(dataInicio);
+		int diaInicio = c.get(Calendar.DAY_OF_WEEK);
+		if(!this.temAula(diaInicio))
+			throw new Exception("Data Inicio não é um dia com aula");
 		this.dataInicio = dataInicio;
 	}
 
@@ -359,6 +369,34 @@ public class TurmaColetivaDO extends TurmaDO {
 		if (this.getProfessor2() != null && this.getProfessor2().getId().equals(professor.getId()))
 			return this.getPercentualProfessor2();
 		return new Double(0);
+	}
+
+	public void alterar(CadastroTurmaColetivaDTO cadastro) throws Exception {
+		if (cadastro.getIdProfessor1() != null)
+			this.setProfessor1(this.getRepositorio().getProfessor(cadastro.getIdProfessor2()));
+
+		this.setPercentualProfessor1(cadastro.getPercentualProfessor1());
+		this.setModalidade(this.getRepositorio().getModalidade(cadastro.getIdModalidade()));
+
+		this.setDomingo(cadastro.isDomingo());
+		this.setSegunda(cadastro.isSegunda());
+		this.setTerca(cadastro.isTerca());
+		this.setQuarta(cadastro.isQuarta());
+		this.setQuinta(cadastro.isQuinta());
+		this.setSexta(cadastro.isSexta());
+		this.setSabado(cadastro.isSabado());
+		this.setHorarioInicial(cadastro.getHorarioInicial());
+		this.setHorarioFinal(cadastro.getHorarioInicial());
+		this.setVagas(cadastro.getQtdVagas());
+		this.setDataInicio(cadastro.getDataInicio());
+		this.setDataTermino(cadastro.getDataFim());
+		if (cadastro.getIdProfessor2() != null)
+			this.setProfessor2(this.getRepositorio().getProfessor(cadastro.getIdProfessor2()));
+		this.setPercentualProfessor2(cadastro.getPercentualProfessor2());
+		this.setNivel(this.getRepositorio().getNivel(cadastro.getIdNivel()));
+		this.setSala(this.getRepositorio().getSala(cadastro.getIdSala()));
+		this.setMensalidade(cadastro.getValorMensalidade());
+		this.cadastrar();
 	}
 	
 }

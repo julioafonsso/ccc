@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
@@ -40,6 +42,7 @@ public class MatriculaDO {
 	private Long diaVencimento;
 
 	@Column(name = "data_matricula")
+	@Temporal(TemporalType.DATE)
 	private Date dataMatricula;
 	
 	@Column(name = "data_exclusao")

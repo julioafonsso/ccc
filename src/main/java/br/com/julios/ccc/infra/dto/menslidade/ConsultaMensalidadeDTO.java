@@ -29,22 +29,6 @@ public class ConsultaMensalidadeDTO {
 
 	}
 
-	
-	public ConsultaMensalidadeDTO(Long id,String codigoTurma, String nomeModalidade, Date dataVencimento,
-			Long mes, Long ano, Double valorMensalidade, Date dataPagamento) {
-
-		this.setId(id);
-		this.setCodigoTurma(codigoTurma);
-		this.setNomeModalidade(nomeModalidade);
-		this.setDesconto(desconto);
-		this.setDataVencimento(dataVencimento);
-		this.setMesReferencia(mes, ano);
-		this.setValorMensalidade(valorMensalidade);
-		this.setDataPagamento(dataPagamento);
-
-	}
-
-	
 	public String getCodigoTurma() {
 		return codigoTurma;
 	}

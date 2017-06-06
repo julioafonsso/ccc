@@ -111,8 +111,7 @@ public abstract class TurmaDO {
 	}
 	
 	public void cadastrar(){
-		if(this.getCodigo() == null || this.getCodigo().length() ==0)
-			this.montaCodigo();
+		this.montaCodigo();
 		this.salvar();
 	}
 	

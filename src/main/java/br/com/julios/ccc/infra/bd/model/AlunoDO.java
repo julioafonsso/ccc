@@ -10,11 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.Email;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.julios.ccc.componentes.CPF;
 import br.com.julios.ccc.infra.Contexto;
@@ -68,8 +68,9 @@ public class AlunoDO {
 	@Column
 	private String cidade;
 
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	
 	@Column(name = "data_nascimento")
+	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 
 	@ManyToOne

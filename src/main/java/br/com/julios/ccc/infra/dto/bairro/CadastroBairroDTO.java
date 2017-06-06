@@ -6,7 +6,7 @@ public class CadastroBairroDTO {
 	private String zona;
 	
 	public String getNome() {
-		return nome;
+		return nome.toUpperCase();
 	}
 	public void setNome(String nome) {
 		this.nome = nome;

@@ -11,7 +11,7 @@ public class CadastroTipoFluxoDTO {
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = nome.toUpperCase();
 	}
 
 	public boolean isIndEntrada() {

@@ -1,6 +1,7 @@
 package br.com.julios.ccc.controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,7 @@ import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.aluno.CadastroAlunoDTO;
 import br.com.julios.ccc.infra.dto.aluno.ConsultaAlunoDTO;
+import br.com.julios.ccc.infra.dto.aluno.ConsultaHistoricoPagamentoDTO;
 import br.com.julios.ccc.infra.dto.matricula.ConsultaMatriculaDTO;
 import br.com.julios.ccc.infra.dto.menslidade.ConsultaMensalidadeDTO;
 import br.com.julios.ccc.infra.dto.turma.individual.CadastroAulaIndividualDTO;
@@ -104,7 +106,7 @@ public class AlunoController {
 		return alunoRepositorio.getAluno(aluno).cadastrar();
 	}
 
-	@RequestMapping(method = RequestMethod.PUT)
+	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
 	public ConsultaAlunoDTO atualizarAluno(@RequestBody CadastroAlunoDTO aluno) throws Exception {
 		return alunoRepositorio.getAluno(aluno.getId()).atualizar(aluno);
 	}
@@ -141,7 +143,7 @@ public class AlunoController {
 	}
 
 	@RequestMapping(value = "{id}/pagamentos/{dataInicio}/{dataFim}", method = RequestMethod.GET)
-	public List<ConsultaMensalidadeDTO> getPagamentos(@PathVariable("id") Long idAluno,
+	public List<ConsultaHistoricoPagamentoDTO> getPagamentos(@PathVariable("id") Long idAluno,
 			@PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws Exception {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
@@ -154,7 +156,13 @@ public class AlunoController {
 		c.add(Calendar.DATE, c.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
 		diaFim = c.getTime();
 
-		return mensalidadeDAO.getMensalidadesPagasAluno(idAluno, diaInicio, diaFim);
+		List<ConsultaHistoricoPagamentoDTO> retorno = new ArrayList<ConsultaHistoricoPagamentoDTO>();
+		
+		retorno.addAll(alunoDAO.getMensalidadesPagasAluno(idAluno, diaInicio, diaFim));
+		retorno.addAll(alunoDAO.getMatriculasPagas(idAluno, diaInicio, diaFim));
+		retorno.addAll(alunoDAO.getWorkShopsPago(idAluno, diaInicio, diaFim));
+		
+		return retorno;
 	}
 
 	@RequestMapping(value = "{id}/aula-particular", method = RequestMethod.POST)
