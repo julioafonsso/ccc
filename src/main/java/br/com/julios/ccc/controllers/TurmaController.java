@@ -1,5 +1,6 @@
 package br.com.julios.ccc.controllers;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.julios.ccc.infra.bd.daos.MatriculaDAO;
 import br.com.julios.ccc.infra.bd.daos.TurmaColetivaDAO;
+import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
+import br.com.julios.ccc.infra.dto.matricula.ConsultaAlunosMatriculadosDTO;
+import br.com.julios.ccc.infra.dto.matricula.ConsultaListaPresencaDTO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.CadastroTurmaColetivaDTO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaDTO;
 import br.com.julios.ccc.repositorios.TurmaColetivaRepositorio;
@@ -25,6 +30,9 @@ public class TurmaController {
 	
 	@Autowired
 	TurmaColetivaDAO turmaDAO;
+	
+	@Autowired
+	MatriculaDAO mDAO;
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public void cadastrarTurma(@RequestBody CadastroTurmaColetivaDTO turma) throws Exception{
@@ -46,6 +54,19 @@ public class TurmaController {
 	{
 		return turmaDAO.getTurma(id);
 	}
+	
+	@RequestMapping(value = "{id}/alunos", method = RequestMethod.GET)
+	public List<ConsultaAlunosMatriculadosDTO> getAluno(@PathVariable("id") Long idTurma) {
+		return mDAO.getAlunosMatriculados(idTurma);
+	}
+	
+	@RequestMapping(value = "{id}/lista-presenca", method = RequestMethod.GET)
+	public List<ConsultaListaPresencaDTO> getListaPresenca(@PathVariable("id") Long idTurma) throws ParseException {
+		TurmaColetivaDO turma = this.turmaRepositorio.getTurma(idTurma);
+		
+		return turma.getListaPresenca();
+	}
+	
 	
 	
 //	@Autowired

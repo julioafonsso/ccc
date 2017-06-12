@@ -39,7 +39,6 @@ public class AlunoRepositorio {
 		aluno.setNumero(cadastro.getNumero());
 		aluno.setComplemento(cadastro.getComplemento());
 		aluno.setBairro(this.getBairro(cadastro.getIdBairro()));
-		aluno.setCidade(cadastro.getCidade());
 		aluno.setDataNascimento(cadastro.getDataNascimento());
 		aluno.setEstadoCivil(this.getEstadoCivil(cadastro.getIdEstadoCivil()));
 		aluno.setProfissao(cadastro.getProfissao());

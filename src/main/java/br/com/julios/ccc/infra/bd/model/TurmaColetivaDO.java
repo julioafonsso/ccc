@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.infra.dto.matricula.ConsultaListaPresencaDTO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.CadastroTurmaColetivaDTO;
 import br.com.julios.ccc.repositorios.TurmaColetivaRepositorio;
 
@@ -24,10 +25,8 @@ import br.com.julios.ccc.repositorios.TurmaColetivaRepositorio;
 @PrimaryKeyJoinColumn(name = "id")
 public class TurmaColetivaDO extends TurmaDO {
 
-	
-	
 	protected TurmaColetivaRepositorio getRepositorio() {
-		if(this.repositorio == null)
+		if (this.repositorio == null)
 			this.repositorio = Contexto.bean(TurmaColetivaRepositorio.class);
 		return (TurmaColetivaRepositorio) repositorio;
 	}
@@ -93,7 +92,7 @@ public class TurmaColetivaDO extends TurmaDO {
 		Calendar c = Calendar.getInstance();
 		c.setTime(dataInicio);
 		int diaInicio = c.get(Calendar.DAY_OF_WEEK);
-		if(!this.temAula(diaInicio))
+		if (!this.temAula(diaInicio))
 			throw new Exception("Data Inicio não é um dia com aula");
 		this.dataInicio = dataInicio;
 	}
@@ -102,7 +101,14 @@ public class TurmaColetivaDO extends TurmaDO {
 		return dataTermino;
 	}
 
-	public void setDataTermino(Date dataTermino) {
+	public void setDataTermino(Date dataTermino) throws Exception {
+
+		Calendar c = Calendar.getInstance();
+		c.setTime(dataTermino);
+		int dia = c.get(Calendar.DAY_OF_WEEK);
+		if (!this.temAula(dia))
+			throw new Exception("Data Termino não é um dia com aula");
+
 		this.dataTermino = dataTermino;
 	}
 
@@ -220,31 +226,16 @@ public class TurmaColetivaDO extends TurmaDO {
 
 	public Double getPercentualDeAulasMes(MesReferenciaDO mes, Date dataInicial) throws ParseException {
 
-		double aulasTotais = 0;
 		double aulasMatriculado = 0;
 
-		Calendar c = Calendar.getInstance();
+		List<Date> aulasNoMes = getDiasAulaMes(mes);
 
-		c.setTime(mes.getPrimeiroDia());
+		for (Date date : aulasNoMes) {
+			if (!date.before(dataInicial) && (this.getDataTermino() == null || !date.after(this.getDataTermino())))
+				aulasMatriculado++;
 
-		int idMes = c.get(Calendar.MONTH);
-		int idMesAtual = idMes;
-
-		while (idMes == idMesAtual) {
-			int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-			if (this.temAula(dayOfWeek)) {
-				aulasTotais++;
-				if (!c.getTime().before(dataInicial)
-						&& (this.getDataTermino() == null || !c.getTime().after(this.getDataTermino())))
-					aulasMatriculado++;
-
-			}
-			c.add(Calendar.DATE, 1);
-
-			idMesAtual = c.get(Calendar.MONTH);
 		}
-
-		return aulasMatriculado / aulasTotais;
+		return aulasMatriculado / aulasNoMes.size();
 
 	}
 
@@ -269,17 +260,15 @@ public class TurmaColetivaDO extends TurmaDO {
 
 	public List<FuncionarioDO> getProfessores() {
 		List<FuncionarioDO> professores = new ArrayList<FuncionarioDO>();
-		if(this.getProfessor1() != null)
+		if (this.getProfessor1() != null)
 			professores.add(this.getProfessor1());
-		
-		if(this.getProfessor2() != null )
+
+		if (this.getProfessor2() != null)
 			professores.add(this.getProfessor2());
-		
+
 		return professores;
 	}
 
-	
-	
 	protected void montaCodigo() {
 		StringBuffer retorno = new StringBuffer();
 
@@ -307,7 +296,7 @@ public class TurmaColetivaDO extends TurmaDO {
 	@Override
 	protected void salvar() {
 		this.getRepositorio().cadastrar(this);
-		
+
 	}
 
 	@Override
@@ -319,7 +308,7 @@ public class TurmaColetivaDO extends TurmaDO {
 	public String getHorarioTurma() {
 		return this.getHorarioInicial() + " - " + this.getHorarioFinal();
 	}
-	
+
 	@Override
 	public String getDias() {
 		StringBuilder sb = new StringBuilder();
@@ -398,5 +387,47 @@ public class TurmaColetivaDO extends TurmaDO {
 		this.setMensalidade(cadastro.getValorMensalidade());
 		this.cadastrar();
 	}
-	
+
+	public List<Date> getDiasAulaMes(MesReferenciaDO mesRef) throws ParseException {
+		List<Date> retorno = new ArrayList<Date>();
+		Calendar c = Calendar.getInstance();
+
+		c.setTime(mesRef.getPrimeiroDia());
+
+		int idMes = c.get(Calendar.MONTH);
+		int idMesAtual = idMes;
+		while (idMes == idMesAtual) {
+			int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+			if (this.temAula(dayOfWeek)) {
+				retorno.add(c.getTime());
+			}
+			c.add(Calendar.DATE, 1);
+
+			idMesAtual = c.get(Calendar.MONTH);
+		}
+
+		return retorno;
+
+	}
+
+	public List<ConsultaListaPresencaDTO> getListaPresenca() throws ParseException {
+		List<ConsultaListaPresencaDTO> retorno = new ArrayList<ConsultaListaPresencaDTO>();
+		
+		List<Date> datas = getDiasAulaMes(this.getRepositorio().getMesAtual());
+		
+		List<MatriculaDO> matriculas = this.getRepositorio().getMatriculas(this);
+		
+		for (MatriculaDO matriculaDO : matriculas) {
+			ConsultaListaPresencaDTO item = new ConsultaListaPresencaDTO();
+			item.setCodigo(this.getCodigo());
+			item.setNome(matriculaDO.getNomeAluno());
+			item.setDataNascimento(matriculaDO.getDataNascimentoAluno());
+			item.setDatasAulas(datas);
+			item.setUltimoPagamento(matriculaDO.getDataUltimoPagamento());
+			
+			retorno.add(item);
+		}
+		return retorno;
+	}
+
 }

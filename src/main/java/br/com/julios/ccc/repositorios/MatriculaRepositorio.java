@@ -13,6 +13,7 @@ import br.com.julios.ccc.infra.bd.daos.TurmaDAO;
 import br.com.julios.ccc.infra.bd.model.AlunoDO;
 import br.com.julios.ccc.infra.bd.model.AulaParticularDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
+import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaDO;
 import br.com.julios.ccc.infra.dto.matricula.CadastroMatriculaDTO;
@@ -36,6 +37,8 @@ public class MatriculaRepositorio {
 	@Autowired
 	private TurmaColetivaDAO turmaColetivaDAO;
 	
+	@Autowired
+	private MensalidadeRepositorio mensalidadeRepositorio;
 	
 	public MatriculaDO getMatricula(CadastroMatriculaDTO cadastro)
 	{
@@ -78,6 +81,16 @@ public class MatriculaRepositorio {
 
 	public TurmaColetivaDO getTurmaColetiva(TurmaDO turma) {
 		return this.turmaColetivaDAO.findOne(turma.getId());
+	}
+
+	public MatriculaDO getMatricula(AlunoDO aluno, TurmaDO turma) {
+		return this.mDAO.getMatriculas(aluno, turma);
+		
+	}
+
+	public MensalidadeDO getUltimaMensalidadePaga(MatriculaDO matriculaDO) {
+		return this.mensalidadeRepositorio.getUltimaMensalidadePaga(matriculaDO);
+		
 	}
 	
 }

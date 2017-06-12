@@ -3,6 +3,7 @@ package br.com.julios.ccc.controllers;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -161,6 +162,18 @@ public class AlunoController {
 		retorno.addAll(alunoDAO.getMensalidadesPagasAluno(idAluno, diaInicio, diaFim));
 		retorno.addAll(alunoDAO.getMatriculasPagas(idAluno, diaInicio, diaFim));
 		retorno.addAll(alunoDAO.getWorkShopsPago(idAluno, diaInicio, diaFim));
+		retorno.addAll(alunoDAO.getAulasParticularesPagas(idAluno, diaInicio, diaFim));
+		
+		retorno.sort(new Comparator<ConsultaHistoricoPagamentoDTO>() {
+
+			@Override
+			public int compare(ConsultaHistoricoPagamentoDTO o1, ConsultaHistoricoPagamentoDTO o2) {
+					if(o1.getDataPagamento().before(o2.getDataPagamento()))
+						return 1;
+					else 
+						return -1;	
+			}
+		});
 		
 		return retorno;
 	}

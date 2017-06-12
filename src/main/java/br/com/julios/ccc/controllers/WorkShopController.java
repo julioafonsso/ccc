@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.julios.ccc.infra.bd.daos.MatriculaDAO;
 import br.com.julios.ccc.infra.bd.daos.WorkShopDAO;
+import br.com.julios.ccc.infra.dto.matricula.ConsultaAlunosMatriculadosDTO;
 import br.com.julios.ccc.infra.dto.turma.workshop.CadastroWorkShopDTO;
 import br.com.julios.ccc.infra.dto.turma.workshop.ConsultaWorkShopDTO;
 import br.com.julios.ccc.repositorios.WorkShopRepositorio;
@@ -25,6 +27,9 @@ public class WorkShopController {
 	
 	@Autowired
 	WorkShopDAO workDAO;
+	
+	@Autowired
+	MatriculaDAO mDAO;
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public void cadastrarTurma(@RequestBody CadastroWorkShopDTO turma) throws Exception{
@@ -45,6 +50,12 @@ public class WorkShopController {
 	@RequestMapping(value = "{id}", method= RequestMethod.PUT)
 	public void alterar(@RequestBody CadastroWorkShopDTO turma, @PathVariable("id") Long id) throws Exception{
 		workShopRepositorio.get(id).alterar(turma);
+	}
+	
+
+	@RequestMapping(value = "{id}/alunos", method = RequestMethod.GET)
+	public List<ConsultaAlunosMatriculadosDTO> getAluno(@PathVariable("id") Long idTurma) {
+		return mDAO.getAlunosMatriculados(idTurma);
 	}
 	
 //	@Autowired

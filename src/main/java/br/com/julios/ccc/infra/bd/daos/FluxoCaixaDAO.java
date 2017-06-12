@@ -35,6 +35,6 @@ public interface FluxoCaixaDAO extends JpaRepository<FluxoCaixaDO, Long>{
 			+ " f.quantidade,"
 			+ " f.observacao,"
 			+ " f.descricao ) from FluxoCaixaDO f "
-			+ " where (trunc(f.data) between ?1 and ?2 ) and f.tipoFluxo.id = ?3  ")
+			+ " where (f.data between ?1 and ?2 ) and f.tipoFluxo.id = ?3  ")
 	public List<ExtratoDetalhadoDTO> getExtratoDetalhado(Date dInicio, Date dFim, Long idTipo);
 }

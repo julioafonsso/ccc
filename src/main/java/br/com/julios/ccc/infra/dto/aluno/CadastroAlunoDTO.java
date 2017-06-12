@@ -16,7 +16,7 @@ public class CadastroAlunoDTO {
 	private Long numero;
 	private String complemento;
 	private Long idBairro;
-	private String cidade;
+//	private String cidade;
 	private Date dataNascimento;
 	private Long idEstadoCivil;
 	private String profissao;
@@ -58,6 +58,8 @@ public class CadastroAlunoDTO {
 		this.email = email;
 	}
 	public String getEndereco() {
+		if(endereco == null)
+			return "";
 		return endereco;
 	}
 	public void setEndereco(String endereco) {
@@ -70,6 +72,8 @@ public class CadastroAlunoDTO {
 		this.numero = numero;
 	}
 	public String getComplemento() {
+		if(complemento == null)
+			return "";
 		return complemento;
 	}
 	public void setComplemento(String complemento) {
@@ -81,12 +85,12 @@ public class CadastroAlunoDTO {
 	public void setIdBairro(Long idBairro) {
 		this.idBairro = idBairro;
 	}
-	public String getCidade() {
-		return cidade;
-	}
-	public void setCidade(String cidade) {
-		this.cidade = cidade.toUpperCase();
-	}
+//	public String getCidade() {
+//		return cidade;
+//	}
+//	public void setCidade(String cidade) {
+//		this.cidade = cidade.toUpperCase();
+//	}
 	public Date getDataNascimento() {
 		return dataNascimento;
 	}
@@ -103,6 +107,8 @@ public class CadastroAlunoDTO {
 		this.idEstadoCivil = idEstadoCivil;
 	}
 	public String getProfissao() {
+		if(profissao == null)
+			return "";
 		return profissao;
 	}
 	public void setProfissao(String profissao) {
@@ -127,6 +133,8 @@ public class CadastroAlunoDTO {
 		this.telefone = telefone;
 	}
 	public String getObservacao() {
+		if(observacao == null)
+			return "";
 		return observacao;
 	}
 	public void setObservacao(String observacao) {

@@ -280,7 +280,6 @@ public class AlunoDO {
 
 	public ConsultaAlunoDTO atualizar(CadastroAlunoDTO aluno) throws Exception {
 		this.setBairro(this.getRepositorio().getBairro(aluno.getIdBairro()));
-		this.setCidade(aluno.getCidade());
 		this.setComplemento(aluno.getComplemento());
 		this.setConheceEscola(this.getRepositorio().getConheceEscola(aluno.getIdConheceEscola()));
 		this.setCpf(aluno.getCpf());

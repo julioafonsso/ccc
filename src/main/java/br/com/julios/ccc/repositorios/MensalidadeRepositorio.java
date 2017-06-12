@@ -82,5 +82,9 @@ public class MensalidadeRepositorio {
 		return this.mDAO.getQtdMensalidadeMes(matricula.getId(), mesReferencia.getId());
 	}
 
+	public MensalidadeDO getUltimaMensalidadePaga(MatriculaDO matriculaDO) {
+		return this.mDAO.getUltimaMensalidadePaga(matriculaDO);
+	}
+
 	
 }

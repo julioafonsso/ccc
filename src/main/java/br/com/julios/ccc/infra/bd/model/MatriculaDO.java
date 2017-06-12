@@ -120,7 +120,11 @@ public class MatriculaDO {
 		return repositorio;
 	}
 
-	public void cadastrar(){
+	public void cadastrar() throws Exception {
+		MatriculaDO m = this.getRepositorio().getMatricula(this.getAluno(), this.getTurma());
+		if(m != null)
+			throw new Exception("Aluno já matriculado!");
+		
 		this.getRepositorio().cadastrar(this);
 	}
 
@@ -174,5 +178,16 @@ public class MatriculaDO {
 
 	public String getCodigoTurma() {
 		return this.getTurma().getCodigo();
+	}
+
+	public Date getDataNascimentoAluno() {
+		return this.getAluno().getDataNascimento();
+	}
+
+	public Date getDataUltimoPagamento() {
+		MensalidadeDO mensalidade = this.getRepositorio().getUltimaMensalidadePaga(this);
+		if(mensalidade != null)
+			return mensalidade.getDataPagamento();
+		return null;
 	}
 }

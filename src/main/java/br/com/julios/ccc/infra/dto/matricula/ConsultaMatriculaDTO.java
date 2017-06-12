@@ -17,9 +17,31 @@ public class ConsultaMatriculaDTO {
 	public Long idDesconto;
     public String nomeDesconto;
     public Long valorDesconto;
-	public Date dataInicio;
 	public Date dataFim;
 	public Date dataMatricula;
+	private String nomeProfessor1;
+	public String getNomeProfessor1() {
+		return nomeProfessor1;
+	}
+
+	public void setNomeProfessor1(String nomeProfessor1) {
+		this.nomeProfessor1 = nomeProfessor1;
+	}
+
+	public Double getValorMensalidade() {
+		return valorMensalidade;
+	}
+
+	public void setValorMensalidade(Double valorMensalidade) {
+		this.valorMensalidade = valorMensalidade;
+	}
+
+	private String nomeProfessor2;
+	private Integer qtdVagas;
+	private Double valorMensalidade;
+	private Integer qtdAlunos;
+	private Integer qtdAlunas;
+	private Date dataInicio;
     
     public ConsultaMatriculaDTO(Long id ,
 			Long idTurma ,
@@ -53,7 +75,16 @@ public class ConsultaMatriculaDTO {
 			Long diaVencimento,
 			Long idDesconto,
 		    String nomeDesconto,
-		    Long valorDesconto){
+		    Long valorDesconto,
+		    Date dataMatricula,
+		    Date dataInicio,
+		    Date dataFim,
+		    Integer qtdAlunos,
+		    Integer qtdAlunas,
+		    String nomeProfessor1,
+		    String nomeProfessor2,
+		    Integer qtdVagas,
+		    Double valorMensalidade){
 
 		this.setId(id) ;
 		this.setIdTurma(idTurma) ;
@@ -68,6 +99,47 @@ public class ConsultaMatriculaDTO {
 		this.setIdDesconto(idDesconto);
 		this.setNomeDesconto(nomeDesconto);
 		this.setValorDesconto(valorDesconto);
+		this.setDataMatricula(dataMatricula);
+		this.setDataInicio(dataInicio);
+		this.setDataFim(dataFim);
+		this.setQtdAlunas(qtdAlunas);
+		this.setQtdAlunos(qtdAlunos);
+		this.setNomeProfessor1(nomeProfessor1);
+		this.setNomeProfessor2(nomeProfessor2);
+		this.setQtdVagas(qtdVagas);
+		this.setValorMensalidade(valorMensalidade);
+	}
+
+	public String getNomeProfessor2() {
+		return nomeProfessor2;
+	}
+
+	public void setNomeProfessor2(String nomeProfessor2) {
+		this.nomeProfessor2 = nomeProfessor2;
+	}
+
+	public Integer getQtdVagas() {
+		return qtdVagas;
+	}
+
+	public void setQtdVagas(Integer qtdVagas) {
+		this.qtdVagas = qtdVagas;
+	}
+
+	public Integer getQtdAlunos() {
+		return qtdAlunos;
+	}
+
+	public void setQtdAlunos(Integer qtdAlunos) {
+		this.qtdAlunos = qtdAlunos;
+	}
+
+	public Integer getQtdAlunas() {
+		return qtdAlunas;
+	}
+
+	public void setQtdAlunas(Integer qtdAlunas) {
+		this.qtdAlunas = qtdAlunas;
 	}
 
 	public Long getId() {

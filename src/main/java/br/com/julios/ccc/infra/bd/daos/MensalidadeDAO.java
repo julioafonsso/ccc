@@ -1,12 +1,12 @@
 package br.com.julios.ccc.infra.bd.daos;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.dto.menslidade.ConsultaMensalidadeDTO;
 
@@ -40,5 +40,8 @@ public interface MensalidadeDAO extends JpaRepository<MensalidadeDO, Long>{
 	@Query("select count (*) from MensalidadeDO m where m.mesReferencia.id = ?2 and m.matricula.id = ?1"
 			+ " and m.dataExclusao is null")
 	public Long getQtdMensalidadeMes(Long idMatricula, Long idMes);
+
+	@Query("select max(m) from MensalidadeDO m where m.dataExclusao is null and m.matricula = ?1 and m.pagamentoMensalidade is not null")
+	public MensalidadeDO getUltimaMensalidadePaga(MatriculaDO matriculaDO);
 	
 }

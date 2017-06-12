@@ -28,16 +28,15 @@ public class FluxoCaixaRepositorio {
 	TipoFluxoCaixaDAO tipoFluxoDAO;
 
 	public FluxoCaixaDO getFluxoPagamentoMatricula(MatriculaDO matricula, Double valor) throws ParseException {
+		FluxoCaixaDO pagamento = new FluxoCaixaDO();
+		pagamento.setData(matricula.getDataMatricula());
+		pagamento.setDescricao(("Aluno : " + matricula.getNomeAluno()));
+		pagamento.setTipoFluxo(tipoFluxoDAO.findOne(TipoFluxoCaixaDO.MATRICULA));
 		if(valor != null && valor.longValue() > 0)
-		{
-			FluxoCaixaDO pagamento = new FluxoCaixaDO();
-			pagamento.setData(matricula.getDataMatricula());
-			pagamento.setDescricao(("Aluno : " + matricula.getNomeAluno()));
 			pagamento.setValor(valor);
-			pagamento.setTipoFluxo(tipoFluxoDAO.findOne(TipoFluxoCaixaDO.MATRICULA));
-			return pagamento;
-		}
-		return null;
+		else
+			pagamento.setValor(new Double(0));
+		return pagamento;
 	}
 
 	public FluxoCaixaDO getFluxo(CadastroFluxoCaixaDTO cadastro) throws ParseException {
@@ -100,19 +99,16 @@ public class FluxoCaixaRepositorio {
 		return getFluxo(cadastro);
 	}
 
-	public FluxoCaixaDO getPagamentoComissao(List<ComissaoProfessorDO> comissoes, MesReferenciaDO mes, String nomeProfessor) throws ParseException {
+	public FluxoCaixaDO getPagamentoComissao( MesReferenciaDO mes, String nomeProfessor) throws ParseException {
 
 		Double valor = new Double(0);
 		
-		for (ComissaoProfessorDO comissaoProfessorDO : comissoes) {
-			valor += comissaoProfessorDO.getValor();
-		}
 		
 		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
 		cadastro.setIdTipo(TipoFluxoCaixaDO.PAGAMENTO_PROFESSOR);
 		cadastro.setData(new Date());
 		cadastro.setQtd(new Long(1));
-		cadastro.setValor(valor);
+		cadastro.setValor(new Double(0));
 		cadastro.setDescricao("Pagamento Professor - " + nomeProfessor);
 		cadastro.setObservacao("Mes Referencia: " + mes.getNomeMes());
 		

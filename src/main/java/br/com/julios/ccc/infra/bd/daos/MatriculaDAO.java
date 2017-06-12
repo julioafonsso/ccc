@@ -7,8 +7,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import br.com.julios.ccc.infra.bd.model.AlunoDO;
 import br.com.julios.ccc.infra.bd.model.DescontosDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
+import br.com.julios.ccc.infra.bd.model.TurmaDO;
+import br.com.julios.ccc.infra.dto.matricula.ConsultaAlunosMatriculadosDTO;
 import br.com.julios.ccc.infra.dto.matricula.ConsultaMatriculaDTO;
 import br.com.julios.ccc.infra.dto.turma.individual.ConsultaAulaIndividualDTO;
 
@@ -29,10 +32,22 @@ public interface MatriculaDAO extends JpaRepository<MatriculaDO, Long>{
 			" m.diaVencimento,  "+
 			" d.id,  "+
 			" d.nome,  "+
-			" d.valor ) "+
+			" d.valor, "+
+			" m.dataMatricula," +
+			" t.dataInicio," +
+			" t.dataTermino," +
+			" t.qtdAlunos," +
+			" t.qtdAlunas," +
+			" p1.nome," +
+			" p2.nome," +
+			" t.vagas," +
+			" t.mensalidade" +
+			" ) "+
 			" from MatriculaDO m, "
 			+ "    TurmaColetivaDO t"
 			+ " LEFT OUTER JOIN m.desconto AS d "
+			+ " LEFT OUTER JOIN t.professor1 AS p1 "
+			+ " LEFT OUTER JOIN t.professor2 AS p2 "
 			+ " where m.aluno.id = ?1 "
 			+ " and m.dataExclusao is null "
 			+ " and m.turma.id = t.id "
@@ -87,5 +102,31 @@ public interface MatriculaDAO extends JpaRepository<MatriculaDO, Long>{
 
 	@Query("select count(*) from MatriculaDO m where m.dataExclusao is null and m.desconto = ?1")
 	public Long getQtdMatriculas(DescontosDO descontosDO);
+
+
+	@Query("select m from MatriculaDO m where m.aluno = ?1 and m.turma = ?2 and m.dataExclusao is null ")
+	public MatriculaDO getMatriculas(AlunoDO aluno, TurmaDO turma);
 	
+	
+	
+	
+	
+	@Query("select new br.com.julios.ccc.infra.dto.matricula.ConsultaAlunosMatriculadosDTO (" +
+			" m.aluno.nome ,"+
+			" m.aluno.cpf ,"+
+			" m.aluno.email ,"+
+			" d.nome,  "+
+			" d.valor, " +
+			" m.dataMatricula ) "+
+			" from MatriculaDO m "
+			+ " LEFT OUTER JOIN m.desconto AS d "
+			+ " where m.turma.id = ?1 "
+			+ " and m.dataExclusao is null "
+			
+			+ " ")
+	public List<ConsultaAlunosMatriculadosDTO> getAlunosMatriculados(Long idTurma);
+
+
+	@Query("select m from MatriculaDO m where m.dataExclusao is null and m.turma = ?1")
+	public List<MatriculaDO> getMatriculas(TurmaDO turma);
 }

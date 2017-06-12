@@ -136,11 +136,15 @@ public class ProfessorController {
 				new Long(sdfAno.format(sdf.parse(mes))));
 
 		List<ComissaoProfessorDO> comissoes = professor.getComissoesPendentes(mesDO);
-		FluxoCaixaDO pagamento = this.pagamentoRepositorio.getPagamentoComissao(comissoes, mesDO, professor.getNome());
-		pagamento.cadastrar();
+		FluxoCaixaDO pagamento = this.pagamentoRepositorio.getPagamentoComissao( mesDO, professor.getNome());
+		
+		 Double valor = 0.0;
 		for (ComissaoProfessorDO comissaoProfessorDO : comissoes) {
 			comissaoProfessorDO.efetuarPagamento(pagamento);
+			valor += comissaoProfessorDO.getValor();
 		}
+		pagamento.setValor(valor);
+		 pagamento.cadastrar();
 		
 		email.enviarEmailPagametoProfessor(comissoes, pagamento, professor);
 	}

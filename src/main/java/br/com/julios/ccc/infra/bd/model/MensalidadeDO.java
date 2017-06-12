@@ -126,8 +126,11 @@ public class MensalidadeDO {
 	public void cadastrar() throws ParseException {
 
 		this.calculaValor();
-		this.calcularVencimentoProximoMes();
-		this.getRepositorio().cadastrar(this);
+		if(this.valorMensalidade.longValue() > 0)
+		{
+			this.calcularVencimentoProximoMes();
+			this.getRepositorio().cadastrar(this);
+		}
 
 	}
 
@@ -189,5 +192,11 @@ public class MensalidadeDO {
 
 	public String getNomeMes() {
 		return this.getMesReferencia().getNomeMes();
+	}
+
+	public Date getDataPagamento() {
+		if(this.getPagamentoMensalidade() != null)
+			return this.getPagamentoMensalidade().getData();
+		return null;
 	}
 }

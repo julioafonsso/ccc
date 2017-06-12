@@ -52,13 +52,15 @@ public class MatriculaController {
 	EmailApi email;
 	
 	
+	
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public void matricular(@RequestBody CadastroMatriculaDTO cadastro) throws Exception{
 		MatriculaDO matricula =  matriculaRepositorio.getMatricula(cadastro);
 
 		FluxoCaixaDO pagamento = fluxoRepositorio.getFluxoPagamentoMatricula(matricula, cadastro.getValor());
 		
-		if(pagamento != null)
+		if(pagamento.getValor().longValue() > 0)
 		{
 			matricula.setPagamentroMatricula(pagamento);
 			pagamento.cadastrar();	
@@ -90,5 +92,7 @@ public class MatriculaController {
 		
 		
 	}
+	
+	
 
 }
