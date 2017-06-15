@@ -1,6 +1,7 @@
 package br.com.julios.ccc.infra.bd.model;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -226,6 +227,9 @@ public class TurmaColetivaDO extends TurmaDO {
 
 	public Double getPercentualDeAulasMes(MesReferenciaDO mes, Date dataInicial) throws ParseException {
 
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		dataInicial = sdf.parse(sdf.format(dataInicial));
+		
 		double aulasMatriculado = 0;
 
 		List<Date> aulasNoMes = getDiasAulaMes(mes);
