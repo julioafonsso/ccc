@@ -1,6 +1,10 @@
 package br.com.julios.ccc.controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +25,10 @@ import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
 import br.com.julios.ccc.infra.bd.model.SalarioDO;
 import br.com.julios.ccc.infra.bd.model.ValeTransporteDO;
+import br.com.julios.ccc.infra.dto.aluno.ConsultaHistoricoPagamentoDTO;
 import br.com.julios.ccc.infra.dto.funcionario.CadastroFuncionarioDTO;
 import br.com.julios.ccc.infra.dto.funcionario.ConsultaFuncionarioDTO;
+import br.com.julios.ccc.infra.dto.funcionario.ConsultaRecebimentosDTO;
 import br.com.julios.ccc.infra.dto.funcionario.pagamentos.CadastroPagamentoFuncionarioDTO;
 import br.com.julios.ccc.infra.dto.funcionario.pagamentos.ConsultaSalarioDTO;
 import br.com.julios.ccc.repositorios.FluxoCaixaRepositorio;
@@ -94,6 +100,22 @@ public class FuncionarioController {
 		return this.salarioDAO.getSalarios(idProfessor, mesDO);
 	}
 
+	@RequestMapping(value = "{id}/valetransporte/{mes}", method = RequestMethod.GET)
+	public ConsultaSalarioDTO getVale(@PathVariable("id") Long idProfessor, @PathVariable("mes") String mes)
+			throws Exception {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+		SimpleDateFormat sdfMes = new SimpleDateFormat("MM");
+		SimpleDateFormat sdfAno = new SimpleDateFormat("yyyy");
+
+		MesReferenciaDO mesDO = this.mesRepositorio.getMes(new Long(sdfMes.format(sdf.parse(mes))),
+				new Long(sdfAno.format(sdf.parse(mes))));
+		return this.salarioDAO.getVale(idProfessor, mesDO);
+	}
+	
+	
+
+	
 	@RequestMapping(value = "{id}/salario/{idSalario}", method = RequestMethod.POST)
 	public void pagarSalario(@PathVariable("id") Long idProfessor, @PathVariable("idSalario") Long idSalario, @RequestBody CadastroPagamentoFuncionarioDTO cadastro)
 			throws Exception {
@@ -107,4 +129,38 @@ public class FuncionarioController {
 		novoSalario.cadastrar();
 		
 	}
+	
+	@RequestMapping(value = "{id}/valetransporte/{idVale}", method = RequestMethod.POST)
+	public void pagarSalario(@PathVariable("id") Long idProfessor, @PathVariable("idVale") Long idVale)
+			throws Exception {
+
+		ValeTransporteDO vale = this.pagamentoFuncRepositorio.getValeTransporte(idVale);
+		FluxoCaixaDO pagamento = this.fluxoRepositorio.getPagamentoSalario(vale, vale.getValor());
+		
+		vale.efetuarPagamento(pagamento);
+		pagamento.cadastrar();
+		ValeTransporteDO  novoSalario = this.pagamentoFuncRepositorio.getVale(vale);
+		novoSalario.cadastrar();
+		
+	}
+	
+	@RequestMapping(value = "{id}/recebimento/{dataInicio}/{dataFim}", method = RequestMethod.GET)
+	public List<ConsultaRecebimentosDTO> getPagamentos(@PathVariable("id") Long idFunc,
+			@PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws Exception {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+
+		Date diaInicio = sdf.parse(dataInicio);
+		Date diaFim = sdf.parse(dataFim);
+
+		Calendar c = Calendar.getInstance();
+		c.setTime(diaFim);
+		c.add(Calendar.DATE, c.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
+		diaFim = c.getTime();
+
+				
+		return this.pagamentoFuncRepositorio.getRecebimentos(idFunc, diaInicio, diaFim);
+	}
+	
+	
 }

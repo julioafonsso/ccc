@@ -87,7 +87,8 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			" m.dataVencimento, " +
 			" m.pagamentoMensalidade.data, " + 
 			" m.pagamentoMensalidade.valor, " + 
-			" 'Mensalidade' " +
+			" 'Mensalidade' ," +
+			" m.pagamentoMensalidade.id " +
 			") from MensalidadeDO m, "
 			+ " TurmaColetivaDO tc "
 			+ " where m.dataExclusao is null "
@@ -107,7 +108,8 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			" m.dataVencimento, " +
 			" m.pagamentoMensalidade.data, " + 
 			" m.pagamentoMensalidade.valor, " + 
-			" 'WorkShop' " +
+			" 'WorkShop', " +
+			" m.pagamentoMensalidade.id " +
 			") from MensalidadeDO m, "
 			+ " WorkShopDO tc "
 			+ " where m.dataExclusao is null "
@@ -125,7 +127,8 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			" m.pagamentroMatricula.data, " +
 			" m.pagamentroMatricula.data, " + 
 			" m.pagamentroMatricula.valor, " + 
-			" 'Matricula' " +
+			" 'Matricula', " +
+			" m.pagamentroMatricula.id " +
 			") from MatriculaDO m, "
 			+ " TurmaColetivaDO tc "
 			+ " where m.dataExclusao is null "
@@ -142,7 +145,8 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			" m.dataVencimento, " +
 			" m.pagamentoMensalidade.data, " + 
 			" m.pagamentoMensalidade.valor, " + 
-			" 'Aula Particular' " +
+			" 'Aula Particular', " +
+			" m.pagamentoMensalidade.id " + 
 			") from MensalidadeDO m, "
 			+ " AulaParticularDO tc "
 			+ " where m.dataExclusao is null "

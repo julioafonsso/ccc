@@ -168,7 +168,7 @@ public class AlunoController {
 
 			@Override
 			public int compare(ConsultaHistoricoPagamentoDTO o1, ConsultaHistoricoPagamentoDTO o2) {
-					if(o1.getDataPagamento().before(o2.getDataPagamento()))
+					if(o1.getIdPagamento().longValue() < o2.getIdPagamento().longValue())
 						return 1;
 					else 
 						return -1;	

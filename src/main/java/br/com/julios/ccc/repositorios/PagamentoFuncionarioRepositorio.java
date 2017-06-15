@@ -1,5 +1,10 @@
 package br.com.julios.ccc.repositorios;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +19,7 @@ import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
 import br.com.julios.ccc.infra.bd.model.PagamentoFuncionariosDO;
 import br.com.julios.ccc.infra.bd.model.SalarioDO;
 import br.com.julios.ccc.infra.bd.model.ValeTransporteDO;
+import br.com.julios.ccc.infra.dto.funcionario.ConsultaRecebimentosDTO;
 
 @Service
 public class PagamentoFuncionarioRepositorio {
@@ -93,6 +99,40 @@ public class PagamentoFuncionarioRepositorio {
 		}
 			
 		return novo;
+	}
+
+	public ValeTransporteDO getValeTransporte(Long idVale) {
+		return this.valeDAO.findOne(idVale);
+	}
+
+	public ValeTransporteDO getVale(ValeTransporteDO vale) {
+		ValeTransporteDO novo = new ValeTransporteDO();
+		novo.setFuncionario(vale.getFuncionario());
+		novo.setMesReferencia(vale.getMesReferencia().getProximoMes());
+			
+		return novo;
+	}
+
+	public List<ConsultaRecebimentosDTO> getRecebimentos(Long idFunc, Date diaInicio, Date diaFim) {
+
+		List<ConsultaRecebimentosDTO> retorno = new ArrayList<ConsultaRecebimentosDTO>();
+		
+		retorno.addAll(this.salarioDAO.getRecebimentos(idFunc, diaInicio , diaFim));
+		retorno.addAll(this.valeDAO.getRecebimentos(idFunc, diaInicio , diaFim));
+		
+		retorno.sort(new Comparator<ConsultaRecebimentosDTO>() {
+
+			@Override
+			public int compare(ConsultaRecebimentosDTO o1, ConsultaRecebimentosDTO o2) {
+				if(o1.getIdPagamento().longValue() < o2.getIdPagamento().longValue())
+					return 1;
+				else 
+					return -1;
+			}
+		});
+		
+		
+		return retorno;
 	}
 	
 	

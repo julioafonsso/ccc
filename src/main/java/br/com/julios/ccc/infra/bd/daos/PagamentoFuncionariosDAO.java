@@ -8,4 +8,7 @@ import br.com.julios.ccc.infra.bd.model.PagamentoFuncionariosDO;
 @Repository
 public interface PagamentoFuncionariosDAO extends JpaRepository<PagamentoFuncionariosDO, Long>{
 
+	
+	
+
 }

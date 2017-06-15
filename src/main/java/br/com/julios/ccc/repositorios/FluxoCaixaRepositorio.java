@@ -14,6 +14,7 @@ import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
+import br.com.julios.ccc.infra.bd.model.PagamentoFuncionariosDO;
 import br.com.julios.ccc.infra.bd.model.SalarioDO;
 import br.com.julios.ccc.infra.bd.model.TipoFluxoCaixaDO;
 import br.com.julios.ccc.infra.dto.fluxo_caixa.CadastroFluxoCaixaDTO;
@@ -115,7 +116,7 @@ public class FluxoCaixaRepositorio {
 		return getFluxo(cadastro);
 	}
 
-	public FluxoCaixaDO getPagamentoSalario(SalarioDO salario, Double valor) throws ParseException {
+	public FluxoCaixaDO getPagamentoSalario(PagamentoFuncionariosDO salario, Double valor) throws ParseException {
 		
 		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
 		cadastro.setIdTipo(TipoFluxoCaixaDO.PAGAMENTO_SALARIO);

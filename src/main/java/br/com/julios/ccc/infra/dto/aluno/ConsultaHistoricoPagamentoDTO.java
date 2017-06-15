@@ -11,9 +11,18 @@ public class ConsultaHistoricoPagamentoDTO {
 	private Date dataPagamento;
 	private Double valorPago;
 	private String tipoPagamento;
+	private Long idPagamento;
+
+	public Long getIdPagamento() {
+		return idPagamento;
+	}
+
+	public void setIdPagamento(Long idPagamento) {
+		this.idPagamento = idPagamento;
+	}
 
 	public ConsultaHistoricoPagamentoDTO(String codigoTurma, String nomeModalidade, Long mesReferencia,
-			Long anoReferencia, Date dataVencimento, Date dataPagamento, Double valorPago, String tipoPagamento) {
+			Long anoReferencia, Date dataVencimento, Date dataPagamento, Double valorPago, String tipoPagamento, Long idPagamento) {
 		this.setCodigoTurma(codigoTurma);
 		this.setDataPagamento(dataPagamento);
 		this.setDataVencimento(dataVencimento);
@@ -26,15 +35,17 @@ public class ConsultaHistoricoPagamentoDTO {
 		this.setNomeModalidade(nomeModalidade);
 		this.setTipoPagamento(tipoPagamento);
 		this.setValorPago(valorPago);
+		this.setIdPagamento(idPagamento);
 	}
 
-	public ConsultaHistoricoPagamentoDTO(String codigoTurma, String nomeModalidade,  Date dataVencimento, Date dataPagamento, Double valorPago, String tipoPagamento) {
+	public ConsultaHistoricoPagamentoDTO(String codigoTurma, String nomeModalidade,  Date dataVencimento, Date dataPagamento, Double valorPago, String tipoPagamento, Long idPagamento) {
 		this.setCodigoTurma(codigoTurma);
 		this.setDataPagamento(dataPagamento);
 		this.setDataVencimento(dataVencimento);
 		this.setNomeModalidade(nomeModalidade);
 		this.setTipoPagamento(tipoPagamento);
 		this.setValorPago(valorPago);
+		this.setIdPagamento(idPagamento);
 	}
 
 	
