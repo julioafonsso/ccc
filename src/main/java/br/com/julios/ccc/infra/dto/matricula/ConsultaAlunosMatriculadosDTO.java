@@ -10,6 +10,7 @@ public class ConsultaAlunosMatriculadosDTO {
 	private String nomeDesconto;
 	private Long valorDesconto;
 	private Date dataMatricula;
+	private Date dataNascimento;
 	
 	public Date getDataMatricula() {
 		return dataMatricula;
@@ -25,15 +26,25 @@ public class ConsultaAlunosMatriculadosDTO {
 			String email,
 			String nomeDesconto,
 			Long valorDesconto,
-			Date dataMatricula) {
+			Date dataMatricula,
+			Date dataNascimento) {
 		this.setCpf(cpf);
 		this.setEmail(email);
 		this.setNome(nome);
 		this.setNomeDesconto(nomeDesconto);
 		this.setValorDesconto(valorDesconto);
 		this.setDataMatricula(dataMatricula);
+		this.setDataNascimento(dataNascimento);
 	}
 	
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
 	public String getNome() {
 		return nome;
 	}

@@ -414,24 +414,6 @@ public class TurmaColetivaDO extends TurmaDO {
 
 	}
 
-	public List<ConsultaListaPresencaDTO> getListaPresenca() throws ParseException {
-		List<ConsultaListaPresencaDTO> retorno = new ArrayList<ConsultaListaPresencaDTO>();
-		
-		List<Date> datas = getDiasAulaMes(this.getRepositorio().getMesAtual());
-		
-		List<MatriculaDO> matriculas = this.getRepositorio().getMatriculas(this);
-		
-		for (MatriculaDO matriculaDO : matriculas) {
-			ConsultaListaPresencaDTO item = new ConsultaListaPresencaDTO();
-			item.setCodigo(this.getCodigo());
-			item.setNome(matriculaDO.getNomeAluno());
-			item.setDataNascimento(matriculaDO.getDataNascimentoAluno());
-			item.setDatasAulas(datas);
-			item.setUltimoPagamento(matriculaDO.getDataUltimoPagamento());
-			
-			retorno.add(item);
-		}
-		return retorno;
-	}
+	
 
 }

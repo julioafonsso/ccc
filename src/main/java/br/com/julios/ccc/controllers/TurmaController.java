@@ -1,6 +1,7 @@
 package br.com.julios.ccc.controllers;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,11 +61,11 @@ public class TurmaController {
 		return mDAO.getAlunosMatriculados(idTurma);
 	}
 	
-	@RequestMapping(value = "{id}/lista-presenca", method = RequestMethod.GET)
-	public List<ConsultaListaPresencaDTO> getListaPresenca(@PathVariable("id") Long idTurma) throws ParseException {
+	@RequestMapping(value = "{id}/dias", method = RequestMethod.GET)
+	public List<Date> getListaPresenca(@PathVariable("id") Long idTurma) throws ParseException {
 		TurmaColetivaDO turma = this.turmaRepositorio.getTurma(idTurma);
 		
-		return turma.getListaPresenca();
+		return turma.getDiasAulaMes(this.turmaRepositorio.getMesAtual());
 	}
 	
 	

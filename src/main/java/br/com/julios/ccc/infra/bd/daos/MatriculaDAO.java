@@ -117,7 +117,8 @@ public interface MatriculaDAO extends JpaRepository<MatriculaDO, Long>{
 			" m.aluno.email ,"+
 			" d.nome,  "+
 			" d.valor, " +
-			" m.dataMatricula ) "+
+			" m.dataMatricula , "+
+			" m.aluno.dataNascimento ) "+
 			" from MatriculaDO m "
 			+ " LEFT OUTER JOIN m.desconto AS d "
 			+ " where m.turma.id = ?1 "
