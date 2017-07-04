@@ -12,7 +12,7 @@ import br.com.julios.ccc.infra.dto.bairro.ConsultaBairroDTO;
 @Repository
 public interface BairroDAO extends JpaRepository<BairroDO, Long> {
 
-	@Query("select new br.com.julios.ccc.infra.dto.bairro.ConsultaBairroDTO(b.id, b.nome, b.zona) from BairroDO b")
+	@Query("select new br.com.julios.ccc.infra.dto.bairro.ConsultaBairroDTO(b.id, b.nome, b.zona) from BairroDO b order by b.nome")
 	public List<ConsultaBairroDTO> getBairros();
 
 	@Query("select b from BairroDO b where upper(b.nome) = upper(?1) ")
