@@ -190,4 +190,9 @@ public class MatriculaDO {
 			return mensalidade.getDataPagamento();
 		return null;
 	}
+
+	public void alterarDesconto(DescontosDO desconto2) {
+		this.setDesconto(desconto2);
+		this.getRepositorio().cadastrar(this);
+	}
 }
