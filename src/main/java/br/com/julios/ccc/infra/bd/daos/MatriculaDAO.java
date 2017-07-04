@@ -51,6 +51,7 @@ public interface MatriculaDAO extends JpaRepository<MatriculaDO, Long>{
 			+ " where m.aluno.id = ?1 "
 			+ " and m.dataExclusao is null "
 			+ " and m.turma.id = t.id "
+			+ " order by m.id desc"
 			
 			+ " ")
 	public List<ConsultaMatriculaDTO> getMatriculas(Long idAluno);

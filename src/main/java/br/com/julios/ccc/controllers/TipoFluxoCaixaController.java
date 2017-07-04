@@ -46,7 +46,7 @@ public class TipoFluxoCaixaController {
 	
 	@RequestMapping(value="/saida", method = RequestMethod.GET)
 	public List<ConsultaTipoFluxoDTO> getTipoFluxoCaixaSaida(){
-		return this.tipoDAO.get(true);
+		return this.tipoDAO.get(false);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)

@@ -30,7 +30,8 @@ public interface MensalidadeDAO extends JpaRepository<MensalidadeDO, Long>{
 			+ " where m.dataExclusao is null "
 			+ " and m.matricula.turma.id = tc.id"
 			+ " and m.pagamentoMensalidade is null "
-			+ " and m.matricula.aluno.id = ?1 ")
+			+ " and m.matricula.aluno.id = ?1 "
+			+ " order by m.dataVencimento ")
 	public List<ConsultaMensalidadeDTO> getMensalidadesAluno(Long idAluno);
 
 	@Query("select count (*) from MensalidadeDO m where m.matricula.aluno.id = ?1"
