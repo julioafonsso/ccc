@@ -43,6 +43,7 @@ public class CadastroAlunoDTO {
 		return nome;
 	}
 	public void setNome(String nome) {
+		if(nome != null)
 		this.nome = nome.toUpperCase();
 	}
 	public String getRg() {
@@ -63,6 +64,7 @@ public class CadastroAlunoDTO {
 		return endereco;
 	}
 	public void setEndereco(String endereco) {
+		if(endereco != null)
 		this.endereco = endereco.toUpperCase();
 	}
 	public Long getNumero() {
@@ -77,7 +79,8 @@ public class CadastroAlunoDTO {
 		return complemento;
 	}
 	public void setComplemento(String complemento) {
-		this.complemento = complemento.toUpperCase();
+		if(complemento != null)
+			this.complemento = complemento.toUpperCase();
 	}
 	public Long getIdBairro() {
 		return idBairro;
@@ -138,6 +141,7 @@ public class CadastroAlunoDTO {
 		return observacao;
 	}
 	public void setObservacao(String observacao) {
+		if(observacao != null)
 		this.observacao = observacao.toUpperCase();
 	}
 	public String getFoto() {

@@ -11,12 +11,14 @@ import br.com.julios.ccc.infra.bd.daos.MensalidadeDAO;
 import br.com.julios.ccc.infra.bd.daos.MesReferenciaDAO;
 import br.com.julios.ccc.infra.bd.daos.SalarioDAO;
 import br.com.julios.ccc.infra.bd.daos.TipoFuncionarioDAO;
+import br.com.julios.ccc.infra.bd.daos.TurmaColetivaDAO;
 import br.com.julios.ccc.infra.bd.daos.ValeTransporteDAO;
 import br.com.julios.ccc.infra.bd.model.ComissaoProfessorDO;
 import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
 import br.com.julios.ccc.infra.bd.model.TipoFuncionarioDO;
+import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.funcionario.CadastroFuncionarioDTO;
 
 @Service
@@ -45,6 +47,9 @@ public class FuncionarioRepositorio {
 	
 	@Autowired
 	MesRerefenciaRepositorio mesRepositorio;
+	
+	@Autowired
+	TurmaColetivaDAO turmaDAO; 
 	
 	public FuncionarioDO getFuncionario(Long idFuncionario) throws Exception {
 		return funcDAO.findOne(idFuncionario);
@@ -110,6 +115,10 @@ public class FuncionarioRepositorio {
 
 	public List<ComissaoProfessorDO> getComissoesPendentes(FuncionarioDO funcionarioDO, MesReferenciaDO mes) {
 		return this.comissaoDAO.getComissoesPendentes(funcionarioDO, mes);
+	}
+
+	public List<TurmaColetivaDO> getTurmas(FuncionarioDO funcionarioDO) {
+		return this.turmaDAO.getTurmas(funcionarioDO);
 	}
 
 //

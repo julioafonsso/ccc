@@ -7,6 +7,8 @@ import java.util.Date;
 public class Util {
 
 	public static Double convertToDouble(String valor) {
+		if(valor == null)
+			return null;
 		String tmp = valor;
 		if (valor.contains(".") || valor.contains(",")) {
 			tmp = valor.replaceAll("\\.", "").replaceAll(",", "");

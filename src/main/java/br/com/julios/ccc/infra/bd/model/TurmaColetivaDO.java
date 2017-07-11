@@ -1,5 +1,6 @@
 package br.com.julios.ccc.infra.bd.model;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,7 +18,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.com.julios.ccc.infra.Contexto;
-import br.com.julios.ccc.infra.dto.matricula.ConsultaListaPresencaDTO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.CadastroTurmaColetivaDTO;
 import br.com.julios.ccc.repositorios.TurmaColetivaRepositorio;
 
@@ -103,12 +103,14 @@ public class TurmaColetivaDO extends TurmaDO {
 	}
 
 	public void setDataTermino(Date dataTermino) throws Exception {
-
-		Calendar c = Calendar.getInstance();
-		c.setTime(dataTermino);
-		int dia = c.get(Calendar.DAY_OF_WEEK);
-		if (!this.temAula(dia))
-			throw new Exception("Data Termino não é um dia com aula");
+		if(dataTermino != null)
+		{
+			Calendar c = Calendar.getInstance();
+			c.setTime(dataTermino);
+			int dia = c.get(Calendar.DAY_OF_WEEK);
+			if (!this.temAula(dia))
+				throw new Exception("Data Termino não é um dia com aula");
+		}
 
 		this.dataTermino = dataTermino;
 	}
@@ -141,7 +143,9 @@ public class TurmaColetivaDO extends TurmaDO {
 		return sala;
 	}
 
-	public void setSala(SalaDO sala) {
+	public void setSala(SalaDO sala) throws Exception {
+		if(this.existeTurmaConflitoHorario(sala.getTurmas()))
+			throw new Exception("Sala já esta sendo utilizada por outra turma!");
 		this.sala = sala;
 	}
 
@@ -157,10 +161,26 @@ public class TurmaColetivaDO extends TurmaDO {
 		return professor2;
 	}
 
-	public void setProfessor2(FuncionarioDO professor2) {
+	@Override
+	public void setProfessor1(FuncionarioDO professor1) throws Exception {
+		validaProfessor(professor1);
+		super.setProfessor1(professor1);
+	}
+	
+	public void setProfessor2(FuncionarioDO professor2) throws Exception {
+		this.validaProfessor(professor2);
 		this.professor2 = professor2;
 	}
 
+	private void validaProfessor(FuncionarioDO professor) throws Exception
+	{
+		if(professor != null)
+		{
+			if(this.existeTurmaConflitoHorario(professor.getTurmas()))
+				throw new Exception("Professor " + professor.getNome() + " tem outra turma nesse mesmo horario! ");
+		}
+	}
+	
 	public Double getPercentualProfessor2() {
 		return percentualProfessor2;
 	}
@@ -366,7 +386,7 @@ public class TurmaColetivaDO extends TurmaDO {
 
 	public void alterar(CadastroTurmaColetivaDTO cadastro) throws Exception {
 		if (cadastro.getIdProfessor1() != null)
-			this.setProfessor1(this.getRepositorio().getProfessor(cadastro.getIdProfessor2()));
+			this.setProfessor1(this.getRepositorio().getProfessor(cadastro.getIdProfessor1()));
 
 		this.setPercentualProfessor1(cadastro.getPercentualProfessor1());
 		this.setModalidade(this.getRepositorio().getModalidade(cadastro.getIdModalidade()));
@@ -412,6 +432,31 @@ public class TurmaColetivaDO extends TurmaDO {
 
 		return retorno;
 
+	}
+	
+	private boolean existeTurmaConflitoHorario(List<TurmaColetivaDO> turmas) throws Exception {
+
+		DateFormat sdf = new SimpleDateFormat("HH:mm");
+		Date horaInicial = sdf.parse(this.getHorarioInicial());
+		Date horaFinal = sdf.parse(this.getHorarioFinal());
+
+		for (TurmaColetivaDO turma2 : turmas) {
+			if ((this.isDomingo() && turma2.isDomingo()) || (this.isSegunda() && turma2.isSegunda())
+					|| (this.isTerca() && turma2.isTerca()) || (this.isQuarta() && turma2.isQuarta())
+					|| (this.isQuinta() && turma2.isQuinta()) || (this.isSexta() && turma2.isSexta())
+					|| (this.isSabado() && turma2.isSabado())) 
+			{
+				
+				Date h1 = sdf.parse(turma2.getHorarioInicial());
+				Date h2 = sdf.parse(turma2.getHorarioFinal());
+				if (horaFinal.after(h1) && horaFinal.before(h2) || horaInicial.after(h1) && horaInicial.before(h2)
+						|| (horaInicial.before(h1) && horaFinal.after(h1))) {
+					return true;
+				}
+			}
+
+		}
+		return false;
 	}
 
 	

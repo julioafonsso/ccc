@@ -21,7 +21,7 @@ public class AulaIndividualRepositorio extends TurmaRepositorio {
 	@Autowired
 	private FuncionarioDAO profDAO;
 
-	public AulaParticularDO getAula(CadastroAulaIndividualDTO aula) {
+	public AulaParticularDO getAula(CadastroAulaIndividualDTO aula) throws Exception {
 		AulaParticularDO aulaDO = new AulaParticularDO();
 		aulaDO.setModalidade(modalidadeDAO.findOne(aula.getIdModalidade()));
 		aulaDO.setProfessor1(profDAO.findOne(aula.getIdProfessor1()));

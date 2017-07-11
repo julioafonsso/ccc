@@ -17,12 +17,9 @@ public class TurmaColetivaRepositorio extends TurmaRepositorio {
 
 	public TurmaColetivaDO getTurma(CadastroTurmaColetivaDTO cadastro) throws Exception {
 		TurmaColetivaDO turma = new TurmaColetivaDO();
-		if (cadastro.getIdProfessor1() != null)
-			turma.setProfessor1(this.getProfessor(cadastro.getIdProfessor1()));
-
-		turma.setPercentualProfessor1(cadastro.getPercentualProfessor1());
-		turma.setModalidade(this.getModalidade(cadastro.getIdModalidade()));
-
+		
+		turma.setHorarioInicial(cadastro.getHorarioInicial());
+		turma.setHorarioFinal(cadastro.getHorarioFinal());
 		turma.setDomingo(cadastro.isDomingo());
 		turma.setSegunda(cadastro.isSegunda());
 		turma.setTerca(cadastro.isTerca());
@@ -30,11 +27,16 @@ public class TurmaColetivaRepositorio extends TurmaRepositorio {
 		turma.setQuinta(cadastro.isQuinta());
 		turma.setSexta(cadastro.isSexta());
 		turma.setSabado(cadastro.isSabado());
-		turma.setHorarioInicial(cadastro.getHorarioInicial());
-		turma.setHorarioFinal(cadastro.getHorarioInicial());
-		turma.setVagas(cadastro.getQtdVagas());
 		turma.setDataInicio(cadastro.getDataInicio());
 		turma.setDataTermino(cadastro.getDataFim());
+		
+		if (cadastro.getIdProfessor1() != null)
+			turma.setProfessor1(this.getProfessor(cadastro.getIdProfessor1()));
+
+		turma.setPercentualProfessor1(cadastro.getPercentualProfessor1());
+		turma.setModalidade(this.getModalidade(cadastro.getIdModalidade()));
+		turma.setVagas(cadastro.getQtdVagas());
+		
 		if (cadastro.getIdProfessor2() != null)
 			turma.setProfessor2(this.getProfessor(cadastro.getIdProfessor2()));
 		turma.setPercentualProfessor2(cadastro.getPercentualProfessor2());

@@ -199,4 +199,8 @@ public class MensalidadeDO {
 			return this.getPagamentoMensalidade().getData();
 		return null;
 	}
+
+	public String getCodigoTurma() {
+		return this.getTurma().getCodigo();
+	}
 }

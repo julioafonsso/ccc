@@ -1,9 +1,7 @@
 package br.com.julios.ccc.controllers;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +23,6 @@ import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
 import br.com.julios.ccc.infra.bd.model.SalarioDO;
 import br.com.julios.ccc.infra.bd.model.ValeTransporteDO;
-import br.com.julios.ccc.infra.dto.aluno.ConsultaHistoricoPagamentoDTO;
 import br.com.julios.ccc.infra.dto.funcionario.CadastroFuncionarioDTO;
 import br.com.julios.ccc.infra.dto.funcionario.ConsultaFuncionarioDTO;
 import br.com.julios.ccc.infra.dto.funcionario.ConsultaRecebimentosDTO;

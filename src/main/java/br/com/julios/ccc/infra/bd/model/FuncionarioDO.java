@@ -244,5 +244,12 @@ public class FuncionarioDO {
 		return this.cadastrar();
 	}
 
+	public List<TurmaColetivaDO> getTurmas() throws Exception {
+		if(this.tipoFuncionario == null || !this.tipoFuncionario.ehProfessor())
+			throw new Exception("Funcionario não é professor !");
+		
+		return this.getRepositorio().getTurmas(this);
+	}
+
 	
 }

@@ -2,7 +2,6 @@ package br.com.julios.ccc.repositorios;
 
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,6 @@ import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
 import br.com.julios.ccc.infra.bd.model.PagamentoFuncionariosDO;
-import br.com.julios.ccc.infra.bd.model.SalarioDO;
 import br.com.julios.ccc.infra.bd.model.TipoFluxoCaixaDO;
 import br.com.julios.ccc.infra.dto.fluxo_caixa.CadastroFluxoCaixaDTO;
 
@@ -102,9 +100,6 @@ public class FluxoCaixaRepositorio {
 
 	public FluxoCaixaDO getPagamentoComissao( MesReferenciaDO mes, String nomeProfessor) throws ParseException {
 
-		Double valor = new Double(0);
-		
-		
 		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
 		cadastro.setIdTipo(TipoFluxoCaixaDO.PAGAMENTO_PROFESSOR);
 		cadastro.setData(new Date());

@@ -55,6 +55,19 @@ public class ComissaoProfessorDO extends PagamentoFuncionariosDO{
 		return this.getMesReferencia().getNomeMes();
 	}
 
+	public String getCodigoTurma() {
+		return this.getMensalidade().getCodigoTurma();
+	}
+
+	public String getNomeAluno() {
+		return this.getMensalidade().getNomeAluno();
+	}
+
+	public Double getValorPagoMensalidade() {
+
+		return this.getMensalidade().getValorPago();
+	}
+
 	
 	
 	

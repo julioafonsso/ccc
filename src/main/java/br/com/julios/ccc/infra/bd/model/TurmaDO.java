@@ -82,7 +82,7 @@ public abstract class TurmaDO {
 		return professor1;
 	}
 
-	public void setProfessor1(FuncionarioDO professor1) {
+	public void setProfessor1(FuncionarioDO professor1) throws Exception {
 		this.professor1 = professor1;
 	}
 
