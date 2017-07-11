@@ -8,7 +8,7 @@ public class ConsultaComissaoDTO extends ConsultaPagamentoFuncionarioDTO {
 			Double valorMensalidade) {
 		this.setId(id);
 		this.setIdFuncionario(idFuncionario);
-		this.setNomeAluno(nomeFuncionario);
+		this.setNomeAluno(nomeAluno);
 		this.setMesReferencia(mes + "/" + ano);
 		this.setValor(valor);
 		this.setIdAluno(idAluno);
