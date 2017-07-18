@@ -54,6 +54,10 @@ public class CadastroFluxoCaixaDTO {
 	public void setData(String data) throws ParseException {
 		this.data = Util.parseDate(data);
 	}
+	public void setData(Date data)
+	{
+		this.data = data;
+	}
 	
 	
 	
