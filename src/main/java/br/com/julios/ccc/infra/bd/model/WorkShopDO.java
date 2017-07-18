@@ -171,5 +171,18 @@ public class WorkShopDO extends TurmaDO {
 		this.cadastrar();
 		
 	}
+	
+	@Override
+	protected void validarPercentualProfessor() throws Exception {
+		super.validarPercentualProfessor();
+		if(this.getProfessor2() != null && this.getPercentualProfessor2() == null){
+			throw new Exception("Favor preencher o Percentual da professora");
+		}
+		
+		if(this.getProfessor2() == null && this.getPercentualProfessor2() != null){
+			throw new Exception("Não preencher o percentual da professora");
+		}
+		
+	}
 
 }

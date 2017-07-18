@@ -47,7 +47,9 @@ public interface TurmaColetivaDAO extends JpaRepository<TurmaColetivaDO, Long> {
 			+ " LEFT OUTER JOIN t.professor1 AS p1 "
 			+ " LEFT OUTER JOIN t.professor2 AS p2 "
 			+ "where (t.professor1.id = ?1 or t.professor2.id = ?1 ) "
-			+ " and (t.dataTermino is null or t.dataTermino > CURRENT_DATE)")
+			+ " and (t.dataTermino is null or t.dataTermino > CURRENT_DATE)"
+			+ " order by t.id desc "
+			+ "")
 	public List<ConsultaTurmaColetivaDTO> getTurmasDoProfessor(Long idProfessor);
 	
 	

@@ -110,11 +110,22 @@ public abstract class TurmaDO {
 		return new Double(0);
 	}
 	
-	public void cadastrar(){
+	public void cadastrar() throws Exception{
+		this.validarPercentualProfessor();
 		this.montaCodigo();
 		this.salvar();
 	}
 	
+	
+	protected void validarPercentualProfessor() throws Exception{
+		if(this.getProfessor1() != null && this.getPercentualProfessor1() == null){
+			throw new Exception("Favor preencher o Percentual do professor");
+		}
+		
+		if(this.getProfessor1() == null && this.getPercentualProfessor1() != null){
+			throw new Exception("Não preencher o percentual do professor");
+		}
+	}
 	protected abstract void salvar();
 
 	protected TurmaRepositorio getRepositorio() {

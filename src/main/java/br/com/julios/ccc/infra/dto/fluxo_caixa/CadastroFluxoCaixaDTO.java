@@ -1,5 +1,6 @@
 package br.com.julios.ccc.infra.dto.fluxo_caixa;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import br.com.julios.ccc.util.Util;
@@ -50,8 +51,8 @@ public class CadastroFluxoCaixaDTO {
 	public Date getData() {
 		return data;
 	}
-	public void setData(Date data) {
-		this.data = data;
+	public void setData(String data) throws ParseException {
+		this.data = Util.parseDate(data);
 	}
 	
 	

@@ -31,12 +31,14 @@ public interface ComissaoProfessorDAO extends JpaRepository<ComissaoProfessorDO,
 			+ " c.mensalidade.pagamentoMensalidade.valor,"
 			+ " c.mensalidade.matricula.turma.codigo,"
 			+ " c.mensalidade.matricula.turma.modalidade.nome,"
-			+ " c.mensalidade.valorMensalidade " 
+			+ " c.mensalidade.valorMensalidade ,"
+			+ " c.mensalidade.pagamentoMensalidade.data " 
 			+ ")"
 			+ " from ComissaoProfessorDO c where c.fluxoCaixa is null"
 			+ " and c.funcionario.id = ?1 and"
 			+ " c.mesReferencia.mes = ?2 and"
 			+ " c.mesReferencia.ano = ?3 "
+			+ " order by c.mensalidade.pagamentoMensalidade.id desc "
 			)
 	public List<ConsultaComissaoDTO> getComissoesPendentes(Long idProfessor, Long mes, Long ano);
 	
@@ -54,9 +56,11 @@ public interface ComissaoProfessorDAO extends JpaRepository<ComissaoProfessorDO,
 			+ " c.mensalidade.pagamentoMensalidade.valor,"
 			+ " c.mensalidade.matricula.turma.codigo,"
 			+ " c.mensalidade.matricula.turma.modalidade.nome,"
-			+ " c.mensalidade.valorMensalidade " 
+			+ " c.mensalidade.valorMensalidade, "
+			+ " c.mensalidade.pagamentoMensalidade.data " 
 			+ ")"
 			+ " from ComissaoProfessorDO c where c.fluxoCaixa.id = ?1 "
+			+ " order by c.mensalidade.pagamentoMensalidade.id desc "
 			)
 	public List<ConsultaComissaoDTO> getDetalheComissao(Long idPagamento);
 	

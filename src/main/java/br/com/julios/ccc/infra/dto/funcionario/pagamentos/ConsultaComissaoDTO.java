@@ -1,11 +1,14 @@
 package br.com.julios.ccc.infra.dto.funcionario.pagamentos;
 
+import java.util.Date;
+
 public class ConsultaComissaoDTO extends ConsultaPagamentoFuncionarioDTO {
 
 	
 	public ConsultaComissaoDTO(Long id, Long idFuncionario, String nomeFuncionario, Long mes, Long ano, Double valor,
 			Long idAluno, String nomeAluno, Double percentual, Double valorPago, String codigo, String nomeModalidade,
-			Double valorMensalidade) {
+			Double valorMensalidade,
+			Date dataMensalidade) {
 		this.setId(id);
 		this.setIdFuncionario(idFuncionario);
 		this.setNomeAluno(nomeAluno);
@@ -17,6 +20,7 @@ public class ConsultaComissaoDTO extends ConsultaPagamentoFuncionarioDTO {
 		this.setCodigo(codigo);
 		this.setNomeModalidade(nomeModalidade);
 		this.setValorMensalidade(valorMensalidade);
+		this.setDataPagamentoMensalidade(dataMensalidade);
 
 	}
 
@@ -27,6 +31,15 @@ public class ConsultaComissaoDTO extends ConsultaPagamentoFuncionarioDTO {
 	private String nomeModalidade;
 	private String codigo;
 	private Double valorMensalidade;
+	private Date dataPagamentoMensalidade;
+
+	public Date getDataPagamentoMensalidade() {
+		return dataPagamentoMensalidade;
+	}
+
+	public void setDataPagamentoMensalidade(Date dataPagamentoMensalidade) {
+		this.dataPagamentoMensalidade = dataPagamentoMensalidade;
+	}
 
 	public Double getValorMensalidade() {
 		return valorMensalidade;
