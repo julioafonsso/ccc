@@ -472,6 +472,19 @@ public class TurmaColetivaDO extends TurmaDO {
 		
 	}
 
+	public String getNomeProfessor2() {
+		if(this.getProfessor2() == null)
+			return "";
+		return this.getProfessor2().getNome();
+	}
+
+	public List<AlunoDO> getAlunos() {
+		return this.getRepositorio().getAlunos(this);
+		
+	}
+
+	
+
 	
 
 }

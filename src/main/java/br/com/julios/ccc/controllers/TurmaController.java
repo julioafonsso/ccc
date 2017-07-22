@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.DatatypeConverter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,13 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.julios.ccc.Excel;
 import br.com.julios.ccc.infra.bd.daos.MatriculaDAO;
 import br.com.julios.ccc.infra.bd.daos.TurmaColetivaDAO;
+import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.matricula.ConsultaAlunosMatriculadosDTO;
-import br.com.julios.ccc.infra.dto.matricula.ConsultaListaPresencaDTO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.CadastroTurmaColetivaDTO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaDTO;
+import br.com.julios.ccc.repositorios.MesRerefenciaRepositorio;
 import br.com.julios.ccc.repositorios.TurmaColetivaRepositorio;
 
 @Controller
@@ -34,6 +38,9 @@ public class TurmaController {
 	
 	@Autowired
 	MatriculaDAO mDAO;
+	
+	@Autowired
+	MesRerefenciaRepositorio mes;
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public void cadastrarTurma(@RequestBody CadastroTurmaColetivaDTO turma) throws Exception{
@@ -61,12 +68,19 @@ public class TurmaController {
 		return mDAO.getAlunosMatriculados(idTurma);
 	}
 	
-	@RequestMapping(value = "{id}/dias", method = RequestMethod.GET)
-	public List<Date> getListaPresenca(@PathVariable("id") Long idTurma) throws ParseException {
+	@RequestMapping(value = "{id}/lista-presenca", method = RequestMethod.GET)
+	public String getListaPresenca(@PathVariable("id") Long idTurma) throws Exception {
+		Excel excel = new Excel();
+		
+		
 		TurmaColetivaDO turma = this.turmaRepositorio.getTurma(idTurma);
 		
-		return turma.getDiasAulaMes(this.turmaRepositorio.getMesAtual());
+		return DatatypeConverter.printBase64Binary(excel.getLista(turma,mes.getMesAtual()));
+		
+		
 	}
+	
+	
 	
 	
 	

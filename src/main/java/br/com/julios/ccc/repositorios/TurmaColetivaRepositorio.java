@@ -2,9 +2,11 @@ package br.com.julios.ccc.repositorios;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import br.com.julios.ccc.infra.bd.model.AlunoDO;
 import br.com.julios.ccc.infra.bd.model.NivelTurmaDO;
 import br.com.julios.ccc.infra.bd.model.SalaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
@@ -63,6 +65,10 @@ public class TurmaColetivaRepositorio extends TurmaRepositorio {
 	public TurmaColetivaDO getTurma(Long idTurma) throws ParseException {
 		TurmaColetivaDO turma = turmaDAO.findOne(idTurma);
 		return turma;
+	}
+
+	public List<AlunoDO> getAlunos(TurmaColetivaDO turmaColetivaDO) {
+		return this.matriculaDAO.getAlunosMatriculados(turmaColetivaDO);
 	}
 
 	

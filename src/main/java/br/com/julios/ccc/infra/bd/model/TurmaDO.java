@@ -167,5 +167,9 @@ public abstract class TurmaDO {
 	}
 		
 	
-	
+	public String getNomeProfessor1() {
+		if(this.getProfessor1() == null)
+			return "";
+		return this.getProfessor1().getNome();
+	}
 }

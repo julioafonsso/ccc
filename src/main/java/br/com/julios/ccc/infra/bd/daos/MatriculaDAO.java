@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import br.com.julios.ccc.infra.bd.model.AlunoDO;
 import br.com.julios.ccc.infra.bd.model.DescontosDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
+import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaDO;
 import br.com.julios.ccc.infra.dto.matricula.ConsultaAlunosMatriculadosDTO;
 import br.com.julios.ccc.infra.dto.matricula.ConsultaMatriculaDTO;
@@ -131,4 +132,12 @@ public interface MatriculaDAO extends JpaRepository<MatriculaDO, Long>{
 
 	@Query("select m from MatriculaDO m where m.dataExclusao is null and m.turma = ?1")
 	public List<MatriculaDO> getMatriculas(TurmaDO turma);
+
+
+	@Query("select m.aluno "+
+			" from MatriculaDO m "
+			+ " where m.turma = ?1 "
+			+ " and m.dataExclusao is null "
+			+ " ")
+	public List<AlunoDO> getAlunosMatriculados(TurmaColetivaDO turmaColetivaDO);
 }
