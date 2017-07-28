@@ -93,6 +93,8 @@ public class CadastroFuncionarioDTO {
 		return observacao;
 	}
 	public void setObservacao(String observacao) {
+		if(observacao == null)
+			observacao = "";
 		this.observacao = observacao.toUpperCase();
 	}
 	public Double getSalario() {

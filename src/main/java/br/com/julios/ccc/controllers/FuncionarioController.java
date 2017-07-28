@@ -61,19 +61,19 @@ public class FuncionarioController {
 	FluxoCaixaRepositorio fluxoRepositorio;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<ConsultaFuncionarioDTO> getProfessores() {
+	public List<ConsultaFuncionarioDTO> getFuncionarios() {
 		return funcDAO.getFuncionarios();
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
-	public ConsultaFuncionarioDTO getProfessor(@PathVariable("id") Long idProfessor) {
-		return funcDAO.getFuncionario(idProfessor);
+	public ConsultaFuncionarioDTO getFuncionario(@PathVariable("id") Long idFuncionario) {
+		return funcDAO.getFuncionario(idFuncionario);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void cadastrarProfessor(@RequestBody CadastroFuncionarioDTO funcionario) throws Exception {
+	public ConsultaFuncionarioDTO cadastrarFuncionario(@RequestBody CadastroFuncionarioDTO funcionario) throws Exception {
 		FuncionarioDO func = funcRep.getFuncionario(funcionario);
-		func.cadastrar();
+		ConsultaFuncionarioDTO retorno = func.cadastrar();
 
 		SalarioDO salario = this.pagamentoFuncRepositorio.getSalario(func, this.mesRepositorio.getMesAtual());
 		salario.cadastrar();
@@ -81,11 +81,19 @@ public class FuncionarioController {
 		ValeTransporteDO valeTrans = this.pagamentoFuncRepositorio.getValeTransporte(func,
 				this.mesRepositorio.getMesAtual());
 		valeTrans.cadastrar();
+		return retorno;
+	}
+
+	@RequestMapping(value = "{id}" , method = RequestMethod.PUT)
+	public ConsultaFuncionarioDTO cadastrarFuncionario(@PathVariable("id") Long idFuncionario, @RequestBody CadastroFuncionarioDTO funcionario) throws Exception {
+		FuncionarioDO func = funcRep.getFuncionario(idFuncionario);
+		return func.alterar(funcionario);
 
 	}
 
+	
 	@RequestMapping(value = "{id}/salario/{mes}", method = RequestMethod.GET)
-	public List<ConsultaSalarioDTO> getSalario(@PathVariable("id") Long idProfessor, @PathVariable("mes") String mes)
+	public List<ConsultaSalarioDTO> getSalario(@PathVariable("id") Long idFuncionario, @PathVariable("mes") String mes)
 			throws Exception {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
@@ -94,11 +102,11 @@ public class FuncionarioController {
 
 		MesReferenciaDO mesDO = this.mesRepositorio.getMes(new Long(sdfMes.format(sdf.parse(mes))),
 				new Long(sdfAno.format(sdf.parse(mes))));
-		return this.salarioDAO.getSalarios(idProfessor, mesDO);
+		return this.salarioDAO.getSalarios(idFuncionario, mesDO);
 	}
 
 	@RequestMapping(value = "{id}/valetransporte/{mes}", method = RequestMethod.GET)
-	public ConsultaSalarioDTO getVale(@PathVariable("id") Long idProfessor, @PathVariable("mes") String mes)
+	public ConsultaSalarioDTO getVale(@PathVariable("id") Long idFuncionario, @PathVariable("mes") String mes)
 			throws Exception {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
@@ -107,14 +115,14 @@ public class FuncionarioController {
 
 		MesReferenciaDO mesDO = this.mesRepositorio.getMes(new Long(sdfMes.format(sdf.parse(mes))),
 				new Long(sdfAno.format(sdf.parse(mes))));
-		return this.salarioDAO.getVale(idProfessor, mesDO);
+		return this.salarioDAO.getVale(idFuncionario, mesDO);
 	}
 	
 	
 
 	
 	@RequestMapping(value = "{id}/salario/{idSalario}", method = RequestMethod.POST)
-	public void pagarSalario(@PathVariable("id") Long idProfessor, @PathVariable("idSalario") Long idSalario, @RequestBody CadastroPagamentoFuncionarioDTO cadastro)
+	public void pagarSalario(@PathVariable("id") Long idFuncionario, @PathVariable("idSalario") Long idSalario, @RequestBody CadastroPagamentoFuncionarioDTO cadastro)
 			throws Exception {
 
 		SalarioDO salario = this.pagamentoFuncRepositorio.getSalario(idSalario);
@@ -128,7 +136,7 @@ public class FuncionarioController {
 	}
 	
 	@RequestMapping(value = "{id}/valetransporte/{idVale}", method = RequestMethod.POST)
-	public void pagarSalario(@PathVariable("id") Long idProfessor, @PathVariable("idVale") Long idVale)
+	public void pagarSalario(@PathVariable("id") Long idFuncionario, @PathVariable("idVale") Long idVale)
 			throws Exception {
 
 		ValeTransporteDO vale = this.pagamentoFuncRepositorio.getValeTransporte(idVale);
