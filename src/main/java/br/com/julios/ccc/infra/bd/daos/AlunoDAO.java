@@ -39,7 +39,8 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			" a.telefone, " +
 			" a.observacao, " +
 			" a.foto " +
-			 ") from AlunoDO a ")
+			 ") from AlunoDO a "
+			 + " where a.dataExclusao is null ")
 	public List<ConsultaAlunoDTO> getAlunos();
 	
 	@Query("select f from AlunoDO f where f.cpf = ?1")

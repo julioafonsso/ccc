@@ -95,8 +95,19 @@ public class AlunoDO {
 
 	@Column
 	private String foto;
+	
+	@Column(name = "data_exclusao")
+	private Date dataExclusao;
 
 	// Getters and Setters
+
+	public Date getDataExclusao() {
+		return dataExclusao;
+	}
+
+	public void setDataExclusao(Date dataExclusao) {
+		this.dataExclusao = dataExclusao;
+	}
 
 	public String getCpf() throws Exception {
 		// if(cpf != null && cpf.length() > 0){
@@ -296,6 +307,12 @@ public class AlunoDO {
 		this.setSexo(aluno.getSexo());
 		this.setTelefone(aluno.getTelefone());
 		return this.cadastrar();
+	}
+
+	public void delete() throws Exception {
+		this.setDataExclusao(new Date());
+		this.getRepositorio().cadastrar(this);
+		
 	}
 
 }

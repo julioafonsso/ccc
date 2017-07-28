@@ -92,6 +92,11 @@ public class AlunoController {
 		return alunoDAO.getAlunos(idAluno);
 	}
 
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	public void deleteAluno(@PathVariable("id") Long idAluno) throws Exception {
+		this.alunoRepositorio.getAluno(idAluno).delete();
+	}
+	
 	@RequestMapping(value = "{id}/turmas", method = RequestMethod.GET)
 	public List<ConsultaMatriculaDTO> getTurmas(@PathVariable("id") Long idAluno) {
 		return matriculaDAO.getMatriculas(idAluno);
