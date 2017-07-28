@@ -10,6 +10,7 @@ import java.util.Locale;
 import br.com.julios.ccc.infra.bd.model.AlunoDO;
 import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
+import jxl.CellView;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
 import jxl.format.Border;
@@ -46,11 +47,13 @@ public class Excel {
 		
 		
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		String filename = "lista-presenca.xls";
 		WorkbookSettings ws = new WorkbookSettings();
 		ws.setLocale(new Locale("en", "EN"));
 		WritableWorkbook workbook = Workbook.createWorkbook(bos, ws);
 		WritableSheet s = workbook.createSheet("Folha1", 0);
+		
+		s.setColumnView(0, 100);
+		s.setColumnView(1, 20);
 		
 		
 		// CABECALHO
@@ -109,6 +112,7 @@ public class Excel {
 		File file = new File(classLoader.getResource("imagem.png").getFile());
 		WritableImage wi = new WritableImage(10, 0, 3, 5, file);
 		s.addImage(wi);	
+		
 		
 		
 		workbook.write();
