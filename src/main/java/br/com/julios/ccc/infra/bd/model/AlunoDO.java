@@ -61,9 +61,8 @@ public class AlunoDO {
 	@Column
 	private String complemento;
 
-	@ManyToOne
-	@JoinColumn(name = "id_bairro")
-	private BairroDO bairro;
+	@Column
+	private String bairro;
 
 	@Column
 	private String cidade;
@@ -203,11 +202,11 @@ public class AlunoDO {
 		this.complemento = complemento;
 	}
 
-	public BairroDO getBairro() {
+	public String getBairro() {
 		return bairro;
 	}
 
-	public void setBairro(BairroDO bairro) {
+	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
 
@@ -282,15 +281,15 @@ public class AlunoDO {
 
 	public ConsultaAlunoDTO getConsulta() throws Exception {
 		return new ConsultaAlunoDTO(this.getId(), this.getCpf(), this.getNome(), this.getRg(), this.getEmail(),
-				this.getEndereco(), this.getNumero(), this.getComplemento(), this.getBairro().getId(),
-				this.getBairro().getNome(), this.getCidade(), this.getDataNascimento(), this.getEstadoCivil().getId(),
+				this.getEndereco(), this.getNumero(), this.getComplemento(), this.getBairro(),
+				this.getCidade(), this.getDataNascimento(), this.getEstadoCivil().getId(),
 				this.getEstadoCivil().getNome(), this.getProfissao(), this.getConheceEscola().getId(),
 				this.getConheceEscola().getNome(), this.getSexo(), this.getTelefone(), this.getObservacao(),
 				this.getFoto());
 	}
 
 	public ConsultaAlunoDTO atualizar(CadastroAlunoDTO aluno) throws Exception {
-		this.setBairro(this.getRepositorio().getBairro(aluno.getIdBairro()));
+		this.setBairro(aluno.getNomeBairro());
 		this.setComplemento(aluno.getComplemento());
 		this.setConheceEscola(this.getRepositorio().getConheceEscola(aluno.getIdConheceEscola()));
 		this.setCpf(aluno.getCpf());

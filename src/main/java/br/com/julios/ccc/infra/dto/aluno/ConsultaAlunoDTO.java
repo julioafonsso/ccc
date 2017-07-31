@@ -12,7 +12,6 @@ public class ConsultaAlunoDTO {
 	private String endereco;
 	private Long numero;
 	private String complemento;
-	private Long idBairro;
 	private String nomeBairro;
 	private String cidade;
 	private Date dataNascimento;
@@ -86,13 +85,6 @@ public class ConsultaAlunoDTO {
 		this.complemento = complemento;
 	}
 
-	public Long getIdBairro() {
-		return idBairro;
-	}
-
-	public void setIdBairro(Long idBairro) {
-		this.idBairro = idBairro;
-	}
 
 	public String getNomeBairro() {
 		return nomeBairro;
@@ -203,7 +195,6 @@ public class ConsultaAlunoDTO {
 			String endereco,
 			Long numero,
 			String complemento,
-			Long idBairro,
 			String nomeBairro,
 			String cidade,
 			Date dataNascimento,
@@ -226,7 +217,6 @@ public class ConsultaAlunoDTO {
 		this.setEndereco(endereco);
 		this.setNumero(numero);
 		this.setComplemento(complemento);
-		this.setIdBairro(idBairro);
 		this.setNomeBairro(nomeBairro);
 		this.setCidade(cidade);
 		this.setDataNascimento(dataNascimento);

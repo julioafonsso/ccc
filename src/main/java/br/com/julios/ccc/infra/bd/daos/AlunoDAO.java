@@ -26,8 +26,7 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			" a.endereco, " +
 			" a.numero, " +
 			" a.complemento, " +
-			" a.bairro.id, " +
-			" a.bairro.nome, " +
+			" a.bairro, " +
 			" a.cidade, " +
 			" a.dataNascimento, " +
 			" a.estadoCivil.id, " +
@@ -62,8 +61,7 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			" a.endereco, " +
 			" a.numero, " +
 			" a.complemento, " +
-			" a.bairro.id, " +
-			" a.bairro.nome, " +
+			" a.bairro, " +
 			" a.cidade, " +
 			" a.dataNascimento, " +
 			" a.estadoCivil.id, " +

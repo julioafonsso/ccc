@@ -15,7 +15,7 @@ public class CadastroAlunoDTO {
 	private String endereco;
 	private Long numero;
 	private String complemento;
-	private Long idBairro;
+	private String nomeBairro;
 //	private String cidade;
 	private Date dataNascimento;
 	private Long idEstadoCivil;
@@ -82,11 +82,11 @@ public class CadastroAlunoDTO {
 		if(complemento != null)
 			this.complemento = complemento.toUpperCase();
 	}
-	public Long getIdBairro() {
-		return idBairro;
+	public String getNomeBairro() {
+		return nomeBairro;
 	}
-	public void setIdBairro(Long idBairro) {
-		this.idBairro = idBairro;
+	public void setNomeBairro(String nomeBairro) {
+		this.nomeBairro = nomeBairro;
 	}
 //	public String getCidade() {
 //		return cidade;
