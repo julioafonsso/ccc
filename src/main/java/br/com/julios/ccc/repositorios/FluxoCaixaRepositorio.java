@@ -29,7 +29,8 @@ public class FluxoCaixaRepositorio {
 	public FluxoCaixaDO getFluxoPagamentoMatricula(MatriculaDO matricula, Double valor) throws ParseException {
 		FluxoCaixaDO pagamento = new FluxoCaixaDO();
 		pagamento.setData(matricula.getDataMatricula());
-		pagamento.setDescricao(("Aluno : " + matricula.getNomeAluno()));
+		pagamento.setDescricao((matricula.getNomeAluno()));
+		pagamento.setObservacao( matricula.getCodigoTurma() + " - " + matricula.getNomeModalidade());
 		pagamento.setTipoFluxo(tipoFluxoDAO.findOne(TipoFluxoCaixaDO.MATRICULA));
 		if(valor != null && valor.longValue() > 0)
 			pagamento.setValor(valor);
@@ -60,9 +61,9 @@ public class FluxoCaixaRepositorio {
 		cadastro.setData(new Date());
 		cadastro.setQtd(new Long(1));
 		cadastro.setValor(valor);
-		cadastro.setDescricao("Aluno - " + mensalidade.getNomeAluno() );
-		cadastro.setObservacao(
-				"Mes Referencia " + mensalidade.getMesReferencia().getNomeMes() + " " + mensalidade.getMesReferencia().getAno());
+		cadastro.setDescricao( mensalidade.getNomeAluno() );
+		cadastro.setObservacao( mensalidade.getCodigoTurma() + " - " + mensalidade.getNomeModalidade() + " - " + 
+				mensalidade.getMesReferencia().getMesFormatado());
 		return this.getFluxo(cadastro);
 	}
 
@@ -72,7 +73,7 @@ public class FluxoCaixaRepositorio {
 		cadastro.setData(new Date());
 		cadastro.setQtd(new Long(1));
 		cadastro.setValor(mensalidade.getValorMensalidade());
-		cadastro.setDescricao("Aluno - " + mensalidade.getNomeAluno());
+		cadastro.setDescricao(mensalidade.getNomeAluno());
 		return this.getFluxo(cadastro);
 	}
 	
@@ -82,7 +83,7 @@ public class FluxoCaixaRepositorio {
 		cadastro.setData(new Date());
 		cadastro.setQtd(new Long(qtdAulas));
 		cadastro.setValor(valor);
-		cadastro.setDescricao("Aluno - " + aluno);
+		cadastro.setDescricao(aluno);
 		return this.getFluxo(cadastro);
 	}
 

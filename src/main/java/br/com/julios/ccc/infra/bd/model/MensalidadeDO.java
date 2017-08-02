@@ -203,4 +203,8 @@ public class MensalidadeDO {
 	public String getCodigoTurma() {
 		return this.getTurma().getCodigo();
 	}
+
+	public String getNomeModalidade() {
+		return this.getTurma().getNomeModalidade();
+	}
 }
