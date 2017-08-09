@@ -39,8 +39,10 @@ public class CPF {
 	{
 		String cpfTMP = "";
 		if(cpf != null)
+		{
 			cpfTMP = cpf.replaceAll("[^0-9]", "");
-		isValid(cpfTMP);
+			isValid(cpfTMP);
+		}
 		return cpfTMP;
 		
 	}

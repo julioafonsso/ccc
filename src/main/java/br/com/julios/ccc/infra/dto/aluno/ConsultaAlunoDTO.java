@@ -2,6 +2,9 @@ package br.com.julios.ccc.infra.dto.aluno;
 
 import java.util.Date;
 
+import br.com.julios.ccc.infra.bd.model.ConheceEscolaDO;
+import br.com.julios.ccc.infra.bd.model.EstadoCivilDO;
+
 public class ConsultaAlunoDTO {
 
 	private Long id;
@@ -187,6 +190,9 @@ public class ConsultaAlunoDTO {
 	private String observacao;
 	private String foto;
 
+	
+	
+	
 	public ConsultaAlunoDTO(	Long id,
 			String cpf,
 			String nome,
@@ -232,6 +238,7 @@ public class ConsultaAlunoDTO {
 		
 		
 	}
-		
+	
+	
 	
 }

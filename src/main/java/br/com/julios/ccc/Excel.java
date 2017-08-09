@@ -1,4 +1,4 @@
-package br.com.julios.ccc;
+	package br.com.julios.ccc;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -11,10 +11,12 @@ import br.com.julios.ccc.infra.bd.model.AlunoDO;
 import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import jxl.CellView;
+import jxl.SheetSettings;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
 import jxl.format.Border;
 import jxl.format.BorderLineStyle;
+import jxl.format.PageOrientation;
 import jxl.write.Label;
 import jxl.write.WritableCellFormat;
 import jxl.write.WritableFont;
@@ -51,9 +53,15 @@ public class Excel {
 		ws.setLocale(new Locale("en", "EN"));
 		WritableWorkbook workbook = Workbook.createWorkbook(bos, ws);
 		WritableSheet s = workbook.createSheet("Folha1", 0);
+		SheetSettings ss = s.getSettings();
+		s.setPageSetup(PageOrientation.LANDSCAPE);
+		s.setColumnView(0, 65);
+		s.setColumnView(1, 15);
 		
-		s.setColumnView(0, 100);
-		s.setColumnView(1, 20);
+		for (int i = 2; i < 30; i++) {
+			s.setColumnView(i, 5);
+			
+		}
 		
 		
 		// CABECALHO
@@ -67,7 +75,7 @@ public class Excel {
 		Label professores = new Label(0, 2, "PROFESORES: " + turma.getNomeProfessor1() + " - " + turma.getNomeProfessor2(), cfSemBorda);
 		s.addCell(professores);
 		
-		Label mes = new Label(0, 3, mesRef.getNomeMes() + " " + mesRef.getAno(), cfNegritoSemBorda);
+		Label mes = new Label(0, 3, mesRef.getNomeMes() , cfNegritoSemBorda);
 		s.addCell(mes);
 		
 		Label homens = new Label(0, 5, "HOMENS: " + turma.getQtdAlunos(), cfSemBorda);
@@ -97,11 +105,19 @@ public class Excel {
 		List<AlunoDO> alunos = turma.getAlunos();
 		count = 9;
 		for (AlunoDO alunoDO : alunos) {
-			nome = new Label(0, count, alunoDO.getNome(), cfComBorda);
+			int countColuna = 0;
+			nome = new Label(countColuna++, count, alunoDO.getNome(), cfComBorda);
 			s.addCell(nome);
 			
-			telefone = new Label(1, count, alunoDO.getTelefone(), cfComBorda);
+			telefone = new Label(countColuna++, count, alunoDO.getTelefone(), cfComBorda);
 			s.addCell(telefone);
+			
+			
+			for (Date date : dias) {
+				Label dia = new Label(countColuna++, count, "" , cfComBorda);
+				s.addCell(dia);
+			}
+			
 			count ++;
 		}
 		
@@ -110,7 +126,7 @@ public class Excel {
 		
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource("imagem.png").getFile());
-		WritableImage wi = new WritableImage(10, 0, 3, 5, file);
+		WritableImage wi = new WritableImage(5, 0, 8, 5, file);
 		s.addImage(wi);	
 		
 		

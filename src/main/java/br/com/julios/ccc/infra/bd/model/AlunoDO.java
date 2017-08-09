@@ -227,6 +227,8 @@ public class AlunoDO {
 	}
 
 	public EstadoCivilDO getEstadoCivil() {
+		if(estadoCivil == null)
+			return new EstadoCivilDO();
 		return estadoCivil;
 	}
 
@@ -243,6 +245,8 @@ public class AlunoDO {
 	}
 
 	public ConheceEscolaDO getConheceEscola() {
+		if(conheceEscola == null)
+			return new ConheceEscolaDO();
 		return conheceEscola;
 	}
 

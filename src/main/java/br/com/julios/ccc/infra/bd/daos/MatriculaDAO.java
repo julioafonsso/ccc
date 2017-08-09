@@ -124,7 +124,7 @@ public interface MatriculaDAO extends JpaRepository<MatriculaDO, Long>{
 			" from MatriculaDO m "
 			+ " LEFT OUTER JOIN m.desconto AS d "
 			+ " where m.turma.id = ?1 "
-			+ " and m.dataExclusao is null "
+			+ " and m.dataExclusao is null order by m.aluno.nome "
 			
 			+ " ")
 	public List<ConsultaAlunosMatriculadosDTO> getAlunosMatriculados(Long idTurma);
@@ -138,6 +138,6 @@ public interface MatriculaDAO extends JpaRepository<MatriculaDO, Long>{
 			" from MatriculaDO m "
 			+ " where m.turma = ?1 "
 			+ " and m.dataExclusao is null "
-			+ " ")
+			+ " order by m.aluno.nome ")
 	public List<AlunoDO> getAlunosMatriculados(TurmaColetivaDO turmaColetivaDO);
 }

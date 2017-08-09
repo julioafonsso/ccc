@@ -29,16 +29,18 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			" a.bairro, " +
 			" a.cidade, " +
 			" a.dataNascimento, " +
-			" a.estadoCivil.id, " +
-			" a.estadoCivil.nome, " +
+			" ec.id, " +
+			" ec.nome, " +
 			" a.profissao, " +
-			" a.conheceEscola.id, " +
-			" a.conheceEscola.nome, " +
+			" ce.id, " +
+			" ce.nome, " +
 			" a.sexo, " +
 			" a.telefone, " +
 			" a.observacao, " +
 			" a.foto " +
-			 ") from AlunoDO a "
+			 ") from AlunoDO a " +
+			 " LEFT OUTER JOIN  a.estadoCivil AS ec " +
+			 " LEFT OUTER JOIN  a.conheceEscola AS ce "
 			 + " where a.dataExclusao is null ")
 	public List<ConsultaAlunoDTO> getAlunos();
 	
@@ -64,16 +66,18 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			" a.bairro, " +
 			" a.cidade, " +
 			" a.dataNascimento, " +
-			" a.estadoCivil.id, " +
-			" a.estadoCivil.nome, " +
+			" ec.id, " +
+			" ec.nome, " +
 			" a.profissao, " +
-			" a.conheceEscola.id, " +
-			" a.conheceEscola.nome, " +
+			" ce.id, " +
+			" ce.nome, " +
 			" a.sexo, " +
 			" a.telefone, " +
 			" a.observacao, " +
 			" a.foto " +
-			") from AlunoDO a "
+			") from AlunoDO a " +
+			" LEFT OUTER JOIN  a.estadoCivil AS ec " +
+			 " LEFT OUTER JOIN  a.conheceEscola AS ce "
 			+ " where a.id = ?1 ")
 	public ConsultaAlunoDTO getAlunos(Long idAluno);
 

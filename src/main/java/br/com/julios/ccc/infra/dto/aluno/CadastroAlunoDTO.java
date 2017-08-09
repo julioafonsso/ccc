@@ -44,7 +44,7 @@ public class CadastroAlunoDTO {
 	}
 	public void setNome(String nome) {
 		if(nome != null)
-		this.nome = nome.toUpperCase();
+			this.nome = nome.toUpperCase();
 	}
 	public String getRg() {
 		return rg;

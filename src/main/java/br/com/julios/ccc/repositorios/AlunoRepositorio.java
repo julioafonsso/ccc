@@ -48,6 +48,9 @@ public class AlunoRepositorio {
 	}
 
 	public EstadoCivilDO getEstadoCivil(Long idEstadoCivil) {
+		if(idEstadoCivil == null)
+			return null;
+			
 		return estadoCivilDAO.findOne(idEstadoCivil);
 	}
 
@@ -63,6 +66,8 @@ public class AlunoRepositorio {
 	}
 
 	public ConheceEscolaDO getConheceEscola(Long idConheceEscola) {
+		if(idConheceEscola == null)
+			return null;
 		return conheceEscolaDAO.findOne(idConheceEscola);
 	}
 
