@@ -16,7 +16,7 @@ public interface TipoFluxoCaixaDAO extends JpaRepository<TipoFluxoCaixaDO, Long>
 	public TipoFluxoCaixaDO get(String nome);
 	
 	@Query("select new br.com.julios.ccc.infra.dto.fluxo_caixa.ConsultaTipoFluxoDTO(t.id, t.nome, t.indEntrada)"
-			+ "from TipoFluxoCaixaDO t ")
+			+ "from TipoFluxoCaixaDO t order by t.nome")
 	public List<ConsultaTipoFluxoDTO> get();
 	
 	@Query("select new br.com.julios.ccc.infra.dto.fluxo_caixa.ConsultaTipoFluxoDTO(t.id, t.nome, t.indEntrada)"
