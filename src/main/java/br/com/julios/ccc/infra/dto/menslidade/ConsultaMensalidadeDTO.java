@@ -1,9 +1,14 @@
 package br.com.julios.ccc.infra.dto.menslidade;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ConsultaMensalidadeDTO {
+public class ConsultaMensalidadeDTO implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String nomeModalidade;
 	private Date dataVencimento;
@@ -14,6 +19,7 @@ public class ConsultaMensalidadeDTO {
 	private Long desconto;
 	private String codigoTurma;
 	
+	public ConsultaMensalidadeDTO() {}
 	
 	public ConsultaMensalidadeDTO(Long id,String codigoTurma, String nomeModalidade, Date dataVencimento,
 			Long mes, Long ano, Double valorMensalidade, Long desconto) {

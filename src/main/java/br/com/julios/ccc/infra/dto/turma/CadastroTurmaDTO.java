@@ -1,8 +1,14 @@
 package br.com.julios.ccc.infra.dto.turma;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
-public class CadastroTurmaDTO {
+public class CadastroTurmaDTO implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	protected SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	

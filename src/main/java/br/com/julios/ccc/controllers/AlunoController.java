@@ -30,6 +30,7 @@ import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.aluno.CadastroAlunoDTO;
+import br.com.julios.ccc.infra.dto.aluno.CadastroPagamentosDTO;
 import br.com.julios.ccc.infra.dto.aluno.ConsultaAlunoDTO;
 import br.com.julios.ccc.infra.dto.aluno.ConsultaHistoricoPagamentoDTO;
 import br.com.julios.ccc.infra.dto.matricula.ConsultaMatriculaDTO;
@@ -247,6 +248,20 @@ public class AlunoController {
 		diaFim = c.getTime();
 
 		return matriculaDAO.getWorkShop(idAluno, diaInicio, diaFim);
+	}
+
+	@RequestMapping(value = "{id}/pagamentos", method = RequestMethod.POST)
+	private void efetuarPagamentos(@PathVariable("id") Long idAluno,@RequestBody CadastroPagamentosDTO cadastro) throws Exception
+	{
+		
+		for (CadastroAulaIndividualDTO aula : cadastro.getAulasParticulares()) {
+			this.cadastrarAulaParticular(idAluno, aula);
+		}
+		
+		for (ConsultaMensalidadeDTO mensalidade : cadastro.getMensalidadesParaPagar()) {
+			this.efetuarPagamento(idAluno, mensalidade.getId() ,mensalidade.getValorCalculado());
+		}
+		
 	}
 	
 }

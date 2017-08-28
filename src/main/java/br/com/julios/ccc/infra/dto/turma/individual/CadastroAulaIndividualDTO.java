@@ -5,6 +5,10 @@ import br.com.julios.ccc.util.Util;
 
 public class CadastroAulaIndividualDTO extends CadastroTurmaDTO {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long qtdAulas;
 	private Double valorPago;
 	
