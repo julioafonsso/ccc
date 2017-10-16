@@ -126,7 +126,7 @@ public class Excel {
 		
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource("imagem.png").getFile());
-		WritableImage wi = new WritableImage(5, 0, 8, 5, file);
+		WritableImage wi = new WritableImage(5, 0, 8, 7, file);
 		s.addImage(wi);	
 		
 		

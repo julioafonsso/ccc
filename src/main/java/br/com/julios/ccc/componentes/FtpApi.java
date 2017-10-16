@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
 
-import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,16 +14,15 @@ public class FtpApi {
 	@Autowired
 	FtpProperties ftpProperties;
 
-	
+	public String salvarFoto(byte[] file, String formato) throws Exception {
+		String nomeImagem = "imagens/" + new Long(new Date().getTime()).toString()
+				+ new Double(Math.random() * 10000).intValue() + ".jpg" ;
 
-	public String salvarFoto(byte[] file) throws Exception {
-		String nomeImagem = "imagens/" + new Long(new Date().getTime()).toString() + new Double (Math.random() * 10000).intValue();
-		
+		if (!(formato.toUpperCase().equals("JPG") || formato.toUpperCase().equals("JPEG")))
+			throw new Exception("Formato da imagem invalido! ");
 
 		FTPClient ftpClient = getFtp();
-		ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 		String nome = ftpProperties.getPath() + "/" + nomeImagem;
-		System.out.println("vou salvar a imagem no diretorio " + nome);
 		OutputStream out = ftpClient.storeFileStream(nome);
 
 		out.write(file);
