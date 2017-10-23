@@ -1,11 +1,16 @@
 package br.com.julios.ccc.infra.dto.turma.workshop;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import br.com.julios.ccc.infra.dto.turma.ConsultaTurmaDTO;
 
-public class ConsultaWorkShopDTO extends ConsultaTurmaDTO {
+public class ConsultaWorkShopDTO extends ConsultaTurmaDTO implements Serializable{
 
+	public ConsultaWorkShopDTO() {
+		super(null, null, null, null, null, null, null);
+	}
+	
 	public ConsultaWorkShopDTO(Long id,
 							   String codigo, 
 							   Long idProfessor1, 

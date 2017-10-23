@@ -195,4 +195,9 @@ public class MatriculaDO {
 		this.setDesconto(desconto2);
 		this.getRepositorio().cadastrar(this);
 	}
+	
+	public Date getDataInicio()
+	{
+		return this.getTurma().getDataInicio();
+	}
 }

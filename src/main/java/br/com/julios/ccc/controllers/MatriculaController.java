@@ -35,6 +35,9 @@ import br.com.julios.ccc.repositorios.PagamentoFuncionarioRepositorio;
 public class MatriculaController {
 	
 	@Autowired
+	DescontoRepositorio descontoRepositorio;
+
+	@Autowired
 	MatriculaRepositorio matriculaRepositorio;
 	
 	@Autowired
@@ -52,11 +55,10 @@ public class MatriculaController {
 	@Autowired
 	MesRerefenciaRepositorio mesRepositorio;
 	
-	@Autowired
-	DescontoRepositorio descontoRepositorio;
 	
 	@Autowired
 	EmailApi email;
+	
 	
 	@RequestMapping(value = "{idMatricula}/desconto", method = RequestMethod.PUT)
 	public void alterarDesconto(@PathVariable("idMatricula") Long idMatricula, @RequestBody DescontoDTO descontoDTO) throws Exception{
@@ -68,6 +70,7 @@ public class MatriculaController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public void matricular(@RequestBody CadastroMatriculaDTO cadastro) throws Exception{
+
 		MatriculaDO matricula =  matriculaRepositorio.getMatricula(cadastro);
 
 		FluxoCaixaDO pagamento = fluxoRepositorio.getFluxoPagamentoMatricula(matricula, cadastro.getValor());
@@ -79,16 +82,16 @@ public class MatriculaController {
 		}
 		
 		matricula.cadastrar();
-		
+		// É criado uma mensalidade pois o Isnard pediu para WorkShop ser tratado assim.
 		MensalidadeDO mensalidade = mensalidadeRepositorio.getMensalidade(matricula);
 		mensalidade.cadastrar();
 		if(matricula.turmaEhWorkShop())
 		{
-			FluxoCaixaDO pagamentoMensalidade = pagamentoRepositorio.getPagamentoWorkShop(mensalidade);
+			FluxoCaixaDO pagamentoWork = pagamentoRepositorio.getPagamentoWorkShop(mensalidade);
 
-			pagamentoMensalidade.cadastrar();
+			pagamentoWork.cadastrar();
 
-			mensalidade.cadastrarPagamento(pagamentoMensalidade);
+			mensalidade.cadastrarPagamento(pagamentoWork);
 
 			List<FuncionarioDO> professores = matricula.getProfessores();;
 
@@ -96,13 +99,14 @@ public class MatriculaController {
 				ComissaoProfessorDO comissao = comissaoRepositorio.getComissao(mensalidade, this.mesRepositorio.getMesAtual(), func);
 				comissao.cadastrar();
 			}
-			email.enviarEmailReciboMensalidade(mensalidade);
+			email.enviarEmailWorkShop(matricula,pagamentoWork );
 		}
 		else{
 			email.enviarEmailReciboMatricula(matricula, pagamento);
 		}
 		
 		
+	
 	}
 	
 	

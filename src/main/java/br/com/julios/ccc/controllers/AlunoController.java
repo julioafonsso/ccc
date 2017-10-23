@@ -33,10 +33,12 @@ import br.com.julios.ccc.infra.dto.aluno.CadastroAlunoDTO;
 import br.com.julios.ccc.infra.dto.aluno.CadastroPagamentosDTO;
 import br.com.julios.ccc.infra.dto.aluno.ConsultaAlunoDTO;
 import br.com.julios.ccc.infra.dto.aluno.ConsultaHistoricoPagamentoDTO;
+import br.com.julios.ccc.infra.dto.matricula.CadastroMatriculaDTO;
 import br.com.julios.ccc.infra.dto.matricula.ConsultaMatriculaDTO;
 import br.com.julios.ccc.infra.dto.menslidade.ConsultaMensalidadeDTO;
 import br.com.julios.ccc.infra.dto.turma.individual.CadastroAulaIndividualDTO;
 import br.com.julios.ccc.infra.dto.turma.individual.ConsultaAulaIndividualDTO;
+import br.com.julios.ccc.infra.dto.turma.workshop.ConsultaWorkShopDTO;
 import br.com.julios.ccc.repositorios.AlunoRepositorio;
 import br.com.julios.ccc.repositorios.AulaIndividualRepositorio;
 import br.com.julios.ccc.repositorios.FluxoCaixaRepositorio;
@@ -83,6 +85,9 @@ public class AlunoController {
 
 	@Autowired
 	private EmailApi email;
+	
+	@Autowired
+	private MatriculaController matricula;
 	
 	//
 	// @Autowired
@@ -251,7 +256,7 @@ public class AlunoController {
 	}
 
 	@RequestMapping(value = "{id}/pagamentos", method = RequestMethod.POST)
-	private void efetuarPagamentos(@PathVariable("id") Long idAluno,@RequestBody CadastroPagamentosDTO cadastro) throws Exception
+	public void efetuarPagamentos(@PathVariable("id") Long idAluno,@RequestBody CadastroPagamentosDTO cadastro) throws Exception
 	{
 		
 		for (CadastroAulaIndividualDTO aula : cadastro.getAulasParticulares()) {
@@ -260,6 +265,14 @@ public class AlunoController {
 		
 		for (ConsultaMensalidadeDTO mensalidade : cadastro.getMensalidadesParaPagar()) {
 			this.efetuarPagamento(idAluno, mensalidade.getId() ,mensalidade.getValorCalculado());
+		}
+		
+		for (ConsultaWorkShopDTO work: cadastro.getWorkShop()) {
+			CadastroMatriculaDTO cadastroMatricula = new CadastroMatriculaDTO();
+			cadastroMatricula.setIdTurma(work.getId());
+			cadastroMatricula.setIdAluno(idAluno);
+					
+			matricula.matricular(cadastroMatricula);
 		}
 		
 	}

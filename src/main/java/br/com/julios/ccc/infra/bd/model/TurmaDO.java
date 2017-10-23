@@ -172,4 +172,8 @@ public abstract class TurmaDO {
 			return "";
 		return this.getProfessor1().getNome();
 	}
+
+	public Date getDataInicio() {
+		return null;
+	}
 }
