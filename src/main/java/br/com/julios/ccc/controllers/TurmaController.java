@@ -80,49 +80,9 @@ public class TurmaController {
 		
 	}
 	
-	
-	
-	
-	
-//	@Autowired
-//	TurmaFacade turmaFacade;
-//	
-//	@Autowired 
-//	MatriculaFacade matriculaFacade;
-	
-//	
-//
-//	@RequestMapping(value="{id}/alunos" ,method = RequestMethod.GET)
-//	public Iterable<MatriculaDO> getAlunos(@PathVariable("id") Long idTurma){
-//		return null;
-//	}
-//
-//	
 
-//	
-//	
-//	
-//	@RequestMapping(value = "matricula", method = RequestMethod.POST)
-//	public void matricularAluno(@RequestBody MatriculaDO matricula) throws Exception{
-//	}
-//	
-//	@RequestMapping(method = RequestMethod.PUT)
-//	public void atualizarTurma(@RequestBody TurmaDO turma) throws Exception{
-//	}
-//	
-//	@RequestMapping(value="{id}" , method = RequestMethod.DELETE)
-//	public void apagarTurma(@PathVariable("id") long id) throws Exception{
-//	}
-//	
-//	@RequestMapping(value="matricula/{id}/desconto" , method = RequestMethod.DELETE)
-//	public void apagarDesconto(@PathVariable("id") long id) throws Exception{
-//	}
-//
-//	@RequestMapping(value="matricula/{id}/desconto/{idDesconto}" , method = RequestMethod.PUT)
-//	public void alterarDesconto(@PathVariable("id") long id, @PathVariable("idDesconto") long idDesconto) throws Exception{
-//	}
-//	
-//	@RequestMapping(value="matricula/{id}" , method = RequestMethod.DELETE)
-//	public void excluirMatricula(@PathVariable("id") long id) throws ParseException{
-//	}
+	@RequestMapping(value="{id}" , method = RequestMethod.DELETE)
+	public void apagarTurma(@PathVariable("id") long id) throws Exception{
+		turmaRepositorio.getTurma(id).excluir();
+	}
 }

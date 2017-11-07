@@ -483,6 +483,11 @@ public class TurmaColetivaDO extends TurmaDO {
 		
 	}
 
+	public void excluir() throws Exception {
+		this.dataTermino = new Date();
+		this.salvar();
+	}
+
 	
 
 	
