@@ -399,7 +399,7 @@ public class TurmaColetivaDO extends TurmaDO {
 		this.setSexta(cadastro.isSexta());
 		this.setSabado(cadastro.isSabado());
 		this.setHorarioInicial(cadastro.getHorarioInicial());
-		this.setHorarioFinal(cadastro.getHorarioInicial());
+		this.setHorarioFinal(cadastro.getHorarioFinal());
 		this.setVagas(cadastro.getQtdVagas());
 		this.setDataInicio(cadastro.getDataInicio());
 		this.setDataTermino(cadastro.getDataFim());

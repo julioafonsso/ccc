@@ -126,8 +126,7 @@ public class MensalidadeDO {
 	public void cadastrar() throws ParseException {
 
 		this.calculaValor();
-		if(this.valorMensalidade.longValue() > 0)
-		{
+		if (this.valorMensalidade.longValue() > 0) {
 			this.calcularVencimentoProximoMes();
 			this.getRepositorio().cadastrar(this);
 		}
@@ -138,10 +137,10 @@ public class MensalidadeDO {
 
 		Date primeiroDia = null;
 
-		if (this.getId() != null)
+		if (getMatricula().getDataMatricula().before(this.getMesReferencia().getPrimeiroDia()))
 			primeiroDia = this.getMesReferencia().getPrimeiroDia();
 		else
-			primeiroDia = new Date();
+			primeiroDia = getMatricula().getDataMatricula();
 
 		this.setValorMensalidade(this.getMatricula().getValorMensalidade()
 				* this.getMatricula().getPercentualDeAulasMes(this.getMesReferencia(), primeiroDia));
@@ -195,7 +194,7 @@ public class MensalidadeDO {
 	}
 
 	public Date getDataPagamento() {
-		if(this.getPagamentoMensalidade() != null)
+		if (this.getPagamentoMensalidade() != null)
 			return this.getPagamentoMensalidade().getData();
 		return null;
 	}

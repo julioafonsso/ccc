@@ -158,7 +158,7 @@ public class WorkShopDO extends TurmaDO {
 		this.setModalidade(this.getRepositorio().getModalidade(cadastro.getIdModalidade()));
 
 		this.setHorarioInicial(cadastro.getHorarioInicial());
-		this.setHorarioFinal(cadastro.getHorarioInicial());
+		this.setHorarioFinal(cadastro.getHorarioFinal());
 		this.setVagas(cadastro.getQtdVagas());
 		this.setDataInicio(cadastro.getDataInicio());
 		this.setDataTermino(cadastro.getDataFim());

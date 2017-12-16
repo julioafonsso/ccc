@@ -52,7 +52,7 @@ public class MatriculaRepositorio {
 			matricula.setDesconto(this.descontoDAO.findOne(cadastro.getIdDesconto()));
 		
 		matricula.setDiaVencimento(cadastro.getDiaVencimento());
-		matricula.setDataMatricula(new Date());
+		matricula.setDataMatricula(cadastro.getDataMatricula());
 		
 		return matricula;
 	}

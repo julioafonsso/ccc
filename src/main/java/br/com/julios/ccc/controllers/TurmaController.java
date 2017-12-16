@@ -1,7 +1,5 @@
 package br.com.julios.ccc.controllers;
 
-import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.DatatypeConverter;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import br.com.julios.ccc.Excel;
 import br.com.julios.ccc.infra.bd.daos.MatriculaDAO;
 import br.com.julios.ccc.infra.bd.daos.TurmaColetivaDAO;
-import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.matricula.ConsultaAlunosMatriculadosDTO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.CadastroTurmaColetivaDTO;
