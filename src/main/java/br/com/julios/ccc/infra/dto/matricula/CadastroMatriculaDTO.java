@@ -1,5 +1,6 @@
 package br.com.julios.ccc.infra.dto.matricula;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import br.com.julios.ccc.util.Util;
@@ -16,8 +17,8 @@ public class CadastroMatriculaDTO {
 	public Date getDataMatricula() {
 		return dataMatricula;
 	}
-	public void setDataMatricula(Date dataMatricula) {
-		this.dataMatricula = dataMatricula;
+	public void setDataMatricula(String dataMatricula) throws ParseException {
+		this.dataMatricula =  Util.parseDate(dataMatricula);
 	}
 	public Long getIdTurma() {
 		return idTurma;

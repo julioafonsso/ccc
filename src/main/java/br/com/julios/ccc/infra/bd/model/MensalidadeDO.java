@@ -126,7 +126,7 @@ public class MensalidadeDO {
 	public void cadastrar() throws ParseException {
 
 		this.calculaValor();
-		if (this.valorMensalidade.longValue() > 0) {
+		if (this.valorMensalidade.longValue() > 0 && this.getMatricula().getDataExclusao() == null ) {
 			this.calcularVencimentoProximoMes();
 			this.getRepositorio().cadastrar(this);
 		}

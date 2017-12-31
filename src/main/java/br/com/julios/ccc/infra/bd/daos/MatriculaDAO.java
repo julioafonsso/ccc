@@ -114,18 +114,21 @@ public interface MatriculaDAO extends JpaRepository<MatriculaDO, Long>{
 	
 	
 	@Query("select new br.com.julios.ccc.infra.dto.matricula.ConsultaAlunosMatriculadosDTO (" +
+			" m.id ,"+
 			" m.aluno.nome ,"+
 			" m.aluno.cpf ,"+
 			" m.aluno.email ,"+
 			" d.nome,  "+
 			" d.valor, " +
 			" m.dataMatricula , "+
-			" m.aluno.dataNascimento ) "+
-			" from MatriculaDO m "
+			" m.aluno.dataNascimento, " +
+			" (select min(mm.dataVencimento) from MensalidadeDO mm  LEFT OUTER JOIN mm.pagamentoMensalidade p  where mm.matricula = m and p is null) " +
+			") "+
+			" from "
+			+ " MatriculaDO m "
 			+ " LEFT OUTER JOIN m.desconto AS d "
 			+ " where m.turma.id = ?1 "
 			+ " and m.dataExclusao is null order by m.aluno.nome "
-			
 			+ " ")
 	public List<ConsultaAlunosMatriculadosDTO> getAlunosMatriculados(Long idTurma);
 

@@ -2,6 +2,11 @@ package br.com.julios.ccc.infra.dto.matricula;
 
 import java.util.Date;
 
+import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.infra.bd.daos.MensalidadeDAO;
+import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
+import br.com.julios.ccc.repositorios.MatriculaRepositorio;
+
 public class ConsultaAlunosMatriculadosDTO {
 
 	private String nome;
@@ -11,6 +16,10 @@ public class ConsultaAlunosMatriculadosDTO {
 	private Long valorDesconto;
 	private Date dataMatricula;
 	private Date dataNascimento;
+	private boolean estaAtrasado;
+	
+	private Date dataUltimoPagamento;
+	private Double valorUltimoPagamento;
 	
 	public Date getDataMatricula() {
 		return dataMatricula;
@@ -21,13 +30,15 @@ public class ConsultaAlunosMatriculadosDTO {
 	}
 
 	public ConsultaAlunosMatriculadosDTO(
+			Long id,
 			String nome,
 			String cpf,
 			String email,
 			String nomeDesconto,
 			Long valorDesconto,
 			Date dataMatricula,
-			Date dataNascimento) {
+			Date dataNascimento,
+			Date mensalidadeAntga) {
 		this.setCpf(cpf);
 		this.setEmail(email);
 		this.setNome(nome);
@@ -35,7 +46,20 @@ public class ConsultaAlunosMatriculadosDTO {
 		this.setValorDesconto(valorDesconto);
 		this.setDataMatricula(dataMatricula);
 		this.setDataNascimento(dataNascimento);
+		this.setEstaAtrasado( mensalidadeAntga != null && new Date().after(mensalidadeAntga));
+		this.loadUltimaMensalidade(id);
 	}
+	
+	private void loadUltimaMensalidade(Long id) {
+		MensalidadeDAO men = Contexto.bean(MensalidadeDAO.class);
+		MensalidadeDO mensalidade = men.getUtilmamensalidadePaga(id);
+		if(mensalidade != null)
+		{
+			this.setDataUltimoPagamento(mensalidade.getDataPagamento());
+			this.setValorUltimoPagamento(mensalidade.getValorPago());
+		}
+	}
+	
 	
 	public Date getDataNascimento() {
 		return dataNascimento;
@@ -74,6 +98,30 @@ public class ConsultaAlunosMatriculadosDTO {
 	}
 	public void setValorDesconto(Long valorDesconto) {
 		this.valorDesconto = valorDesconto;
+	}
+
+	public boolean isEstaAtrasado() {
+		return estaAtrasado;
+	}
+
+	public void setEstaAtrasado(boolean estaAtrasado) {
+		this.estaAtrasado = estaAtrasado;
+	}
+
+	public Date getDataUltimoPagamento() {
+		return dataUltimoPagamento;
+	}
+
+	public void setDataUltimoPagamento(Date dataUltimoPagamento) {
+		this.dataUltimoPagamento = dataUltimoPagamento;
+	}
+
+	public Double getValorUltimoPagamento() {
+		return valorUltimoPagamento;
+	}
+
+	public void setValorUltimoPagamento(Double valorUltimoPagamento) {
+		this.valorUltimoPagamento = valorUltimoPagamento;
 	}
 	
 	

@@ -200,4 +200,9 @@ public class MatriculaDO {
 	{
 		return this.getTurma().getDataInicio();
 	}
+
+	public void excluir() {
+		this.setDataExclusao(new Date());
+		this.getRepositorio().cadastrar(this);
+	}
 }

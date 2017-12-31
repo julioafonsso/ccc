@@ -66,6 +66,13 @@ public class MatriculaController {
 		MatriculaDO matricula = this.matriculaRepositorio.getMatricula(idMatricula);
 		matricula.alterarDesconto(desconto);
 	}
+
+	
+	@RequestMapping(value = "{idMatricula}", method = RequestMethod.DELETE)
+	public void excluir(@PathVariable("idMatricula") Long idMatricula) throws Exception{
+		MatriculaDO matricula = this.matriculaRepositorio.getMatricula(idMatricula);
+		matricula.excluir();
+	}
 	
 	
 	@RequestMapping(method = RequestMethod.POST)
