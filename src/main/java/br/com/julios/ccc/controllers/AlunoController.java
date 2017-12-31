@@ -30,6 +30,7 @@ import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.aluno.CadastroAlunoDTO;
+import br.com.julios.ccc.infra.dto.aluno.CadastroPagamentoMaticulaDTO;
 import br.com.julios.ccc.infra.dto.aluno.CadastroPagamentosDTO;
 import br.com.julios.ccc.infra.dto.aluno.ConsultaAlunoDTO;
 import br.com.julios.ccc.infra.dto.aluno.ConsultaHistoricoPagamentoDTO;
@@ -273,6 +274,19 @@ public class AlunoController {
 			cadastroMatricula.setIdAluno(idAluno);
 					
 			matricula.matricular(cadastroMatricula);
+		}
+		
+		for(CadastroPagamentoMaticulaDTO mat: cadastro.getMatriculas()) {
+			MatriculaDO matricula =  matriculaRepositorio.getMatricula(mat.getIdMatricula());
+
+			FluxoCaixaDO pagamento = pagamentoRepositorio.getFluxoPagamentoMatricula(matricula, mat.getValor());
+			if(pagamento.getValor().longValue() > 0)
+			{
+				matricula.setPagamentroMatricula(pagamento);
+				pagamento.cadastrar();
+				email.enviarEmailReciboMatricula(matricula, pagamento);
+			}
+			
 		}
 		
 	}

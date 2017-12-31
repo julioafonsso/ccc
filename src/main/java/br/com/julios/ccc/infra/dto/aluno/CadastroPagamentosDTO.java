@@ -11,9 +11,16 @@ public class CadastroPagamentosDTO {
 	private List<ConsultaMensalidadeDTO> mensalidadesParaPagar;
 	private List<CadastroAulaIndividualDTO> aulasParticulares;
 	private List<ConsultaWorkShopDTO> workShop;
-	 
+	private List<CadastroPagamentoMaticulaDTO> matriculas;
 	
 	
+	
+	public List<CadastroPagamentoMaticulaDTO> getMatriculas() {
+		return matriculas;
+	}
+	public void setMatriculas(List<CadastroPagamentoMaticulaDTO> matriculas) {
+		this.matriculas = matriculas;
+	}
 	public List<ConsultaWorkShopDTO> getWorkShop() {
 		return workShop;
 	}
