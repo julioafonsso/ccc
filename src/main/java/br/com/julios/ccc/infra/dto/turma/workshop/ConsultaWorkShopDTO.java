@@ -5,30 +5,17 @@ import java.util.Date;
 
 import br.com.julios.ccc.infra.dto.turma.ConsultaTurmaDTO;
 
-public class ConsultaWorkShopDTO extends ConsultaTurmaDTO implements Serializable{
+public class ConsultaWorkShopDTO extends ConsultaTurmaDTO implements Serializable {
 
 	public ConsultaWorkShopDTO() {
 		super(null, null, null, null, null, null, null);
 	}
-	
-	public ConsultaWorkShopDTO(Long id,
-							   String codigo, 
-							   Long idProfessor1, 
-							   String nomeProfessor1, 
-							   Double percentualProfessor1,
-							   Long idProfessor2,
-								String nomeProfessor2,
-								Double percentualProfessor2,
-							   Long idModalidade,
-							   String nomeModalidade,
-							   Integer qtdVagas,
-								Double valorMensalidade,
-								String horarioInicial,
-								String horarioFinal,
-								Date dataInicio,
-								Date dataFim
-							   ) {
-		super(id,codigo, idProfessor1, nomeProfessor1, percentualProfessor1, idModalidade, nomeModalidade);
+
+	public ConsultaWorkShopDTO(Long id, String codigo, Long idProfessor1, String nomeProfessor1,
+			Double percentualProfessor1, Long idProfessor2, String nomeProfessor2, Double percentualProfessor2,
+			Long idModalidade, String nomeModalidade, Integer qtdVagas, Double valorMensalidade, String horarioInicial,
+			String horarioFinal, Date dataInicio, Date dataFim) {
+		super(id, codigo, idProfessor1, nomeProfessor1, percentualProfessor1, idModalidade, nomeModalidade);
 		this.setIdProfessor2(idProfessor2);
 		this.setNomeProfessor2(nomeProfessor2);
 		this.setPercentualProfessor2(percentualProfessor2);
@@ -49,6 +36,15 @@ public class ConsultaWorkShopDTO extends ConsultaTurmaDTO implements Serializabl
 	private String horarioFinal;
 	private Date dataInicio;
 	private Date dataFim;
+	private String observacao;
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
 
 	public Long getIdProfessor2() {
 		return idProfessor2;

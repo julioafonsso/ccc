@@ -48,5 +48,8 @@ public interface MensalidadeDAO extends JpaRepository<MensalidadeDO, Long>{
 	
 	@Query("select max(m) from MensalidadeDO m where m.matricula.id = ?1 and m.pagamentoMensalidade is not null ")
 	public MensalidadeDO getUtilmamensalidadePaga(Long id);
+
+	@Query("select min(m) from MensalidadeDO m where m.matricula.id = ?1 and m.pagamentoMensalidade is  null and m.dataVencimento <  CURRENT_DATE")
+	public MensalidadeDO getMensalidadesVencidas(Long idMatricula);
 	
 }

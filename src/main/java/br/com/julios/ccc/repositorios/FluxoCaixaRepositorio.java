@@ -26,13 +26,13 @@ public class FluxoCaixaRepositorio {
 	@Autowired
 	TipoFluxoCaixaDAO tipoFluxoDAO;
 
-	public FluxoCaixaDO getFluxoPagamentoMatricula(MatriculaDO matricula, Double valor) throws ParseException {
+	public FluxoCaixaDO getFluxoPagamentoMatricula(MatriculaDO matricula, Double valor, String observacao) throws ParseException {
 		FluxoCaixaDO pagamento = new FluxoCaixaDO();
 		pagamento.setData(matricula.getDataMatricula());
-		pagamento.setDescricao((matricula.getNomeAluno()));
-		pagamento.setObservacao( matricula.getCodigoTurma() + " - " + matricula.getNomeModalidade());
+		pagamento.setDescricao((matricula.getNomeAluno() +  matricula.getCodigoTurma() + " - " + matricula.getNomeModalidade()));
+		pagamento.setObservacao(observacao);
 		pagamento.setTipoFluxo(tipoFluxoDAO.findOne(TipoFluxoCaixaDO.MATRICULA));
-		if(valor != null && valor.longValue() > 0)
+		if (valor != null && valor.longValue() > 0)
 			pagamento.setValor(valor);
 		else
 			pagamento.setValor(new Double(0));
@@ -55,15 +55,16 @@ public class FluxoCaixaRepositorio {
 		fluxoDAO.save(fluxoCaixaDO);
 	}
 
-	public FluxoCaixaDO getPagamentoMensalidade(MensalidadeDO mensalidade, Double valor) throws Exception {
+	public FluxoCaixaDO getPagamentoMensalidade(MensalidadeDO mensalidade, Double valor, String observacao)
+			throws Exception {
 		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
 		cadastro.setIdTipo(TipoFluxoCaixaDO.MENSALIDADE);
 		cadastro.setData(new Date());
 		cadastro.setQtd(new Long(1));
 		cadastro.setValor(valor);
-		cadastro.setDescricao( mensalidade.getNomeAluno() );
-		cadastro.setObservacao( mensalidade.getCodigoTurma() + " - " + mensalidade.getNomeModalidade() + " - " + 
-				mensalidade.getMesReferencia().getMesFormatado());
+		cadastro.setDescricao(mensalidade.getNomeAluno() + "  -   " + mensalidade.getCodigoTurma() + " - "
+				+ mensalidade.getNomeModalidade() + " - " + mensalidade.getMesReferencia().getMesFormatado());
+		cadastro.setObservacao(observacao);
 		return this.getFluxo(cadastro);
 	}
 
@@ -76,14 +77,16 @@ public class FluxoCaixaRepositorio {
 		cadastro.setDescricao(mensalidade.getNomeAluno());
 		return this.getFluxo(cadastro);
 	}
-	
-	public FluxoCaixaDO getPagamentoAulaParticular(String aluno, Long qtdAulas, Double valor) throws Exception {
+
+	public FluxoCaixaDO getPagamentoAulaParticular(String aluno, Long qtdAulas, Double valor, String observacao)
+			throws Exception {
 		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
 		cadastro.setIdTipo(TipoFluxoCaixaDO.AULA_PARTICULAR);
 		cadastro.setData(new Date());
 		cadastro.setQtd(new Long(qtdAulas));
 		cadastro.setValor(valor);
 		cadastro.setDescricao(aluno);
+		cadastro.setObservacao(observacao);
 		return this.getFluxo(cadastro);
 	}
 
@@ -95,11 +98,11 @@ public class FluxoCaixaRepositorio {
 		cadastro.setValor(comissao.getValor());
 		cadastro.setDescricao("Pagamento Professor - " + comissao.getNomeFuncionario());
 		cadastro.setObservacao("Mes Referencia: " + comissao.getNomeMes());
-		
+
 		return getFluxo(cadastro);
 	}
 
-	public FluxoCaixaDO getPagamentoComissao( MesReferenciaDO mes, String nomeProfessor) throws ParseException {
+	public FluxoCaixaDO getPagamentoComissao(MesReferenciaDO mes, String nomeProfessor) throws ParseException {
 
 		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
 		cadastro.setIdTipo(TipoFluxoCaixaDO.PAGAMENTO_PROFESSOR);
@@ -108,12 +111,12 @@ public class FluxoCaixaRepositorio {
 		cadastro.setValor(new Double(0));
 		cadastro.setDescricao("Pagamento Professor - " + nomeProfessor);
 		cadastro.setObservacao("Mes Referencia: " + mes.getNomeMes());
-		
+
 		return getFluxo(cadastro);
 	}
 
 	public FluxoCaixaDO getPagamentoSalario(PagamentoFuncionariosDO salario, Double valor) throws ParseException {
-		
+
 		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
 		cadastro.setIdTipo(TipoFluxoCaixaDO.PAGAMENTO_SALARIO);
 		cadastro.setData(new Date());
@@ -121,7 +124,7 @@ public class FluxoCaixaRepositorio {
 		cadastro.setValor(valor);
 		cadastro.setDescricao("Pagamento - " + salario.getNomeFuncionario());
 		cadastro.setObservacao("Mes Referencia: " + salario.getMes());
-		
+
 		return getFluxo(cadastro);
 	}
 

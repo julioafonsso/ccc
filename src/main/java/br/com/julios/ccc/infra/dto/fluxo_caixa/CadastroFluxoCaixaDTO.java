@@ -40,7 +40,8 @@ public class CadastroFluxoCaixaDTO {
 		return observacao;
 	}
 	public void setObservacao(String observacao) {
-		this.observacao = observacao.toUpperCase();
+		if(observacao != null)
+			this.observacao = observacao.toUpperCase();
 	}
 	public String getDescricao() {
 		return descricao;

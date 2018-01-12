@@ -3,8 +3,8 @@ package br.com.julios.ccc.infra.dto.menslidade;
 import java.io.Serializable;
 import java.util.Date;
 
-public class ConsultaMensalidadeDTO implements Serializable{
-	
+public class ConsultaMensalidadeDTO implements Serializable {
+
 	/**
 	 * 
 	 */
@@ -18,11 +18,21 @@ public class ConsultaMensalidadeDTO implements Serializable{
 	private Double valorCalculado;
 	private Long desconto;
 	private String codigoTurma;
-	
-	public ConsultaMensalidadeDTO() {}
-	
-	public ConsultaMensalidadeDTO(Long id,String codigoTurma, String nomeModalidade, Date dataVencimento,
-			Long mes, Long ano, Double valorMensalidade, Long desconto) {
+	private String observacao;
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
+	public ConsultaMensalidadeDTO() {
+	}
+
+	public ConsultaMensalidadeDTO(Long id, String codigoTurma, String nomeModalidade, Date dataVencimento, Long mes,
+			Long ano, Double valorMensalidade, Long desconto) {
 
 		this.setId(id);
 		this.setCodigoTurma(codigoTurma);
@@ -53,17 +63,17 @@ public class ConsultaMensalidadeDTO implements Serializable{
 		this.desconto = desconto;
 	}
 
-	
 	private void setMesReferencia(Long mes, Long ano) {
 		this.setMesReferencia(mes + "/" + ano);
-		
+
 	}
 
 	private void calculaValor() {
 		if (new Date().after(this.getDataVencimento())) {
 			this.setValorCalculado(this.getValorMensalidade() * 1.1);
 		} else {
-			this.setValorCalculado(this.getValorMensalidade() - (this.getValorMensalidade() * this.getDesconto() / 100));
+			this.setValorCalculado(
+					this.getValorMensalidade() - (this.getValorMensalidade() * this.getDesconto() / 100));
 		}
 	}
 
@@ -83,7 +93,6 @@ public class ConsultaMensalidadeDTO implements Serializable{
 		this.nomeModalidade = nomeModalidade;
 	}
 
-
 	public Date getDataVencimento() {
 		return dataVencimento;
 	}
@@ -101,7 +110,7 @@ public class ConsultaMensalidadeDTO implements Serializable{
 	}
 
 	public Double getValorMensalidade() {
-		if(this.valorMensalidade == null)
+		if (this.valorMensalidade == null)
 			return new Double(0);
 		return valorMensalidade;
 	}
@@ -118,16 +127,12 @@ public class ConsultaMensalidadeDTO implements Serializable{
 		this.valorCalculado = valorCalculado;
 	}
 
-
 	public Date getDataPagamento() {
 		return dataPagamento;
 	}
-
 
 	public void setDataPagamento(Date dataPagamento) {
 		this.dataPagamento = dataPagamento;
 	}
 
-	
-	
 }

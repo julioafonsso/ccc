@@ -17,7 +17,15 @@ public class ConsultaAlunosMatriculadosDTO {
 	private Date dataMatricula;
 	private Date dataNascimento;
 	private boolean estaAtrasado;
-	
+	private Long id;
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	private Date dataUltimoPagamento;
 	private Double valorUltimoPagamento;
 	
@@ -48,6 +56,8 @@ public class ConsultaAlunosMatriculadosDTO {
 		this.setDataNascimento(dataNascimento);
 		this.setEstaAtrasado( mensalidadeAntga != null && new Date().after(mensalidadeAntga));
 		this.loadUltimaMensalidade(id);
+		this.setId(id);
+		
 	}
 	
 	private void loadUltimaMensalidade(Long id) {

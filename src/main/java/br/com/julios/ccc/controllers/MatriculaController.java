@@ -80,13 +80,6 @@ public class MatriculaController {
 
 		MatriculaDO matricula =  matriculaRepositorio.getMatricula(cadastro);
 
-//		FluxoCaixaDO pagamento = fluxoRepositorio.getFluxoPagamentoMatricula(matricula, cadastro.getValor());
-//		
-//		if(pagamento.getValor().longValue() > 0)
-//		{
-//			matricula.setPagamentroMatricula(pagamento);
-//			pagamento.cadastrar();	
-//		}
 		
 		matricula.cadastrar();
 		// É criado uma mensalidade pois o Isnard pediu para WorkShop ser tratado assim.
@@ -108,9 +101,6 @@ public class MatriculaController {
 			}
 			email.enviarEmailWorkShop(matricula,pagamentoWork );
 		}
-//		else{
-//			email.enviarEmailReciboMatricula(matricula, pagamento);
-//		}
 		
 		return matricula.getId();
 		

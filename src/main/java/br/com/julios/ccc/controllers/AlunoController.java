@@ -77,19 +77,19 @@ public class AlunoController {
 
 	@Autowired
 	private MensalidadeDAO mensalidadeDAO;
-	
+
 	@Autowired
 	private PagamentoFuncionarioRepositorio comissaoRepositorio;
-	
+
 	@Autowired
 	private MesRerefenciaRepositorio mesRepositorio;
 
 	@Autowired
 	private EmailApi email;
-	
+
 	@Autowired
 	private MatriculaController matricula;
-	
+
 	//
 	// @Autowired
 	// private HttpServletRequest http;
@@ -99,11 +99,18 @@ public class AlunoController {
 		return alunoDAO.getAlunos(idAluno);
 	}
 
+	@RequestMapping(value = "email-cobranca/{idMatricula}", method = RequestMethod.POST)
+	public void enviarEmailCobrancao(@PathVariable("idMatricula") Long idMatricula  ) throws Exception {
+		
+		MensalidadeDO mensalidades = this.mensalidadeRepositorio.getMensalidadesVencida(idMatricula);
+		this.email.enviarEmailCobranca(mensalidades);
+	}
+	
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	public void deleteAluno(@PathVariable("id") Long idAluno) throws Exception {
 		this.alunoRepositorio.getAluno(idAluno).delete();
 	}
-	
+
 	@RequestMapping(value = "{id}/turmas", method = RequestMethod.GET)
 	public List<ConsultaMatriculaDTO> getTurmas(@PathVariable("id") Long idAluno) {
 		return matriculaDAO.getMatriculas(idAluno);
@@ -116,7 +123,7 @@ public class AlunoController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ConsultaAlunoDTO cadastrarAluno(@RequestBody CadastroAlunoDTO aluno) throws Exception {
-		ConsultaAlunoDTO retorno =alunoRepositorio.getAluno(aluno).cadastrar() ;
+		ConsultaAlunoDTO retorno = alunoRepositorio.getAluno(aluno).cadastrar();
 		return retorno;
 	}
 
@@ -125,20 +132,17 @@ public class AlunoController {
 		return alunoRepositorio.getAluno(aluno.getId()).atualizar(aluno);
 	}
 
-	
 	@RequestMapping(value = "{id}/debitos", method = RequestMethod.GET)
 	public List<ConsultaMensalidadeDTO> getDebitos(@PathVariable("id") Long idAluno) throws Exception {
 		return mensalidadeDAO.getMensalidadesAluno(idAluno);
 	}
 
-	@RequestMapping(value = "{idAluno}/debitos/{idMensalidade}/pagamento", method = RequestMethod.POST)
-	public void efetuarPagamento(@PathVariable("idAluno") Long idAluno,
-			@PathVariable("idMensalidade") Long idMensalidade, @RequestBody Double valor) throws Exception {
+	public void efetuarPagamento(Long idAluno, Long idMensalidade, Double valor, String observacao) throws Exception {
 		MensalidadeDO mensalidade = mensalidadeRepositorio.getMensalidade(idMensalidade);
 
 		TurmaColetivaDO turma = (TurmaColetivaDO) mensalidade.getTurma();
 
-		FluxoCaixaDO pagamento = pagamentoRepositorio.getPagamentoMensalidade(mensalidade, valor);
+		FluxoCaixaDO pagamento = pagamentoRepositorio.getPagamentoMensalidade(mensalidade, valor, observacao);
 
 		pagamento.cadastrar();
 
@@ -147,11 +151,13 @@ public class AlunoController {
 		List<FuncionarioDO> professores = turma.getProfessores();
 
 		for (FuncionarioDO func : professores) {
-			ComissaoProfessorDO comissao = comissaoRepositorio.getComissao(mensalidade, this.mesRepositorio.getMesAtual(), func);
+			ComissaoProfessorDO comissao = comissaoRepositorio.getComissao(mensalidade,
+					this.mesRepositorio.getMesAtual(), func);
 			comissao.cadastrar();
 		}
 
-		MensalidadeDO mensalidadeNova = mensalidadeRepositorio.getMensalidade(mensalidade.getMatricula(), mensalidade.getMesReferencia().getProximoMes());
+		MensalidadeDO mensalidadeNova = mensalidadeRepositorio.getMensalidade(mensalidade.getMatricula(),
+				mensalidade.getMesReferencia().getProximoMes());
 		mensalidadeNova.cadastrar();
 		email.enviarEmailReciboMensalidade(mensalidade);
 	}
@@ -171,23 +177,23 @@ public class AlunoController {
 		diaFim = c.getTime();
 
 		List<ConsultaHistoricoPagamentoDTO> retorno = new ArrayList<ConsultaHistoricoPagamentoDTO>();
-		
+
 		retorno.addAll(alunoDAO.getMensalidadesPagasAluno(idAluno, diaInicio, diaFim));
 		retorno.addAll(alunoDAO.getMatriculasPagas(idAluno, diaInicio, diaFim));
 		retorno.addAll(alunoDAO.getWorkShopsPago(idAluno, diaInicio, diaFim));
 		retorno.addAll(alunoDAO.getAulasParticularesPagas(idAluno, diaInicio, diaFim));
-		
+
 		retorno.sort(new Comparator<ConsultaHistoricoPagamentoDTO>() {
 
 			@Override
 			public int compare(ConsultaHistoricoPagamentoDTO o1, ConsultaHistoricoPagamentoDTO o2) {
-					if(o1.getIdPagamento().longValue() < o2.getIdPagamento().longValue())
-						return 1;
-					else 
-						return -1;	
+				if (o1.getIdPagamento().longValue() < o2.getIdPagamento().longValue())
+					return 1;
+				else
+					return -1;
 			}
 		});
-		
+
 		return retorno;
 	}
 
@@ -207,17 +213,17 @@ public class AlunoController {
 		MensalidadeDO mensalidade = mensalidadeRepositorio.getMensalidade(matricula);
 
 		FluxoCaixaDO pagamento = pagamentoRepositorio.getPagamentoAulaParticular(matricula.getNomeAluno(),
-				cadastro.getQtdAulas(), cadastro.getValorPago());
+				cadastro.getQtdAulas(), cadastro.getValorPago(), cadastro.getObservacao());
 
 		pagamento.cadastrar();
 
 		mensalidade.cadastrar();
 		mensalidade.cadastrarPagamento(pagamento);
-		
 
-		ComissaoProfessorDO comissao = this.comissaoRepositorio.getComissao(mensalidade, this.mesRepositorio.getMesAtual(), turma.getProfessor1());
+		ComissaoProfessorDO comissao = this.comissaoRepositorio.getComissao(mensalidade,
+				this.mesRepositorio.getMesAtual(), turma.getProfessor1());
 		comissao.cadastrar();
-		
+
 		email.enviarEmailAulaParticular(matricula, turma, pagamento);
 	}
 
@@ -257,38 +263,37 @@ public class AlunoController {
 	}
 
 	@RequestMapping(value = "{id}/pagamentos", method = RequestMethod.POST)
-	public void efetuarPagamentos(@PathVariable("id") Long idAluno,@RequestBody CadastroPagamentosDTO cadastro) throws Exception
-	{
-		
+	public void efetuarPagamentos(@PathVariable("id") Long idAluno, @RequestBody CadastroPagamentosDTO cadastro)
+			throws Exception {
+
 		for (CadastroAulaIndividualDTO aula : cadastro.getAulasParticulares()) {
 			this.cadastrarAulaParticular(idAluno, aula);
 		}
-		
+
 		for (ConsultaMensalidadeDTO mensalidade : cadastro.getMensalidadesParaPagar()) {
-			this.efetuarPagamento(idAluno, mensalidade.getId() ,mensalidade.getValorCalculado());
+			this.efetuarPagamento(idAluno, mensalidade.getId(), mensalidade.getValorCalculado(), mensalidade.getObservacao());
 		}
-		
-		for (ConsultaWorkShopDTO work: cadastro.getWorkShop()) {
+
+		for (ConsultaWorkShopDTO work : cadastro.getWorkShop()) {
 			CadastroMatriculaDTO cadastroMatricula = new CadastroMatriculaDTO();
 			cadastroMatricula.setIdTurma(work.getId());
 			cadastroMatricula.setIdAluno(idAluno);
-					
+
 			matricula.matricular(cadastroMatricula);
 		}
-		
-		for(CadastroPagamentoMaticulaDTO mat: cadastro.getMatriculas()) {
-			MatriculaDO matricula =  matriculaRepositorio.getMatricula(mat.getIdMatricula());
 
-			FluxoCaixaDO pagamento = pagamentoRepositorio.getFluxoPagamentoMatricula(matricula, mat.getValor());
-			if(pagamento.getValor().longValue() > 0)
-			{
+		for (CadastroPagamentoMaticulaDTO mat : cadastro.getMatriculas()) {
+			MatriculaDO matricula = matriculaRepositorio.getMatricula(mat.getIdMatricula());
+
+			FluxoCaixaDO pagamento = pagamentoRepositorio.getFluxoPagamentoMatricula(matricula, mat.getValor(), mat.getObservacao());
+			if (pagamento.getValor().longValue() > 0) {
 				matricula.setPagamentroMatricula(pagamento);
 				pagamento.cadastrar();
 				email.enviarEmailReciboMatricula(matricula, pagamento);
 			}
-			
+
 		}
-		
+
 	}
-	
+
 }
