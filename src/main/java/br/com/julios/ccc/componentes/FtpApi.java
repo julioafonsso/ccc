@@ -14,6 +14,8 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.twelvemonkeys.imageio.plugins.jpeg.JPEGImageReader;
+
 @Service
 public class FtpApi {
 
@@ -56,7 +58,9 @@ public class FtpApi {
 
 			ByteArrayInputStream baIn = new ByteArrayInputStream(imagemData);
 			
-			BufferedImage originalImage = ImageIO.read(baIn); 
+			BufferedImage originalImage = ImageIO.read(baIn);
+			
+			
 			int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
 
 			BufferedImage resizeImageJpg = resizeImage(originalImage, type);
