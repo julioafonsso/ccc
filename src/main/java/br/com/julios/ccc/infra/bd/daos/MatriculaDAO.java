@@ -122,7 +122,9 @@ public interface MatriculaDAO extends JpaRepository<MatriculaDO, Long>{
 			" d.valor, " +
 			" m.dataMatricula , "+
 			" m.aluno.dataNascimento, " +
-			" (select min(mm.dataVencimento) from MensalidadeDO mm  LEFT OUTER JOIN mm.pagamentoMensalidade p  where mm.matricula = m and p is null) " +
+			" (select min(mm.dataVencimento) from MensalidadeDO mm  LEFT OUTER JOIN mm.pagamentoMensalidade p  where mm.matricula = m and p is null),"
+			+ "(select count(*) from ControleEmailCobrancaDO c where c.matricula = m ),"
+			+ "(select max(c.dataEnvio) from ControleEmailCobrancaDO c where c.matricula = m ) " +
 			") "+
 			" from "
 			+ " MatriculaDO m "

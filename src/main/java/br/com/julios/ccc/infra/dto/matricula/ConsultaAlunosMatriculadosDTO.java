@@ -5,7 +5,6 @@ import java.util.Date;
 import br.com.julios.ccc.infra.Contexto;
 import br.com.julios.ccc.infra.bd.daos.MensalidadeDAO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
-import br.com.julios.ccc.repositorios.MatriculaRepositorio;
 
 public class ConsultaAlunosMatriculadosDTO {
 
@@ -18,25 +17,11 @@ public class ConsultaAlunosMatriculadosDTO {
 	private Date dataNascimento;
 	private boolean estaAtrasado;
 	private Long id;
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	private Date dataUltimoPagamento;
 	private Double valorUltimoPagamento;
+	private Long qtdEmailEnviados;
+	private Date ultimoEmail;
 	
-	public Date getDataMatricula() {
-		return dataMatricula;
-	}
-
-	public void setDataMatricula(Date dataMatricula) {
-		this.dataMatricula = dataMatricula;
-	}
-
 	public ConsultaAlunosMatriculadosDTO(
 			Long id,
 			String nome,
@@ -46,7 +31,9 @@ public class ConsultaAlunosMatriculadosDTO {
 			Long valorDesconto,
 			Date dataMatricula,
 			Date dataNascimento,
-			Date mensalidadeAntga) {
+			Date mensalidadeAntga,
+			Long qtdEmailEnviados,
+			Date ultimoEmail) {
 		this.setCpf(cpf);
 		this.setEmail(email);
 		this.setNome(nome);
@@ -57,8 +44,44 @@ public class ConsultaAlunosMatriculadosDTO {
 		this.setEstaAtrasado( mensalidadeAntga != null && new Date().after(mensalidadeAntga));
 		this.loadUltimaMensalidade(id);
 		this.setId(id);
+		this.setQtdEmailEnviados(qtdEmailEnviados);
+		this.setUltimoEmail(ultimoEmail);
 		
 	}
+
+	public Long getQtdEmailEnviados() {
+		return qtdEmailEnviados;
+	}
+
+	public void setQtdEmailEnviados(Long qtdEmailEnviados) {
+		this.qtdEmailEnviados = qtdEmailEnviados;
+	}
+
+	public Date getUltimoEmail() {
+		return ultimoEmail;
+	}
+
+	public void setUltimoEmail(Date ultimoEmail) {
+		this.ultimoEmail = ultimoEmail;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Date getDataMatricula() {
+		return dataMatricula;
+	}
+
+	public void setDataMatricula(Date dataMatricula) {
+		this.dataMatricula = dataMatricula;
+	}
+
+	
 	
 	private void loadUltimaMensalidade(Long id) {
 		MensalidadeDAO men = Contexto.bean(MensalidadeDAO.class);
