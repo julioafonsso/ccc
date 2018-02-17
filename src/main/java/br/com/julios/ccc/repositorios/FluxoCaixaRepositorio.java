@@ -25,6 +25,11 @@ public class FluxoCaixaRepositorio {
 
 	@Autowired
 	TipoFluxoCaixaDAO tipoFluxoDAO;
+	
+	public TipoFluxoCaixaDO getTipo(Long id)
+	{
+		return this.tipoFluxoDAO.findOne(id);
+	}
 
 	public FluxoCaixaDO getFluxoPagamentoMatricula(MatriculaDO matricula, Double valor, String observacao) throws ParseException {
 		FluxoCaixaDO pagamento = new FluxoCaixaDO();
@@ -126,6 +131,10 @@ public class FluxoCaixaRepositorio {
 		cadastro.setObservacao("Mes Referencia: " + salario.getMes());
 
 		return getFluxo(cadastro);
+	}
+
+	public FluxoCaixaDO getFluxo(Long idFluxo) {
+				return fluxoDAO.findOne(idFluxo);
 	}
 
 }

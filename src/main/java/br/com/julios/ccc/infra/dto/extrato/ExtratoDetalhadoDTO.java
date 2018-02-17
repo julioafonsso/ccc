@@ -4,17 +4,21 @@ import java.util.Date;
 
 public class ExtratoDetalhadoDTO {
 
+	public Long id;
 	public Date data;
 	public Double valor;
 	public Long quantidade;
 	public String observacao;
 	public String descricao;
 
-	public ExtratoDetalhadoDTO(Date data, 
+	public ExtratoDetalhadoDTO(
+								Long id,
+								Date data, 
 							   Double valor, 
 							   Long quantidade, 
 							   String observacao, 
 							   String descricao) {
+		this.setId(id);
 		this.setData(data);
 		this.setDescricao(descricao);
 		this.setObservacao(observacao);
@@ -61,5 +65,15 @@ public class ExtratoDetalhadoDTO {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	
 
 }

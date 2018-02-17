@@ -18,6 +18,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
+import br.com.julios.ccc.infra.dto.fluxo_caixa.CadastroFluxoCaixaDTO;
 import br.com.julios.ccc.repositorios.FluxoCaixaRepositorio;
 
 @Entity
@@ -131,6 +132,16 @@ public class FluxoCaixaDO {
 	public void cadastrar() {
 		this.getRepositorio().cadastrar(this);
 		
+	}
+
+	public void alterar(CadastroFluxoCaixaDTO fluxoCaixa) throws ParseException {
+		this.setObservacao(fluxoCaixa.getObservacao());
+		this.setDescricao(fluxoCaixa.getDescricao());
+		this.setData(fluxoCaixa.getData());
+		this.setQuantidade(fluxoCaixa.getQtd());
+		this.setValor(fluxoCaixa.getValor());
+		this.setTipoFluxo(this.getRepositorio().getTipo(fluxoCaixa.getIdTipo()));
+		this.getRepositorio().cadastrar(this);
 	}
 
 }

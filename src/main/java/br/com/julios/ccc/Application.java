@@ -1,5 +1,13 @@
 package br.com.julios.ccc;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.SocketException;
+
+import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -29,15 +37,21 @@ public class Application extends SpringBootServletInitializer {
 		return configureApplication(builder);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SocketException, IOException {
 		configureApplication(new SpringApplicationBuilder()).run(args);
 		
-//		String tmp = "1.000,000";
-//		tmp = tmp.replaceAll("\\.", "").replaceAll(",", "");
+		
+		
+//		FTPClient ftpClient = new FTPClient();
+//		ftpClient.connect("ftp.controle-danca-ccc.website", 21);
+//		ftpClient.login("controlecc", "Isnard@333");
+//		ftpClient.enterLocalActiveMode();
 //		
-//		tmp = tmp.substring(0, tmp.length() - 2) + "." + tmp.substring(tmp.length() -2);
+//		OutputStream out = ftpClient.storeFileStream("/controlecc.uh-app.com.br/webapps/ROOT/imagens/teste.jpg");
 //		
-//		System.out.println(new Double(tmp));
+//
+//		out.write(readBytesFromFile("1.jpg"));
+//		ftpClient.logout();
 		
 	}
 
@@ -45,6 +59,36 @@ public class Application extends SpringBootServletInitializer {
 		return builder.sources(Application.class).bannerMode(Banner.Mode.OFF);
 	}
 	
-	
+	private static byte[] readBytesFromFile(String filePath) {
+
+        FileInputStream fileInputStream = null;
+        byte[] bytesArray = null;
+
+        try {
+
+            File file = new File(filePath);
+            bytesArray = new byte[(int) file.length()];
+
+            //read file into bytes[]
+            fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bytesArray);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
+        return bytesArray;
+
+    }
 
 }
+

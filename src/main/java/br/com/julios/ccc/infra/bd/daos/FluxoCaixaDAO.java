@@ -30,6 +30,7 @@ public interface FluxoCaixaDAO extends JpaRepository<FluxoCaixaDO, Long>{
 
 	
 	@Query("select new br.com.julios.ccc.infra.dto.extrato.ExtratoDetalhadoDTO("
+			+ "f.id, "
 			+ " f.data, "
 			+ " f.valor, "
 			+ " f.quantidade,"

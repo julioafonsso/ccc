@@ -14,8 +14,6 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.twelvemonkeys.imageio.plugins.jpeg.JPEGImageReader;
-
 @Service
 public class FtpApi {
 
@@ -31,12 +29,14 @@ public class FtpApi {
 
 		FTPClient ftpClient = getFtp();
 		String nome = ftpProperties.getPath() + "/" + nomeImagem;
+		System.out.println(ftpClient.isConnected());
 		OutputStream out = ftpClient.storeFileStream(nome);
 
 		out.write(diminuirImagem(file));
 
 		out.close();
-
+		
+		ftpClient.logout();
 		return nomeImagem;
 	}
 
@@ -45,6 +45,11 @@ public class FtpApi {
 		ftpClient.connect(ftpProperties.getUrl(), 21);
 		ftpClient.login(ftpProperties.getUser(), ftpProperties.getPassword());
 		ftpClient.enterLocalPassiveMode();
+		
+//		FTPClient ftpClient = new FTPClient();
+//		ftpClient.connect("ftp.controle-danca-ccc.website", 21);
+//		ftpClient.login("controlecc", "Isnard@333");
+//		ftpClient.enterLocalActiveMode();
 		return ftpClient;
 	}
 
