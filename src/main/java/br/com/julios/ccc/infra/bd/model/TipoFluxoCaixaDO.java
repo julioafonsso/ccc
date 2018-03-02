@@ -1,11 +1,15 @@
 package br.com.julios.ccc.infra.bd.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import br.com.julios.ccc.infra.Contexto;
@@ -42,8 +46,22 @@ public class TipoFluxoCaixaDO {
 
 	@Column
 	private boolean indEntrada;
+	
+	@Column(name = "data_exclusao")
+	@Temporal(TemporalType.DATE)
+	private Date dataExclusao;
+
+	
 
 	// Getters and Setters
+
+	public Date getDataExclusao() {
+		return dataExclusao;
+	}
+
+	public void setDataExclusao(Date dataExclusao) {
+		this.dataExclusao = dataExclusao;
+	}
 
 	public Long getId() {
 		return id;
@@ -55,7 +73,7 @@ public class TipoFluxoCaixaDO {
 	}
 
 	public void setNome(String nome) throws Exception {
-		TipoFluxoCaixaDO tipo = this.getRepositorio().get(nome);
+		TipoFluxoCaixaDO tipo = this.getRepositorio().get(nome, this.isIndEntrada());
 		if (tipo != null) {
 			if (!tipo.getId().equals(this.getId())) {
 				throw new Exception("Tipo já cadastrado !");
@@ -87,7 +105,8 @@ public class TipoFluxoCaixaDO {
 		if(this.getRepositorio().getQtdFluxoCadastrados(this).longValue() > 0)
 			throw new Exception("Não pode ser excluido, existe lançamentos com esse tipo !");
 		
-		this.getRepositorio().deletar(this);
+		this.setDataExclusao(new Date());
+		this.getRepositorio().cadastrar(this);
 	}
 
 }

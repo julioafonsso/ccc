@@ -50,7 +50,19 @@ public class FluxoCaixaDO {
 	@Column
 	private String observacao;
 	
+	@Column(name = "data_exclusao")
+	@Temporal(TemporalType.DATE)
+	private Date dataExclusao;
 	
+	
+	public Date getDataExclusao() {
+		return dataExclusao;
+	}
+
+	public void setDataExclusao(Date dataExclusao) {
+		this.dataExclusao = dataExclusao;
+	}
+
 	@Column(name = "data_fluxo")
 	@Temporal(TemporalType.DATE)
 	private Date data;
@@ -142,6 +154,12 @@ public class FluxoCaixaDO {
 		this.setValor(fluxoCaixa.getValor());
 		this.setTipoFluxo(this.getRepositorio().getTipo(fluxoCaixa.getIdTipo()));
 		this.getRepositorio().cadastrar(this);
+	}
+
+	public void apagar() {
+		this.setDataExclusao(new Date());
+		this.getRepositorio().cadastrar(this);
+		
 	}
 
 }

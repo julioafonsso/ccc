@@ -50,10 +50,10 @@ public abstract class TurmaDO {
 	@Column(name = "percentual_professor1")
 	private Double percentualProfessor1;
 
-	@Formula("(select count(*) from matricula ta , aluno a where a.id = ta.aluno_id and a.sexo = 'M' and ta.turma_id = id and ta.data_exclusao is null)")
+	@Formula("(select count(*) from matricula ta , aluno a where a.id = ta.aluno_id and a.sexo = 'M' and ta.turma_id = id and ta.data_exclusao is null and a.data_exclusao is null )")
 	private Integer qtdAlunos;
 
-	@Formula("(select count(*) from matricula ta , aluno a where a.id = ta.aluno_id and a.sexo = 'F' and ta.turma_id = id and ta.data_exclusao is null	)")
+	@Formula("(select count(*) from matricula ta , aluno a where a.id = ta.aluno_id and a.sexo = 'F' and ta.turma_id = id and ta.data_exclusao is null and a.data_exclusao is null 	)")
 	private Integer qtdAlunas;
 
 	public Long getId() {

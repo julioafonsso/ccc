@@ -55,8 +55,9 @@ public class FluxoCaixaController {
 		fluxoRepositorio.getFluxo(idFluxo).alterar(fluxoCaixa);
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE)
-	public void apagarFluxoCaixa(@RequestBody FluxoCaixaDO fluxoCaixa){
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	public void apagarFluxoCaixa(@PathVariable("id") Long idFluxo){
+		this.fluxoRepositorio.getFluxo(idFluxo).apagar();
 	}
 	
 	

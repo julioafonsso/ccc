@@ -28,8 +28,8 @@ public class TipoFluxoRepositorio {
 		return tipo;
 	}
 
-	public TipoFluxoCaixaDO get(String nome) {
-		return this.tipoFluxoDAO.get(nome);
+	public TipoFluxoCaixaDO get(String nome, boolean indEntrada) {
+		return this.tipoFluxoDAO.get(nome, indEntrada);
 	}
 
 	public void cadastrar(TipoFluxoCaixaDO tipoFluxoCaixaDO) {
@@ -40,7 +40,5 @@ public class TipoFluxoRepositorio {
 		return this.fluxoDAO.getQtdFluxoCadastrados(tipoFluxoCaixaDO);
 	}
 
-	public void deletar(TipoFluxoCaixaDO tipoFluxoCaixaDO) {
-		this.tipoFluxoDAO.delete(tipoFluxoCaixaDO);
-	}
+	
 }

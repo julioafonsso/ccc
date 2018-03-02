@@ -16,7 +16,7 @@ import br.com.julios.ccc.infra.dto.extrato.ExtratoDetalhadoDTO;
 public interface FluxoCaixaDAO extends JpaRepository<FluxoCaixaDO, Long>{
 
 	
-	@Query("select count(*) from FluxoCaixaDO f where f.tipoFluxo = ?1")
+	@Query("select count(*) from FluxoCaixaDO f where f.tipoFluxo = ?1 and f.dataExclusao is null ")
 	public Long getQtdFluxoCadastrados(TipoFluxoCaixaDO tipoFluxoCaixaDO);
 
 	
@@ -25,7 +25,8 @@ public interface FluxoCaixaDAO extends JpaRepository<FluxoCaixaDO, Long>{
 			+ " f.tipoFluxo.nome , "
 			+ " count(*),"
 			+ " sum(f.valor) ) from FluxoCaixaDO f "
-			+ " where (f.data between ?1 and ?2 ) and f.tipoFluxo.indEntrada = ?3 group by f.tipoFluxo ")
+			+ " where f.dataExclusao is null "
+			+ " and (f.data between ?1 and ?2 ) and f.tipoFluxo.indEntrada = ?3 group by f.tipoFluxo ")
 	public List<ExtratoConsolidadoDTO> getExtratoConsolidadodo(Date dInicio, Date dFim, boolean b);
 
 	
@@ -36,6 +37,7 @@ public interface FluxoCaixaDAO extends JpaRepository<FluxoCaixaDO, Long>{
 			+ " f.quantidade,"
 			+ " f.observacao,"
 			+ " f.descricao ) from FluxoCaixaDO f "
-			+ " where (f.data between ?1 and ?2 ) and f.tipoFluxo.id = ?3  ")
+			+ " where (f.data between ?1 and ?2 ) and f.tipoFluxo.id = ?3  "
+			+ " and f.dataExclusao is null")
 	public List<ExtratoDetalhadoDTO> getExtratoDetalhado(Date dInicio, Date dFim, Long idTipo);
 }
