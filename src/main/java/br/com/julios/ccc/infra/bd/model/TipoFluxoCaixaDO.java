@@ -27,6 +27,7 @@ public class TipoFluxoCaixaDO {
 	public static final Long WORKSHOP = new Long(5);
 	public static final Long PAGAMENTO_SALARIO = new Long(6);
 	public static final Long PAGAMENTO_VALE_TRANSPORTE = new Long(7);
+	public static final Long PAGAMENTO_TAXA = new Long(8);
 
 	@Transient
 	private TipoFluxoRepositorio repositorio;

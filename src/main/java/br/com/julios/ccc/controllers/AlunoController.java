@@ -31,6 +31,7 @@ import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.aluno.CadastroAlunoDTO;
 import br.com.julios.ccc.infra.dto.aluno.CadastroPagamentoMaticulaDTO;
+import br.com.julios.ccc.infra.dto.aluno.CadastroPagamentoTaxaDTO;
 import br.com.julios.ccc.infra.dto.aluno.CadastroPagamentosDTO;
 import br.com.julios.ccc.infra.dto.aluno.ConsultaAlunoDTO;
 import br.com.julios.ccc.infra.dto.aluno.ConsultaHistoricoPagamentoDTO;
@@ -47,6 +48,7 @@ import br.com.julios.ccc.repositorios.MatriculaRepositorio;
 import br.com.julios.ccc.repositorios.MensalidadeRepositorio;
 import br.com.julios.ccc.repositorios.MesRerefenciaRepositorio;
 import br.com.julios.ccc.repositorios.PagamentoFuncionarioRepositorio;
+import br.com.julios.ccc.repositorios.TaxasPagasRepositorio;
 
 @Controller
 @ResponseBody
@@ -60,6 +62,9 @@ public class AlunoController {
 	@Autowired
 	private MensalidadeRepositorio mensalidadeRepositorio;
 
+	@Autowired
+	private TaxasPagasRepositorio taxasReposirotio;
+	
 	@Autowired
 	private AulaIndividualRepositorio aulaIndividualRepositorio;
 
@@ -182,6 +187,7 @@ public class AlunoController {
 		retorno.addAll(alunoDAO.getMatriculasPagas(idAluno, diaInicio, diaFim));
 		retorno.addAll(alunoDAO.getWorkShopsPago(idAluno, diaInicio, diaFim));
 		retorno.addAll(alunoDAO.getAulasParticularesPagas(idAluno, diaInicio, diaFim));
+		retorno.addAll(alunoDAO.getTaxasPagas(idAluno, diaInicio, diaFim));
 
 		retorno.sort(new Comparator<ConsultaHistoricoPagamentoDTO>() {
 
@@ -266,6 +272,8 @@ public class AlunoController {
 	public void efetuarPagamentos(@PathVariable("id") Long idAluno, @RequestBody CadastroPagamentosDTO cadastro)
 			throws Exception {
 
+		AlunoDO aluno = this.alunoRepositorio.getAluno(idAluno);
+		
 		for (CadastroAulaIndividualDTO aula : cadastro.getAulasParticulares()) {
 			this.cadastrarAulaParticular(idAluno, aula);
 		}
@@ -274,6 +282,14 @@ public class AlunoController {
 			this.efetuarPagamento(idAluno, mensalidade.getId(), mensalidade.getValorCalculado(), mensalidade.getObservacao());
 		}
 
+		for(CadastroPagamentoTaxaDTO taxa : cadastro.getTaxas()) {
+			
+			FluxoCaixaDO pagamentoTaxa = this.pagamentoRepositorio.getFluxoPagamentoTaxas(aluno, taxa.getValor(), taxa.getDataPagamento(), taxa.getObservacao());
+			pagamentoTaxa.cadastrar();
+			this.taxasReposirotio.getTaxaPaga(aluno, pagamentoTaxa).cadastrar();
+			
+		}
+		
 		for (ConsultaWorkShopDTO work : cadastro.getWorkShop()) {
 			CadastroMatriculaDTO cadastroMatricula = new CadastroMatriculaDTO();
 			cadastroMatricula.setIdTurma(work.getId());

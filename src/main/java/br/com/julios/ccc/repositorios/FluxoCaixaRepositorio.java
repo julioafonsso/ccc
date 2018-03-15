@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.julios.ccc.infra.bd.daos.FluxoCaixaDAO;
 import br.com.julios.ccc.infra.bd.daos.TipoFluxoCaixaDAO;
+import br.com.julios.ccc.infra.bd.model.AlunoDO;
 import br.com.julios.ccc.infra.bd.model.ComissaoProfessorDO;
 import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
@@ -135,6 +136,17 @@ public class FluxoCaixaRepositorio {
 
 	public FluxoCaixaDO getFluxo(Long idFluxo) {
 				return fluxoDAO.findOne(idFluxo);
+	}
+
+	public FluxoCaixaDO getFluxoPagamentoTaxas(AlunoDO aluno, Double valor, Date dataPagamento, String observacao) throws ParseException {
+		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
+		cadastro.setIdTipo(TipoFluxoCaixaDO.PAGAMENTO_TAXA);
+		cadastro.setData(dataPagamento);
+		cadastro.setQtd(new Long(1));
+		cadastro.setValor(valor);
+		cadastro.setObservacao(observacao);
+		cadastro.setDescricao("Aluno : " + aluno.getNome());
+		return this.getFluxo(cadastro);
 	}
 
 }

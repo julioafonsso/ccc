@@ -206,4 +206,13 @@ public class MensalidadeDO {
 	public String getNomeModalidade() {
 		return this.getTurma().getNomeModalidade();
 	}
+
+	public void apagar() throws Exception {
+		if(this.getMatricula().estaAtiva())
+			throw new Exception("Aluno esta matriculado a turma!");
+		
+		this.setDataExclusao(new Date());
+		this.getRepositorio().cadastrar(this);
+		
+	}
 }

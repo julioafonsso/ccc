@@ -205,4 +205,8 @@ public class MatriculaDO {
 		this.setDataExclusao(new Date());
 		this.getRepositorio().cadastrar(this);
 	}
+
+	public boolean estaAtiva() {
+		return this.getDataExclusao() == null;
+	}
 }

@@ -12,6 +12,16 @@ public class ConsultaHistoricoPagamentoDTO {
 	private Double valorPago;
 	private String tipoPagamento;
 	private Long idPagamento;
+	private String observacao;
+	
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
 
 	public Long getIdPagamento() {
 		return idPagamento;
@@ -21,8 +31,17 @@ public class ConsultaHistoricoPagamentoDTO {
 		this.idPagamento = idPagamento;
 	}
 
-	public ConsultaHistoricoPagamentoDTO(String codigoTurma, String nomeModalidade, Long mesReferencia,
-			Long anoReferencia, Date dataVencimento, Date dataPagamento, Double valorPago, String tipoPagamento, Long idPagamento) {
+	public ConsultaHistoricoPagamentoDTO(
+			String codigoTurma, 
+			String nomeModalidade, 
+			Long mesReferencia,
+			Long anoReferencia, 
+			Date dataVencimento, 
+			Date dataPagamento, 
+			Double valorPago, 
+			String tipoPagamento, 
+			Long idPagamento) {
+		
 		this.setCodigoTurma(codigoTurma);
 		this.setDataPagamento(dataPagamento);
 		this.setDataVencimento(dataVencimento);
@@ -38,7 +57,15 @@ public class ConsultaHistoricoPagamentoDTO {
 		this.setIdPagamento(idPagamento);
 	}
 
-	public ConsultaHistoricoPagamentoDTO(String codigoTurma, String nomeModalidade,  Date dataVencimento, Date dataPagamento, Double valorPago, String tipoPagamento, Long idPagamento) {
+	public ConsultaHistoricoPagamentoDTO(
+			String codigoTurma, 
+			String nomeModalidade,  
+			Date dataVencimento, 
+			Date dataPagamento, 
+			Double valorPago, 
+			String tipoPagamento, 
+			Long idPagamento) {
+		
 		this.setCodigoTurma(codigoTurma);
 		this.setDataPagamento(dataPagamento);
 		this.setDataVencimento(dataVencimento);
@@ -48,7 +75,25 @@ public class ConsultaHistoricoPagamentoDTO {
 		this.setIdPagamento(idPagamento);
 	}
 
-	
+
+	public ConsultaHistoricoPagamentoDTO(
+			String codigoTurma, 
+			Date dataPagamento, 
+			Double valorPago, 
+			String tipoPagamento, 
+			Long idPagamento,
+			String observacao) {
+		
+		this.setCodigoTurma(codigoTurma);
+		this.setDataPagamento(dataPagamento);
+		this.setDataVencimento(dataVencimento);
+		this.setNomeModalidade(nomeModalidade);
+		this.setTipoPagamento(tipoPagamento);
+		this.setValorPago(valorPago);
+		this.setIdPagamento(idPagamento);
+		this.setObservacao(observacao);
+	}
+
 	
 	public String getCodigoTurma() {
 		return codigoTurma;

@@ -160,4 +160,21 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			)
 	public List<ConsultaHistoricoPagamentoDTO> getAulasParticularesPagas(Long idAluno, Date diaInicio, Date diaFim);
 	
+	@Query("select new br.com.julios.ccc.infra.dto.aluno.ConsultaHistoricoPagamentoDTO(" +
+			"  'Taxas', " + 
+			"  tp.pagamento.data,  " +
+			"  tp.pagamento.valor,  " + 
+			"  'Taxas',  " +
+			" tp.pagamento.id, " + 
+			" tp.pagamento.observacao " +
+			") from   "
+			+ " TaxasPagasDO tp "
+			+ " where tp.aluno.dataExclusao is null "
+			+ " and tp.pagamento.dataExclusao is  null "
+			+ " and tp.aluno.id = ?1 "
+			+ " and tp.pagamento.data between ?2 and ?3 "
+			)
+	public List<ConsultaHistoricoPagamentoDTO> getTaxasPagas(Long idAluno, Date diaInicio, Date diaFim);
+	
+	
 }
