@@ -1,5 +1,6 @@
 package br.com.julios.ccc.infra.bd.daos;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -51,5 +52,8 @@ public interface MensalidadeDAO extends JpaRepository<MensalidadeDO, Long>{
 
 	@Query("select min(m) from MensalidadeDO m where m.matricula.id = ?1 and m.pagamentoMensalidade is  null and m.dataVencimento <  CURRENT_DATE")
 	public MensalidadeDO getMensalidadesVencidas(Long idMatricula);
+
+	@Query("select m from MensalidadeDO m where m.matricula = ?1 and m.pagamentoMensalidade is null and m.dataVencimento >= ?2 ")
+	public MensalidadeDO getMensalidadesFuturas(MatriculaDO matriculaDO, Date primeiroDiaMes);
 	
 }

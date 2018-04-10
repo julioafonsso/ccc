@@ -410,6 +410,7 @@ public class TurmaColetivaDO extends TurmaDO {
 		this.setSala(this.getRepositorio().getSala(cadastro.getIdSala()));
 		this.setMensalidade(cadastro.getValorMensalidade());
 		this.cadastrar();
+		
 	}
 
 	public List<Date> getDiasAulaMes(MesReferenciaDO mesRef) throws ParseException {

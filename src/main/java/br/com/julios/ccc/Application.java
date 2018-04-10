@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.SocketException;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.boot.Banner;
@@ -39,19 +41,6 @@ public class Application extends SpringBootServletInitializer {
 
 	public static void main(String[] args) throws SocketException, IOException {
 		configureApplication(new SpringApplicationBuilder()).run(args);
-		
-		
-		
-//		FTPClient ftpClient = new FTPClient();
-//		ftpClient.connect("ftp.controle-danca-ccc.website", 21);
-//		ftpClient.login("controlecc", "Isnard@333");
-//		ftpClient.enterLocalActiveMode();
-//		
-//		OutputStream out = ftpClient.storeFileStream("/controlecc.uh-app.com.br/webapps/ROOT/imagens/teste.jpg");
-//		
-//
-//		out.write(readBytesFromFile("1.jpg"));
-//		ftpClient.logout();
 		
 	}
 

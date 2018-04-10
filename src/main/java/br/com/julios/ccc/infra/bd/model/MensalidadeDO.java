@@ -126,7 +126,7 @@ public class MensalidadeDO {
 	public void cadastrar() throws ParseException {
 
 		this.calculaValor();
-		if (this.valorMensalidade.longValue() > 0 && this.getMatricula().getDataExclusao() == null ) {
+		if (this.valorMensalidade.longValue() > 0 && this.getMatricula().getDataExclusao() == null) {
 			this.calcularVencimentoProximoMes();
 			this.getRepositorio().cadastrar(this);
 		}
@@ -208,11 +208,20 @@ public class MensalidadeDO {
 	}
 
 	public void apagar() throws Exception {
-		if(this.getMatricula().estaAtiva())
+		if (this.getMatricula().estaAtiva())
 			throw new Exception("Aluno esta matriculado a turma!");
-		
+
 		this.setDataExclusao(new Date());
 		this.getRepositorio().cadastrar(this);
+
+	}
+
+	public void alterarValor(Double valorMensalidade2) throws Exception {
+		if (this.getPagamentoMensalidade() != null)
+			throw new Exception("matricula já esta paga");
 		
+		this.setValorMensalidade(valorMensalidade2);
+		
+		this.getRepositorio().cadastrar(this);
 	}
 }
