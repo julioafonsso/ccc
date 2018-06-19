@@ -13,6 +13,7 @@ import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaDO;
 import br.com.julios.ccc.infra.dto.matricula.ConsultaAlunosMatriculadosDTO;
+import br.com.julios.ccc.infra.dto.matricula.ConsultaAlunosMatriculadosTurmaExcluidaDTO;
 import br.com.julios.ccc.infra.dto.matricula.ConsultaMatriculaDTO;
 import br.com.julios.ccc.infra.dto.turma.individual.ConsultaAulaIndividualDTO;
 
@@ -135,6 +136,27 @@ public interface MatriculaDAO extends JpaRepository<MatriculaDO, Long>{
 			+ " ")
 	public List<ConsultaAlunosMatriculadosDTO> getAlunosMatriculados(Long idTurma);
 
+	@Query("select new br.com.julios.ccc.infra.dto.matricula.ConsultaAlunosMatriculadosTurmaExcluidaDTO (" +
+			" m.aluno.nome ,"+
+			" m.aluno.cpf ,"+
+			" m.aluno.email ,"+
+			" d.nome,  "+
+			" d.valor, " +
+			" m.dataMatricula , "+
+			" m.dataExclusao , "+
+			" m.aluno.dataNascimento, " +
+			" pg.valor, " +
+			" (select sum(mm.pagamentoMensalidade.valor) from MensalidadeDO mm where mm.matricula = m and mm.pagamentoMensalidade is not null  )" +
+			") "+
+			" from "
+			+ " MatriculaDO m "
+			+ " LEFT OUTER JOIN m.desconto AS d "
+			+ " LEFT OUTER JOIN m.pagamentroMatricula AS pg "
+			+ " where m.turma.id = ?1 "
+			+ " order by m.aluno.nome "
+			+ " ")
+	public List<ConsultaAlunosMatriculadosTurmaExcluidaDTO> getAlunosMatriculadosTurmaExcluida(Long idTurma);
+	
 
 	@Query("select m from MatriculaDO m where m.dataExclusao is null and m.turma = ?1")
 	public List<MatriculaDO> getMatriculas(TurmaDO turma);

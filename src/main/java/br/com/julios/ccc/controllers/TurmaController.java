@@ -22,8 +22,10 @@ import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.matricula.ConsultaAlunosMatriculadosDTO;
+import br.com.julios.ccc.infra.dto.matricula.ConsultaAlunosMatriculadosTurmaExcluidaDTO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.CadastroTurmaColetivaDTO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaDTO;
+import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaExcluidasDTO;
 import br.com.julios.ccc.repositorios.MesRerefenciaRepositorio;
 import br.com.julios.ccc.repositorios.TurmaColetivaRepositorio;
 
@@ -74,8 +76,13 @@ public class TurmaController {
 		}
 	}
 
+	@RequestMapping(value="excluidas", method = RequestMethod.GET)
+	public List<ConsultaTurmaColetivaExcluidasDTO> getTurmas() {
+		return turmaDAO.getTurmasExcluidas();
+	}
+	
 	@RequestMapping(method = RequestMethod.GET)
-	public List<ConsultaTurmaColetivaDTO> getTurmas() {
+	public List<ConsultaTurmaColetivaDTO> getTurmasExcluidas() {
 		return turmaDAO.getTurmas();
 	}
 
@@ -89,6 +96,11 @@ public class TurmaController {
 		return mDAO.getAlunosMatriculados(idTurma);
 	}
 
+	@RequestMapping(value = "excluidas/{id}/alunos", method = RequestMethod.GET)
+	public List<ConsultaAlunosMatriculadosTurmaExcluidaDTO> getAlunosTurmaExcluidas(@PathVariable("id") Long idTurma) {
+		return mDAO.getAlunosMatriculadosTurmaExcluida(idTurma);
+	}
+	
 	@RequestMapping(value = "{id}/lista-presenca", method = RequestMethod.GET)
 	public String getListaPresenca(@PathVariable("id") Long idTurma) throws Exception {
 		Excel excel = new Excel();

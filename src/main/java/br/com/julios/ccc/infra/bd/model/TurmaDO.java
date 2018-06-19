@@ -55,6 +55,20 @@ public abstract class TurmaDO {
 
 	@Formula("(select count(*) from matricula ta , aluno a where a.id = ta.aluno_id and a.sexo = 'F' and ta.turma_id = id and ta.data_exclusao is null and a.data_exclusao is null 	)")
 	private Integer qtdAlunas;
+	
+	@Formula("(select count(*) from matricula ta , aluno a where a.id = ta.aluno_id and a.sexo = 'M' and ta.turma_id = id  )")
+	private Integer qtdAlunosTotal;
+
+	@Formula("(select count(*) from matricula ta , aluno a where a.id = ta.aluno_id and a.sexo = 'F' and ta.turma_id = id  	)")
+	private Integer qtdAlunasTotal;
+
+	public Integer getQtdAlunosTotal() {
+		return qtdAlunosTotal;
+	}
+
+	public Integer getQtdAlunasTotal() {
+		return qtdAlunasTotal;
+	}
 
 	public Long getId() {
 		return id;

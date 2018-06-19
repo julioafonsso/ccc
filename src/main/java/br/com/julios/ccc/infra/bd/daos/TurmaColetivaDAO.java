@@ -10,6 +10,7 @@ import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.ModalidadeTurmaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaDTO;
+import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaExcluidasDTO;
 
 @Repository
 public interface TurmaColetivaDAO extends JpaRepository<TurmaColetivaDO, Long> {
@@ -134,5 +135,35 @@ public interface TurmaColetivaDAO extends JpaRepository<TurmaColetivaDO, Long> {
 			+ "where (t.professor1 = ?1 or t.professor2 = ?1 ) "
 			+ " and (t.dataTermino is null or t.dataTermino > CURRENT_DATE)")
 	public List<TurmaColetivaDO> getTurmas(FuncionarioDO professor);
+
+	
+	
+	@Query("select new br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaExcluidasDTO( t.id, "
+			+ "t.codigo, "
+			+ "p1.id, " 
+			+ "p1.nome, " 
+			+ "t.percentualProfessor1, " 
+			+ "t.modalidade.id, "
+			+ "t.modalidade.nome, " 
+			+ "p2.id, " 
+			+ "p2.nome, " 
+			+ "t.percentualProfessor2, "
+			+ "t.vagas, " 
+			+ "t.mensalidade, " 
+			+ "t.nivel.id, "
+			+ "t.nivel.nome, " 
+			+ "t.qtdAlunosTotal, " 
+			+ "t.qtdAlunasTotal,"
+			+ "t.dataInicio,"
+			+ "t.dataTermino ,"
+			+ "  ( select sum(m.pagamentroMatricula.valor) from MatriculaDO m where m.pagamentroMatricula is not null and m.turma = t ) , "
+			+ "  ( select sum (mm.pagamentoMensalidade.valor) from MensalidadeDO mm where mm.pagamentoMensalidade is not null and "
+			+ "                                                                                              mm.matricula.turma = t)  "
+			+ " ) from TurmaColetivaDO t  "
+			+ " LEFT OUTER JOIN t.professor1 AS p1 "
+			+ " LEFT OUTER JOIN t.professor2 AS p2 "
+			+ "where (t.dataTermino is not null and t.dataTermino <= CURRENT_DATE)"
+			+ " order by t.modalidade.nome")
+	public List<ConsultaTurmaColetivaExcluidasDTO> getTurmasExcluidas();
 
 }
