@@ -13,9 +13,15 @@ public class CadastroPagamentosDTO {
 	private List<ConsultaWorkShopDTO> workShop;
 	private List<CadastroPagamentoMaticulaDTO> matriculas;
 	private List<CadastroPagamentoTaxaDTO> taxas;
+	private List<CadastroPagamentoAulasAvulsaDTO> 	aulasAvulsa;
 	
 	
-	
+	public List<CadastroPagamentoAulasAvulsaDTO> getAulasAvulsa() {
+		return aulasAvulsa;
+	}
+	public void setAulasAvulsa(List<CadastroPagamentoAulasAvulsaDTO> aulasAvulsa) {
+		this.aulasAvulsa = aulasAvulsa;
+	}
 	public List<CadastroPagamentoTaxaDTO> getTaxas() {
 		return taxas;
 	}

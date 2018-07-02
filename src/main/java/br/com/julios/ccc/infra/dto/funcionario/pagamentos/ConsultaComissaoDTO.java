@@ -24,6 +24,25 @@ public class ConsultaComissaoDTO extends ConsultaPagamentoFuncionarioDTO {
 
 	}
 
+	public ConsultaComissaoDTO(Long id, Long idFuncionario, String nomeFuncionario,  Double valor,
+			Long idAluno, String nomeAluno, Double percentual, Double valorPago, String codigo, String nomeModalidade,
+			
+			Date dataMensalidade) {
+		this.setId(id);
+		this.setIdFuncionario(idFuncionario);
+		this.setNomeAluno(nomeAluno);
+		this.setValor(valor);
+		this.setIdAluno(idAluno);
+		this.setPercentual(percentual);
+		this.setValorPago(valorPago);
+		this.setCodigo("AUV - " +  codigo);
+		this.setNomeModalidade(nomeModalidade);
+		this.setValorMensalidade(valorMensalidade);
+		this.setDataPagamentoMensalidade(dataMensalidade);
+
+	}
+	
+	
 	private Long idAluno;
 	private String nomeAluno;
 	private Double percentual;

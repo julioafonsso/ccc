@@ -40,7 +40,28 @@ public interface ComissaoProfessorDAO extends JpaRepository<ComissaoProfessorDO,
 			+ " c.mesReferencia.ano = ?3 "
 			+ " order by c.mensalidade.pagamentoMensalidade.id desc "
 			)
-	public List<ConsultaComissaoDTO> getComissoesPendentes(Long idProfessor, Long mes, Long ano);
+	public List<ConsultaComissaoDTO> getComissoesMensalidadePendentes(Long idProfessor, Long mes, Long ano);
+	
+	@Query("select new br.com.julios.ccc.infra.dto.funcionario.pagamentos.ConsultaComissaoDTO("
+			+ " c.id, "
+			+ " c.funcionario.id, "
+			+ " c.funcionario.nome, "
+			+ " c.valor , "
+			+ " c.taxa.aluno.id, "
+			+ " c.taxa.aluno.nome, "
+			+ " c.percentual, "
+			+ " c.taxa.pagamento.valor,"
+			+ " c.taxa.turma.codigo,"
+			+ " c.taxa.turma.modalidade.nome,"
+			+ " c.taxa.pagamento.data " 
+			+ ")"
+			+ " from ComissaoProfessorDO c where c.fluxoCaixa is null"
+			+ " and c.funcionario.id = ?1 and"
+			+ " c.mesReferencia.mes = ?2 and"
+			+ " c.mesReferencia.ano = ?3 "
+			
+			)
+	public List<ConsultaComissaoDTO> getComissoesAulasAvulsasPendentes(Long idProfessor, Long mes, Long ano);
 	
 	
 	@Query("select new br.com.julios.ccc.infra.dto.funcionario.pagamentos.ConsultaComissaoDTO("
@@ -62,7 +83,23 @@ public interface ComissaoProfessorDAO extends JpaRepository<ComissaoProfessorDO,
 			+ " from ComissaoProfessorDO c where c.fluxoCaixa.id = ?1 "
 			+ " order by c.mensalidade.pagamentoMensalidade.id desc "
 			)
-	public List<ConsultaComissaoDTO> getDetalheComissao(Long idPagamento);
+	public List<ConsultaComissaoDTO> getDetalheComissaoMensalidade(Long idPagamento);
+	
+	@Query("select new br.com.julios.ccc.infra.dto.funcionario.pagamentos.ConsultaComissaoDTO("
+			+ " c.id, "
+			+ " c.funcionario.id, "
+			+ " c.funcionario.nome, "
+			+ " c.valor , "
+			+ " c.taxa.aluno.id, "
+			+ " c.taxa.aluno.nome, "
+			+ " c.percentual, "
+			+ " c.taxa.pagamento.valor,"
+			+ " c.taxa.turma.codigo,"
+			+ " c.taxa.turma.modalidade.nome,"
+			+ " c.taxa.pagamento.data " 
+			+ ")"
+			+ " from ComissaoProfessorDO c where c.fluxoCaixa.id = ?1 ")
+	public List<ConsultaComissaoDTO> getDetalheComissaoAulaAvulsa(Long idPagamento);
 	
 	@Query("select c from ComissaoProfessorDO c where c.fluxoCaixa is null"
 			+ " and c.funcionario = ?1 and c.mesReferencia = ?2 ")

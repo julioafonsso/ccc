@@ -1,5 +1,6 @@
 package br.com.julios.ccc.controllers;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,8 +29,10 @@ import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
 import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
+import br.com.julios.ccc.infra.bd.model.TaxasPagasDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.aluno.CadastroAlunoDTO;
+import br.com.julios.ccc.infra.dto.aluno.CadastroPagamentoAulasAvulsaDTO;
 import br.com.julios.ccc.infra.dto.aluno.CadastroPagamentoMaticulaDTO;
 import br.com.julios.ccc.infra.dto.aluno.CadastroPagamentoTaxaDTO;
 import br.com.julios.ccc.infra.dto.aluno.CadastroPagamentosDTO;
@@ -142,7 +145,7 @@ public class AlunoController {
 		return mensalidadeDAO.getMensalidadesAluno(idAluno);
 	}
 
-	public void efetuarPagamento(Long idAluno, Long idMensalidade, Double valor, String observacao) throws Exception {
+	public void efetuarPagamentoMensalidade(Long idAluno, Long idMensalidade, Double valor, String observacao) throws Exception {
 		MensalidadeDO mensalidade = mensalidadeRepositorio.getMensalidade(idMensalidade);
 
 		TurmaColetivaDO turma = (TurmaColetivaDO) mensalidade.getTurma();
@@ -279,16 +282,22 @@ public class AlunoController {
 		}
 
 		for (ConsultaMensalidadeDTO mensalidade : cadastro.getMensalidadesParaPagar()) {
-			this.efetuarPagamento(idAluno, mensalidade.getId(), mensalidade.getValorCalculado(), mensalidade.getObservacao());
+			this.efetuarPagamentoMensalidade(idAluno, mensalidade.getId(), mensalidade.getValorCalculado(), mensalidade.getObservacao());
 		}
 
 		for(CadastroPagamentoTaxaDTO taxa : cadastro.getTaxas()) {
 			
-			FluxoCaixaDO pagamentoTaxa = this.pagamentoRepositorio.getFluxoPagamentoTaxas(aluno, taxa.getValor(), taxa.getDataPagamento(), taxa.getObservacao());
+			FluxoCaixaDO pagamentoTaxa = this.pagamentoRepositorio.getFluxoPagamentoTaxas(aluno, taxa.getValor(), taxa.getDataPagamento(), taxa.getObservacao(), taxa.getTipo());
 			pagamentoTaxa.cadastrar();
 			this.taxasReposirotio.getTaxaPaga(aluno, pagamentoTaxa).cadastrar();
 			
 		}
+		
+		for(CadastroPagamentoAulasAvulsaDTO aula:  cadastro.getAulasAvulsa()) {
+		
+			this.efetuarPagamentoAulaAvulsa(aluno, aula);
+		}
+			
 		
 		for (ConsultaWorkShopDTO work : cadastro.getWorkShop()) {
 			CadastroMatriculaDTO cadastroMatricula = new CadastroMatriculaDTO();
@@ -310,6 +319,27 @@ public class AlunoController {
 
 		}
 
+	}
+
+	private void efetuarPagamentoAulaAvulsa(AlunoDO aluno, CadastroPagamentoAulasAvulsaDTO aula) throws ParseException {
+		FluxoCaixaDO pagamento = this.pagamentoRepositorio.getFluxoPagamentoAulaAvulsa(aluno,aula.getValor(),aula.getDataPagamento(),aula.getObservacao());
+		pagamento.cadastrar();
+		
+		TaxasPagasDO taxa = this.taxasReposirotio.getTaxaPaga(aluno, pagamento, aula.getIdTurma());
+		
+		taxa.cadastrar();
+		
+		
+
+		TurmaColetivaDO turma = (TurmaColetivaDO) taxa.getTurma();
+
+		List<FuncionarioDO> professores = turma.getProfessores();
+
+		for (FuncionarioDO func : professores) {
+			ComissaoProfessorDO comissao = comissaoRepositorio.getComissao(taxa, func, this.mesRepositorio.getMesAtual());
+			comissao.cadastrar();
+		}
+		
 	}
 
 }

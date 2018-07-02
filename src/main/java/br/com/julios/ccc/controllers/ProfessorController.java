@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import br.com.julios.ccc.infra.bd.model.ComissaoProfessorDO;
 import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
 import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
+import br.com.julios.ccc.infra.dto.aluno.ConsultaHistoricoPagamentoDTO;
 import br.com.julios.ccc.infra.dto.funcionario.CadastroFuncionarioDTO;
 import br.com.julios.ccc.infra.dto.funcionario.ConsultaFuncionarioDTO;
 import br.com.julios.ccc.infra.dto.funcionario.pagamentos.ConsultaComissaoConsolidadaDTO;
@@ -61,7 +63,7 @@ public class ProfessorController {
 
 	@Autowired
 	private MesRerefenciaRepositorio mesRepositorio;
-	
+
 	@Autowired
 	private EmailApi email;
 
@@ -76,10 +78,11 @@ public class ProfessorController {
 	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	public ConsultaFuncionarioDTO atualizarProfessor(@RequestBody CadastroFuncionarioDTO professor, @PathVariable("id") Long id) throws Exception {
+	public ConsultaFuncionarioDTO atualizarProfessor(@RequestBody CadastroFuncionarioDTO professor,
+			@PathVariable("id") Long id) throws Exception {
 		return funcRep.getFuncionario(id).alterar(professor);
 	}
-	
+
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ConsultaFuncionarioDTO getProfessor(@PathVariable("id") Long idProfessor) {
 		return funcDAO.getFuncionario(idProfessor);
@@ -98,27 +101,45 @@ public class ProfessorController {
 		SimpleDateFormat sdfMes = new SimpleDateFormat("MM");
 		SimpleDateFormat sdfAno = new SimpleDateFormat("yyyy");
 
-		return comissaoDAO.getComissoesPendentes(idProfessor, new Long(sdfMes.format(sdf.parse(mes))),
-				new Long(sdfAno.format(sdf.parse(mes))));
+		List<ConsultaComissaoDTO> retorno = new ArrayList<ConsultaComissaoDTO>();
+
+		retorno.addAll(comissaoDAO.getComissoesMensalidadePendentes(idProfessor,
+				new Long(sdfMes.format(sdf.parse(mes))), new Long(sdfAno.format(sdf.parse(mes)))));
+
+		retorno.addAll(comissaoDAO.getComissoesAulasAvulsasPendentes(idProfessor,
+				new Long(sdfMes.format(sdf.parse(mes))), new Long(sdfAno.format(sdf.parse(mes)))));
+
+		retorno.sort(new Comparator<ConsultaComissaoDTO>() {
+
+			@Override
+			public int compare(ConsultaComissaoDTO o1, ConsultaComissaoDTO o2) {
+				if (o1.getId() < o2.getId())
+					return 1;
+				else
+					return -1;
+			}
+		});
+		return retorno;
+
 	}
 
 	@RequestMapping(value = "{id}/salario/{idSalario}", method = RequestMethod.POST)
 	public void cadastrarRecebimento(@PathVariable("id") Long idProfessor, @PathVariable("idSalario") Long idSalario)
 			throws Exception {
-		
+
 		FuncionarioDO professor = this.funcRep.getFuncionario(idProfessor);
-		
+
 		List<ComissaoProfessorDO> comissoes = new ArrayList<ComissaoProfessorDO>();
-		
+
 		ComissaoProfessorDO comissao = this.comissaoRepositorio.getComissao(idSalario);
 
 		FluxoCaixaDO pagamento = this.pagamentoRepositorio.getPagamentoComissao(comissao);
 		pagamento.cadastrar();
 
 		comissao.efetuarPagamento(pagamento);
-		
+
 		comissoes.add(comissao);
-		
+
 		email.enviarEmailPagametoProfessor(comissoes, pagamento, professor);
 
 	}
@@ -136,16 +157,16 @@ public class ProfessorController {
 				new Long(sdfAno.format(sdf.parse(mes))));
 
 		List<ComissaoProfessorDO> comissoes = professor.getComissoesPendentes(mesDO);
-		FluxoCaixaDO pagamento = this.pagamentoRepositorio.getPagamentoComissao( mesDO, professor.getNome());
-		
-		 Double valor = 0.0;
+		FluxoCaixaDO pagamento = this.pagamentoRepositorio.getPagamentoComissao(mesDO, professor.getNome());
+
+		Double valor = 0.0;
 		for (ComissaoProfessorDO comissaoProfessorDO : comissoes) {
 			comissaoProfessorDO.efetuarPagamento(pagamento);
 			valor += comissaoProfessorDO.getValor();
 		}
 		pagamento.setValor(valor);
-		 pagamento.cadastrar();
-		
+		pagamento.cadastrar();
+
 		email.enviarEmailPagametoProfessor(comissoes, pagamento, professor);
 	}
 
@@ -169,9 +190,14 @@ public class ProfessorController {
 
 	@RequestMapping(value = "detalhe-pagamento/{id}", method = RequestMethod.GET)
 	public List<ConsultaComissaoDTO> getDetalhePagamento(@PathVariable("id") Long idPagamento) {
-		return this.comissaoDAO.getDetalheComissao(idPagamento);
+		List<ConsultaComissaoDTO> retorno = new ArrayList<>();
+		
+		retorno.addAll(this.comissaoDAO.getDetalheComissaoMensalidade(idPagamento));
+		retorno.addAll(this.comissaoDAO.getDetalheComissaoAulaAvulsa(idPagamento));
+		
+		return retorno;
 	}
-	
+
 	// @RequestMapping(method = RequestMethod.PUT)
 	// public void atualizarProfessor(@RequestBody FuncionarioDO professor)
 	// throws Exception{
@@ -181,7 +207,7 @@ public class ProfessorController {
 	// public void apagarProfessor(@PathVariable("id") Long idProfessor){
 	// }
 	//
-	
+
 	//
 	//
 	// @RequestMapping(value = "{id}/recibos/{dataInicio}/{dataFim}", method =

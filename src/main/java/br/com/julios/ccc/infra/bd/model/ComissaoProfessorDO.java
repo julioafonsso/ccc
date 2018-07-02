@@ -18,7 +18,19 @@ public class ComissaoProfessorDO extends PagamentoFuncionariosDO{
 
 	@Column
 	private Double percentual;
+	
+	@ManyToOne
+	@JoinColumn(name="id_taxa")
+	private TaxasPagasDO taxa;
 
+	public TaxasPagasDO getTaxa() {
+		return taxa;
+	}
+
+	public void setTaxa(TaxasPagasDO taxa) {
+		this.taxa = taxa;
+		this.setPercentual(this.getTaxa().getTurma().getPercentual(this.getFuncionario()));
+	}
 
 	public MensalidadeDO getMensalidade() {
 		return mensalidade;
@@ -38,7 +50,10 @@ public class ComissaoProfessorDO extends PagamentoFuncionariosDO{
 	}
 
 	private void calcular() {
-		this.setValor(this.getMensalidade().getValorPago() * this.getPercentual() / 100);
+		if(this.getMensalidade() != null)
+			this.setValor(this.getMensalidade().getValorPago() * this.getPercentual() / 100);
+		else
+			this.setValor(this.getTaxa().getPagamento().getValor() * this.getPercentual()/100);
 		
 	}
 
@@ -67,9 +82,4 @@ public class ComissaoProfessorDO extends PagamentoFuncionariosDO{
 
 		return this.getMensalidade().getValorPago();
 	}
-
-	
-	
-	
-	
 }

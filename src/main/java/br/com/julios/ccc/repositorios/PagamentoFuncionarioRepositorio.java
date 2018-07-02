@@ -18,6 +18,7 @@ import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
 import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
 import br.com.julios.ccc.infra.bd.model.PagamentoFuncionariosDO;
 import br.com.julios.ccc.infra.bd.model.SalarioDO;
+import br.com.julios.ccc.infra.bd.model.TaxasPagasDO;
 import br.com.julios.ccc.infra.bd.model.ValeTransporteDO;
 import br.com.julios.ccc.infra.dto.funcionario.ConsultaRecebimentosDTO;
 
@@ -133,6 +134,15 @@ public class PagamentoFuncionarioRepositorio {
 		
 		
 		return retorno;
+	}
+
+	public ComissaoProfessorDO getComissao(TaxasPagasDO taxa, FuncionarioDO func, MesReferenciaDO mes) {
+		ComissaoProfessorDO comissao = new ComissaoProfessorDO();
+		comissao.setFuncionario(func);
+		comissao.setTaxa(taxa);
+		comissao.setMesReferencia(mes);
+		
+		return comissao;
 	}
 	
 	

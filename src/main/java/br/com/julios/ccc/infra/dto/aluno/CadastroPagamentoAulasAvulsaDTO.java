@@ -5,16 +5,23 @@ import java.util.Date;
 
 import br.com.julios.ccc.util.Util;
 
-public class CadastroPagamentoTaxaDTO {
-
+public class CadastroPagamentoAulasAvulsaDTO {
+	
 	private Long id;
 	private Double valor;
 	private String observacao;
 	private Date dataPagamento;
 	private Long tipo;
+	private Long idTurma;
 	
 	
-	
+	public Long getIdTurma() {
+		return idTurma;
+	}
+
+	public void setIdTurma(Long idTurma) {
+		this.idTurma = idTurma;
+	}
 
 	public Long getTipo() {
 		return tipo;
@@ -56,5 +63,5 @@ public class CadastroPagamentoTaxaDTO {
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
-	
+
 }

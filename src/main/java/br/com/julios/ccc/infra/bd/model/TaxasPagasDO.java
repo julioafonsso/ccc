@@ -37,7 +37,17 @@ public class TaxasPagasDO {
 	@ManyToOne
 	private FluxoCaixaDO pagamento;
 
+	@ManyToOne
+	private TurmaDO turma;
 	
+	public TurmaDO getTurma() {
+		return turma;
+	}
+
+	public void setTurma(TurmaDO turma) {
+		this.turma = turma;
+	}
+
 	public Long getId() {
 		return id;
 	}

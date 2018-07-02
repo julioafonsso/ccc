@@ -138,9 +138,9 @@ public class FluxoCaixaRepositorio {
 				return fluxoDAO.findOne(idFluxo);
 	}
 
-	public FluxoCaixaDO getFluxoPagamentoTaxas(AlunoDO aluno, Double valor, Date dataPagamento, String observacao) throws ParseException {
+	public FluxoCaixaDO getFluxoPagamentoTaxas(AlunoDO aluno, Double valor, Date dataPagamento, String observacao, Long tipo) throws ParseException {
 		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
-		cadastro.setIdTipo(TipoFluxoCaixaDO.PAGAMENTO_TAXA);
+		cadastro.setIdTipo(tipo);
 		cadastro.setData(dataPagamento);
 		cadastro.setQtd(new Long(1));
 		cadastro.setValor(valor);
@@ -149,4 +149,17 @@ public class FluxoCaixaRepositorio {
 		return this.getFluxo(cadastro);
 	}
 
+	public FluxoCaixaDO getFluxoPagamentoAulaAvulsa(AlunoDO aluno, Double valor, Date dataPagamento,
+			String observacao) throws ParseException {
+		CadastroFluxoCaixaDTO cadastro = new CadastroFluxoCaixaDTO();
+		cadastro.setIdTipo(TipoFluxoCaixaDO.PAGAMENTO_AULA_AVULSA);
+		cadastro.setData(dataPagamento);
+		cadastro.setQtd(new Long(1));
+		cadastro.setValor(valor);
+		cadastro.setObservacao(observacao);
+		cadastro.setDescricao("Aluno : " + aluno.getNome());
+		return this.getFluxo(cadastro);
+	}
+	
+	
 }
