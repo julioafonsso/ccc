@@ -22,8 +22,8 @@ public interface ComissaoProfessorDAO extends JpaRepository<ComissaoProfessorDO,
 			+ " c.id, "
 			+ " c.funcionario.id, "
 			+ " c.funcionario.nome, "
-			+ " c.mesReferencia.mes, "
-			+ " c.mesReferencia.ano, "
+			+ " c.mensalidade.mesReferencia.mes, "
+			+ " c.mensalidade.mesReferencia.ano, "
 			+ " c.valor , "
 			+ " c.mensalidade.matricula.aluno.id, "
 			+ " c.mensalidade.matricula.aluno.nome, "
@@ -105,6 +105,9 @@ public interface ComissaoProfessorDAO extends JpaRepository<ComissaoProfessorDO,
 			+ " and c.funcionario = ?1 and c.mesReferencia = ?2 ")
 	public List<ComissaoProfessorDO> getComissoesPendentes(FuncionarioDO professor, MesReferenciaDO mes);
 
+	@Query("select c from ComissaoProfessorDO c where c.fluxoCaixa is null")
+	public List<ComissaoProfessorDO> getComissoesPendentes();
+	
 	@Query("select distinct new br.com.julios.ccc.infra.dto.funcionario.pagamentos.ConsultaComissaoConsolidadaDTO("
 			+ " c.fluxoCaixa.id,"
 			+ " c.fluxoCaixa.valor, "

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import br.com.julios.ccc.componentes.EmailApi;
 import br.com.julios.ccc.infra.bd.daos.MensagemEmailDAO;
 import br.com.julios.ccc.infra.bd.model.MensagemEmailDO;
+import br.com.julios.ccc.infra.dto.EmailDTO;
 
 @Controller
 @ResponseBody
@@ -38,6 +39,16 @@ public class EmailController {
 		MensagemEmailDO msgAntiga = msgDAO.getMensagem();
 		msgAntiga.setMsg(msg.getMsg());
 		msgDAO.save(msgAntiga);
+	}
+	
+	@RequestMapping(value = "mkt", method = RequestMethod.POST)
+	public void enviarEmailMarketing(@RequestBody EmailDTO emailDTO) throws Exception {
+		this.email.enviarEmailMKT(emailDTO);
+	}
+	
+	@RequestMapping(value = "alunos", method = RequestMethod.GET)
+	public String getEmailsTodosAlunos() throws Exception {
+		return this.email.getEmailsAlunos();
 	}
 	
 }

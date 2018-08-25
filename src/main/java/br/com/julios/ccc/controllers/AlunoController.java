@@ -97,11 +97,7 @@ public class AlunoController {
 
 	@Autowired
 	private MatriculaController matricula;
-
-	//
-	// @Autowired
-	// private HttpServletRequest http;
-
+	
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	public ConsultaAlunoDTO getAluno(@PathVariable("id") Long idAluno) {
 		return alunoDAO.getAlunos(idAluno);
@@ -166,7 +162,9 @@ public class AlunoController {
 
 		MensalidadeDO mensalidadeNova = mensalidadeRepositorio.getMensalidade(mensalidade.getMatricula(),
 				mensalidade.getMesReferencia().getProximoMes());
+		
 		mensalidadeNova.cadastrar();
+		
 		email.enviarEmailReciboMensalidade(mensalidade);
 	}
 

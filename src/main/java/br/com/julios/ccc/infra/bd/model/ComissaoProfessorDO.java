@@ -82,4 +82,11 @@ public class ComissaoProfessorDO extends PagamentoFuncionariosDO{
 
 		return this.getMensalidade().getValorPago();
 	}
+
+	public void alterarPercentual(Double novoPercentual) {
+		this.setPercentual(novoPercentual);
+		this.calcular();
+		this.getRepositorio().cadastrar(this);
+		
+	}
 }

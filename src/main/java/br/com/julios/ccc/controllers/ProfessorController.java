@@ -190,7 +190,7 @@ public class ProfessorController {
 
 	@RequestMapping(value = "detalhe-pagamento/{id}", method = RequestMethod.GET)
 	public List<ConsultaComissaoDTO> getDetalhePagamento(@PathVariable("id") Long idPagamento) {
-		List<ConsultaComissaoDTO> retorno = new ArrayList<>();
+		List<ConsultaComissaoDTO> retorno = new ArrayList<ConsultaComissaoDTO>();
 		
 		retorno.addAll(this.comissaoDAO.getDetalheComissaoMensalidade(idPagamento));
 		retorno.addAll(this.comissaoDAO.getDetalheComissaoAulaAvulsa(idPagamento));

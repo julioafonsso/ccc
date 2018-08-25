@@ -176,6 +176,10 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			+ " and tp.pagamento.data between ?2 and ?3 "
 			)
 	public List<ConsultaHistoricoPagamentoDTO> getTaxasPagas(Long idAluno, Date diaInicio, Date diaFim);
+
+	
+	@Query("select f from AlunoDO f where f.dataExclusao is null and f.email is not null")
+	public List<AlunoDO> getEmailAlunos();
 	
 	
 }

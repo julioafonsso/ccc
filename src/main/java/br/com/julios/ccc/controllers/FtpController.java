@@ -23,5 +23,11 @@ public class FtpController {
 	public String cadastrarFoto(@RequestBody MultipartFile file) throws Exception {
 		return fileApi.salvarFoto(file.getBytes(), file.getContentType().split("/")[1]);
 	}
+
+	@RequestMapping(value = "foto/email", method = RequestMethod.POST)
+	public String cadastrarFotoEmail(@RequestBody MultipartFile file) throws Exception {
+		return fileApi.salvarFotoEmail(file.getBytes(), file.getContentType().split("/")[1]);
+	}
+
 	
 }

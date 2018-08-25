@@ -21,8 +21,22 @@ public class FtpApi {
 	FtpProperties ftpProperties;
 
 	public String salvarFoto(byte[] file, String formato) throws Exception {
-		String nomeImagem = "imagens/" + new Long(new Date().getTime()).toString()
+		String nomeImagem =  new Long(new Date().getTime()).toString()
 				+ new Double(Math.random() * 10000).intValue() + ".jpg";
+		return 	this.salvarFoto(file, formato, nomeImagem,true);
+		
+	}
+	
+	public String salvarFotoEmail(byte[] file, String formato) throws Exception {
+		String nomeImagem =  "email/" + new Long(new Date().getTime()).toString()
+				+ new Double(Math.random() * 10000).intValue() + ".jpg";
+		return 	this.salvarFoto(file, formato, nomeImagem,false);
+		
+	}
+	
+	
+	private String salvarFoto(byte[] file, String formato, String nomeFoto, boolean diminuir) throws Exception {
+		String nomeImagem = "imagens/" + nomeFoto;
 
 		if (!(formato.toUpperCase().equals("JPG") || formato.toUpperCase().equals("JPEG")))
 			throw new Exception("Formato da imagem invalido! ");
@@ -32,13 +46,17 @@ public class FtpApi {
 		System.out.println(ftpClient.isConnected());
 		OutputStream out = ftpClient.storeFileStream(nome);
 
-		out.write(diminuirImagem(file));
+		if(diminuir)
+			out.write(diminuirImagem(file));
+		else 
+			out.write(file);
 
 		out.close();
 		
 		ftpClient.logout();
 		return nomeImagem;
 	}
+
 
 	private FTPClient getFtp() throws IOException {
 		FTPClient ftpClient = new FTPClient();

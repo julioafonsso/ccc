@@ -1,5 +1,8 @@
 package br.com.julios.ccc.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +22,10 @@ import br.com.julios.ccc.infra.bd.model.FluxoCaixaDO;
 import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.MatriculaDO;
 import br.com.julios.ccc.infra.bd.model.MensalidadeDO;
+import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
 import br.com.julios.ccc.infra.dto.DescontoDTO;
 import br.com.julios.ccc.infra.dto.matricula.CadastroMatriculaDTO;
+import br.com.julios.ccc.infra.dto.menslidade.CadastroMensalidadeDTO;
 import br.com.julios.ccc.repositorios.DescontoRepositorio;
 import br.com.julios.ccc.repositorios.FluxoCaixaRepositorio;
 import br.com.julios.ccc.repositorios.MatriculaRepositorio;
@@ -106,6 +111,26 @@ public class MatriculaController {
 		
 	}
 	
+	@RequestMapping(value = "{idMatricula}/mensalidade/{mes}" ,method= RequestMethod.POST)
+	public void criarMensalidadeManual(@PathVariable("idMatricula") Long idMatricula,  @PathVariable("mes") String mesParam) throws Exception
+	{
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+		SimpleDateFormat sdfAno = new SimpleDateFormat("yyyy");
+		SimpleDateFormat sdfmes = new SimpleDateFormat("MM");
+
+		Date mes = sdf.parse(mesParam);
+
+		MesReferenciaDO mesReferencia = mesRepositorio.getMes(new Long(sdfmes.format(mes)), new Long(sdfAno.format(mes)));
+		MatriculaDO matricula =matriculaRepositorio.getMatricula(idMatricula);
+		Long qtdMensalidade = mensalidadeRepositorio.getQtdMensalidadeMes(matricula, mesReferencia);
+		
+		if(qtdMensalidade == 0) {
+			mensalidadeRepositorio.getMensalidade(matricula, mesReferencia).cadastrar();;
+		}else {
+			throw new Exception("Mensalidade já Existe");
+		}
+		
+	}
 	
 
 }
