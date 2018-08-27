@@ -54,6 +54,6 @@ public interface MensalidadeDAO extends JpaRepository<MensalidadeDO, Long>{
 	public MensalidadeDO getMensalidadesVencidas(Long idMatricula);
 
 	@Query("select m from MensalidadeDO m where m.matricula = ?1 and m.pagamentoMensalidade is null and m.dataVencimento >= ?2 ")
-	public MensalidadeDO getMensalidadesFuturas(MatriculaDO matriculaDO, Date primeiroDiaMes);
+	public List<MensalidadeDO> getMensalidadesFuturas(MatriculaDO matriculaDO, Date primeiroDiaMes);
 	
 }

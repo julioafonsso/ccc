@@ -228,4 +228,10 @@ public class MensalidadeDO {
 		
 		this.getRepositorio().cadastrar(this);
 	}
+
+	public void recalcular() throws ParseException {
+		this.calculaValor();
+		this.getRepositorio().cadastrar(this);
+		
+	}
 }

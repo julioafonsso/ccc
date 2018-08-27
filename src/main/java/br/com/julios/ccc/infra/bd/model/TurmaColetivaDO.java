@@ -404,8 +404,16 @@ public class TurmaColetivaDO extends TurmaDO {
 		this.setDataInicio(cadastro.getDataInicio());
 		this.setDataTermino(cadastro.getDataFim());
 		if (cadastro.getIdProfessor2() != null)
+		{
+			this.setPercentualProfessor2(cadastro.getPercentualProfessor2());
 			this.setProfessor2(this.getRepositorio().getProfessor(cadastro.getIdProfessor2()));
-		this.setPercentualProfessor2(cadastro.getPercentualProfessor2());
+		}
+		else
+		{
+			this.setPercentualProfessor2(null);
+			this.setProfessor2(null);
+		}
+		
 		this.setNivel(this.getRepositorio().getNivel(cadastro.getIdNivel()));
 		this.setSala(this.getRepositorio().getSala(cadastro.getIdSala()));
 		this.setMensalidade(cadastro.getValorMensalidade());
