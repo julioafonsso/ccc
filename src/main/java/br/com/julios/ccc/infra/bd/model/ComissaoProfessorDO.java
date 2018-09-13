@@ -71,7 +71,10 @@ public class ComissaoProfessorDO extends PagamentoFuncionariosDO{
 	}
 
 	public String getCodigoTurma() {
-		return this.getMensalidade().getCodigoTurma();
+		if(this.getMensalidade() != null )
+			return this.getMensalidade().getCodigoTurma();
+		else
+			return "AUV - " + this.getTaxa().getTurma().getCodigo();
 	}
 
 	public String getNomeAluno() {
