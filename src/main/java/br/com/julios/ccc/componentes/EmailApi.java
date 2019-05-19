@@ -45,10 +45,10 @@ public class EmailApi {
 		@Autowired
 		MensagemEmailDAO msgDAO;
 
-	public static void main(String[] args) throws Exception {
-		EmailApi e = new EmailApi();
-		e.enviarEmailReciboMensalidade(null);
-	}
+//	public static void main(String[] args) throws Exception {
+//		EmailApi e = new EmailApi();
+//		e.enviarEmailReciboMensalidade(null);
+//	}
 
 	public void enviarEmailAulaParticular(MatriculaDO matricula, AulaParticularDO aula, FluxoCaixaDO fluxo)
 			throws Exception {

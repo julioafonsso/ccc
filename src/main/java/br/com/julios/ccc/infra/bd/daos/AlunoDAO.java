@@ -37,7 +37,8 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			" a.sexo, " +
 			" a.telefone, " +
 			" a.observacao, " +
-			" a.foto " +
+			" a.foto, " +
+			" a.receberEmail " +
 			 ") from AlunoDO a " +
 			 " LEFT OUTER JOIN  a.estadoCivil AS ec " +
 			 " LEFT OUTER JOIN  a.conheceEscola AS ce "
@@ -74,7 +75,8 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			" a.sexo, " +
 			" a.telefone, " +
 			" a.observacao, " +
-			" a.foto " +
+			" a.foto, " +
+			" a.receberEmail " +
 			") from AlunoDO a " +
 			" LEFT OUTER JOIN  a.estadoCivil AS ec " +
 			 " LEFT OUTER JOIN  a.conheceEscola AS ce "
@@ -178,7 +180,7 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 	public List<ConsultaHistoricoPagamentoDTO> getTaxasPagas(Long idAluno, Date diaInicio, Date diaFim);
 
 	
-	@Query("select f from AlunoDO f where f.dataExclusao is null and f.email is not null")
+	@Query("select f from AlunoDO f where f.dataExclusao is null and f.email is not null and f.receberEmail = true ")
 	public List<AlunoDO> getEmailAlunos();
 	
 	

@@ -10,7 +10,6 @@ import java.util.Locale;
 import br.com.julios.ccc.infra.bd.model.AlunoDO;
 import br.com.julios.ccc.infra.bd.model.MesReferenciaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
-import jxl.CellView;
 import jxl.SheetSettings;
 import jxl.Workbook;
 import jxl.WorkbookSettings;

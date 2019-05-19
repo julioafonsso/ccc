@@ -23,6 +23,7 @@ public class ConsultaAlunoDTO {
 	private String profissao;
 	private Long idConheceEscola;
 	private String nomeConheceEscola;
+	private boolean receberEmail;
 	
 	public Long getId() {
 		return id;
@@ -212,7 +213,8 @@ public class ConsultaAlunoDTO {
 			String sexo,
 			String telefone,
 			String observacao,
-			String foto
+			String foto,
+			boolean receberEmail
 			) {
 		
 		this.setId(id);
@@ -235,8 +237,17 @@ public class ConsultaAlunoDTO {
 		this.setTelefone(telefone);
 		this.setObservacao(observacao);
 		this.setFoto(foto);
+		this.setReceberEmail(receberEmail);
 		
 		
+	}
+
+	public boolean isReceberEmail() {
+		return receberEmail;
+	}
+
+	public void setReceberEmail(boolean receberEmail) {
+		this.receberEmail = receberEmail;
 	}
 	
 	

@@ -42,6 +42,7 @@ public class AlunoRepositorio {
 		aluno.setTelefone(cadastro.getTelefone());
 		aluno.setObservacao(cadastro.getObservacao());
 		aluno.setFoto(cadastro.getFoto());
+		aluno.setReceberEmail(cadastro.isReceberEmail());
 
 		return aluno;
 

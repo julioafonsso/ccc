@@ -1,5 +1,7 @@
 package br.com.julios.ccc.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -27,6 +29,7 @@ import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
 import br.com.julios.ccc.infra.dto.matricula.ConsultaAlunosMatriculadosDTO;
 import br.com.julios.ccc.infra.dto.matricula.ConsultaAlunosMatriculadosTurmaExcluidaDTO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.CadastroTurmaColetivaDTO;
+import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaHistoricoPagamentoTurmaDTO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaDTO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaExcluidasDTO;
 import br.com.julios.ccc.repositorios.MesRerefenciaRepositorio;
@@ -121,4 +124,22 @@ public class TurmaController {
 	public void apagarTurma(@PathVariable("id") long id) throws Exception {
 		turmaRepositorio.getTurma(id).excluir();
 	}
+	
+	@RequestMapping(value = "{id}/pagamentos/{dataInicio}/{dataFim}", method = RequestMethod.GET)
+	public List<ConsultaHistoricoPagamentoTurmaDTO> getPagamentos(@PathVariable("id") Long id,
+			@PathVariable("dataInicio") String dataInicio, @PathVariable("dataFim") String dataFim) throws ParseException {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+
+		Date diaInicio = sdf.parse(dataInicio);
+		Date diaFim = sdf.parse(dataFim);
+
+		Calendar c = Calendar.getInstance();
+		c.setTime(diaFim);
+		c.add(Calendar.DATE, c.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
+		diaFim = c.getTime();
+		
+		return turmaDAO.getMensalidadesPagas(id, diaInicio, diaFim);
+	}
+
 }

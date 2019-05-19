@@ -1,5 +1,6 @@
 package br.com.julios.ccc.infra.bd.daos;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import br.com.julios.ccc.infra.bd.model.FuncionarioDO;
 import br.com.julios.ccc.infra.bd.model.ModalidadeTurmaDO;
 import br.com.julios.ccc.infra.bd.model.TurmaColetivaDO;
+import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaHistoricoPagamentoTurmaDTO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaDTO;
 import br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaTurmaColetivaExcluidasDTO;
 
@@ -165,5 +167,21 @@ public interface TurmaColetivaDAO extends JpaRepository<TurmaColetivaDO, Long> {
 			+ "where (t.dataTermino is not null and t.dataTermino <= CURRENT_DATE)"
 			+ " order by t.modalidade.nome")
 	public List<ConsultaTurmaColetivaExcluidasDTO> getTurmasExcluidas();
+	
+	@Query("select new br.com.julios.ccc.infra.dto.turma.coletiva.ConsultaHistoricoPagamentoTurmaDTO( "
+			+ " m.matricula.aluno.nome, "
+			+ " m.mesReferencia.mes, "
+			+ " m.mesReferencia.ano, "
+			+ " m.dataVencimento, "
+			+ " m.pagamentoMensalidade.data, "
+			+ " m.pagamentoMensalidade.valor,"
+			+ " m.valorMensalidade "
+			+ " )"
+			+ " from MensalidadeDO m"
+			+ " where m.pagamentoMensalidade is not null "
+			+ " and m.matricula.turma.id = ?1"
+			+ " and m.pagamentoMensalidade.data between ?2 and ?3"
+			+ " order by  m.pagamentoMensalidade.data desc ")
+	public List<ConsultaHistoricoPagamentoTurmaDTO> getMensalidadesPagas(Long id, Date diaInicio, Date diaFim);
 
 }

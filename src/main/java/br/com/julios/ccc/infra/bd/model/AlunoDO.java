@@ -97,8 +97,19 @@ public class AlunoDO {
 	
 	@Column(name = "data_exclusao")
 	private Date dataExclusao;
+	
+	@Column
+	private boolean receberEmail;
 
 	// Getters and Setters
+
+	public boolean isReceberEmail() {
+		return receberEmail;
+	}
+
+	public void setReceberEmail(boolean receberEmail) {
+		this.receberEmail = receberEmail;
+	}
 
 	public Date getDataExclusao() {
 		return dataExclusao;
@@ -109,11 +120,6 @@ public class AlunoDO {
 	}
 
 	public String getCpf() throws Exception {
-		// if(cpf != null && cpf.length() > 0){
-		// return cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." +
-		// cpf.substring(6, 9) + "-" + cpf.substring(9);
-		// }
-		// return null;
 		return this.cpf;
 
 	}
@@ -123,18 +129,6 @@ public class AlunoDO {
 	}
 
 	public String getTelefone() {
-		// if(telefone != null )
-		// {
-		// if(telefone.length() == 11)
-		// {
-		// return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2,
-		// 7) + "-" + telefone.substring(7);
-		// }
-		// else{
-		// return "(" + telefone.substring(0, 2) + ")" + telefone.substring(2,
-		// 6) + "-" + telefone.substring(6);
-		// }
-		// }
 		return telefone;
 	}
 
@@ -289,7 +283,7 @@ public class AlunoDO {
 				this.getCidade(), this.getDataNascimento(), this.getEstadoCivil().getId(),
 				this.getEstadoCivil().getNome(), this.getProfissao(), this.getConheceEscola().getId(),
 				this.getConheceEscola().getNome(), this.getSexo(), this.getTelefone(), this.getObservacao(),
-				this.getFoto());
+				this.getFoto(), this.isReceberEmail());
 	}
 
 	public ConsultaAlunoDTO atualizar(CadastroAlunoDTO aluno) throws Exception {
@@ -309,6 +303,7 @@ public class AlunoDO {
 		this.setRg(aluno.getRg());
 		this.setSexo(aluno.getSexo());
 		this.setTelefone(aluno.getTelefone());
+		this.setReceberEmail(aluno.isReceberEmail());
 		return this.cadastrar();
 	}
 
