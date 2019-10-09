@@ -2,9 +2,6 @@ package br.com.julios.ccc.infra.dto.aluno;
 
 import java.util.Date;
 
-import br.com.julios.ccc.infra.bd.model.ConheceEscolaDO;
-import br.com.julios.ccc.infra.bd.model.EstadoCivilDO;
-
 public class ConsultaAlunoDTO {
 
 	private Long id;
@@ -24,7 +21,16 @@ public class ConsultaAlunoDTO {
 	private Long idConheceEscola;
 	private String nomeConheceEscola;
 	private boolean receberEmail;
+	private boolean ativo;
 	
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -214,7 +220,8 @@ public class ConsultaAlunoDTO {
 			String telefone,
 			String observacao,
 			String foto,
-			boolean receberEmail
+			boolean receberEmail,
+			boolean ativo
 			) {
 		
 		this.setId(id);
@@ -238,7 +245,7 @@ public class ConsultaAlunoDTO {
 		this.setObservacao(observacao);
 		this.setFoto(foto);
 		this.setReceberEmail(receberEmail);
-		
+		this.setAtivo(ativo);
 		
 	}
 

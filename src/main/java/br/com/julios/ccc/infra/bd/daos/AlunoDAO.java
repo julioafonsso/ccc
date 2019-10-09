@@ -38,7 +38,8 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			" a.telefone, " +
 			" a.observacao, " +
 			" a.foto, " +
-			" a.receberEmail " +
+			" a.receberEmail,"+ 
+			" a.ativo " +
 			 ") from AlunoDO a " +
 			 " LEFT OUTER JOIN  a.estadoCivil AS ec " +
 			 " LEFT OUTER JOIN  a.conheceEscola AS ce "
@@ -76,7 +77,8 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			" a.telefone, " +
 			" a.observacao, " +
 			" a.foto, " +
-			" a.receberEmail " +
+			" a.receberEmail,"+ 
+			" a.ativo " +
 			") from AlunoDO a " +
 			" LEFT OUTER JOIN  a.estadoCivil AS ec " +
 			 " LEFT OUTER JOIN  a.conheceEscola AS ce "
@@ -179,9 +181,16 @@ public interface AlunoDAO extends JpaRepository<AlunoDO, Long>{
 			)
 	public List<ConsultaHistoricoPagamentoDTO> getTaxasPagas(Long idAluno, Date diaInicio, Date diaFim);
 
+
 	
-	@Query("select f from AlunoDO f where f.dataExclusao is null and f.email is not null and f.receberEmail = true ")
-	public List<AlunoDO> getEmailAlunos();
+	@Query("select f.email from AlunoDO f where f.dataExclusao is null and f.email is not null and f.receberEmail = true and f.ativo = ?1")
+	public List<String> getEmailAlunos(boolean ativo);
+
+	@Query("select distinct m.aluno.email from MatriculaDO m where m.turma.modalidade.id=?1 and m.aluno.dataExclusao is null and m.aluno.email is not null and m.aluno.receberEmail = true and m.aluno.ativo = ?2")
+	public List<String> getEmailAlunosPorTurma(Long idModalidade,boolean ativo);
+	
+	@Query("select count(*) from AlunoDO f where f.ativo = ?1 ")
+	public Long getQtdAlunos(boolean ativo);
 	
 	
 }

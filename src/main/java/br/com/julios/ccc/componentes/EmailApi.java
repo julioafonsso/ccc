@@ -45,10 +45,6 @@ public class EmailApi {
 		@Autowired
 		MensagemEmailDAO msgDAO;
 
-//	public static void main(String[] args) throws Exception {
-//		EmailApi e = new EmailApi();
-//		e.enviarEmailReciboMensalidade(null);
-//	}
 
 	public void enviarEmailAulaParticular(MatriculaDO matricula, AulaParticularDO aula, FluxoCaixaDO fluxo)
 			throws Exception {
@@ -355,9 +351,9 @@ public class EmailApi {
 		HtmlEmail email = getConfigHmlEmailContato();
 		if(emailDTO.getTeste().equals("N"))
 		{
-			List<AlunoDO> alunos = this.alunoDAO.getEmailAlunos();
-			for (AlunoDO alunoDO : alunos) {
-				email.addBcc(alunoDO.getEmail());
+			List<String> emails= this.alunoDAO.getEmailAlunos(true);
+			for (String string : emails) {
+				email.addBcc(string);
 			}
 		}
 		
@@ -437,12 +433,13 @@ public class EmailApi {
 	}
 
 	public MensagemEmailDO getMensagemEmail() {
-//		 return msgEmail.getMensagemEmail();
-		return null;
+		 return msgDAO.getMensagem();
 	}
 
 	public void atualizarMensagem(MensagemEmailDO msg) {
-//		 msgEmail.save(msg);
+		MensagemEmailDO msgAntiga = msgDAO.getMensagem();
+		msgAntiga.setMsg(msg.getMsg());
+		msgDAO.save(msgAntiga);
 	}
 
 	public void emailContatoTeste() throws Exception {
@@ -535,14 +532,16 @@ public class EmailApi {
 		return retorno.toString();
 	}
 
-	public String getEmailsAlunos() {
+	public String getEmailsAlunos(Long idModalidade, boolean ativo) {
+		List<String> emails =null;
 		StringBuilder sb = new StringBuilder();
-		List<AlunoDO> alunos = this.alunoDAO.getEmailAlunos();
-		for (AlunoDO alunoDO : alunos) {
-			if(alunoDO.getEmail() != null)
-				sb.append(alunoDO.getEmail()).append(";");
+		if (idModalidade != null && idModalidade.longValue() > 0) 
+			emails = this.alunoDAO.getEmailAlunosPorTurma(idModalidade, ativo);
+		else
+			emails = this.alunoDAO.getEmailAlunos(ativo);
+		for (String string : emails) {
+			sb.append(string).append(";");
 		}
-		
 		return sb.toString();
 	}
 }

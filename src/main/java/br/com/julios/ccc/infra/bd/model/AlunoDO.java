@@ -100,8 +100,18 @@ public class AlunoDO {
 	
 	@Column
 	private boolean receberEmail;
+	
+	private boolean ativo;
 
 	// Getters and Setters
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
 
 	public boolean isReceberEmail() {
 		return receberEmail;
@@ -283,7 +293,7 @@ public class AlunoDO {
 				this.getCidade(), this.getDataNascimento(), this.getEstadoCivil().getId(),
 				this.getEstadoCivil().getNome(), this.getProfissao(), this.getConheceEscola().getId(),
 				this.getConheceEscola().getNome(), this.getSexo(), this.getTelefone(), this.getObservacao(),
-				this.getFoto(), this.isReceberEmail());
+				this.getFoto(), this.isReceberEmail(), this.isAtivo());
 	}
 
 	public ConsultaAlunoDTO atualizar(CadastroAlunoDTO aluno) throws Exception {
@@ -308,9 +318,12 @@ public class AlunoDO {
 	}
 
 	public void delete() throws Exception {
-		this.setDataExclusao(new Date());
+		this.setAtivo(false);
 		this.getRepositorio().cadastrar(this);
-		
 	}
 
+	public void reativar() throws Exception {
+		this.setAtivo(true);
+		this.getRepositorio().cadastrar(this);
+	}
 }

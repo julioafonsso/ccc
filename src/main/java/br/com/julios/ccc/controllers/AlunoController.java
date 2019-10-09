@@ -115,6 +115,11 @@ public class AlunoController {
 		this.alunoRepositorio.getAluno(idAluno).delete();
 	}
 
+	@RequestMapping(value = "{id}", method = RequestMethod.POST)
+	public void reativarAluno(@PathVariable("id") Long idAluno) throws Exception {
+		this.alunoRepositorio.getAluno(idAluno).reativar();;
+	}
+	
 	@RequestMapping(value = "{id}/turmas", method = RequestMethod.GET)
 	public List<ConsultaMatriculaDTO> getTurmas(@PathVariable("id") Long idAluno) {
 		return matriculaDAO.getMatriculas(idAluno);
@@ -339,5 +344,14 @@ public class AlunoController {
 		}
 		
 	}
+	
+	@RequestMapping(value = "ativos/quantidade", method = RequestMethod.GET)
+	public Long getQtdAlunosAtivos() {
+		return this.alunoDAO.getQtdAlunos(true);
+	}
 
+	@RequestMapping(value = "inativos/quantidade", method = RequestMethod.GET)
+	public Long getQtdAlunosInativos() {
+		return this.alunoDAO.getQtdAlunos(false);
+	}
 }
